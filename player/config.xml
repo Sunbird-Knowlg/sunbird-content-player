@@ -12,7 +12,7 @@
     </author>
     <content src="index.html"/>
     <access origin="*"/>
-    <preference name="SplashScreen" value ="screen" />
+    <preference name="SplashScreen" value ="splash" />
     <preference name="SplashScreenDelay" value = "1000" />
     <preference name="SplashShowOnlyFirstTime" value="false"/>
     <preference name="SplashMaintainAspectRatio" value="true" />
