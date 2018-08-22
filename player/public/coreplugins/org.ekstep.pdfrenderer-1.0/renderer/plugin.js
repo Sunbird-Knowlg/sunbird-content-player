@@ -214,6 +214,10 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             stageId: context.CURRENT_PAGE.toString()
         });
         EkstepRendererAPI.getTelemetryService().navigate(context.CURRENT_PAGE.toString(), (context.CURRENT_PAGE - 1).toString());
+        if(context.CURRENT_PAGE == 1) {
+            showToaster('error', "Page not found");
+            contentExitCall();
+        }
         if (context.CURRENT_PAGE != 1)
             context.showPage(--context.CURRENT_PAGE);
     },
