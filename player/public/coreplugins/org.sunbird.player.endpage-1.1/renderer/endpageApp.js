@@ -46,7 +46,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
    
     $scope.replayContent = function() {
         if(isMobile) {
-            EkstepRendererAPI.dispatch("event:openUserSwitchingModal", {'logGEEvent': $scope.pluginInstance._isAvailable});
+            EventBus.dispatch("event:openUserSwitchingModal", {'logGEEvent': $scope.pluginInstance._isAvailable});
         }else {
             $scope.replayCallback();
         }
