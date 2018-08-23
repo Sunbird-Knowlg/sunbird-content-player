@@ -1,9 +1,6 @@
 const BUILD_NUMBER = process.env.build_number;
 const PLAYER_VER = process.env.player_version_number;
 
-// Build Zip Folder Name
-const BUILD_FOLDER_NAME = 'player-build';
-
 // Required dependency files
 const path = require('path');
 const webpack = require('webpack');
@@ -20,23 +17,13 @@ const fs = require('fs');
 const replace = require('replace-in-file');
 const file_extra = require('fs-extra')
 var WebpackOnBuildPlugin = require('on-build-webpack');
+const APP_CONFIG = require('./build.config.js')
 
-
-const APP_CONFIG = {
-    ekstep: {
-        configFile: './public/js/appConfig.js',
-        splashScreen: {
-            backgroundImage: "./public/assets/icons/background_1.png"
-        }
-    },
-    sunbird: {
-        configFile: './public/js/appConfig-Sunbird.js',
-        splashScreen: {
-            backgroundImage: "./public/assets/icons/splacebackground_1.png"
-        }
-    }
-}
-
+const CONSTANTS = {
+    build_folder_name: 'player-build',
+    ekstep: 'ekstep',
+    sunbird: 'sunbird'
+};
 
 const FOLDER_PATHS = {
     basePath: './',
@@ -115,7 +102,7 @@ if (!BUILD_NUMBER && !PLAYER_VER) {
 const VERSION = PLAYER_VER + '.' + BUILD_NUMBER;
 
 module.exports = (env, argv) => {
-    (env.channel === 'sunbird') ? SCRIPTS.unshift(APP_CONFIG.sunbird.configFile): SCRIPTS.unshift(APP_CONFIG.ekstep.configFile);
+    (env.channel === CONSTANTS.sunbird) ? SCRIPTS.unshift(APP_CONFIG.sunbird.configFile): SCRIPTS.unshift(APP_CONFIG.ekstep.configFile);
     return {
         entry: {
             'script': SCRIPTS,
@@ -123,7 +110,7 @@ module.exports = (env, argv) => {
         },
         output: {
             filename: `[name].min.${VERSION}.js`,
-            path: path.resolve(__dirname, 'public/' + BUILD_FOLDER_NAME)
+            path: path.resolve(__dirname, 'public/' + CONSTANTS.build_folder_name)
         },
         resolve: {
             alias: {
@@ -216,12 +203,12 @@ module.exports = (env, argv) => {
             ]
         },
         plugins: [
-            new CleanWebpackPlugin([path.resolve(__dirname, 'public/' + BUILD_FOLDER_NAME)]),
+            new CleanWebpackPlugin([path.resolve(__dirname, 'public/' + CONSTANTS.build_folder_name)]),
             new MiniCssExtractPlugin({
                 filename: `[name].min.${VERSION}.css`,
             }),
             new WebpackOnBuildPlugin(function(stats) {
-                updateCordovaConfigXML(env.channel)
+                replaceStringInFiles(env.channel)
             }),
             new ngAnnotatePlugin({
                 add: true,
@@ -272,28 +259,28 @@ module.exports = (env, argv) => {
     }
 };
 
-function updateCordovaConfigXML(channel) {
-    var replaceTo = (channel === 'sunbird') ? APP_CONFIG.sunbird.splashScreen.backgroundImage : APP_CONFIG.ekstep.splashScreen.backgroundImage
-    const options = {
+function replaceStringInFiles(channel) {
+    // Which is used to replace the specific string from the mentioned file 
+    var replaceTo = (channel === CONSTANTS.sunbird) ? APP_CONFIG.sunbird.splashScreen.backgroundImage : APP_CONFIG.ekstep.splashScreen.backgroundImage
+    const options = [{
+        src: "./config.xml",
         files: './config.dist.xml',
         from: /SPLASH_IMAGE_PATH/g,
         to: replaceTo,
-    };
-    file_extra.copy('./config.xml', './config.dist.xml')
-        .then(() => {
-            console.log('success!');
-            replace(options)
-                .then(changes => {
-                    console.log('Modified files:', changes.join(', '));
-                })
-                .catch(error => {
-                    console.error('Error occurred:', error);
-                });
-        })
-        .catch(err => {
-            console.error(err)
-        })
-
-    // replace logic
-
+    }];
+    options.forEach(element => {
+        file_extra.copy(element.src, element.files)
+            .then(() => {
+                replace(element)
+                    .then(changes => {
+                        console.log('Modified files:', changes.join(', '));
+                    })
+                    .catch(error => {
+                        console.error('Error occurred:', error);
+                    });
+            })
+            .catch(err => {
+                console.error("Error occurred", err)
+            })
+    });
 }
