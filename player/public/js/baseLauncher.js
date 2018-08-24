@@ -25,7 +25,6 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
             EkstepRendererAPI.addEventListener("renderer:telemetry:end", this.endTelemetry, this);
             EkstepRendererAPI.addEventListener('renderer:content:end', this.end, this);
             EkstepRendererAPI.addEventListener('renderer:content:replay', this.replay, this);
-            EkstepRendererAPI.addEventListener('renderer:launcher:clean', this.cleanUp, this);
             this.manifest = manifest;
             this.contentMetaData = content;
             EkstepRendererAPI.dispatchEvent('renderer:launcher:register', this);
@@ -46,6 +45,7 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
     start: function() {
         var instance = this;
         this.cleanUp();
+        EkstepRendererAPI.addEventListener('renderer:launcher:clean', this.cleanUp, this);
         console.info('Base Launcher should construct');
         this.resetDomElement();
         this.startTelemetry();
@@ -88,6 +88,7 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
     cleanUp: function() {
         console.info('Clearing the launcher instance')
         this.sleepMode = true;
+        EkstepRendererAPI.removeEventListener('renderer:launcher:clean', this.cleanUp, this);
     },
 
     /**

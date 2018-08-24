@@ -9,10 +9,12 @@
     enableHeartBeatEvent:true,
     _constants: {
         mimeType: ["application/vnd.ekstep.html-archive", "application/vnd.ekstep.h5p-archive"],
-        launchEvent: "renderer:launch:html/h5p",
+        events: {
+            launchEvent: "renderer:launch:html"
+        }
     },
     initLauncher: function() {
-        EkstepRendererAPI.addEventListener(this._constants.launchEvent, this.start, this);
+        EkstepRendererAPI.addEventListener(this._constants.events.launchEvent, this.start, this);
     },
     start: function() {
         this._super();

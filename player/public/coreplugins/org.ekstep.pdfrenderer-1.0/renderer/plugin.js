@@ -13,11 +13,13 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     headerTimer: undefined,
     _constants: {
         mimeType: ["application/pdf"],
-        launchEvent: "renderer:launch:pdf",
+        events: {
+            launchEvent: "renderer:launch:pdf"
+        }
     },
     initLauncher: function (manifestData) {
         this._manifest = manifestData;
-        EkstepRendererAPI.addEventListener(this._constants.launchEvent, this.start, this);
+        EkstepRendererAPI.addEventListener(this._constants.events.launchEvent, this.start, this);
         EkstepRendererAPI.addEventListener('nextClick', this.nextNavigation, this);
         EkstepRendererAPI.addEventListener('previousClick', this.previousNavigation, this);
     },
@@ -346,6 +348,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     cleanUp: function () {
         this.sleepMode = true;
+        EkstepRendererAPI.removeEventListener('renderer:launcher:clean', this.cleanUp, this);
         // EkstepRendererAPI.removeEventListener('actionNavigateNext');
         // EkstepRendererAPI.removeEventListener('actionNavigatePrevious');
     }

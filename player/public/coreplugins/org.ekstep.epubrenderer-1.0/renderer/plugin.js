@@ -15,10 +15,12 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     enableHeartBeatEvent: false,
     _constants: {
         mimeType: ["application/epub"],
-        launchEvent: "renderer:launch:epub"
+        events: {
+            launchEvent: "renderer:launch:epub"
+        }
     },
     initLauncher: function () {
-        EkstepRendererAPI.addEventListener(this._constants.launchEvent, this.start, this);
+        EkstepRendererAPI.addEventListener(this._constants.events.launchEvent, this.start, this);
         EkstepRendererAPI.dispatchEvent('renderer:stagereload:hide');
     },
     start: function (event, data) {
@@ -204,6 +206,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         this.removeProgressElements();
         EkstepRendererAPI.removeEventListener('actionNavigateNext', undefined, undefined, true);
         EkstepRendererAPI.removeEventListener('actionNavigatePrevious', undefined, undefined, true);
+        EkstepRendererAPI.removeEventListener('renderer:launcher:clean', this.cleanUp, this);
     }
 });
 //# sourceURL=ePubRendererPlugin.js

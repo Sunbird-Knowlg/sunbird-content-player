@@ -9,7 +9,7 @@ Plugin.extend({
         _ngScopeVar: "playerContent",
         _injectTemplateFn: undefined,
         // Hashmap for launchers
-        launcherMap: {},
+        rendererMap: {},
         initialize: function() {
             EkstepRendererAPI.addEventListener('renderer:launcher:load', this.start, this);
             EkstepRendererAPI.addEventListener('renderer:launcher:register', this.registerLauncher, this);
@@ -23,8 +23,8 @@ Plugin.extend({
             var instance = this;
             try {
                 plugin._constants.mimeType.forEach(function(mimetype) {
-                    instance.launcherMap[mimetype] = {
-                        event: plugin._constants.launchEvent,
+                    instance.rendererMap[mimetype] = {
+                        event: plugin._constants.events.launchEvent,
                         pluginId: plugin.manifest.id
                     };
                 });
@@ -34,7 +34,7 @@ Plugin.extend({
         },
         start: function(evt, contentObj) {
             content = contentObj;
-            var launcherPluginMap = this.launcherMap[content.mimeType];
+            var launcherPluginMap = this.rendererMap[content.mimeType];
             if (_.isUndefined(launcherPluginMap)) return;
             // Checking if mimetype launcher is already loaded or not
             var pluginInstance = EkstepRendererAPI.getPluginObjs(launcherPluginMap.pluginId);
@@ -44,7 +44,17 @@ Plugin.extend({
                 EkstepRendererAPI.dispatchEvent("telemetryPlugin:intialize");
                 EkstepRendererAPI.dispatchEvent(launcherPluginMap.event);
             } else {
-                console.error("No plugin available to handle '" + content.mimetype + "' Mimetype")
+                EkstepRendererAPI.logErrorEvent({stack: "No plugin available to handle '" + content.mimeType + "' Mimetype in launch manager"}, {
+                    'severity': 'fatal',
+                    'type': 'content',
+                    'action': 'play'
+                });
+                EkstepRendererAPI.dispatchEvent("renderer:alert:show", undefined, {
+                    title: "Error",
+                    text: "Plugin not available",
+                    type: "error",
+                    data: {text: 'Plugin not available', data: "No plugin available to handle '" + content.mimeType + "' Mimetype"}
+                });
             }
             EkstepRendererAPI.dispatchEvent("renderer:player:show");
         },

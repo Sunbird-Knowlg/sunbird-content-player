@@ -21,7 +21,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     enableHeartBeatEvent:false,
     _constants: {
         mimeType: ["application/vnd.ekstep.ecml-archive"],
-        launchEvent: "renderer:launch:ecml"
+        events: {
+            launchEvent: "renderer:launch:ecml"
+        }
     },
     /**
      * registers events
@@ -30,7 +32,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     initLauncher: function() {
         EkstepRendererAPI.addEventListener('renderer:content:load', this.start, this);
         EkstepRendererAPI.addEventListener('renderer:cleanUp', this.cleanUp, this);
-        EkstepRendererAPI.addEventListener(this._constants.launchEvent, this.start, this);
+        EkstepRendererAPI.addEventListener(this._constants.events.launchEvent, this.start, this);
     },
     /**
      *
@@ -228,6 +230,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     cleanUp: function() {
         if (this.sleepMode) return;
         this.sleepMode = true;
+        EkstepRendererAPI.removeEventListener('renderer:launcher:clean', this.cleanUp, this);
         if (this.running) {
             this.running = false;
             AnimationManager.cleanUp();
