@@ -1,3 +1,4 @@
+const fs = require('fs');
 module.exports = function(grunt) {
     var target = grunt.option('target') || 'ekstep';
 
@@ -816,10 +817,21 @@ module.exports = function(grunt) {
     grunt.registerTask('init', ['uglify:renderermin', 'copy:main', 'injector:prview'])
     grunt.registerTask('build-preview', ['clean', 'mkdir:all', 'build-telemetry-lib', 'init', 'rename:preview', 'clean:minhtml', 'copy:toPreview', 'clean:preview']);
 
+    grunt.registerTask('backup-config-xml', function() {
+        grunt.file.copy('./config.xml', './config.latest.xml')
+        grunt.file.copy('./config.dist.xml', './config.xml')
+    });
+
+    grunt.registerTask('revert-config-xml', function() {
+        grunt.file.copy('./config.latest.xml', './config.xml');
+        fs.unlink('./config.latest.xml');
+        fs.unlink('./config.dist.xml');
+    });
+
     //Build AAR
     grunt.registerTask('init-setup', ['set-platforms', 'add-cordova-plugin-genieservices']);
     grunt.registerTask('build-aarshared-xwalk', ['init', 'rename:main', 'injector:prview', 'cordovacli:add_plugins', 'copy:unsigned', 'replace:gradleCanvasVersion', 'add-speech', 'set-android-library', 'set-xwalkshared-library', 'cordovacli:build_android']);
-    grunt.registerTask('build-app', ['clean', 'mkdir:all', 'init-setup', 'build-aarshared-xwalk']);
+    grunt.registerTask('build-app', ['clean', 'mkdir:all', 'backup-config-xml', 'init-setup', 'build-aarshared-xwalk', 'revert-config-xml']);
 
     //Added on 16/04/18. Simple command to build aar file. There is no xwalk build required. This changes made to share build for Sunbird.
     grunt.registerTask('build-aar', ['mkdir:all', 'build-aarshared-xwalk']);
