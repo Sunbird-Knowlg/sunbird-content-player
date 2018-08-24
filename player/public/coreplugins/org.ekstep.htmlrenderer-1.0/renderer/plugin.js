@@ -75,6 +75,11 @@
     reset:function(){
       this.currentIndex = 50;
       this.totalIndex = 100;
+    },
+    cleanUp: function() {
+        this._super();
+        EkstepRendererAPI.dispatchEvent('renderer:next:show')
+        EkstepRendererAPI.dispatchEvent('renderer:previous:show')
     }
 });
 //# sourceURL=HTMLRendererePlugin.js
