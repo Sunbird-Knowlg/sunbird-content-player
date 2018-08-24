@@ -3,7 +3,7 @@
     COLLECTION_MIMETYPE = "application/vnd.ekstep.content-collection",
     stack = new Array(), collectionChildrenIds = new Array(), collectionPath = new Array(), collectionPathMap = {},
     collectionChildren = true, content = {}, config = {showEndPage: true, showHTMLPages: true },
-    isbrowserpreview = getUrlParameter("webview"), isCoreplugin = undefined, Renderer = undefined;
+    isbrowserpreview = getUrlParameter("webview"), isCoreplugin = undefined, Renderer = undefined,isMobile=undefined;
 
 document.body.addEventListener("logError", telemetryError, false);
 
