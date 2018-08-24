@@ -1061,5 +1061,15 @@ window.EkstepRendererAPI = {
         } else {
             console.warn('Invalid Content')
         }
+    },
+
+    /**
+    * This method is used for stop audio play 
+    * when user click outside of the preview area.
+    **/
+    clearPlayer: function() {
+        AudioManager.stopAll();
+        Renderer.theme.removeHtmlElements();
     }
+
 }
