@@ -10,16 +10,10 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     stageId: undefined,
     heartBeatData:{},
     enableHeartBeatEvent:false,
-    _constants: {
-        mimeType: ["video/mp4", "video/x-youtube", "video/webm"],
-        events: {
-            launchEvent: "renderer:launch:video"
-        }
-    },
-    initLauncher: function() {
-        EkstepRendererAPI.addEventListener(this._constants.events.launchEvent, this.start, this);
+    initLauncher: function(manifestData) {
         EkstepRendererAPI.addEventListener("renderer:overlay:mute", this.onOverlayAudioMute, this);
         EkstepRendererAPI.addEventListener("renderer:overlay:unmute", this.onOverlayAudioUnmute, this);
+        this.start();
     },
     start: function() {
         this._super();
@@ -188,7 +182,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         EkstepRendererAPI.getTelemetryService().interact(type || 'TOUCH', "", "", eksData);
     },
     replay:function(){
-        if (this.sleepMode) return;
        EkstepRendererAPI.dispatchEvent('renderer:overlay:unmute');
        this.start();
     },
@@ -242,8 +235,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }
     },
     cleanUp: function() {
-        if (this.sleepMode) return;
-        this.sleepMode = true;
         if (document.getElementById(this.manifest.id)) {
             videojs(this.manifest.id).dispose();
         }
@@ -252,7 +243,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         EkstepRendererAPI.dispatchEvent("renderer:next:show");
         EkstepRendererAPI.dispatchEvent('renderer:stagereload:show');
         EkstepRendererAPI.dispatchEvent("renderer:previous:show");
-        EkstepRendererAPI.removeEventListener('renderer:launcher:clean', this.cleanUp, this);
     }
 });
 

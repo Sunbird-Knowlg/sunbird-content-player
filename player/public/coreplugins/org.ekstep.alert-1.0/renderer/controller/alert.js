@@ -7,7 +7,7 @@ app.compileProvider.directive('alert', ['$rootScope', '$compile', function($root
     return {
         restrict: 'E',
         template: "<div ng-include='getAlertPluginTemplate()' ></div>",
-        link: function(scope) {
+        link: function(scope, element, attrs, controller) {
             var upIcon = EkstepRendererAPI.resolvePluginResource("org.ekstep.alert", "1.0", "assets/up.png");
             var downIcon = EkstepRendererAPI.resolvePluginResource("org.ekstep.alert", "1.0", "assets/down.png");
             scope.title = "";

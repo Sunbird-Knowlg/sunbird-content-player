@@ -55,7 +55,7 @@ org.ekstep.contentrenderer.startGame = function(appInfo) {
                         EkstepRendererAPI.dispatchEvent('renderer:collection:show');
                     });
                 } else {
-                    console.log("SORRY COLLECTION PREVIEW IS NOT AVAILABLE");
+                    console.log("SORRY COLLECTION PREVIEW IS NOT AVAILABEL");
                 }
             }
         });
@@ -70,15 +70,10 @@ org.ekstep.contentrenderer.addRepos = function() {
     if (_.isUndefined(obj.config.repos)) {
         obj.config.repos = isMobile ? obj.devicePluginspath : obj.previewPluginspath;
     }
-    var path = _.isArray(obj.config.repos) ? obj.config.repos : [obj.config.repos];
-    path.push(globalConfig.corePluginspath);
-    /**
-     * renderer:repo:create event will get dispatch to add a custom repo to load the plugins from the path.
-     * @event 'renderer:repo:create'
-     * @fires 'renderer:repo:create'
-     * @memberof EkstepRendererEvents
-     */
-    EkstepRendererAPI.dispatchEvent("renderer:repo:create", undefined, path);
+    EkstepRendererAPI.dispatchEvent("renderer:repo:create", undefined, {
+        path: obj.config.repos,
+        position: 0
+    });
 };
 
 /**
@@ -126,6 +121,7 @@ org.ekstep.contentrenderer.setContent = function(metadata, data, configuration) 
 org.ekstep.contentrenderer.initializePreview = function(configuration) {
     // Checking if renderer is running or not
     if (EkstepRendererAPI.isRendererRunning()) {
+        EkstepRendererAPI.hideEndPage();
         // If renderer is running just call function to load aluncher
         var contentObj = configuration.metadata || globalConfig.defaultMetadata;
         if (configuration.data) contentObj.body = configuration.data;
