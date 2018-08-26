@@ -1,7 +1,12 @@
 org.ekstep.contentrenderer.baseLauncher.extend({
+    _constants: {
+        mimeType: ["text/x-url"],
+        events: {
+            launchEvent: "renderer:launch:extcontent"
+        }
+    },
     initLauncher: function () {
-        var instance = this;
-        this.start();
+        EkstepRendererAPI.addEventListener(this._constants.events.launchEvent, this.start, this);
     },
     start: function () {
         var instance = this;
@@ -56,7 +61,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }
         return previewHtml;
     },
-
     reset: function () {
         this.currentIndex = 50;
         this.totalIndex = 100;
