@@ -8,6 +8,7 @@ describe('Animation Plugin test cases', function() {
             Renderer.update = true;
         });
         org.ekstep.contentrenderer.loadPlugins([{"mimeType":["application/vnd.ekstep.ecml-archive"],"id":"org.ekstep.ecmlrenderer","ver":1,"type":"plugin"}], [], function() {
+            EkstepRendererAPI.dispatchEvent('renderer:launch:ecml');
             setTimeout(function() {
                 AnimationPlugin = AnimationManager.pluginMap.tween.prototype;
                 spyOn(AnimationPlugin, 'init').and.callThrough();
