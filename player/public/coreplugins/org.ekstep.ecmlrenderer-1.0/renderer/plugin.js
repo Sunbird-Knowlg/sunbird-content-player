@@ -19,18 +19,21 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     stageId:[],
     qid:[],
     enableHeartBeatEvent:false,
+    _constants: {	
+        mimeType: ["application/vnd.ekstep.ecml-archive"],	
+        events: {	
+            launchEvent: "renderer:launch:ecml"	
+        }	
+    },
 
     /**
      * registers events
      * @memberof ecmlRenderer
      */
-    initLauncher: function(manifest) {
+    initLauncher: function() {
         EkstepRendererAPI.addEventListener('renderer:content:load', this.start, this);
         EkstepRendererAPI.addEventListener('renderer:cleanUp', this.cleanUp, this);
-        var instance = this;
-        setTimeout(function(){
-            instance.start();
-        }, 0);
+        EkstepRendererAPI.addEventListener(this._constants.events.launchEvent, this.start, this);
     },
     /**
      *
@@ -226,6 +229,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
      * @memberof ecmlRenderer
      */
     cleanUp: function() {
+        if (this.sleepMode) return;	
+        this.sleepMode = true;	
+        EkstepRendererAPI.removeEventListener('renderer:launcher:clean', this.cleanUp, this);
         if (this.running) {
             this.running = false;
             AnimationManager.cleanUp();
@@ -248,10 +254,13 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             Renderer.theme.resume();
     },
     replay: function(){
+        if (this.sleepMode) return;
         this.qid = [];
         this.stageId = [];
-        Renderer.theme.removeHtmlElements();
-        Renderer.theme.reRender();
+        if (Renderer && Renderer.theme) {
+            Renderer.theme.removeHtmlElements();
+            Renderer.theme.reRender();
+        }
         this.startTelemetry();
     },
     
@@ -277,6 +286,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     initContentProgress: function() {
         var instance = this;
         EkstepRendererAPI.addEventListener("sceneEnter", function(event) {
+            if (instance.sleepMode) return;
             var currentScene = Renderer.theme._currentScene
             if (currentScene.isItemScene()) {
                 if (!_.contains(instance.qid, currentScene._stageController.assessStartEvent.event.edata.eks.qid)) {

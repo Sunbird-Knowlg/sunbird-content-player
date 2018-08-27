@@ -11,14 +11,20 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     heartBeatData: {},
     enableHeartBeatEvent: true,
     headerTimer: undefined,
+    _constants: {
+        mimeType: ["application/pdf"],
+        events: {
+            launchEvent: "renderer:launch:pdf"
+        }
+    },
     initLauncher: function(manifestData) {
         console.info('PDF Renderer init', manifestData)
+        EkstepRendererAPI.addEventListener(this._constants.events.launchEvent, this.start, this);
         this._manifest = manifestData;
         EkstepRendererAPI.addEventListener('nextClick', this.nextNavigation, this);
         EkstepRendererAPI.addEventListener('previousClick', this.previousNavigation, this);
-        this.start();
     },
-    enableOverly: function() {
+    enableOverly: function () {
         EkstepRendererAPI.dispatchEvent("renderer:overlay:show");
         EkstepRendererAPI.dispatchEvent('renderer:stagereload:hide');
         $('#pdf-buttons').css({
@@ -62,6 +68,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         });
     },
     replay: function() {
+        if (this.sleepMode) return;
         this._super();
         this.enableOverly();
     },
@@ -199,6 +206,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
 
     nextNavigation: function() {
+        if (this.sleepMode) return;
         EkstepRendererAPI.getTelemetryService().interact("TOUCH", "next", null, {
             stageId: context.CURRENT_PAGE.toString()
         });
@@ -210,6 +218,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }
     },
     previousNavigation: function() {
+        if (this.sleepMode) return;
         EkstepRendererAPI.getTelemetryService().interact("TOUCH", "previous", null, {
             stageId: context.CURRENT_PAGE.toString()
         });
