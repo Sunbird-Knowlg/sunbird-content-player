@@ -63,7 +63,7 @@ var splashScreen = {
         jQuery('#loading').show();
         isMobile && setTimeout(function() {
             navigator.splashscreen.hide();
-        }, 0)
+        }, 100)
         var width = 1;
         clearInterval(id);
         var id = setInterval(frame, 50);
