@@ -13,11 +13,16 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     lastPage: false,
     stageId:[],
     enableHeartBeatEvent: false,
+    _constants: {	
+        mimeType: ["application/epub"],	
+        events: {	
+            launchEvent: "renderer:launch:epub"	
+        }	
+    },
     initLauncher: function () {
         var instance = this;
-        EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.epub-archive', this.launch, this);
+        EkstepRendererAPI.addEventListener(this._constants.events.launchEvent, this.start, this);
         EkstepRendererAPI.dispatchEvent('renderer:stagereload:hide');
-
         EkstepRendererAPI.addEventListener('nextClick', function () {
             EkstepRendererAPI.dispatchEvent('sceneEnter',instance);
             if (instance.lastPage) {
@@ -44,7 +49,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             instance.logTelemetryInteract(instance.currentPage.toString());
             instance.removeProgressElements();
         });
-        this.start();
     },
     start: function (event, data) {
         this._super()
@@ -75,7 +79,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         });
     },
     renderEpub: function (epubPath) {
-        // jQuery('#gameCanvas').remove();
         jQuery('#gameArea').css({left: '10%', top: '0px', width: "80%", height: "90%", margin: "5% 0 0 0"});
         var epubOptions = {
             width: document.getElementById('gameArea').offsetWidth,
@@ -111,6 +114,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         });
     },
     replay:function(){
+        if (this.sleepMode) return;
         this.stageId = [];
         this.lastPage = false;
         this.currentPage = 1;
@@ -199,9 +203,12 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         return this.progres(currentStageIndex + 1, totalStages);
     },
     cleanUp: function() {
+        if (this.sleepMode) return;	
+        this.sleepMode = true;
         this.removeProgressElements();
         EkstepRendererAPI.removeEventListener('actionNavigateNext', undefined, undefined, true);
         EkstepRendererAPI.removeEventListener('actionNavigatePrevious', undefined, undefined, true);
+        EkstepRendererAPI.removeEventListener('renderer:launcher:clean', this.cleanUp, this);
     }
 });
 //# sourceURL=ePubRendererPlugin.js

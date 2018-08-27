@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
     .constant("appConstants", { "contentId": "contentId", "stateContentList": "contentList", "stateShowContent": "showContent", "statePlayContent": "playContent", "stateShowContentEnd": "showContentEnd" })
-    .run(function($rootScope, $ionicPlatform, $location, $timeout, $state, $stateParams, appConstants) {
+    .run(function($rootScope, $ionicPlatform, $timeout) {
         $rootScope.enableEval = false;
         $rootScope.enableUserSwitcher = undefined;
         $rootScope.showUser = undefined;
