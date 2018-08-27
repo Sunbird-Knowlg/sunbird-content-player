@@ -1,0 +1,19 @@
+language: node_js
+node_js:
+    - "6.1"
+sudo: required
+addons:
+  chrome: stable
+before_script:
+    - cd player
+    - npm install
+    - grunt build-telemetry-lib
+    - npm run package-coreplugins
+    - npm run build-ekstep 
+    - grunt build-preview
+    - grunt compress:preview
+    - grunt generate-libs
+    - grunt build-jsdoc
+
+script:
+    - grunt renderer-test

@@ -1,22 +1,29 @@
 
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="org.ekstep.geniecanvas" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Genie Canvas</name>
+<widget id="org.ekstep.geniecanvas" version="0.0.1"
+    xmlns="http://www.w3.org/ns/widgets"
+    xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Content Player</name>
     <description>
-        Ekstep Genie Canvas
+        Which is used to play the content
     </description>
-    <author email="dev@ilimi.in" href="http://www.ilimi.in/">
-        Ilimi Team.
+    <author href="https://ekstep.in/">
+       Ekstep
     </author>
-    <content src="index.html" />
+    <content src="index.html"/>
     <access origin="*"/>
+    <preference name="SplashScreen" value ="screen" />
+    <preference name="SplashScreenDelay" value = "1000" />
+    <preference name="SplashShowOnlyFirstTime" value="false"/>
+    <preference name="SplashMaintainAspectRatio" value="true" />
+    <preference name="AutoHideSplashScreen" value="false" />
+    <preference name="ShowSplashScreenSpinner" value="false"/>
     <preference name="webviewbounce" value="false" />
     <preference name="UIWebViewBounce" value="false" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="android-minSdkVersion" value="16" />
     <preference name="android-targetSdkVersion" value="24" />
     <preference name="BackupWebStorage" value="none" />
-    <preference name="SplashScreen" value="none" />
     <preference name="Orientation" value="sensorLandscape" />
     <preference name="Fullscreen" value="true" />
     <preference name="AndroidPersistentFileLocation" value="Compatibility" />
@@ -26,7 +33,20 @@
         <param name="ios-package" onload="true" value="CDVStatusBar" />
     </feature>
     <platform name="android">
-        <icon src="public/assets/icons/blank.png" />
-        <splash src="public/assets/icons/blank.png" />
+        <splash src="SPLASH_IMAGE_PATH" density="port-hdpi"/>
+        <splash src="SPLASH_IMAGE_PATH" density="port-ldpi" />
+        <splash src="SPLASH_IMAGE_PATH" density="port-mdpi" />
+        <splash src="SPLASH_IMAGE_PATH" density="port-xhdpi" />
+        <splash src="SPLASH_IMAGE_PATH" density="port-xxhdpi" />
+        <splash src="SPLASH_IMAGE_PATH" density="port-xxxhdpi" />
+        <!-- Landscape-->
+        <splash src="SPLASH_IMAGE_PATH" density="land-hdpi" />
+        <splash src="SPLASH_IMAGE_PATH" density="land-ldpi" />
+        <splash src="SPLASH_IMAGE_PATH" density="land-mdpi" />
+        <splash src="SPLASH_IMAGE_PATH" density="land-xhdpi" />
+        <splash src="SPLASH_IMAGE_PATH" density="land-xxhdpi" />
+        <splash src="SPLASH_IMAGE_PATH" density="land-xxxhdpi" />
+        <!-- Landscape-->
     </platform>
+    <plugin name="cordova-plugin-splashscreen" spec="~3.2.1" />
 </widget>

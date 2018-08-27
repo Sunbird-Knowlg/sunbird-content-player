@@ -214,6 +214,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             stageId: context.CURRENT_PAGE.toString()
         });
         EkstepRendererAPI.getTelemetryService().navigate(context.CURRENT_PAGE.toString(), (context.CURRENT_PAGE - 1).toString());
+        if(context.CURRENT_PAGE == 1) {
+            contentExitCall();
+        }
         if (context.CURRENT_PAGE != 1)
             context.showPage(--context.CURRENT_PAGE);
     },
@@ -249,6 +252,10 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     showPage: function(page_no) {
         var instance = this;
         EkstepRendererAPI.dispatchEvent("sceneEnter", context);
+        EkstepRendererAPI.dispatchEvent("overlayPrevious", true);
+        if(page_no == 1) {
+            EkstepRendererAPI.dispatchEvent("renderer:previous:show");
+        }
         if (page_no <= context.TOTAL_PAGES && page_no > 0) {
 
             context.PAGE_RENDERING_IN_PROGRESS = 1;
