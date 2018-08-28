@@ -333,4 +333,4 @@ var CryptoJS = CryptoJS || function(s, p) {
     r.HmacMD5 = t._createHmacHelper(q)
 })(Math);
 
-window.CryptoJS = CryptoJS;
+//window.CryptoJS = CryptoJS;
