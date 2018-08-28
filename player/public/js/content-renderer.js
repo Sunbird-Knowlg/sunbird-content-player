@@ -25,7 +25,18 @@ org.ekstep.contentrenderer.loadDefaultPlugins = function(cb) {
     org.ekstep.contentrenderer.initPlugins('', 'coreplugins');
     var globalConfig = EkstepRendererAPI.getGlobalConfig();
     globalConfig.isCorePluginsPackaged && jQuery("body").append($("<script type='text/javascript' src='./coreplugins.js?" + globalConfig.version + "'>"));
-    org.ekstep.contentrenderer.loadPlugins(globalConfig.defaultPlugins, [], function() {
+    var plugins = globalConfig.defaultPlugins;
+    var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
+    _.each(globalConfigObj.contentLaunchers, function(launchPlugin) {
+        plugins.push(launchPlugin);
+    })
+    if (GlobalContext.config.showEndPage) {
+        plugins.push({ "id": "org.ekstep.endpage", "ver": "1.0", "type": 'plugin' });
+    }
+    if (GlobalContext.config.overlay.showOverlay) {
+        plugins.push({ "id": "org.ekstep.overlay", "ver": "1.0", "type": 'plugin' });
+    }
+    org.ekstep.contentrenderer.loadPlugins(plugins, [], function() {
         if (cb) cb()
     });
 };
