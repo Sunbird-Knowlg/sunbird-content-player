@@ -24,6 +24,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         EkstepRendererAPI.addEventListener(this._constants.events.launchEvent, this.start, this);
         EkstepRendererAPI.dispatchEvent('renderer:stagereload:hide');
         EkstepRendererAPI.addEventListener('nextClick', function () {
+            if (this.sleepMode) return;
             EkstepRendererAPI.dispatchEvent('sceneEnter',instance);
             if (instance.lastPage) {
                 EkstepRendererAPI.dispatchEvent('renderer:content:end');
@@ -34,6 +35,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }, this);
 
         EkstepRendererAPI.addEventListener('previousClick', function () {
+            if (this.sleepMode) return;
             EkstepRendererAPI.dispatchEvent('sceneEnter',instance);
             if(instance.currentPage === 2) {
                 // This is needed because some ePubs do not go back to the cover page on `book.prevPage()`
@@ -46,6 +48,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }, this);
 
         EkstepRendererAPI.addEventListener('actionContentClose', function () {
+            if (this.sleepMode) return;
             instance.logTelemetryInteract(instance.currentPage.toString());
             instance.removeProgressElements();
         });
