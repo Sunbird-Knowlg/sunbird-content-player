@@ -332,9 +332,3 @@ var CryptoJS = CryptoJS || function(s, p) {
     r.MD5 = t._createHelper(q);
     r.HmacMD5 = t._createHmacHelper(q)
 })(Math);
-
-if (typeof require !== "function") {
-    window.CryptoJS = CryptoJS;
-}
-
-//window.CryptoJS = CryptoJS;
