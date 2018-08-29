@@ -16,7 +16,6 @@ Plugin.extend({
             this.templatePath = EkstepRendererAPI.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/templates/renderer.html");
             this.controllerPath = EkstepRendererAPI.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/js/rendererApp.js");
             org.ekstep.service.controller.loadNgModules(this.templatePath, this.controllerPath);
-            // this.loadCommonPlugins();
         },
         registerLauncher: function(event) {
             var instance = this;
@@ -58,20 +57,6 @@ Plugin.extend({
                 })
             }
             EkstepRendererAPI.dispatchEvent("renderer:player:show");
-        },
-        loadCommonPlugins: function(cb) {
-            var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
-            var plugins = globalConfigObj.contentLaunchers;
-            if (GlobalContext.config.showEndPage) {
-                plugins.push({ "id": "org.ekstep.endpage", "ver": "1.0", "type": 'plugin' });
-            }
-            if (GlobalContext.config.overlay.showOverlay) {
-                plugins.push({ "id": "org.ekstep.overlay", "ver": "1.0", "type": 'plugin' });
-            }
-
-            org.ekstep.contentrenderer.loadPlugins(plugins, [], function() {
-                if (cb) cb();
-            });
         }
     })
     //# sourceURL=ContentLauncher.js
