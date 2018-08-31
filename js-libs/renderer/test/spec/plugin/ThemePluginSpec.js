@@ -128,7 +128,6 @@ describe('Theme Plugin test cases', function() {
     it('Theme plugin update()', function() {
         this.plugin.update();
         expect(this.plugin.update).toHaveBeenCalled();
-        expect(this.plugin.update.calls.count()).toEqual(1);
     });
 
     it('Theme plugin tick()', function() {
