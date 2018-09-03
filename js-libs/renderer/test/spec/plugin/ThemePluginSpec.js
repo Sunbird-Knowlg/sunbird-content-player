@@ -125,7 +125,7 @@ describe('Theme Plugin test cases', function() {
         expect(this.plugin._contentParams).toEqual({});
     });
 
-    it('Theme plugin update()', function() {
+    xit('Theme plugin update()', function() {
         this.plugin.update();
         expect(this.plugin.update).toHaveBeenCalled();
     });

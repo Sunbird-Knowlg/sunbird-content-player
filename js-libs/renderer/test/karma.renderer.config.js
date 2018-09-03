@@ -19,6 +19,7 @@ module.exports = function(config) {
 
         // list of files / patterns to load in the browser
         files: [
+            '../js-libs/telemetry-lib/md5.js',
             'https://cdn.jsdelivr.net/npm/promise-polyfill@7/dist/polyfill.min.js',
             'public/coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs/createjs.min.js',
             'public/coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs/cordovaaudioplugin-0.6.1.min.js',
