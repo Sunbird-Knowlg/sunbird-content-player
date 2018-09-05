@@ -1,22 +1,49 @@
-# Genie-Canvas
-Genie Canvas : Quiz/Story App
+# Content Player
 
-### Setup of Genie-Canvas:
+![](https://api.travis-ci.org/project-sunbird/sunbird-content-player.svg?branch=master)
 
-* Install android-sdk.
-* Install npm.
-* Install cordova and ionic framwork.
-* Install grunt.
+## What is Content Player?
+  // Description
+   
+ **Supported Contents**
+   
+  * ECML (Ekstep content markup language)
+  * HTML
+  * Youtube
+  * Epub
+  * H5P
+  * Mp4/Webm
+  * PDF
 
-### How to build:
-* Clone the project.
-* Change to PROJECT_FOLDER/player (cd player)
-* Run `npm install`
-* Run `grunt init-setup`
-* Run `grunt build-aar` - to build normal aar files.
-* Run `grunt build-aar-xwalk` - to build xwalk aar files.
 
-The .aar files are created at the below path.
+## Prerequisites
+    
+   * Install NPM, Node(v6), android-sdk, Cordova and Ionic
 
-PROJECT_FOLDER/player/platforms/android/build/outputs/aar/geniecanvas-BUILD_NUMBER-debug.aar
-PROJECT_FOLDER/player/platforms/android/CordovaLib/build/outputs/aar/CordovaLib-debug.aar
+## How to run 
+
+* Clone the content player from here
+* Run `npm install` in PROJECT_FOLDER/player path
+* To run player in local `node app`
+
+## How to build
+    
+   1. **Preview**
+      
+      Run `npm run build-preview sunbird` which creates the preview folder for sunbird instance
+      
+ 2. **AAR**
+ 
+ 	Run `npm run build-aar sunbird` which creates an aar file for the sunbird instance
+ 	
+ The AAR file will create in the below path.
+ 
+> PROJECT_FOLDER/player/platforms/android/build/outputs/aar/geniecanvas-BUILD_NUMBER-debug.aar
+ 
+
+## Reporting Issues
+We have an open and active [issue tracker](https://github.com/project-sunbird/sunbird-commons/issues). Please report any issues.
+
+
+
+
