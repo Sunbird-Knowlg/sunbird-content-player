@@ -1062,5 +1062,12 @@ window.EkstepRendererAPI = {
         } else {
             console.warn('Invalid Content')
         }
+    },
+    /**
+     * Return boolean value for audio mute
+     * @memberof EkstepRendererAPI
+     */
+    isAudioMuted: function(){
+        return AudioManager.muted;
     }
 }
