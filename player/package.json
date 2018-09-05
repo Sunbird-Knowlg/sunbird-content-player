@@ -1,7 +1,7 @@
 {
-    "name": "quizapp",
+    "name": "content-player",
     "version": "1.0.0",
-    "description": "quizApp: An Ionic project",
+    "description": "Which renders the contents in both web and devices",
     "dependencies": {
         "async": "*",
         "audiosprite": "*",
@@ -81,12 +81,15 @@
         "replace-in-file": "3.4.2",
         "replace": "1.0.0",
         "on-build-webpack": "0.1.0",
-        "fs-extra": "7.0.0"
+        "fs-extra": "7.0.0",
+        "if-env": "1.0.4"
     },
     "scripts": {
         "build-sunbird": "webpack --env.channel=sunbird",
         "build-ekstep": "webpack --env.channel=ekstep",
-        "package-coreplugins": "webpack --config webpack.plugin.config.js"
+        "package-coreplugins": "webpack --config webpack.plugin.config.js",
+        "build-preview": "bash -c 'grunt build-telemetry-lib && if [[ ${1} == \"ekstep\" ]]; then npm run package-coreplugins && npm run build-ekstep && grunt build-preview; else echo ${1} npm run package-coreplugins && npm run build-sunbird && grunt build-preview; fi' -- ",
+        "build-aar": "bash -c 'grunt build-telemetry-lib && if [[ ${1} == \"ekstep\" ]]; then npm run package-coreplugins && npm run build-ekstep && grunt build-app; else npm run package-coreplugins && npm run build-sunbird && grunt build-app; fi' -- "
     },
     "cordovaPlugins": [
         "cordova-plugin-device",
