@@ -113,7 +113,7 @@ var previewObj = {
 | `apislug` | It is `string` which defines proxy setup to make a api request | ```/action```
 
 
-1. **[How to render in Web environment](https://github.com/ekstep/Common-Design/wiki/GenieCanvas:-How-to-embed-or-render-content-preview-in-portal-or-editor-or-external-consumer)**
+1. **How to render in Web**
 
     content player will render inside the web environment with the above configuration .
     
@@ -126,6 +126,7 @@ var previewObj = {
 	
 	```
 	**JS**
+	
 	```js
 	
 	  var previewElement = jQuery('#preview')[0];
@@ -134,17 +135,11 @@ var previewObj = {
       }
 	
 	```
- 
+2. **How to render in Device(cordova)**
 
-For more info please refer [here](https://github.com/ekstep/Common-Design/wiki/GenieCanvas:-How-to-embed-or-render-content-preview-in-portal-or-editor-or-external-consumer)
-    
+content player will render inside Cordova environment and it's accepting the configuration through ```cordova webintent```
 
 
-2. **[How to render in Device environment(cordova)](https://github.com/ekstep/Common-Design/wiki/GenieCanvas:-How-to-render-content--in-app)**
-
-content player will render inside Cordova environment and it's accepting the configuration through the cordova webintent
-
-For more info please refer [here](https://github.com/ekstep/Common-Design/wiki/GenieCanvas:-How-to-render-content--in-app)
 
 
 
