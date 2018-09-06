@@ -153,8 +153,8 @@ For more info please refer [here](https://github.com/ekstep/Common-Design/wiki/G
       Run `npm run build-preview sunbird` which creates the preview folder for sunbird instance
       
    2. **AAR**
- 
- 	Run `npm run build-aar sunbird` which creates an aar file for the sunbird instance
+   
+ Run  `npm run build-aar sunbird`  which creates an aar file for the sunbird instance
  	
  The AAR file will create in the below path.
  
