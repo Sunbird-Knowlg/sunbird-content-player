@@ -3,7 +3,7 @@
 ![](https://api.travis-ci.org/project-sunbird/sunbird-content-player.svg?branch=master)
 
 ## What is Content Player?
-  // Description
+  Which renders the contents in both device and web
    
  **Supported Contents**
    
@@ -32,7 +32,7 @@
       
       Run `npm run build-preview sunbird` which creates the preview folder for sunbird instance
       
- 2. **AAR**
+   2. **AAR**
  
  	Run `npm run build-aar sunbird` which creates an aar file for the sunbird instance
  	
@@ -42,7 +42,7 @@
  
 
 ## Reporting Issues
-We have an open and active [issue tracker](https://github.com/project-sunbird/sunbird-commons/issues). Please report any issues.
+We have an open and active [issue tracker](https://github.com/ekstep/Field-Issues/issues). Please report any issues.
 
 
 
