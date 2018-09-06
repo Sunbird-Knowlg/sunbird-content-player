@@ -1,6 +1,6 @@
 {
     "name": "@project-sunbird/content-player",
-    "version": "1.0.0",
+    "version": "0.0.2",
     "description": "Which renders the contents in both web and devices",
     "dependencies": {
         "async": "*",
@@ -93,7 +93,6 @@
         "build-preview": "bash -c 'grunt build-telemetry-lib && if [[ ${1} == \"ekstep\" ]]; then npm run package-coreplugins && npm run build-ekstep && grunt build-preview; else echo ${1} npm run package-coreplugins && npm run build-sunbird && grunt build-preview; fi' -- ",
         "build-aar": "bash -c 'grunt build-telemetry-lib && if [[ ${1} == \"ekstep\" ]]; then npm run package-coreplugins && npm run build-ekstep && grunt build-app; else npm run package-coreplugins && npm run build-sunbird && grunt build-app; fi' -- ",
         "build-npm-package": "node_modules/.bin/rimraf ./www && npm run build-preview sunbird && node_modules/.bin/cpy package.json ./www/preview && node_modules/.bin/cpy ../README.md ./www/preview"
-
     },
     "cordovaPlugins": [
         "cordova-plugin-device",
