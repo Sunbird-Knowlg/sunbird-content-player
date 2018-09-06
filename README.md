@@ -33,7 +33,7 @@ var previewObj = {
 		"channel": "" // To identify the channel(Channel ID). Default value ""
 		"pdata": // Producer information. Generally the App which is creating the event, default value {}
 		{ 
-		  "id": "", // Producer ID. For ex: For ekstep it would be "portal" or "genie"
+		  "id": "", // Producer ID. For ex: For sunbird it would be "portal" or "genie"
                   "pid": , // Optional. In case the component is distributed, then which instance of that component
 		  "ver": "", // version of the App
 		}, 
@@ -48,7 +48,7 @@ var previewObj = {
 	},
 	"config": {
 		"repos": ["s3path"],    // plugins repo path where all the plugins are pushed s3 or absolute folder path
-		"plugins": [{id:"org.ekstep.telemtryPlugin", "ver": "1.0", "type":"plugin"}],     //Inject external custom plugins into content (for externl telemetry sync)
+		"plugins": [{id:"org.sunbird.telemtryPlugin", "ver": "1.0", "type":"plugin"}],     //Inject external custom plugins into content (for externl telemetry sync)
 		"overlay": {  // Configuarable propeties of overlay showing by GenieCanvas on top of the content
 		  "enableUserSwitcher": true, // enable/disable user-switcher, default is true for mobile & preview
 		  "showUser": true,     // show/hide user-switcher functionality. default is true to show user information
@@ -62,10 +62,10 @@ var previewObj = {
 		  }
 		},
 		"splash": {  // list of configurable properties to handle splash screen shown while loading content
-		  "text": "Powered by EkStep",  // Text to be shown on splash screen while loading content. 
+		  "text": "Powered by Sunbird",  // Text to be shown on splash screen while loading content. 
 		  "icon": "assets/icons/icn_genie.png",  // Icon to be show on above the text(full absolute path of the image in mobiew or http image link)
 		  "bgImage": "assets/icons/background_1.png",  // backgroung image used for splash screen while loading content(absolute folder path of the image in mobie or http image link)
-		  "webLink": "https://www.ekstep.in"  // weblink to be opened on click of text
+		  "webLink": "XXXX"  // weblink to be opened on click of text
 		},
 		"mimetypes": [  // Content mimetypes for new cotent lucnhers
 		  "application/vnd.ekstep.ecml-archive", 
@@ -74,7 +74,7 @@ var previewObj = {
 		"contentLaunchers": [ // content laucher plugins for specific content mimetypes
 		  {  // Plugin used for ECML content to launch, It is default plugin
 		    "mimeType": 'application/vnd.ekstep.html-archive',
-		    "id": 'org.ekstep.htmlrenderer',
+		    "id": 'org.sunbird.htmlrenderer',
 		    "ver": 1.0,
 		    "type": 'plugin'
 		  },
@@ -150,11 +150,11 @@ For more info please refer [here](https://github.com/ekstep/Common-Design/wiki/G
     
    1. **Preview**
       
-      Run `npm run build-preview sunbird` which creates the preview folder for sunbird instance
+     	Run `npm run build-preview sunbird` which creates the preview folder for sunbird instance
       
    2. **AAR**
    
- Run  `npm run build-aar sunbird`  which creates an aar file for the sunbird instance
+ 		Run  `npm run build-aar sunbird`  which creates an aar file for the sunbird instance
  	
  The AAR file will create in the below path.
  
@@ -162,7 +162,7 @@ For more info please refer [here](https://github.com/ekstep/Common-Design/wiki/G
  
 
 ## Any Issues ?
-We have an open and active [issue tracker](https://github.com/ekstep/Field-Issues/issues). Please report any issues.
+We have an open and active [issue tracker](https://github.com/Field-Issues/issues). Please report any issues.
 
 
 
