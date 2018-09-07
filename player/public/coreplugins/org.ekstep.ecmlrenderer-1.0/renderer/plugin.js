@@ -255,6 +255,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     replay: function(){
         if (this.sleepMode) return;
+        EkstepRendererAPI.updatePlayerStartTime();
         this.qid = [];
         this.stageId = [];
         if (Renderer && Renderer.theme) {

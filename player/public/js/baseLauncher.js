@@ -76,6 +76,7 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
      */
     replay: function() {
         if (this.sleepMode) return;
+        EkstepRendererAPI.updatePlayerStartTime();
         this.heartBeatEvent(false);
         this.endTelemetry();
         this.start();
@@ -115,6 +116,7 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
         data.mode = getPreviewMode();
         var gameId = TelemetryService.getGameId();
         var version = TelemetryService.getGameVer();
+        data.duration = (Date.now() - EkstepRendererAPI.getPlayerStartTime()) * 0.001;
         TelemetryService.start(gameId, version, data);
     },
 

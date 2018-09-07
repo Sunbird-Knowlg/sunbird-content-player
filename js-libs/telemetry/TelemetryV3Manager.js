@@ -48,6 +48,7 @@ TelemetryV3Manager = Class.extend({
         if(data.loc){
           edata["loc"] = data.loc;
         }
+        edata.duration = data.duration;
         var actorObj = {"actor" : { id: config.uid, type: "User" } };
         EkTelemetry.start(config, TelemetryService._gameData.id, ver, edata, actorObj);
     },

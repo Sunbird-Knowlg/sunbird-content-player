@@ -118,6 +118,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     replay:function(){
         if (this.sleepMode) return;
+        EkstepRendererAPI.updatePlayerStartTime();
         this.stageId = [];
         this.lastPage = false;
         this.currentPage = 1;

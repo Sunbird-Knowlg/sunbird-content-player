@@ -1069,5 +1069,20 @@ window.EkstepRendererAPI = {
      */
     isAudioMuted: function(){
         return AudioManager.muted;
+    },
+
+    /**
+     * Which returns the player start time
+     * @return {int} Current time in miliseconds
+     */
+    getPlayerStartTime:function(){
+        return window.PLAYER_START_TIME;
+    },
+
+    /**
+     * Which updates the PLAYER_START_TIME to current time in miliseconds
+     */
+    updatePlayerStartTime:function(){
+        window.PLAYER_START_TIME = Date.now()
     }
 }

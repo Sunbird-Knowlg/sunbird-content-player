@@ -69,6 +69,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     replay: function() {
         if (this.sleepMode) return;
+        EkstepRendererAPI.updatePlayerStartTime();
         this._super();
         this.enableOverly();
     },

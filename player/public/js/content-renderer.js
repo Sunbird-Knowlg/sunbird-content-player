@@ -13,6 +13,7 @@ window.globalConfig = {
     'context': {},
     'config': {}
 };
+window.PLAYER_START_TIME = Date.now();
 org.ekstep.contentrenderer.init = function() {
     window.initializePreview = org.ekstep.contentrenderer.initializePreview;
     window.setContentData = org.ekstep.contentrenderer.setContent;

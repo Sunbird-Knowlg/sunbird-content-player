@@ -189,6 +189,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     replay:function(){
         if (this.sleepMode) return;
+       EkstepRendererAPI.updatePlayerStartTime(); 
        EkstepRendererAPI.dispatchEvent('renderer:overlay:unmute');
        this.start();
     },
