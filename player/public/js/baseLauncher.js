@@ -48,8 +48,8 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
         EkstepRendererAPI.addEventListener('renderer:launcher:clean', this.cleanUp, this);
         console.info('Base Launcher should construct');
         this.resetDomElement();
-        this.startTelemetry();
         this.sleepMode = false;
+        this.updateGameData();
         if (this.enableHeartBeatEvent) {
             this.heartBeatEvent(true);
         }
@@ -219,5 +219,9 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
                 }
             })
         }
+    }, 
+    updateGameData: function() {
+        GlobalContext.game = {id: content.identifier, ver: content.pkgVersion};
+        TelemetryService._gameData = GlobalContext.game;
     }
 });
