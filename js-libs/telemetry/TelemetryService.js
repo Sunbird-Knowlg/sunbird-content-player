@@ -126,7 +126,7 @@ TelemetryService = {
             ver = ver.toString();
             TelemetryService._gameData ={
                 id: id,
-                ver: ver()
+                ver: ver
             };
             if (_.findWhere(TelemetryService.instance._start, {
                     id: id
