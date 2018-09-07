@@ -109,12 +109,11 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
      */
 
     startTelemetry: function() {
-        this.updateGameData();
         var data = {};
         data.stageid = EkstepRendererAPI.getCurrentStageId();
         data.mode = getPreviewMode();
-        var gameId = TelemetryService.getGameId();
-        var version = TelemetryService.getGameVer();
+        var gameId = content.identifier;
+        var version = content.pkgVersion || '1.0';
         TelemetryService.start(gameId, version, data);
     },
 
@@ -219,14 +218,5 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
                 }
             })
         }
-    },
-    /*
-     * Update the gamedata in GlobalContext & TelemetryService
-     */
-    updateGameData: function() {
-        if (content.identifier == GlobalContext.game.id) return;
-        GlobalContext.game.id = content.identifier;
-        GlobalContext.game.ver = content.pkgVersion || '1.0';
-        TelemetryService.setGameData(GlobalContext.game);
     }
 });
