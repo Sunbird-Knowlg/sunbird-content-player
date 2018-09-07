@@ -125,7 +125,7 @@ TelemetryService = {
         } else {
             TelemetryService._gameData ={
                 id: id,
-                ver: ver
+                ver: ver.toString()
             };
             if (_.findWhere(TelemetryService.instance._start, {
                     id: id
