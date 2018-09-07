@@ -267,6 +267,9 @@ TelemetryService = {
     },
     eventDispatcher: function() {
         console.warn('Framework should handle dispatching of event by overwiting this function with dispatching event function');
+    },
+    setGameData: function(gameData) {
+        TelemetryService._gameData = gameData;
     }
 }
 
