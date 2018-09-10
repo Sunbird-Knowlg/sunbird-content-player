@@ -48,12 +48,11 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
         EkstepRendererAPI.addEventListener('renderer:launcher:clean', this.cleanUp, this);
         console.info('Base Launcher should construct');
         this.resetDomElement();
-        this.startTelemetry();
         this.sleepMode = false;
         if (this.enableHeartBeatEvent) {
             this.heartBeatEvent(true);
         }
-        setTimeout(function(){
+        setTimeout(function() {
             instance.startTelemetry();
         }, 0);
     },
@@ -88,7 +87,7 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
      */
     cleanUp: function() {
         console.info('Clearing the launcher instance')
-        this.sleepMode = true;	
+        this.sleepMode = true;
         EkstepRendererAPI.removeEventListener('renderer:launcher:clean', this.cleanUp, this);
     },
 
@@ -114,8 +113,8 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
         var data = {};
         data.stageid = EkstepRendererAPI.getCurrentStageId();
         data.mode = getPreviewMode();
-        var gameId = TelemetryService.getGameId();
-        var version = TelemetryService.getGameVer();
+        var gameId = content.identifier;
+        var version = content.pkgVersion || '1.0';
         data.duration = (Date.now() - EkstepRendererAPI.getPlayerStartTime()) * 0.001;
         TelemetryService.start(gameId, version, data);
     },
@@ -214,10 +213,10 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
             EkstepRendererAPI.dispatchEvent("renderer:toast:show", undefined, {
                 message: errorObj.message || 'Sorry!!.. Unable to open the Content',
                 type: "error",
-                custom: {timeOut: 200000}, 
+                custom: { timeOut: 200000 },
                 errorInfo: {
                     errorStack: errorObj.stack,
-                    data: errorObj.data || {'severity': 'fatal', 'type': 'content', 'action': 'play'} 
+                    data: errorObj.data || { 'severity': 'fatal', 'type': 'content', 'action': 'play' }
                 }
             })
         }
