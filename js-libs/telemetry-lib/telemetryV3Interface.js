@@ -262,7 +262,7 @@ var EkTelemetry = (function() {
     this.ektelemetry.end = function(data, options) {
         if(telemetryInstance.startData.length){
             var startEventObj = telemetryInstance.startData.pop();
-            data.duration = ((new Date()).getTime() - startEventObj.ets) * 0.001; // Converting duration miliSeconds to seconds
+            data.duration = Math.round(((new Date()).getTime() - startEventObj.ets) * 0.001); // Converting duration miliSeconds to seconds
             instance.updateValues(options);
             instance._dispatch(instance.getEvent('END', data));
         }else{
