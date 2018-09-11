@@ -6,15 +6,17 @@ app.controllerProvider.register('ContentCtrl', ['$scope', '$rootScope', '$state'
     $scope.isInitialized = false;
     $scope.canvas = false;
     $scope.init = function() {
-        if (_.isUndefined($rootScope.content)) {
-            if (!_.isUndefined(content.metadata)) {
-                $rootScope.content = content.metadata;
-                $scope.renderContent();
+        if (!$scope.isInitialized) {
+            if (_.isUndefined($rootScope.content)) {
+                if (!_.isUndefined(content.metadata)) {
+                    $rootScope.content = content.metadata;
+                    $scope.renderContent();
+                } else {
+                    console.info('Content Metadata is not present');
+                }
             } else {
-                console.info('Content Metadata is not present');
+                $scope.renderContent();
             }
-        } else {
-            $scope.renderContent();
         }
     };
 
@@ -26,6 +28,7 @@ app.controllerProvider.register('ContentCtrl', ['$scope', '$rootScope', '$state'
     };
     $scope.renderContent = function() {
         if ($rootScope.content) {
+            $scope.isInitialized = true;
             $rootScope.pageTitle = $rootScope.content.name;
             $scope.canvas = $rootScope.content.mimeType == 'application/vnd.ekstep.ecml-archive' ? true : false;
             GlobalContext.currentContentId = _.isUndefined(GlobalContext.currentContentId) ? $rootScope.content.identifier : GlobalContext.currentContentId;
@@ -49,7 +52,6 @@ app.controllerProvider.register('ContentCtrl', ['$scope', '$rootScope', '$state'
         reloadStage();
     };
     $scope.initializePlayer = function() {
-        $scope.isInitialized = true;
         /**
          * 'renderer:player:show' event will get dispatch to show the canvas player .
          * @event 'renderer:player:show'
