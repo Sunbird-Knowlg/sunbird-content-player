@@ -13,6 +13,7 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
     manifest: undefined,
     enableHeartBeatEvent: false,
     heartBeatData: {},
+    sleepMode: true,
 
     /**
      * init of the launcher with the given data.
@@ -26,6 +27,7 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
             EkstepRendererAPI.addEventListener('renderer:content:replay', this.replay, this);
             this.manifest = manifest;
             this.contentMetaData = content;
+            EkstepRendererAPI.dispatchEvent('renderer:launcher:register', this);
             this.initLauncher(this.manifest);
         } catch (error) {
             this.throwError(error);
@@ -43,9 +45,10 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
     start: function() {
         var instance = this;
         this.cleanUp();
+        EkstepRendererAPI.addEventListener('renderer:launcher:clean', this.cleanUp, this);
         console.info('Base Launcher should construct');
         this.resetDomElement();
-        this.startTelemetry();
+        this.sleepMode = false;
         if (this.enableHeartBeatEvent) {
             this.heartBeatEvent(true);
         }
@@ -71,17 +74,20 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
      * @memberof org.ekstep.contentrenderer.baseLauncher
      */
     replay: function() {
+        if (this.sleepMode) return;
         this.heartBeatEvent(false);
         this.endTelemetry();
         this.start();
     },
 
     /**
-     * Clearing of the Lancher instace
+     * Clearing of the Launcher instace
      * @memberof org.ekstep.contentrenderer.baseLauncher
      */
     cleanUp: function() {
         console.info('Clearing the launcher instance')
+        this.sleepMode = true;	
+        EkstepRendererAPI.removeEventListener('renderer:launcher:clean', this.cleanUp, this);
     },
 
     /**
@@ -106,8 +112,8 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
         var data = {};
         data.stageid = EkstepRendererAPI.getCurrentStageId();
         data.mode = getPreviewMode();
-        var gameId = TelemetryService.getGameId();
-        var version = TelemetryService.getGameVer();
+        var gameId = content.identifier;
+        var version = content.pkgVersion || '1.0';
         TelemetryService.start(gameId, version, data);
     },
 
@@ -137,7 +143,7 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
             instance._time = setInterval(function() {
                 EkstepRendererAPI.getTelemetryService().interact("HEARTBEAT", "", "", instance.heartBeatData || {});
             }, EkstepRendererAPI.getGlobalConfig().heartBeatTime);
-        }
+        } else
         if (!flag) {
             clearInterval(instance._time);
         }
@@ -212,28 +218,5 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
                 }
             })
         }
-
-    },
-    destroy: function() {
-        var instance = this;
-        var pluginName = this.manifest.id;
-        var listeners = EventBus.listeners;
-        this.cleanUp();
-        this.resetDomElement();
-        for(var type in listeners) {
-            var noOfCallbacks = listeners[type].length;
-            var event = listeners[type];
-            for (var i=0;i<noOfCallbacks;i++) {
-                if (event[i] && (event[i].scope == instance)) {
-                    EkstepRendererAPI.removeEventListener(type, event[i].callback, event[i].scope)
-                }
-            }
-        }
-        if (org.ekstep.pluginframework.pluginManager.plugins) delete org.ekstep.pluginframework.pluginManager.plugins[pluginName];
-        if (org.ekstep.pluginframework.pluginManager.pluginManifests) delete org.ekstep.pluginframework.pluginManager.pluginManifests[pluginName];
-        if (org.ekstep.pluginframework.pluginManager.pluginObjs) delete org.ekstep.pluginframework.pluginManager.pluginObjs[pluginName];
-        if (org.ekstep.pluginframework.pluginManager.pluginVisited) delete org.ekstep.pluginframework.pluginManager.pluginVisited[pluginName];
-        console.log(pluginName, " Plugin instance got destroyed");
     }
-
 });

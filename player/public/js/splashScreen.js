@@ -1,6 +1,6 @@
 var splashScreen = {
     elementId: '#loading',
-    progressEle:undefined,
+    progressEle: undefined,
     config: {},
     initialize: function() {
         var globalConfig = EkstepRendererAPI.getGlobalConfig();
@@ -23,7 +23,7 @@ var splashScreen = {
 
         instance.show();
     },
-    addEvents: function(){
+    addEvents: function() {
         EkstepRendererAPI.addEventListener("renderer:launcher:load", splashScreen.loadContentDetails);
         EkstepRendererAPI.addEventListener("renderer:splash:show", splashScreen.show);
         EkstepRendererAPI.addEventListener("renderer:splash:hide", splashScreen.hide);
@@ -42,7 +42,7 @@ var splashScreen = {
     },
 
     loadContentDetails: function(eve, data) {
-       $("#splashTextId").text(data.name);
+        $("#splashTextId").text(data.name);
     },
 
     show: function() {
@@ -61,9 +61,13 @@ var splashScreen = {
         splashScreen.progressEle = document.getElementById("progressBar");
         jQuery("#progressBar").width(0);
         jQuery('#loading').show();
+        isMobile && setTimeout(function() {
+            navigator.splashscreen.hide();
+        }, 100)
         var width = 1;
         clearInterval(id);
         var id = setInterval(frame, 50);
+
         function frame() {
             if (width >= 100) {
                 clearInterval(id);
@@ -77,9 +81,9 @@ var splashScreen = {
 
     },
 
-    hideProgressBar:function() {
-    //   splashScreen.progressEle.style.width = 0 + '%'
-      jQuery('#loading').hide();
+    hideProgressBar: function() {
+        //   splashScreen.progressEle.style.width = 0 + '%'
+        jQuery('#loading').hide();
     }
 };
 window.splashScreen = splashScreen;

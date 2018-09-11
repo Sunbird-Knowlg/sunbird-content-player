@@ -11,14 +11,20 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     heartBeatData: {},
     enableHeartBeatEvent: true,
     headerTimer: undefined,
+    _constants: {
+        mimeType: ["application/pdf"],
+        events: {
+            launchEvent: "renderer:launch:pdf"
+        }
+    },
     initLauncher: function(manifestData) {
         console.info('PDF Renderer init', manifestData)
+        EkstepRendererAPI.addEventListener(this._constants.events.launchEvent, this.start, this);
         this._manifest = manifestData;
         EkstepRendererAPI.addEventListener('nextClick', this.nextNavigation, this);
         EkstepRendererAPI.addEventListener('previousClick', this.previousNavigation, this);
-        this.start();
     },
-    enableOverly: function() {
+    enableOverly: function () {
         EkstepRendererAPI.dispatchEvent("renderer:overlay:show");
         EkstepRendererAPI.dispatchEvent('renderer:stagereload:hide');
         $('#pdf-buttons').css({
@@ -62,6 +68,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         });
     },
     replay: function() {
+        if (this.sleepMode) return;
         this._super();
         this.enableOverly();
     },
@@ -199,6 +206,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
 
     nextNavigation: function() {
+        if (this.sleepMode) return;
         EkstepRendererAPI.getTelemetryService().interact("TOUCH", "next", null, {
             stageId: context.CURRENT_PAGE.toString()
         });
@@ -210,10 +218,14 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }
     },
     previousNavigation: function() {
+        if (this.sleepMode) return;
         EkstepRendererAPI.getTelemetryService().interact("TOUCH", "previous", null, {
             stageId: context.CURRENT_PAGE.toString()
         });
         EkstepRendererAPI.getTelemetryService().navigate(context.CURRENT_PAGE.toString(), (context.CURRENT_PAGE - 1).toString());
+        if(context.CURRENT_PAGE == 1) {
+            contentExitCall();
+        }
         if (context.CURRENT_PAGE != 1)
             context.showPage(--context.CURRENT_PAGE);
     },
@@ -249,6 +261,10 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     showPage: function(page_no) {
         var instance = this;
         EkstepRendererAPI.dispatchEvent("sceneEnter", context);
+        EkstepRendererAPI.dispatchEvent("overlayPrevious", true);
+        if(page_no == 1) {
+            EkstepRendererAPI.dispatchEvent("renderer:previous:show");
+        }
         if (page_no <= context.TOTAL_PAGES && page_no > 0) {
 
             context.PAGE_RENDERING_IN_PROGRESS = 1;

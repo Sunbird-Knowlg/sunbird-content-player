@@ -123,6 +123,11 @@ TelemetryService = {
             console.log("TelemetryService is not active.");
             return new InActiveEvent();
         } else {
+            ver = ver.toString();
+            TelemetryService._gameData ={
+                id: id,
+                ver: ver
+            };
             if (_.findWhere(TelemetryService.instance._start, {
                     id: id
                 })){

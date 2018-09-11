@@ -84,7 +84,7 @@ var EkTelemetry = (function() {
      * @param  {object} options    [It can have `context, object, actor` can be explicitly passed in this event]
      */
     this.ektelemetry.start = function(config, contentId, contentVer, data, options) {
-        data.duration = data.duration || (new Date()).getTime();
+        data.duration = data.duration || 0;
         if(contentId && contentVer){
             telemetryInstance._globalObject.id =  contentId;
             telemetryInstance._globalObject.ver = contentVer;
@@ -262,7 +262,7 @@ var EkTelemetry = (function() {
     this.ektelemetry.end = function(data, options) {
         if(telemetryInstance.startData.length){
             var startEventObj = telemetryInstance.startData.pop();
-            data.duration = ((new Date()).getTime() - startEventObj.ets)
+            data.duration = Math.round(((new Date()).getTime() - startEventObj.ets) * 0.001); // Converting duration miliSeconds to seconds
             instance.updateValues(options);
             instance._dispatch(instance.getEvent('END', data));
         }else{
