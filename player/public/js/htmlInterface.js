@@ -133,4 +133,4 @@ var RendererInterface = function() {
 org.ekstep.contentrenderer = window.parent.org.ekstep.contentrenderer;
 
 // RI : Renderer Interface
-org.ekstep.contentrenderer.interface = window.RI = new RendererInterface();
+org.ekstep.contentrenderer.interface = window.PI = window.RI = new RendererInterface();

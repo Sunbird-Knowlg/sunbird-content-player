@@ -93,7 +93,7 @@
         "build-preview": "bash -c 'grunt build-telemetry-lib && if [[ ${1} == \"ekstep\" ]]; then npm run package-coreplugins && npm run build-ekstep && grunt build-preview; else echo ${1} npm run package-coreplugins && npm run build-sunbird && grunt build-preview; fi' -- ",
         "build-aar": "bash -c 'grunt build-telemetry-lib && if [[ ${1} == \"ekstep\" ]]; then npm run package-coreplugins && npm run build-ekstep && grunt build-app; else npm run package-coreplugins && npm run build-sunbird && grunt build-app; fi' -- ",
         "build-npm-package": "node_modules/.bin/rimraf ./www && npm run build-preview sunbird && node_modules/.bin/cpy package.json ./www/preview && node_modules/.bin/cpy ../README.md ./www/preview",
-        "build-player-interface": "node_modules/.bin/cpy public/js/htmlInterface.js ./npm-dist"
+        "build-player-interface": "node_modules/.bin/cpy public/js/htmlInterface.js ./npm-dist/content-player-interface"
     },
     "cordovaPlugins": [
         "cordova-plugin-device",
