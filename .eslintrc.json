@@ -109,7 +109,8 @@
         "telemetry": true,
         "AppErrors": true,
         "telemetry_web": true,
-        "appConfig": true
+        "appConfig": true,
+        "telemetry_web": true
     },
     "rules": {
         "indent": [2, "tab"],
