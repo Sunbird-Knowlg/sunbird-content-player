@@ -11,9 +11,9 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const WebpackOnBuildPlugin = require('on-build-webpack');
 
 const PLUGINS_BASE_PATH = './public/coreplugins/'; // Plugins base path
-const PACKAGE_JS_FILE_NAME = 'coreplugins.js'; // Packaged all plugins file name
-const PACKAGE_CSS_FILE_NAME = 'plugins.min.css';
-const OUTPUT_PATH = 'public/'; // Package file path.
+const PACKAGE_JS_FILE_NAME = 'coreplugins.js'; // Packaged all plugins js file name
+const PACKAGE_CSS_FILE_NAME = 'coreplugins.css'; // Packaged all plugins css files name
+const OUTPUT_PATH = 'public/js'; // Package file path.
 const DIST_OUTPUT_FILE_PATH = '/renderer/plugin.dist.js'; // dist file path which is created in each plugins folder
 const CONFIG = {
     drop_console: process.env.drop_console || false,
@@ -32,7 +32,7 @@ const PLUGINS = process.env.plugins || [
     "org.ekstep.htmlrenderer-1.0",
     "org.ekstep.videorenderer-1.0",
     "org.ekstep.pdfrenderer-1.0",
-    // "org.ekstep.epubrenderer-1.0",
+    "org.ekstep.epubrenderer-1.0",
     // "org.ekstep.ecmlrenderer-1.0",
     // "org.ekstep.extcontentpreview-1.0"
 ];
@@ -44,8 +44,7 @@ function getEntryFiles() {
         entryFiles: packagePlugins(),
         outputName: PACKAGE_JS_FILE_NAME,
     }, {
-        entryFiles: getVendorCSS(),
-        outputName: PACKAGE_CSS_FILE_NAME,
+        entryFiles: getVendorCSS()
     }, ]
     return entryPlus(entryFiles);
 }
@@ -161,15 +160,7 @@ module.exports = {
                     loader: 'expose-loader',
                     options: 'toastr'
                 }]
-            },
-            {
-                test: require.resolve(`${PLUGINS_BASE_PATH}org.ekstep.videorenderer-1.0/renderer/libs/video.js`),
-                use: [{
-                    loader: 'expose-loader',
-                    options: 'videojs'
-                }]
-            },
-            {
+            }, {
                 test: /\.(s*)css$/,
                 use: [
                     MiniCssExtractPlugin.loader,
@@ -214,12 +205,15 @@ module.exports = {
     },
     plugins: [
         new MiniCssExtractPlugin({
-            filename: "[name].min.css",
+            filename: PACKAGE_CSS_FILE_NAME,
         }),
         new webpack.ProvidePlugin({
             jQuery: 'jquery',
+            RSVP: 'rsvp',
             toastr: path.resolve(`${PLUGINS_BASE_PATH}org.ekstep.toaster-1.0/renderer/libs/toastr.min.js`),
-            CryptoJS: path.resolve(`${PLUGINS_BASE_PATH}org.ekstep.telemetrysync-1.0/renderer/libs/md5.js`)
+            CryptoJS: path.resolve(`${PLUGINS_BASE_PATH}org.ekstep.telemetrysync-1.0/renderer/libs/md5.js`),
+            JSZip: path.resolve(`${PLUGINS_BASE_PATH}org.ekstep.epubrenderer-1.0/renderer/libs/jszip.min.js`),
+            videojs: path.resolve(`${PLUGINS_BASE_PATH}org.ekstep.videorenderer-1.0/renderer/libs/video.js`)
         }),
         new UglifyJsPlugin({
             cache: false,
@@ -240,7 +234,7 @@ module.exports = {
         }),
         new WebpackOnBuildPlugin(function(stats) {
             cleanDistFiles();
-            console.log("I am success");
+            console.log("Cleared all plugin.dist.js files");
             // Remove the plugin.dist files from all plugins folder once build is done.
         }),
 
