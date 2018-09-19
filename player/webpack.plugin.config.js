@@ -11,8 +11,9 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const WebpackOnBuildPlugin = require('on-build-webpack');
 
 const PLUGINS_BASE_PATH = './public/coreplugins/'; // Plugins base path
-const PACKAGE_FILE_NAME = 'coreplugins.js'; // Packaged all plugins file name
-const OUTPUT_PATH = 'public/js'; // Package file path.
+const PACKAGE_JS_FILE_NAME = 'coreplugins.js'; // Packaged all plugins file name
+const PACKAGE_CSS_FILE_NAME = 'plugins.min.css';
+const OUTPUT_PATH = 'public/'; // Package file path.
 const DIST_OUTPUT_FILE_PATH = '/renderer/plugin.dist.js'; // dist file path which is created in each plugins folder
 const CONFIG = {
     drop_console: process.env.drop_console || false,
@@ -27,7 +28,13 @@ const PLUGINS = process.env.plugins || [
     "org.ekstep.telemetrysync-1.0",
     "org.ekstep.nextnavigation-1.0",
     "org.ekstep.previousnavigation-1.0",
-    "org.ekstep.genie-1.0"
+    "org.ekstep.genie-1.0",
+    "org.ekstep.htmlrenderer-1.0",
+    "org.ekstep.videorenderer-1.0",
+    "org.ekstep.pdfrenderer-1.0",
+    // "org.ekstep.epubrenderer-1.0",
+    // "org.ekstep.ecmlrenderer-1.0",
+    // "org.ekstep.extcontentpreview-1.0"
 ];
 
 let entryFiles = []
@@ -35,8 +42,11 @@ let entryFiles = []
 function getEntryFiles() {
     entryFiles = [{
         entryFiles: packagePlugins(),
-        outputName: PACKAGE_FILE_NAME,
-    }]
+        outputName: PACKAGE_JS_FILE_NAME,
+    }, {
+        entryFiles: getVendorCSS(),
+        outputName: PACKAGE_CSS_FILE_NAME,
+    }, ]
     return entryPlus(entryFiles);
 }
 cleanDistFiles = function() {
@@ -100,7 +110,7 @@ function packagePlugins() {
 
 function getVendorCSS() {
     var cssDependencies = [];
-    corePlugins.forEach(function(plugin) {
+    PLUGINS.forEach(function(plugin) {
         var manifest = JSON.parse(fs.readFileSync(`${PLUGINS_BASE_PATH}${plugin}/manifest.json`));
         if (manifest.renderer.dependencies) {
             manifest.renderer.dependencies.forEach(function(dep) {
@@ -153,6 +163,13 @@ module.exports = {
                 }]
             },
             {
+                test: require.resolve(`${PLUGINS_BASE_PATH}org.ekstep.videorenderer-1.0/renderer/libs/video.js`),
+                use: [{
+                    loader: 'expose-loader',
+                    options: 'videojs'
+                }]
+            },
+            {
                 test: /\.(s*)css$/,
                 use: [
                     MiniCssExtractPlugin.loader,
@@ -181,6 +198,17 @@ module.exports = {
                         }
                     },
                 ],
+            }, {
+                test: /\.(woff|woff2|eot|ttf|otf|svg|png)$/,
+                use: [{
+                    loader: 'file-loader',
+                    options: {
+                        name: '[name].[ext]',
+                        outputPath: './fonts/',
+                        limit: 10000,
+                        fallback: 'responsive-loader'
+                    }
+                }]
             }
         ]
     },
