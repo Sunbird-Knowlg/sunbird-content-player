@@ -85,7 +85,8 @@
         "if-env": "1.0.4",
         "rimraf": "2.6.2",
         "cpy-cli": "2.0.0",
-        "rsvp": "4.8.4"
+        "rsvp": "4.8.4",
+        "localforage": "1.7.2"
     },
     "scripts": {
         "build-sunbird": "webpack --env.channel=sunbird",
