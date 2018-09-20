@@ -270,11 +270,13 @@ module.exports = (env, argv) => {
 
 function copyCorePlugins(channel) {
     let plugins = [];
+    console.log("FILTER_PLUGINS", FILTER_PLUGINS)
     if (FILTER_PLUGINS) {
         plugins = (channel === CONSTANTS.sunbird) ? APP_CONFIG.sunbird.plugins : APP_CONFIG.ekstep.plugins;
     } else {
         plugins = [...new Set([...APP_CONFIG.sunbird.plugins, ...APP_CONFIG.ekstep.plugins])]
     }
+    console.log("Plugins are ", plugins);
     plugins.forEach(element => {
         file_extra.copy(`${FOLDER_PATHS.basePath}/public/coreplugins/${element}`, `${FOLDER_PATHS.basePath}/public/${CONSTANTS.build_folder_name}/coreplugins/${element}/`)
     })
