@@ -6,6 +6,7 @@
 
 const BUILD_NUMBER = process.env.build_number;
 const PLAYER_VER = process.env.player_version_number;
+const SPLIT_PLUGINS = process.env.player_plugins_split || false; // To seperate the plugins for ekstep and sunbird.
 
 // Required dependency files
 const path = require('path');
@@ -268,9 +269,13 @@ module.exports = (env, argv) => {
 };
 
 function copyCorePlugins(channel) {
-    var plugins = (channel === CONSTANTS.sunbird) ? APP_CONFIG.sunbird.plugins : APP_CONFIG.ekstep.plugins;
+    let plugins = [];
+    if (SPLIT_PLUGINS) {
+        plugins = (channel === CONSTANTS.sunbird) ? APP_CONFIG.sunbird.plugins : APP_CONFIG.ekstep.plugins;
+    } else {
+        plugins = [...new Set([...APP_CONFIG.sunbird.plugins, ...APP_CONFIG.ekstep.plugins])]
+    }
     plugins.forEach(element => {
-        console.log("element", element)
         file_extra.copy(`${FOLDER_PATHS.basePath}/public/coreplugins/${element}`, `${FOLDER_PATHS.basePath}/public/${CONSTANTS.build_folder_name}/coreplugins/${element}/`)
     })
 };
