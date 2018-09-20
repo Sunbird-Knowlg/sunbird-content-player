@@ -271,11 +271,11 @@ module.exports = (env, argv) => {
 function copyCorePlugins(channel) {
     let plugins = [];
     console.log("FILTER_PLUGINS", FILTER_PLUGINS)
-    if (FILTER_PLUGINS) {
-        console.log("filter true")
+    if (FILTER_PLUGINS === true) {
+        console.log("Plugins are filtering ")
         plugins = (channel === CONSTANTS.sunbird) ? APP_CONFIG.sunbird.plugins : APP_CONFIG.ekstep.plugins;
     } else {
-        console.log("filter false")
+        console.log("Plugins not filtered")
         plugins = [...new Set([...APP_CONFIG.sunbird.plugins, ...APP_CONFIG.ekstep.plugins])]
     }
     console.log("Plugins are ", plugins);
