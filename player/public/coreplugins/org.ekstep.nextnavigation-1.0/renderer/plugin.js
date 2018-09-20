@@ -6,13 +6,11 @@
 Plugin.extend({
     _type: "nextNavigation",
     initialize: function() {
-        var nextIcon = EkstepRendererAPI.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/assets/next.png");
         app.compileProvider.directive('nextNavigation', ['$rootScope', function($rootScope) {
             return {
                 restrict: 'E',
-                template: '<div><a class="nav-icon nav-next" ng-show="showOverlayNext !== state_off" href="javascript:void(0);"><img ng-src="{{nextIcon}}" ng-click="navigate(\'next\')"></a></div>',
+                template: '<div><a class="nav-icon nav-next" ng-show="showOverlayNext !== state_off" href="javascript:void(0);"><img ng-src="{{imageBasePath}}next.png" ng-click="navigate(\'next\')"></a></div>',
                 link: function(scope) {
-                    scope.nextIcon = nextIcon;
                     var events = ["overlayNext", "renderer:next:show", "renderer:next:hide"];
                     scope.toggleNav = function(event) {
                         var val;

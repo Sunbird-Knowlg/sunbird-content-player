@@ -5,15 +5,13 @@
  */
 Plugin.extend({
     initialize: function() {
-        var icon = EkstepRendererAPI.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/assets/icn_home.png");
         app.compileProvider.directive('genie', ['$rootScope', function($rootScope) {
             return {
                 restrict: 'E',
-                template: '<div ng-class="enableGenie ? \'genie-home\' : \'icon-opacity genie-home\'" ng-click="goToGenie()"><img ng-src="{{imgSrc}}"/><span> {{AppLables.home}} </span></div>',
+                template: '<div ng-class="enableGenie ? \'genie-home\' : \'icon-opacity genie-home\'" ng-click="goToGenie()"><img ng-src="{{imageBasePath}}icn_home.png"/><span> {{AppLables.home}} </span></div>',
                 link: function(scope) {
                     scope.AppLables = AppLables;
                     scope.enableGenie = ("undefined" == typeof cordova) ? false : true;
-                    scope.imgSrc = icon;
                     if (scope.enableGenie) {
                         scope.goToGenie = function() {
                             EkstepRendererAPI.hideEndPage();
