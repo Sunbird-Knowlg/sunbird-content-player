@@ -63,6 +63,7 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
      * @memberof org.ekstep.contentrenderer.baseLauncher
      */
     end: function() {
+        if (this.sleepMode) return;
         this.heartBeatEvent(false);
         this.endTelemetry();
         EkstepRendererAPI.dispatchEvent("renderer:endpage:show");
@@ -120,7 +121,8 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
     /**
      * Generation of OE_END Telemetry event.
      */
-    endTelemetry: function(event) {
+    endTelemetry: function() {
+        if (this.sleepMode) return;
         if (TelemetryService.instance && TelemetryService.instance.telemetryStartActive()) {
             var telemetryEndData = {};
             telemetryEndData.stageid = getCurrentStageId();
