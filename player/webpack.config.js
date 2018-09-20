@@ -1,3 +1,9 @@
+/** 
+ * @author Manjunath Davanam<manjunathd@ilimi.in>
+ * @description  Which minifies the content-player script files and style files.
+ */
+
+
 const BUILD_NUMBER = process.env.build_number;
 const PLAYER_VER = process.env.player_version_number;
 
@@ -36,7 +42,8 @@ const APP_STYLE = [
     './public/styles/skin02.css',
     './public/styles/toastr.min.css',
     './public/styles/jquery.mCustomScrollbar.min.css',
-    './public/styles/style.css'
+    './public/styles/style.css',
+    './public/coreplugins-dist/coreplugins.css' // Include the coreplugins.css if have only else comment out this line
 ];
 
 const EXTERNAL_SCRIPTS = [
@@ -65,7 +72,7 @@ const APP_SCRIPTS = [
     './public/js/app.js',
     './public/js/basePlugin.js',
     './public/services/mainservice.js',
-    //'./public/services/localservice.js',
+    //'./public/services/localservice.js', // For localdevelopment use localservice.js insted of webservice.js
     './public/services/webservice.js',
     './public/services/interfaceService.js',
     './public/js/ekstepRendererApi.js',

@@ -1,3 +1,9 @@
+/** 
+ * @author Manjunath Davanam<manjunathd@ilimi.in> 
+ * @description - Which minifies and bundles the all core plugins  with js/css dependency files.
+ *                - Before bundle It will read the plugins views and dependency object which is defined in the plugin manifest.json.
+ */
+
 // Dependency files 
 const path = require('path');
 const webpack = require('webpack');
@@ -13,7 +19,7 @@ const WebpackOnBuildPlugin = require('on-build-webpack');
 const PLUGINS_BASE_PATH = './public/coreplugins/'; // Plugins base path
 const PACKAGE_JS_FILE_NAME = 'coreplugins.js'; // Packaged all plugins js file name
 const PACKAGE_CSS_FILE_NAME = 'coreplugins.css'; // Packaged all plugins css files name
-const OUTPUT_PATH = 'public/js'; // Package file path.
+const OUTPUT_PATH = 'public/coreplugins-dist'; //'public/'; // Package file path.
 const DIST_OUTPUT_FILE_PATH = '/renderer/plugin.dist.js'; // dist file path which is created in each plugins folder
 const CONFIG = {
     drop_console: process.env.drop_console || false,
@@ -33,8 +39,8 @@ const PLUGINS = process.env.plugins || [
     "org.ekstep.videorenderer-1.0",
     "org.ekstep.pdfrenderer-1.0",
     "org.ekstep.epubrenderer-1.0",
-    // "org.ekstep.ecmlrenderer-1.0",
-    // "org.ekstep.extcontentpreview-1.0"
+    //"org.ekstep.ecmlrenderer-1.0",
+    "org.ekstep.extcontentpreview-1.0"
 ];
 
 let entryFiles = []
@@ -133,6 +139,7 @@ module.exports = {
     resolve: {
         alias: {
             'jquery': path.resolve('./public/libs/jquery.min.js'),
+            'creatine:': path.resolve(`${PLUGINS_BASE_PATH}org.ekstep.ecmlrenderer-1.0/renderer/libs/creatine-1.0.0.min.js`),
         }
     },
     module: {
@@ -148,6 +155,13 @@ module.exports = {
                 }],
             },
             {
+                test: require.resolve(`${PLUGINS_BASE_PATH}org.ekstep.toaster-1.0/renderer/libs/toastr.min.js`),
+                use: [{
+                    loader: 'expose-loader',
+                    options: 'toastr'
+                }]
+            },
+            {
                 test: require.resolve(`${PLUGINS_BASE_PATH}org.ekstep.telemetrysync-1.0/renderer/libs/md5.js`),
                 use: [{
                     loader: 'expose-loader',
@@ -155,12 +169,13 @@ module.exports = {
                 }]
             },
             {
-                test: require.resolve(`${PLUGINS_BASE_PATH}org.ekstep.toaster-1.0/renderer/libs/toastr.min.js`),
+                test: require.resolve(`${PLUGINS_BASE_PATH}org.ekstep.ecmlrenderer-1.0/renderer/libs/creatine-1.0.0.min.js`),
                 use: [{
                     loader: 'expose-loader',
-                    options: 'toastr'
+                    options: 'creatine'
                 }]
-            }, {
+            },
+            {
                 test: /\.(s*)css$/,
                 use: [
                     MiniCssExtractPlugin.loader,
@@ -213,7 +228,9 @@ module.exports = {
             toastr: path.resolve(`${PLUGINS_BASE_PATH}org.ekstep.toaster-1.0/renderer/libs/toastr.min.js`),
             CryptoJS: path.resolve(`${PLUGINS_BASE_PATH}org.ekstep.telemetrysync-1.0/renderer/libs/md5.js`),
             JSZip: path.resolve(`${PLUGINS_BASE_PATH}org.ekstep.epubrenderer-1.0/renderer/libs/jszip.min.js`),
-            videojs: path.resolve(`${PLUGINS_BASE_PATH}org.ekstep.videorenderer-1.0/renderer/libs/video.js`)
+            videojs: path.resolve(`${PLUGINS_BASE_PATH}org.ekstep.videorenderer-1.0/renderer/libs/video.js`),
+            createjs: path.resolve(`${PLUGINS_BASE_PATH}org.ekstep.ecmlrenderer-1.0/renderer/libs/createjs.min.js`),
+            creatine: path.resolve(`${PLUGINS_BASE_PATH}org.ekstep.ecmlrenderer-1.0/renderer/libs/creatine-1.0.0.min.js`),
         }),
         new UglifyJsPlugin({
             cache: false,

@@ -251,7 +251,7 @@ module.exports = function(grunt) {
                     },
                     {
                         expand: true,
-                        cwd: 'public/js/',
+                        cwd: 'public/coreplugins-dist/',
                         src: 'coreplugins.js',
                         dest: 'www/',
                         flatten: false,
