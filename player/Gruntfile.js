@@ -240,7 +240,7 @@ module.exports = function(grunt) {
                 files: [{
                         expand: true,
                         cwd: 'public/',
-                        src: ['assets/**', '!js/tests/**', "coreplugins/**", '!js/*', '!json/*', '!libs/*', '!styles/**', 'templates/*', 'index.html', 'index_min.html'],
+                        src: ['assets/**', '!js/tests/**', '!js/*', '!json/*', '!libs/*', '!styles/**', 'templates/*', 'index.html', 'index_min.html'],
                         dest: 'www/'
                     }, {
                         expand: true,

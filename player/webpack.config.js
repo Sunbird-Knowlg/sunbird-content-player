@@ -215,7 +215,8 @@ module.exports = (env, argv) => {
                 filename: `[name].min.${VERSION}.css`,
             }),
             new WebpackOnBuildPlugin(function(stats) {
-                replaceStringInFiles(env.channel)
+                replaceStringInFiles(env.channel);
+                copyCorePlugins(env.channel);
             }),
             new ngAnnotatePlugin({
                 add: true,
@@ -264,6 +265,14 @@ module.exports = (env, argv) => {
 
         }
     }
+};
+
+function copyCorePlugins(channel) {
+    var plugins = (channel === CONSTANTS.sunbird) ? APP_CONFIG.sunbird.plugins : APP_CONFIG.ekstep.plugins;
+    plugins.forEach(element => {
+        console.log("element", element)
+        file_extra.copy(`${FOLDER_PATHS.basePath}/public/coreplugins/${element}`, `${FOLDER_PATHS.basePath}/public/${CONSTANTS.build_folder_name}/coreplugins/${element}/`)
+    })
 };
 
 function replaceStringInFiles(channel) {
