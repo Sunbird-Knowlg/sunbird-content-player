@@ -6,7 +6,7 @@
 
 const BUILD_NUMBER = process.env.build_number || 1;
 const PLAYER_VER = process.env.player_version_number || 1;
-const FILTER_PLUGINS = process.env.filter_plugins || false; // To seperate the plugins for ekstep and sunbird.
+const FILTER_PLUGINS = process.env.filter_plugins || 'false'; // To seperate the plugins for ekstep and sunbird.
 
 // Required dependency files
 const path = require('path');
@@ -271,7 +271,7 @@ module.exports = (env, argv) => {
 function copyCorePlugins(channel) {
     let plugins = [];
     console.log("FILTER_PLUGINS", FILTER_PLUGINS)
-    if (FILTER_PLUGINS === true) {
+    if (FILTER_PLUGINS === 'true') {
         console.log("Plugins are filtering ")
         plugins = (channel === CONSTANTS.sunbird) ? APP_CONFIG.sunbird.plugins : APP_CONFIG.ekstep.plugins;
     } else {
