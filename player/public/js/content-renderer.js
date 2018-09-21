@@ -79,10 +79,6 @@ org.ekstep.contentrenderer.addRepos = function() {
      * @memberof EkstepRendererEvents	
      */
     EkstepRendererAPI.dispatchEvent("renderer:repo:create", undefined, path);
-    EkstepRendererAPI.dispatchEvent("renderer:repo:create", undefined, {
-        path: obj.config.repos,
-        position: 0
-    });
 };
 
 /**
