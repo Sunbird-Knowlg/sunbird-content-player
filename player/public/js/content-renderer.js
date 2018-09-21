@@ -26,7 +26,7 @@ org.ekstep.contentrenderer.loadDefaultPlugins = function(cb) {
     var globalConfig = EkstepRendererAPI.getGlobalConfig();
     globalConfig.isCorePluginsPackaged && jQuery("body").append($("<script type='text/javascript' src='./coreplugins.js?" + globalConfig.version + "'>"));
     org.ekstep.contentrenderer.loadPlugins(globalConfig.defaultPlugins, [], function() {
-        cb()
+        if (cb) cb()
     });
 };
 
