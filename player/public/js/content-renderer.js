@@ -71,7 +71,6 @@ org.ekstep.contentrenderer.addRepos = function() {
         obj.config.repos = isMobile ? obj.devicePluginspath : obj.previewPluginspath;
     }
     var path = _.isArray(obj.config.repos) ? obj.config.repos : [obj.config.repos];
-    path.push(globalConfig.corePluginspath);
     /**
      * renderer:repo:create event will get dispatch to add a custom repo to load the plugins from the path.
      * @event 'renderer:repo:create'	

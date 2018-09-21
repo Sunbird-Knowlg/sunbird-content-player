@@ -62,6 +62,10 @@ Plugin.extend({
         loadLauncherPlugins: function(cb) {
             var globalConfigObj = EkstepRendererAPI.getGlobalConfig();	
             var plugins = globalConfigObj.contentLaunchers;	
+            EkstepRendererAPI.dispatchEvent("renderer:repo:create", undefined, {
+                path: globalConfigObj.corePluginspath,
+                position: 0
+            });
             if (GlobalContext.config.showEndPage) {	
                 plugins.push({ "id": "org.ekstep.endpage", "ver": "1.0", "type": 'plugin' });	
             }	
