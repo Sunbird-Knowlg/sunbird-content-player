@@ -26,7 +26,7 @@ org.ekstep.contentrenderer.loadDefaultPlugins = function(cb) {
     var globalConfig = EkstepRendererAPI.getGlobalConfig();
     globalConfig.isCorePluginsPackaged && jQuery("body").append($("<script type='text/javascript' src='./coreplugins.js?" + globalConfig.version + "'>"));
     org.ekstep.contentrenderer.loadPlugins(globalConfig.defaultPlugins, [], function() {
-        EkstepRendererAPI.dispatchEvent('renderer:launcher:loadRendererPlugins', cb)
+        cb()
     });
 };
 
@@ -95,10 +95,12 @@ org.ekstep.contentrenderer.loadExternalPlugins = function(cb) {
     if (globalConfig.config.plugins) {
         org.ekstep.contentrenderer.loadPlugins(globalConfig.config.plugins, [], function() {
             console.info('External plugins are loaded');
-            if (cb) cb();
+            EkstepRendererAPI.dispatchEvent('renderer:launcher:loadRendererPlugins', cb)
+            // if (cb) cb();
         });
     } else {
-        if (cb) cb();
+        EkstepRendererAPI.dispatchEvent('renderer:launcher:loadRendererPlugins', cb)
+        // if (cb) cb();
     }
 };
 
