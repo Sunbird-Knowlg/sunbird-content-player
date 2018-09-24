@@ -121,7 +121,7 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
 	/**
      * Generation of OE_END Telemetry event.
      */
-	endTelemetry: function (event) {
+	endTelemetry: function () {
 		if (this.sleepMode) return
 		if (TelemetryService.instance && TelemetryService.instance.telemetryStartActive()) {
 			var telemetryEndData = {}
