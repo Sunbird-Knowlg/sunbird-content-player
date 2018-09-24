@@ -4,8 +4,8 @@
  */
 
 
-const BUILD_NUMBER = process.env.build_number || 1;
-const PLAYER_VER = process.env.player_version_number || 1;
+const BUILD_NUMBER = process.env.build_number;
+const PLAYER_VER = process.env.player_version_number;
 const FILTER_PLUGINS = process.env.filter_plugins || 'false'; // To seperate the plugins for ekstep and sunbird.
 
 // Required dependency files

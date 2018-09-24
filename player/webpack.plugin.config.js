@@ -40,7 +40,7 @@ const PLUGINS = process.env.plugins || [
     "org.ekstep.pdfrenderer-1.0",
     "org.ekstep.epubrenderer-1.0",
     //"org.ekstep.ecmlrenderer-1.0",
-    //"org.ekstep.extcontentpreview-1.0"
+    "org.ekstep.extcontentpreview-1.0"
 ];
 
 let entryFiles = []
@@ -135,6 +135,9 @@ module.exports = {
     output: {
         filename: '[name]',
         path: path.resolve(__dirname, OUTPUT_PATH),
+        chunkFilename: 'chunks/[name].[chunkhash].js'
+
+
     },
     resolve: {
         alias: {
