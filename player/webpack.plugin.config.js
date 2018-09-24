@@ -172,13 +172,6 @@ module.exports = {
                 }]
             },
             {
-                test: require.resolve(`${PLUGINS_BASE_PATH}org.ekstep.ecmlrenderer-1.0/renderer/libs/creatine-1.0.0.min.js`),
-                use: [{
-                    loader: 'expose-loader',
-                    options: 'creatine'
-                }]
-            },
-            {
                 test: /\.(s*)css$/,
                 use: [
                     MiniCssExtractPlugin.loader,
@@ -232,8 +225,6 @@ module.exports = {
             CryptoJS: path.resolve(`${PLUGINS_BASE_PATH}org.ekstep.telemetrysync-1.0/renderer/libs/md5.js`),
             JSZip: path.resolve(`${PLUGINS_BASE_PATH}org.ekstep.epubrenderer-1.0/renderer/libs/jszip.min.js`),
             videojs: path.resolve(`${PLUGINS_BASE_PATH}org.ekstep.videorenderer-1.0/renderer/libs/video.js`),
-            createjs: path.resolve(`${PLUGINS_BASE_PATH}org.ekstep.ecmlrenderer-1.0/renderer/libs/createjs.min.js`),
-            creatine: path.resolve(`${PLUGINS_BASE_PATH}org.ekstep.ecmlrenderer-1.0/renderer/libs/creatine-1.0.0.min.js`),
         }),
         new UglifyJsPlugin({
             cache: false,
