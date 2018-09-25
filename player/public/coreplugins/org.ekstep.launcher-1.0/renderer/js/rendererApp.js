@@ -103,13 +103,13 @@ app.controllerProvider.register('ContentCtrl', ['$scope', '$rootScope', '$state'
 
     /* Temporary solution so load content. init event is dispatched before loading/compiling this controller
      init event is dispatched before loading/compiling this controller */
-    setTimeout(function() {
-        if ($scope.isInitialized) {
-            $scope.isInitialized = false;
-        } else {
-            //EkstepRendererAPI.dispatchEvent('renderer:player:show');
-            $scope.showCanvasPlayer();
-            $scope.init();
-        }
-    }, 2000);
+    // setTimeout(function() {
+    //     if ($scope.isInitialized) {
+    //         $scope.isInitialized = false;
+    //     } else {
+    //         //EkstepRendererAPI.dispatchEvent('renderer:player:show');
+    //         $scope.showCanvasPlayer();
+    //         $scope.init();
+    //     }
+    // }, 2000);
 }]);
