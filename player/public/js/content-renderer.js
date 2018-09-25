@@ -26,7 +26,7 @@ org.ekstep.contentrenderer.loadDefaultPlugins = function(cb) {
     var globalConfig = EkstepRendererAPI.getGlobalConfig();
     globalConfig.isCorePluginsPackaged && jQuery("body").append($("<script type='text/javascript' src='./coreplugins.js?" + globalConfig.version + "'>"));
     org.ekstep.contentrenderer.loadPlugins(globalConfig.defaultPlugins, [], function() {
-        EkstepRendererAPI.dispatchEvent('renderer:launcher:loadRendererPlugins', cb)
+        if (cb) cb()
     });
 };
 
@@ -71,7 +71,6 @@ org.ekstep.contentrenderer.addRepos = function() {
         obj.config.repos = isMobile ? obj.devicePluginspath : obj.previewPluginspath;
     }
     var path = _.isArray(obj.config.repos) ? obj.config.repos : [obj.config.repos];
-    path.push(globalConfig.corePluginspath);
     /**
      * renderer:repo:create event will get dispatch to add a custom repo to load the plugins from the path.
      * @event 'renderer:repo:create'	
@@ -79,10 +78,6 @@ org.ekstep.contentrenderer.addRepos = function() {
      * @memberof EkstepRendererEvents	
      */
     EkstepRendererAPI.dispatchEvent("renderer:repo:create", undefined, path);
-    EkstepRendererAPI.dispatchEvent("renderer:repo:create", undefined, {
-        path: obj.config.repos,
-        position: 0
-    });
 };
 
 /**
@@ -95,10 +90,12 @@ org.ekstep.contentrenderer.loadExternalPlugins = function(cb) {
     if (globalConfig.config.plugins) {
         org.ekstep.contentrenderer.loadPlugins(globalConfig.config.plugins, [], function() {
             console.info('External plugins are loaded');
-            if (cb) cb();
+            EkstepRendererAPI.dispatchEvent('renderer:launcher:loadRendererPlugins', cb)
+            // if (cb) cb();
         });
     } else {
-        if (cb) cb();
+        EkstepRendererAPI.dispatchEvent('renderer:launcher:loadRendererPlugins', cb)
+        // if (cb) cb();
     }
 };
 
