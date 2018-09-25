@@ -7,7 +7,7 @@ AppConfig = {
 	recorder: "AUDIO_RECORDER",
 	flavor: "DEPLOYMENT",
 	heartBeatTime: 180000,
-	isCorePluginsPackaged: false, // Default to TRUE, For local development turn off this flag.
+	isCorePluginsPackaged: true, // Default to TRUE, For local development turn off this flag.
 	s3ContentHost: "/assets/public/content/",
 	previewPluginspath: "/content-plugins",
 	devicePluginspath: "/widgets/content-plugins",
