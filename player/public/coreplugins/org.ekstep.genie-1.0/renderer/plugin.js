@@ -5,23 +5,23 @@
  */
 Plugin.extend({
     initialize: function() {
-        app.compileProvider.directive('genie', ['$rootScope', function($rootScope) {
+        app.compileProvider.directive("genie", ["$rootScope", function($rootScope) {
             return {
-                restrict: 'E',
+                restrict: "E",
                 template: '<div ng-class="enableGenie ? \'genie-home\' : \'icon-opacity genie-home\'" ng-click="goToGenie()"><img ng-src="{{imageBasePath}}icn_home.png"/><span> {{AppLables.home}} </span></div>',
                 link: function(scope) {
-                    scope.AppLables = AppLables;
-                    scope.enableGenie = ("undefined" == typeof cordova) ? false : true;
+                    scope.AppLables = AppLables
+                    scope.enableGenie = typeof cordova !== "undefined"
                     if (scope.enableGenie) {
                         scope.goToGenie = function() {
-                            EkstepRendererAPI.hideEndPage();
-                            stageId = !_.isUndefined(Renderer) ? Renderer.theme._currentStage : " ";
-                            TelemetryService.interact("TOUCH", "gc_genie", "TOUCH", { stageId: stageId });
-                            exitApp();
+                            EkstepRendererAPI.hideEndPage()
+                            var stageId = !_.isUndefined(Renderer) ? Renderer.theme._currentStage : " "
+                            TelemetryService.interact("TOUCH", "gc_genie", "TOUCH", { stageId: stageId })
+                            exitApp()
                         }
                     }
                 }
             }
-        }]);
+        }])
     }
 })

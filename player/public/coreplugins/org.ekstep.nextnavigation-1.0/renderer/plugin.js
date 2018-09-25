@@ -4,50 +4,50 @@
  * @author Akash Gupta <akash.gupta@tarento.com>
  */
 Plugin.extend({
-    _type: "nextNavigation",
-    initialize: function() {
-        app.compileProvider.directive('nextNavigation', ['$rootScope', function($rootScope) {
-            return {
-                restrict: 'E',
-                template: '<div><a class="nav-icon nav-next" ng-show="showOverlayNext !== state_off" href="javascript:void(0);"><img ng-src="{{imageBasePath}}next.png" ng-click="navigate(\'next\')"></a></div>',
-                link: function(scope) {
-                    var events = ["overlayNext", "renderer:next:show", "renderer:next:hide"];
-                    scope.toggleNav = function(event) {
-                        var val;
-                        var globalConfig = EkstepRendererAPI.getGlobalConfig();
-                        var defaultValue = globalConfig.overlay.showNext ? "on" : "off";
-                        switch (event.type) {
-                            /**
+	_type: "nextNavigation",
+	initialize: function () {
+		app.compileProvider.directive("nextNavigation", ["$rootScope", function ($rootScope) {
+			return {
+				restrict: "E",
+				template: "<div><a class=\"nav-icon nav-next\" ng-show=\"showOverlayNext !== state_off\" href=\"javascript:void(0);\"><img ng-src=\"{{imageBasePath}}next.png\" ng-click=\"navigate('next')\"></a></div>",
+				link: function (scope) {
+					var events = ["overlayNext", "renderer:next:show", "renderer:next:hide"]
+					scope.toggleNav = function (event) {
+						var val
+						var globalConfig = EkstepRendererAPI.getGlobalConfig()
+						var defaultValue = globalConfig.overlay.showNext ? "on" : "off"
+						switch (event.type) {
+						/**
                              * renderer:next:show Event to show next navigation icon.
                              * @event renderer:next:show
                              * @listen renderer:next:show
                              * @memberOf EkstepRendererEvents
                              */
-                            case "renderer:next:show":
-                                val = "on";
-                                break;
-                                /**
+						case "renderer:next:show":
+							val = "on"
+							break
+							/**
                                  * renderer:next:hide Event to hide next navigation icon.
                                  * @event renderer:next:hide
                                  * @listen renderer:next:hide
                                  * @memberOf EkstepRendererEvents
                                  */
-                            case "renderer:next:hide":
-                                val = "off";
-                                break;
-                            case "overlayNext":
-                                val = event.target ? event.target : defaultValue;
-                        }
-                        scope.showOverlayNext = val;
-                        $rootScope.safeApply();
-                    };
-                    _.each(events, function(event) {
-                        EkstepRendererAPI.addEventListener(event, scope.toggleNav, scope)
-                    });
-                }
-            }
-        }]);
-    }
+						case "renderer:next:hide":
+							val = "off"
+							break
+						case "overlayNext":
+							val = event.target ? event.target : defaultValue
+						}
+						scope.showOverlayNext = val
+						$rootScope.safeApply()
+					}
+					_.each(events, function (event) {
+						EkstepRendererAPI.addEventListener(event, scope.toggleNav, scope)
+					})
+				}
+			}
+		}])
+	}
 })
 
-//# sourceURL=nextnavigationplugin.js
+// # sourceURL=nextnavigationplugin.js

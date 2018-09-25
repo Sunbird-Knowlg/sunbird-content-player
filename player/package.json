@@ -86,7 +86,13 @@
         "rimraf": "2.6.2",
         "cpy-cli": "2.0.0",
         "rsvp": "4.8.4",
-        "localforage": "1.7.2"
+        "localforage": "1.7.2",
+        "eslint": "^5.4.0",
+        "eslint-config-standard": "^11.0.0",
+        "eslint-plugin-import": "^2.14.0",
+        "eslint-plugin-node": "^7.0.1",
+        "eslint-plugin-promise": "^4.0.0",
+        "eslint-plugin-standard": "^3.1.0"
     },
     "scripts": {
         "build-sunbird": "webpack --env.channel=sunbird",

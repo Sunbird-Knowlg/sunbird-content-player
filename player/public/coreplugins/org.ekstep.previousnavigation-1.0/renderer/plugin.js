@@ -28,8 +28,8 @@ Plugin.extend({
                                  * @memberOf EkstepRendererEvents
                                  */
                             case "renderer:previous:show":
-                                val = "on";
-                                break;
+                                val = "on"
+                                break
                                 /**
                                  * renderer:previous:hide Event to hide previous navigation icon.
                                  * @event renderer:previous:hide
@@ -37,13 +37,13 @@ Plugin.extend({
                                  * @memberOf EkstepRendererEvents
                                  */
                             case "renderer:previous:hide":
-                                val = "off";
-                                break;
+                                val = "off"
+                                break
                         }
-                        if (val == "on") {
-                            var navigateToStage = EkstepRendererAPI.getStageParam('previous');
+                        if (val === "on") {
+                            var navigateToStage = EkstepRendererAPI.getStageParam("previous")
                             if (_.isUndefined(navigateToStage)) {
-                                val = "disable";
+                                val = "disable"
                                 if (EkstepRendererAPI.isItemScene() && EkstepRendererAPI.getCurrentController().hasPrevious()) {
                                     val = "enable"
                                 }
@@ -51,16 +51,16 @@ Plugin.extend({
                                 val = "enable"
                             }
                         }
-                        scope.showOverlayPrevious = val;
-                        $rootScope.safeApply();
+                        scope.showOverlayPrevious = val
+                        $rootScope.safeApply()
                     }
                     _.each(events, function(event) {
                         EkstepRendererAPI.addEventListener(event, scope.changeValue, scope)
                     })
                 }
             }
-        }]);
+        }])
     }
 })
 
-//# sourceURL=previousnavigationplugin.js
+// # sourceURL=previousnavigationplugin.js

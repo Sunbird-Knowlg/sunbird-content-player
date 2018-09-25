@@ -346,6 +346,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     initContentProgress: function() {
         var instance = this;
         EkstepRendererAPI.addEventListener("sceneEnter", function(event) {
+            if (this.sleepMode) return;
             instance.stageId.push(event.target.CURRENT_PAGE);
         });
     },
