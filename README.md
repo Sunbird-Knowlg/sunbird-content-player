@@ -1,12 +1,13 @@
-# Content Player
-
 ![](https://api.travis-ci.org/project-sunbird/sunbird-content-player.svg?branch=master)
 [![npm version](https://badge.fury.io/js/%40project-sunbird%2Fcontent-player.svg)](https://badge.fury.io/js/%40project-sunbird%2Fcontent-player)
 
-## Introduction
+
+
+# Content Player
+
    Content-Player which is used to play/render the content in both device and web.
    
- **Supported Contents**
+ **Supported Content MIME Types**
    
   * ECML (Ekstep content markup language)
   * HTML
