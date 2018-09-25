@@ -29,7 +29,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
         var teleEvents = org.ekstep.service.content.getTelemetryEvents();
         if (!_.isEmpty(teleEvents) && !_.isUndefined(teleEvents.assess)) {
             _.forEach(teleEvents.assess, function(value) {
-                if(value.edata.pass === 'Yes') {
+                if(value.edata.score) {
                     totalScore = totalScore + value.edata.score;
                 }
                 if(value.edata.item.maxscore) {
