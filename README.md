@@ -122,7 +122,7 @@ var previewObj = {
 
 1. **How to render in Web**
 
-    content player will render inside the web environment with the above configuration .
+    Content player will render inside the web environment with the above configuration .
     
 	**HTML**
 	```html
@@ -142,7 +142,7 @@ var previewObj = {
 	```
 2. **How to render in Device(cordova)**
 
-content player will render inside Cordova environment and it's accepting the configuration through ```cordova webintent```
+Content player will render inside Cordova environment and it's accepting the configuration through ```cordova webintent```
 
 
 
@@ -191,7 +191,11 @@ content player will render inside Cordova environment and it's accepting the con
  See [ChangeLogs](https://github.com/project-sunbird/sunbird-content-player/releases) for more information 
 
 ## License
-this project is licensed under the MIT License - see the [LICENSE](https://github.com/project-sunbird/sunbird-content-player/blob/master/LICENSE) file for details 
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/project-sunbird/sunbird-content-player/blob/master/LICENSE) file for details 
+
+## Versioning
+
+We use [SemVer](https://semver.org/) for versioning. For the versions available, see the [tags](https://github.com/project-sunbird/sunbird-content-player/tags) on this repository.
 
 ## Any Issues ?
 We have an open and active [issue tracker](https://github.com/Field-Issues/issues). Please report any issues. 
