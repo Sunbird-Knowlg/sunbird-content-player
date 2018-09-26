@@ -9,7 +9,6 @@ module.exports = {
             backgroundImage: "./public/assets/icons/background_1.png"
         },
         plugins: [
-            "org.ekstep.extcontentpreview-1.0",
             "org.ekstep.overlay-1.0",
             "org.ekstep.userswitcher-1.0",
             "org.ekstep.ecmlrenderer-1.0",
@@ -23,7 +22,6 @@ module.exports = {
             backgroundImage: "./public/assets/icons/splacebackground_1.png"
         },
         plugins: [
-            "org.ekstep.extcontentpreview-1.0",
             "org.sunbird.player.endpage-1.1",
             "org.sunbird.player.userswitcher-1.0",
             "org.ekstep.ecmlrenderer-1.0",
