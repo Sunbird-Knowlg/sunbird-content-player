@@ -2,8 +2,8 @@
  * @author Manjunath Davanam<manjunathd@ilimi.in> 
  * @description - Which minifies and bundles the all core plugins  with js/css dependency files.
  *              - Before bundle It will read the plugins views and dependency object which is defined in the plugin manifest.json.
- * @example     - CMD to run this file for ekstep channel. [npm run package-coreplugins -- --env.channel=ekstep]
- *              - CMD to run this file for sunbird channel. [npm run package-coreplugins -- --env.channel=sunbird]
+ * @example     - CMD to run this file for ekstep channel.  👉 [npm run package-coreplugins -- --env.channel=ekstep]
+ *              - CMD to run this file for sunbird channel. 👉[npm run package-coreplugins -- --env.channel=sunbird]
  */
 
 // Dependency files 
