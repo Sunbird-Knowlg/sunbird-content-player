@@ -46,7 +46,7 @@ var Plugin = Class.extend({
     borderShape: undefined,
     _pluginParams: {},
     _manifest: {},
-    _unSupportedFonts: ["notosans", "verdana", "notosans oriya"],
+    _unSupportedFonts: ["verdana", "notosans oriya"],
     /**
      * Initializes the plugin with the given data and parent object
      * @param data {object} Init parameters for the plugin
