@@ -187,8 +187,14 @@ content player will render inside Cordova environment and it's accepting the con
  	
  
 
+## Change Logs
+ See [ChangeLogs](https://github.com/project-sunbird/sunbird-content-player/releases) for more information 
+
+## License
+this project is licensed under the MIT License - see the [LICENSE](https://github.com/project-sunbird/sunbird-content-player/blob/master/LICENSE) file for details 
+
 ## Any Issues ?
-We have an open and active [issue tracker](https://github.com/Field-Issues/issues). Please report any issues.
+We have an open and active [issue tracker](https://github.com/Field-Issues/issues). Please report any issues. 
 
 
 
