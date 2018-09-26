@@ -1,6 +1,8 @@
 /** 
  * @author Manjunath Davanam<manjunathd@ilimi.in>
- * @description  Which minifies the content-player script files and style files.
+ * @description    - Which minifies the content-player script files and style files.
+ * @example        - CMD to run this file for ekstep channel  👉 [npm run build ekstep]
+ *                 - CMD to run this file for sunbird channel 👉 [npm run build sunbird]
  */
 
 
