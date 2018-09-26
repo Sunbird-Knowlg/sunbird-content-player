@@ -5,17 +5,22 @@
 
 # Content Player
 
-   Content-Player which is used to play/render the content in both device and web.
+   Content-Player which is used to play/render the contents in both device and web.
    
  **Supported Content MIME Types**
-   
-  * ECML (Ekstep content markup language)
-  * HTML
-  * Youtube
-  * Epub
-  * H5P
-  * Mp4/Webm
-  * PDF
+
+| Content Type | MIME Type | 
+| --- | --- | 
+|ECML | application/vnd.ekstep.ecml-archive|
+|HTML|application/vnd.ekstep.html-archive|
+|Epub|application/epub|
+|H5P|application/vnd.ekstep.h5p-archive|
+|PDF|application/pdf|
+|YOUTUBE|video/x-youtube|
+|WEBM|video/Webm|
+|MP4|video/mp4|
+|EXTERNAL CONTENT|text/x-url|
+
 
 ## How to render the contents?
 
@@ -120,7 +125,6 @@ var previewObj = {
     content player will render inside the web environment with the above configuration .
     
 	**HTML**
-	
 	```html
 	<div class="content-player">
 	    <iframe id="preview" src ='./node_modules/@project-sunbird/content-player/preview.html?webview=true' width=100% height=100%></iframe>
@@ -128,7 +132,6 @@ var previewObj = {
 	
 	```
 	**JS**
-	
 	```js
 	
 	  var previewElement = jQuery('#preview')[0];
@@ -156,9 +159,9 @@ content player will render inside Cordova environment and it's accepting the con
 
  **How to Run**
 
-* Clone the content player from here
+* Clone the content player from [here](https://github.com/project-sunbird/sunbird-content-player)
 * Run `npm install` in PROJECT_FOLDER/player path
-* To run player in local `node app`
+* To run player in local run `node app` in the Terminal
 
  **How to build**
     
@@ -169,10 +172,19 @@ content player will render inside Cordova environment and it's accepting the con
    2. **AAR**
    
  		Run  `npm run build-aar sunbird`  which creates an aar file for the sunbird instance
- 	
- The AAR file will create in the below path.
+
+        The AAR file will create in the below path.
+
+        >PROJECT_FOLDER/player/platforms/android/build/outputs/aar/geniecanvas-BUILD_NUMBER-debug.aar
  
-> PROJECT_FOLDER/player/platforms/android/build/outputs/aar/geniecanvas-BUILD_NUMBER-debug.aar
+   3. **Plugins Package**
+
+        Run  `npm run package-coreplugins -- --env.channel sunbird`  Which bundles all the coreplugins plugins and creates the `coreplugins.js` and `coreplugins.css`  
+
+   4. **Test Cases**
+
+        Run  `npm run test` Which runs the player test cases.         
+ 	
  
 
 ## Any Issues ?
