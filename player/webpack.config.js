@@ -283,6 +283,7 @@ function copyCorePlugins(channel) {
     console.log("Plugins are ", plugins);
     plugins.forEach(plugin => {
         if (plugin.package) {
+            console.log("Plugins moving", plugin);
             file_extra.copy(`${FOLDER_PATHS.basePath}/public/coreplugins/${plugin.id}-${plugin.ver}`, `${FOLDER_PATHS.basePath}/public/${CONSTANTS.build_folder_name}/coreplugins/${plugin.id}-${plugin.ver}/`)
         }
     })

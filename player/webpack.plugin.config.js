@@ -278,6 +278,7 @@ module.exports = (env, argv) => {
             let jsDependencyPath, cssDependencyPath;
             plugins.forEach(function(plugin) {
                 if (plugin.minify) {
+                    console.log("Plugins are", plugin);
                     let manifest = JSON.parse(fs.readFileSync(`${PLUGINS_BASE_PATH}${plugin.id}-${plugin.ver}/manifest.json`));
                     let pluginContent = uglifyjs.minify(fs.readFileSync(`${PLUGINS_BASE_PATH}${plugin.id}-${plugin.ver}/${manifest.renderer.main}`, 'utf8'));
                     if (manifest.renderer.dependencies) {
