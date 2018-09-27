@@ -281,8 +281,10 @@ function copyCorePlugins(channel) {
         plugins = [...new Set([...APP_CONFIG.sunbird.plugins, ...APP_CONFIG.ekstep.plugins])]
     }
     console.log("Plugins are ", plugins);
-    plugins.forEach(element => {
-        file_extra.copy(`${FOLDER_PATHS.basePath}/public/coreplugins/${element}`, `${FOLDER_PATHS.basePath}/public/${CONSTANTS.build_folder_name}/coreplugins/${element}/`)
+    plugins.forEach(plugin => {
+        if (plugin.package) {
+            file_extra.copy(`${FOLDER_PATHS.basePath}/public/coreplugins/${plugin.id}-${plugin.ver}`, `${FOLDER_PATHS.basePath}/public/${CONSTANTS.build_folder_name}/coreplugins/${plugin.id}-${plugin.ver}/`)
+        }
     })
 };
 
