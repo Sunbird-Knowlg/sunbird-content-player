@@ -187,15 +187,16 @@ table {
 .ps-score-content {
   font-weight: bold;
   position: absolute;
-  width: 50%;
+  width: 55%;
   top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
   background-color: #f3f3f3;
   border-radius: 5px;
   padding: 1vw 0vw;
 }
+
 
 .ps-chapter-text {
   color: #ffffff;
