@@ -187,15 +187,16 @@ table {
 .ps-score-content {
   font-weight: bold;
   position: absolute;
-  width: 50%;
+  width: 55%;
   top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
   background-color: #f3f3f3;
   border-radius: 5px;
   padding: 1vw 0vw;
 }
+
 
 .ps-chapter-text {
   color: #ffffff;
@@ -276,10 +277,12 @@ table {
 }
 
 .ps-score-data {
-  color: #979797;
-  font-weight: 400;
-  padding: 1vw 1vw 0 1vw;
-  font-size: 2.6vw;
+   position: absolute;
+   padding-left: 5%;
+   /* left: 22%; */
+   color: #979797;
+   font-weight: 400;
+   font-size: 2.6vw;
 }
 
 .ps-score-item {
