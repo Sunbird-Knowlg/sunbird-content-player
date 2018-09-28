@@ -187,7 +187,7 @@ table {
 .ps-score-content {
   font-weight: bold;
   position: absolute;
-  width: 50%;
+  width: 55%;
   top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
@@ -265,7 +265,7 @@ table {
 }
 .ps-score-detail{
   padding: 20% 0%;
-  width: 10vw;
+  width: 16vw;
   text-align: center;
 }
 .ps-score-heading {
