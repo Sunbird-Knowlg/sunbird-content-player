@@ -38,7 +38,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
                     maxScore = maxScore + 0;
                 }
             });
-            $scope.score = (totalScore + "/" + maxScore);
+            $scope.score = ($scope.convert(totalScore) + "/" + $scope.convert(maxScore));
         } else {
             $scope.score = undefined;
         }
@@ -189,4 +189,24 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
         org.ekstep.service.content.clearTelemetryEvents();
         $scope.safeApply();
     });
+    $scope.precision = function(a) {
+        if (!isFinite(a)) return 0;
+        var e = 1,
+            p = 0;
+        while (Math.round(a * e) / e !== a) {
+            e *= 10;
+            p++;
+        }
+        return p;
+    };
+
+    $scope.convert = function(totalScore) {
+        if ((!isNaN(totalScore) && totalScore.toString().indexOf('.') != -1)) {
+            var precisionLen = $scope.precision(totalScore);
+            return precisionLen > 1 ? totalScore.toFixed(2) : totalScore;
+        } else {
+            return totalScore
+        }
+    };
+     
 });
