@@ -276,10 +276,12 @@ table {
 }
 
 .ps-score-data {
-  color: #979797;
-  font-weight: 400;
-  padding: 1vw 1vw 0 1vw;
-  font-size: 2.6vw;
+   position: absolute;
+   padding-left: 5%;
+   /* left: 22%; */
+   color: #979797;
+   font-weight: 400;
+   font-size: 2.6vw;
 }
 
 .ps-score-item {
