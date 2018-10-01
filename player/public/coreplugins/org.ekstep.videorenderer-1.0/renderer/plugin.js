@@ -41,7 +41,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         video.style.width = '100%';
         video.style.height = '100%';
         video.controls = true;
-        video.controlsList = 'nodownload';
+        if (window.cordova) video.controlsList = 'nodownload';
         video.autoplay = true;
         video.preload = "auto";
         video.className = 'video-js vjs-default-skin';

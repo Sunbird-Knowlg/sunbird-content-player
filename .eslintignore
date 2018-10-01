@@ -1,0 +1,11 @@
+public/libs/**
+public/js/basePlugin.js
+public/js/app/speech.js
+public/test/**
+public/fixture-stories
+public/example
+public/coreplugins
+hooks/**
+app-data/**
+build-config/**
+node_modules/**
