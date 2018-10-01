@@ -135,7 +135,7 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
     },
 
     /**
-     * It Generates the HEARTBEAT Telemetry event.
+     * It Generates the HEARTBEAT Telemetry event. 
      * Any child launcher can extends/overide this functionality.
      */
 
