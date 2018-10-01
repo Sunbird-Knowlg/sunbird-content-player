@@ -121,13 +121,17 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
         if (!window.cordova){
             var downloadBtn = document.createElement("img");
-            downloadBtn.src = EkstepRendererAPI.resolvePluginResource("org.ekstep.pdfrenderer", "1.0", "renderer/assets/mdpi.png");
+            downloadBtn.src = EkstepRendererAPI.resolvePluginResource(instance.manifest.id, instance.manifest.ver, "renderer/assets/mdpi.png");
             downloadBtn.style = "padding-left: 2.5px; margin-left: 2px; width: 13.5%; margin-bottom: -3%; cursor: pointer;"
             downloadBtn.onclick = function(){
                 var link = document.createElement('a');
                 link.href = path;
                 link.download = path.substring(0, path.indexOf('?')).substring(path.lastIndexOf('/')+1);
                 link.dispatchEvent(new MouseEvent('click'));
+                EkstepRendererAPI.getTelemetryService().interact("TOUCH", "Download", "TOUCH", {
+                    stageId: context.CURRENT_PAGE.toString(),
+                    subtype: ''
+                });
             };
             pdfSearchContainer.appendChild(downloadBtn);
         }
