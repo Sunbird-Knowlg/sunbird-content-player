@@ -73,7 +73,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         this.enableOverly();
     },
     renderPDF: function(path, canvasContainer) {
-        var instance = this;
         EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
         var pdfMainContainer = document.createElement("div");
         pdfMainContainer.id = "pdf-main-container";
@@ -120,21 +119,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         pdfSearchContainer.appendChild(findSubmit);
 
         if (!window.cordova){
-            var downloadBtn = document.createElement("img");
-            downloadBtn.id = "download-btn"; 
-            downloadBtn.src = EkstepRendererAPI.resolvePluginResource(instance.manifest.id, instance.manifest.ver, "renderer/assets/mdpi.png");
-            downloadBtn.style = "padding-left: 2.5px; margin-left: 2px; width: 13.5%; margin-bottom: -3%; cursor: pointer;"
-            downloadBtn.onclick = function(){
-                var link = document.createElement('a');
-                link.href = path;
-                link.download = path.substring(0, path.indexOf('?')).substring(path.lastIndexOf('/')+1);
-                link.dispatchEvent(new MouseEvent('click'));
-                EkstepRendererAPI.getTelemetryService().interact("TOUCH", "Download", "TOUCH", {
-                    stageId: context.CURRENT_PAGE.toString(),
-                    subtype: ''
-                });
-            };
-            pdfSearchContainer.appendChild(downloadBtn);
+            this.addDownloadButton(path, pdfSearchContainer);
         }
 
         pdfButtons.appendChild(pdfPrevButton);
@@ -224,6 +209,39 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         context.showPDF(path, context.manifest);
     },
 
+    addDownloadButton: function(path, pdfSearchContainer){
+        var instance = this;
+        var downloadBtn = document.createElement("img");
+        downloadBtn.id = "download-btn"; 
+        downloadBtn.src = EkstepRendererAPI.resolvePluginResource(instance.manifest.id, instance.manifest.ver, "renderer/assets/mdpi.png");
+        downloadBtn.className = "pdf-download-btn";
+        downloadBtn.onclick = function(){
+            var link = document.createElement('a');
+            link.href = path;
+
+            // if path is "xxx/xxx/index.pdf?xx"
+            // then this will take only "index.pdf" string
+            link.download = path.substring(0, path.indexOf('?')).substring(path.lastIndexOf('/')+1);
+            
+            try{
+                link.dispatchEvent(new MouseEvent('click'));
+            }catch(e){
+                showToaster('error', "Download failed");
+                EkstepRendererAPI.logErrorEvent('Download failed', {
+                    'type': 'content',
+                    'action': 'download',
+                    'severity': 'error'
+                });
+            }finally{
+                link.remove();
+            }
+            EkstepRendererAPI.getTelemetryService().interact("TOUCH", "Download", "TOUCH", {
+                stageId: context.CURRENT_PAGE.toString(),
+                subtype: ''
+            });
+        };
+        pdfSearchContainer.appendChild(downloadBtn);
+    },
     nextNavigation: function() {
         if (this.sleepMode) return;
         EkstepRendererAPI.getTelemetryService().interact("TOUCH", "next", null, {
@@ -255,7 +273,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
         // use api to resolve the plugin resource
         PDFJS.workerSrc = org.ekstep.pluginframework.pluginManager.resolvePluginResource(this.manifest.id, this.manifest.ver, "renderer/libs/pdf.worker.js");
-        context.pdf_url = pdf_url;
         PDFJS.getDocument({
             url: pdf_url
         }).then(function(pdf_doc) {
