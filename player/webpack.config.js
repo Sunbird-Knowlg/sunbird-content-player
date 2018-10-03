@@ -1,5 +1,14 @@
+/** 
+ * @author Manjunath Davanam<manjunathd@ilimi.in>
+ * @description    - Which minifies the content-player script files and style files.
+ * @example        - CMD to run this file for ekstep channel  👉 [npm run build ekstep]
+ *                 - CMD to run this file for sunbird channel 👉 [npm run build sunbird]
+ */
+
+
 const BUILD_NUMBER = process.env.build_number;
 const PLAYER_VER = process.env.player_version_number;
+const FILTER_PLUGINS = process.env.filter_plugins || 'false'; // To seperate the plugins for ekstep and sunbird.
 
 // Required dependency files
 const path = require('path');
@@ -36,7 +45,8 @@ const APP_STYLE = [
     './public/styles/skin02.css',
     './public/styles/toastr.min.css',
     './public/styles/jquery.mCustomScrollbar.min.css',
-    './public/styles/style.css'
+    './public/styles/style.css',
+    './public/coreplugins-dist/coreplugins.css' // Include the coreplugins.css if have only else comment out this line
 ];
 
 const EXTERNAL_SCRIPTS = [
@@ -65,7 +75,7 @@ const APP_SCRIPTS = [
     './public/js/app.js',
     './public/js/basePlugin.js',
     './public/services/mainservice.js',
-    //'./public/services/localservice.js',
+    //'./public/services/localservice.js', // For localdevelopment use localservice.js insted of webservice.js
     './public/services/webservice.js',
     './public/services/interfaceService.js',
     './public/js/ekstepRendererApi.js',
@@ -208,7 +218,8 @@ module.exports = (env, argv) => {
                 filename: `[name].min.${VERSION}.css`,
             }),
             new WebpackOnBuildPlugin(function(stats) {
-                replaceStringInFiles(env.channel)
+                replaceStringInFiles(env.channel);
+                copyCorePlugins(env.channel);
             }),
             new ngAnnotatePlugin({
                 add: true,
@@ -257,6 +268,25 @@ module.exports = (env, argv) => {
 
         }
     }
+};
+
+function copyCorePlugins(channel) {
+    let plugins = [];
+    console.log("FILTER_PLUGINS", FILTER_PLUGINS)
+    if (FILTER_PLUGINS === 'true') {
+        console.log("Plugins are filtering ")
+        plugins = (channel === CONSTANTS.sunbird) ? APP_CONFIG.sunbird.plugins : APP_CONFIG.ekstep.plugins;
+    } else {
+        console.log("Plugins not filtered")
+        plugins = [...new Set([...APP_CONFIG.sunbird.plugins, ...APP_CONFIG.ekstep.plugins])]
+    }
+    console.log("Plugins are ", plugins);
+    plugins.forEach(plugin => {
+        if (plugin.package) {
+            console.log("Plugins moving", plugin);
+            file_extra.copy(`${FOLDER_PATHS.basePath}/public/coreplugins/${plugin.id}-${plugin.ver}`, `${FOLDER_PATHS.basePath}/public/${CONSTANTS.build_folder_name}/coreplugins/${plugin.id}-${plugin.ver}/`)
+        }
+    })
 };
 
 function replaceStringInFiles(channel) {

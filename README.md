@@ -1,19 +1,26 @@
+![](https://api.travis-ci.org/project-sunbird/sunbird-content-player.svg?branch=master)
+[![npm version](https://badge.fury.io/js/%40project-sunbird%2Fcontent-player.svg)](https://badge.fury.io/js/%40project-sunbird%2Fcontent-player)
+
+
+
 # Content Player
 
-![](https://api.travis-ci.org/project-sunbird/sunbird-content-player.svg?branch=master)
+   Content-Player which is used to play/render the contents in both device and web.
+   
+ **Supported Content MIME Types**
 
-## What is Content Player?
-  Which renders the contents in both device and web
-   
- **Supported Contents**
-   
-  * ECML (Ekstep content markup language)
-  * HTML
-  * Youtube
-  * Epub
-  * H5P
-  * Mp4/Webm
-  * PDF
+| Content Type | MIME Type | 
+| --- | --- | 
+|ECML | application/vnd.ekstep.ecml-archive|
+|HTML|application/vnd.ekstep.html-archive|
+|Epub|application/epub|
+|H5P|application/vnd.ekstep.h5p-archive|
+|PDF|application/pdf|
+|YOUTUBE|video/x-youtube|
+|WEBM|video/Webm|
+|MP4|video/mp4|
+|EXTERNAL CONTENT|text/x-url|
+
 
 ## How to render the contents?
 
@@ -115,10 +122,9 @@ var previewObj = {
 
 1. **How to render in Web**
 
-    content player will render inside the web environment with the above configuration .
+    Content player will render inside the web environment with the above configuration .
     
 	**HTML**
-	
 	```html
 	<div class="content-player">
 	    <iframe id="preview" src ='./node_modules/@project-sunbird/content-player/preview.html?webview=true' width=100% height=100%></iframe>
@@ -126,7 +132,6 @@ var previewObj = {
 	
 	```
 	**JS**
-	
 	```js
 	
 	  var previewElement = jQuery('#preview')[0];
@@ -137,7 +142,7 @@ var previewObj = {
 	```
 2. **How to render in Device(cordova)**
 
-content player will render inside Cordova environment and it's accepting the configuration through ```cordova webintent```
+Content player will render inside Cordova environment and it's accepting the configuration through ```cordova webintent```
 
 
 
@@ -154,9 +159,9 @@ content player will render inside Cordova environment and it's accepting the con
 
  **How to Run**
 
-* Clone the content player from here
+* Clone the content player from [here](https://github.com/project-sunbird/sunbird-content-player)
 * Run `npm install` in PROJECT_FOLDER/player path
-* To run player in local `node app`
+* To run player in local run `node app` in the Terminal
 
  **How to build**
     
@@ -167,14 +172,33 @@ content player will render inside Cordova environment and it's accepting the con
    2. **AAR**
    
  		Run  `npm run build-aar sunbird`  which creates an aar file for the sunbird instance
- 	
- The AAR file will create in the below path.
+
+        The AAR file will create in the below path.
+
+        >PROJECT_FOLDER/player/platforms/android/build/outputs/aar/geniecanvas-BUILD_NUMBER-debug.aar
  
-> PROJECT_FOLDER/player/platforms/android/build/outputs/aar/geniecanvas-BUILD_NUMBER-debug.aar
+   3. **Plugins Package**
+
+        Run  `npm run package-coreplugins -- --env.channel sunbird`  Which bundles all the coreplugins plugins and creates the `coreplugins.js` and `coreplugins.css`  
+
+   4. **Test Cases**
+
+        Run  `npm run test` Which runs the player test cases.         
+ 	
  
 
+## Change Logs
+ See [ChangeLogs](https://github.com/project-sunbird/sunbird-content-player/releases) for more information 
+
+## License
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/project-sunbird/sunbird-content-player/blob/master/LICENSE) file for details 
+
+## Versioning
+
+We use [SemVer](https://semver.org/) for versioning. For the versions available, see the [tags](https://github.com/project-sunbird/sunbird-content-player/tags) on this repository.
+
 ## Any Issues ?
-We have an open and active [issue tracker](https://github.com/Field-Issues/issues). Please report any issues.
+We have an open and active [issue tracker](https://github.com/Field-Issues/issues). Please report any issues. 
 
 
 

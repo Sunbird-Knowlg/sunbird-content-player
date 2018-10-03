@@ -63,10 +63,10 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
      * @memberof org.ekstep.contentrenderer.baseLauncher
      */
     end: function() {
-        if (this.sleepMode) return;
-        this.heartBeatEvent(false);
-        this.endTelemetry();
-        EkstepRendererAPI.dispatchEvent("renderer:endpage:show");
+        if (this.sleepMode) return
+        this.heartBeatEvent(false)
+        this.endTelemetry()
+        EkstepRendererAPI.dispatchEvent("renderer:endpage:show")
     },
 
     /**
@@ -122,15 +122,15 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
      * Generation of OE_END Telemetry event.
      */
     endTelemetry: function() {
-        if (this.sleepMode) return;
+        if (this.sleepMode) return
         if (TelemetryService.instance && TelemetryService.instance.telemetryStartActive()) {
-            var telemetryEndData = {};
-            telemetryEndData.stageid = getCurrentStageId();
-            telemetryEndData.progress = this.contentProgress();
-            console.info("telemetryEndData", telemetryEndData);
-            TelemetryService.end(telemetryEndData);
+            var telemetryEndData = {}
+            telemetryEndData.stageid = getCurrentStageId()
+            telemetryEndData.progress = this.contentProgress()
+            console.info("telemetryEndData", telemetryEndData)
+            TelemetryService.end(telemetryEndData)
         } else {
-            console.warn('Telemetry service end is already logged Please log start telemetry again');
+            console.warn("Telemetry service end is already logged Please log start telemetry again")
         }
     },
 
