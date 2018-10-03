@@ -210,6 +210,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
 
     addDownloadButton: function(path, pdfSearchContainer){
+        if(!path.length) return false;
         var instance = this;
         var downloadBtn = document.createElement("img");
         downloadBtn.id = "download-btn"; 

@@ -76,5 +76,10 @@ describe('Pdfrenderer Plugin', function() {
             $('#download-btn').click();
             expect('click').toHaveBeenTriggeredOn($('#download-btn'));
         });
+        it("It should not show download button", function() {
+            spyOn(pdfrendererInstance, "addDownloadButton").and.callThrough();
+            pdfrendererInstance.addDownloadButton(undefined, "");
+            expect($('#download-btn').length).toEqual(0);
+        });
     });
 });
