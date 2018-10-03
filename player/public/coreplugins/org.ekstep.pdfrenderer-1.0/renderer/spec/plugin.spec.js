@@ -71,5 +71,10 @@ describe('Pdfrenderer Plugin', function() {
             $('#pdf-next').click();
             expect('click').toHaveBeenTriggeredOn($('#pdf-next'));
         });
+        it("It should trigger click evet on download pdf button", function() {
+            spyOnEvent($('#download-btn'), 'click');
+            $('#download-btn').click();
+            expect('click').toHaveBeenTriggeredOn($('#download-btn'));
+        });
     });
 });

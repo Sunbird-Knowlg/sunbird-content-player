@@ -121,6 +121,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
         if (!window.cordova){
             var downloadBtn = document.createElement("img");
+            downloadBtn.id = "download-btn"; 
             downloadBtn.src = EkstepRendererAPI.resolvePluginResource(instance.manifest.id, instance.manifest.ver, "renderer/assets/mdpi.png");
             downloadBtn.style = "padding-left: 2.5px; margin-left: 2px; width: 13.5%; margin-bottom: -3%; cursor: pointer;"
             downloadBtn.onclick = function(){
