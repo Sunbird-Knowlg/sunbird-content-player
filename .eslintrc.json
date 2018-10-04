@@ -56,7 +56,6 @@
         "AudioManager": true,
         "CommandManager": true,
         "EkstepRendererEvents": true,
-        "getCurrentStageId": true,
         "contentExitCall": true,
         "getCurrentStageId": true,
         "splashScreen": true,

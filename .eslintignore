@@ -2,7 +2,7 @@ public/libs/**
 public/js/basePlugin.js
 public/js/app/speech.js
 public/test/**
-public/fixture-stories
+public/fixture-stories/**
 public/example
 public/coreplugins
 hooks/**
