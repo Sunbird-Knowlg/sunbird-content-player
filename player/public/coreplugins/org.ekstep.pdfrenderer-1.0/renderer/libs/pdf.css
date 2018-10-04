@@ -109,3 +109,11 @@
 .higheropacity {
     opacity: 1 !important;
 }
+
+.pdf-download-btn{
+    padding-left: 2.5px;
+    margin-left: 2px; 
+    width: 13.5%;
+    margin-bottom: -3%;
+    cursor: pointer;
+}

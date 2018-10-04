@@ -23,6 +23,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         this._manifest = manifestData;
         EkstepRendererAPI.addEventListener('nextClick', this.nextNavigation, this);
         EkstepRendererAPI.addEventListener('previousClick', this.previousNavigation, this);
+        this.downloadIcon = EkstepRendererAPI.resolvePluginResource(this.manifest.id, this.manifest.ver, "renderer/assets/mdpi.png");
     },
     enableOverly: function () {
         EkstepRendererAPI.dispatchEvent("renderer:overlay:show");
@@ -118,6 +119,10 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         pdfSearchContainer.appendChild(findTextField);
         pdfSearchContainer.appendChild(findSubmit);
 
+        if (!window.cordova){
+            this.addDownloadButton(path, pdfSearchContainer);
+        }
+
         pdfButtons.appendChild(pdfPrevButton);
         pdfButtons.appendChild(pdfNextButton);
 
@@ -205,6 +210,28 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         context.showPDF(path, context.manifest);
     },
 
+    addDownloadButton: function(path, pdfSearchContainer){
+        if(!path.length) return false;
+        var instance = this;
+        var downloadBtn = document.createElement("img");
+        downloadBtn.id = "download-btn"; 
+        downloadBtn.src = instance.downloadIcon;
+        downloadBtn.className = "pdf-download-btn";
+        downloadBtn.onclick = function(){
+            var link = document.createElement('a');
+            link.href = path;
+            // if path is "xxx/xxx/index.pdf?xx"
+            // then this will take only "index.pdf" string
+            link.download = path.substring(0, path.indexOf('?')).substring(path.lastIndexOf('/')+1);
+            link.dispatchEvent(new MouseEvent('click'));
+            link.remove();
+            EkstepRendererAPI.getTelemetryService().interact("TOUCH", "Download", "TOUCH", {
+                stageId: context.CURRENT_PAGE.toString(),
+                subtype: ''
+            });
+        };
+        pdfSearchContainer.appendChild(downloadBtn);
+    },
     nextNavigation: function() {
         if (this.sleepMode) return;
         EkstepRendererAPI.getTelemetryService().interact("TOUCH", "next", null, {
