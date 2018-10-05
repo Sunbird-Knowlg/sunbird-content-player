@@ -18,6 +18,7 @@ const entryPlus = require('webpack-entry-plus');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const WebpackOnBuildPlugin = require('on-build-webpack');
 const APP_CONFIG = require('./build.config.js')
+const _ = require('underscore');
 
 
 const PLUGINS_BASE_PATH = './public/coreplugins/'; // Plugins base path
@@ -25,56 +26,43 @@ const PACKAGE_JS_FILE_NAME = 'coreplugins.js'; // Packaged all plugins js file n
 const PACKAGE_CSS_FILE_NAME = 'coreplugins.css'; // Packaged all plugins css files name
 const OUTPUT_PATH = 'public/coreplugins-dist/'; //'public/'; // Package file path.
 const DIST_OUTPUT_FILE_PATH = '/renderer/plugin.dist.js'; // dist file path which is created in each plugins folder
-const CONFIG = {
-    drop_console: process.env.drop_console || false,
-    mangle: process.env.mangle || false,
-}
-
-const PLUGINS = process.env.plugins || [
-    "org.ekstep.launcher-1.0",
-    "org.ekstep.repo-1.0",
-    "org.ekstep.toaster-1.0",
-    "org.ekstep.alert-1.0",
-    "org.ekstep.telemetrysync-1.0",
-    "org.ekstep.nextnavigation-1.0",
-    "org.ekstep.previousnavigation-1.0",
-    "org.ekstep.genie-1.0",
-    "org.ekstep.htmlrenderer-1.0",
-    "org.ekstep.videorenderer-1.0",
-    "org.ekstep.pdfrenderer-1.0",
-    "org.ekstep.epubrenderer-1.0",
-    "org.ekstep.extcontentpreview-1.0"
-];
 
 let entryFiles = []
 
-function getEntryFiles() {
+function getEntryFiles(channel) {
+    const plugins = _.filter([...new Set([...APP_CONFIG[channel].plugins, ...APP_CONFIG['general'].plugins])], function(p) {
+        return p.config.webpack
+    })
     entryFiles = [{
-        entryFiles: packagePlugins(),
+        entryFiles: packagePlugins(plugins),
         outputName: PACKAGE_JS_FILE_NAME,
     }, {
-        entryFiles: getVendorCSS()
+        entryFiles: getVendorCSS(plugins)
     }, ]
     return entryPlus(entryFiles);
 }
-cleanDistFiles = function() {
-    PLUGINS.forEach(function(plugin) {
+cleanDistFiles = function(channel) {
+    const plugins = _.filter([...new Set([...APP_CONFIG[channel].plugins, ...APP_CONFIG['general'].plugins])], function(p) {
+        return p.config.webpack
+    })
+    plugins.forEach(function(plugin) {
         if (fs.existsSync(`${PLUGINS_BASE_PATH}${plugin}${DIST_OUTPUT_FILE_PATH}`)) {
             fs.unlinkSync(`${PLUGINS_BASE_PATH}${plugin}${DIST_OUTPUT_FILE_PATH}`);
         }
     })
 }
 
-function packagePlugins() {
+function packagePlugins(plugins) {
+
     var pluginPackageArr = [];
-    PLUGINS.forEach(function(plugin) {
+    plugins.forEach(function(plugin) {
         var dependenciesArr = [];
         var packagedDepArr = [];
-        var manifest = JSON.parse(fs.readFileSync(`${PLUGINS_BASE_PATH}${plugin}/manifest.json`));
+        var manifest = JSON.parse(fs.readFileSync(`${PLUGINS_BASE_PATH}${plugin.id}-${plugin.ver}/manifest.json`));
         console.log("manifest", manifest)
-        var pluginContent = fs.readFileSync(`${PLUGINS_BASE_PATH}${plugin}/renderer/plugin.js`, 'utf8');
-        if (fs.existsSync(`${PLUGINS_BASE_PATH}${plugin}${DIST_OUTPUT_FILE_PATH}`)) {
-            fs.unlinkSync(`${PLUGINS_BASE_PATH}${plugin}${DIST_OUTPUT_FILE_PATH}`);
+        var pluginContent = fs.readFileSync(`${PLUGINS_BASE_PATH}${plugin.id}-${plugin.ver}/renderer/plugin.js`, 'utf8');
+        if (fs.existsSync(`${PLUGINS_BASE_PATH}${plugin.id}-${plugin.ver}${DIST_OUTPUT_FILE_PATH}`)) {
+            fs.unlinkSync(`${PLUGINS_BASE_PATH}${plugin.id}-${plugin.ver}${DIST_OUTPUT_FILE_PATH}`);
         }
         if (manifest.renderer.views && pluginContent) {
             var controllerPathArr = [];
@@ -103,27 +91,27 @@ function packagePlugins() {
         if (manifest.renderer.dependencies) {
             manifest.renderer.dependencies.forEach(function(obj, i) {
                 if (obj.type == "js") {
-                    dependenciesArr[i] = fs.readFileSync(`${PLUGINS_BASE_PATH}${plugin}/${obj.src}`, 'utf8');
+                    dependenciesArr[i] = fs.readFileSync(`${PLUGINS_BASE_PATH}${plugin.id}-${plugin.ver}/${obj.src}`, 'utf8');
                 }
             });
         }
         dependenciesArr.push('org.ekstep.pluginframework.pluginManager.registerPlugin(' + JSON.stringify(manifest) + ',' + pluginContent.code.replace(/;\s*$/, "") + ')')
 
-        fs.appendFile(`${PLUGINS_BASE_PATH}${plugin}${DIST_OUTPUT_FILE_PATH}`, [...dependenciesArr].join("\n"))
-        pluginPackageArr.push(`${PLUGINS_BASE_PATH}${plugin}${DIST_OUTPUT_FILE_PATH}`)
+        fs.appendFile(`${PLUGINS_BASE_PATH}${plugin.id}-${plugin.ver}${DIST_OUTPUT_FILE_PATH}`, [...dependenciesArr].join("\n"))
+        pluginPackageArr.push(`${PLUGINS_BASE_PATH}${plugin.id}-${plugin.ver}${DIST_OUTPUT_FILE_PATH}`)
     })
 
     return pluginPackageArr;
 }
 
-function getVendorCSS() {
+function getVendorCSS(plugins) {
     var cssDependencies = [];
-    PLUGINS.forEach(function(plugin) {
-        var manifest = JSON.parse(fs.readFileSync(`${PLUGINS_BASE_PATH}${plugin}/manifest.json`));
+    plugins.forEach(function(plugin) {
+        var manifest = JSON.parse(fs.readFileSync(`${PLUGINS_BASE_PATH}${plugin.id}-${plugin.ver}/manifest.json`));
         if (manifest.renderer.dependencies) {
             manifest.renderer.dependencies.forEach(function(dep) {
                 if (dep.type === "css") {
-                    cssDependencies.push(`${PLUGINS_BASE_PATH}${plugin}/${dep.src}`)
+                    cssDependencies.push(`${PLUGINS_BASE_PATH}${plugin.id}-${plugin.ver}/${dep.src}`)
                 }
             })
         };
@@ -134,7 +122,7 @@ function getVendorCSS() {
 module.exports = (env, argv) => {
     console.info(`Plugins are packaging for ${env.channel} environment`);
     return {
-        entry: getEntryFiles(),
+        entry: getEntryFiles(env.channel),
 
         output: {
             filename: '[name]',
@@ -235,19 +223,19 @@ module.exports = (env, argv) => {
                 uglifyOptions: {
                     compress: {
                         dead_code: true,
-                        drop_console: CONFIG.drop_console,
+                        drop_console: APP_CONFIG.minification.drop_console,
                         global_defs: {
                             DEBUG: true
                         },
                         passes: 1,
                     },
                     ecma: 5,
-                    mangle: CONFIG.mangle
+                    mangle: APP_CONFIG.minification.mangle
                 },
                 sourceMap: true
             }),
             new WebpackOnBuildPlugin(function(stats) {
-                cleanDistFiles();
+                cleanDistFiles(env.channel);
                 packageChannelPlugins(env.channel) // TODO: ECML Plugin is unable to pack with the webpack hence just writing the ecml plugin script to coreplugins.js 
                 console.log("Cleared all plugin.dist.js files");
                 // Remove the plugin.dist files from all plugins folder once build is done.
@@ -274,10 +262,13 @@ module.exports = (env, argv) => {
      */
     function packageChannelPlugins(channel) {
         try {
-            let plugins = APP_CONFIG[channel].plugins;
+            //let plugins = APP_CONFIG[channel].plugins;
+            const plugins = _.filter([...new Set([...APP_CONFIG[channel].plugins, ...APP_CONFIG['general'].plugins])], function(p) {
+                return !p.config.webpack
+            })
             let jsDependencyPath, cssDependencyPath;
             plugins.forEach(function(plugin) {
-                if (plugin.minify) {
+                if (plugin.config.minify) {
                     console.log("Plugins are", plugin);
                     let manifest = JSON.parse(fs.readFileSync(`${PLUGINS_BASE_PATH}${plugin.id}-${plugin.ver}/manifest.json`));
                     let pluginContent = uglifyjs.minify(fs.readFileSync(`${PLUGINS_BASE_PATH}${plugin.id}-${plugin.ver}/${manifest.renderer.main}`, 'utf8'));

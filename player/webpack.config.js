@@ -5,11 +5,6 @@
  *                 - CMD to run this file for sunbird channel 👉 [npm run build sunbird]
  */
 
-
-const BUILD_NUMBER = process.env.build_number;
-const PLAYER_VER = process.env.player_version_number;
-const FILTER_PLUGINS = process.env.filter_plugins || 'false'; // To seperate the plugins for ekstep and sunbird.
-
 // Required dependency files
 const path = require('path');
 const webpack = require('webpack');
@@ -39,84 +34,23 @@ const FOLDER_PATHS = {
     jsLibs: "../js-libs/",
 
 };
-const APP_STYLE = [
-    './public/styles/ionic.css',
-    './public/styles/bookshelf_slider.css',
-    './public/styles/skin02.css',
-    './public/styles/toastr.min.css',
-    './public/styles/jquery.mCustomScrollbar.min.css',
-    './public/styles/style.css',
-    './public/coreplugins-dist/coreplugins.css' // Include the coreplugins.css if have only else comment out this line
-];
-
-const EXTERNAL_SCRIPTS = [
-    './public/libs/jquery.min.js',
-    './public/libs/jquery.easing.1.3.js',
-    './public/libs/jquery.bookshelfslider.min.js',
-    './public/libs/async.min.js',
-    './public/libs/toastr.min.js',
-    './public/libs/jquery.mCustomScrollbar.concat.min.js',
-    './public/libs/underscore.js',
-    './public/libs/date-format.js',
-    './public/libs/ionic.bundle.min.js',
-    './public/libs/angular-resource.min.js',
-    './public/libs/ng-cordova.min.js',
-    './public/libs/ocLazyLoad.js',
-    './public/libs/eventbus.min.js',
-    './public/libs/plugin-framework.min.js'
-];
-
-const APP_SCRIPTS = [
-    './public/libs/class.js',
-    './public/js/globalContext.js',
-    './public/js/appMessages.js',
-    './public/js/splashScreen.js',
-    './public/js/main.js',
-    './public/js/app.js',
-    './public/js/basePlugin.js',
-    './public/services/mainservice.js',
-    //'./public/services/localservice.js', // For localdevelopment use localservice.js insted of webservice.js
-    './public/services/webservice.js',
-    './public/services/interfaceService.js',
-    './public/js/ekstepRendererApi.js',
-    './public/js/content-renderer.js',
-    './public/js/baseLauncher.js',
-    './public/js/baseEndpage.js',
-    './public/services/controllerservice.js',
-    './public/js/ekstepRendererEvents.js',
-    './public/js/iEvaluator.js',
-    './public/dispatcher/idispatcher.js',
-    './public/dispatcher/web-dispatcher.js',
-    './public/dispatcher/device-dispatcher.js',
-    '../js-libs/renderer/manager/AudioManager.js',
-];
-const TELEMETRY = [
-    './public/libs/date-format.js',
-    '../js-libs/build/telemetry.min.js',
-    '../js-libs/telemetry/InActiveEvent.js',
-    '../js-libs/telemetry/TelemetryEvent.js',
-    '../js-libs/telemetry/TelemetryService.js',
-    '../js-libs/telemetry/TelemetryServiceUtil.js',
-    '../js-libs/telemetry/TelemetryV1Manager.js',
-    '../js-libs/telemetry/TelemetryV2Manager.js',
-    '../js-libs/telemetry/TelemetryV3Manager.js',
-];
 
 // removing the duplicate files
-const SCRIPTS = [...new Set([...EXTERNAL_SCRIPTS, ...TELEMETRY, ...APP_SCRIPTS])];
+const SCRIPTS = [...new Set([...APP_CONFIG.general.scripts.external, ...APP_CONFIG.general.scripts.internal])];
+const STYLES = [...new Set([...APP_CONFIG.general.styles.external, ...APP_CONFIG.general.styles.internal])];
 
-if (!BUILD_NUMBER && !PLAYER_VER) {
+if (!APP_CONFIG.build_number && !APP_CONFIG.player_ver) {
     console.error('Error!!! Cannot find player_version_number and build_number env variables');
     return process.exit(1)
 }
-const VERSION = PLAYER_VER + '.' + BUILD_NUMBER;
+const VERSION = APP_CONFIG.player_ver + '.' + APP_CONFIG.build_number;
 
 module.exports = (env, argv) => {
     (env.channel === CONSTANTS.sunbird) ? SCRIPTS.unshift(APP_CONFIG.sunbird.configFile): SCRIPTS.unshift(APP_CONFIG.ekstep.configFile);
     return {
         entry: {
             'script': SCRIPTS,
-            "style": APP_STYLE
+            "style": STYLES
         },
         output: {
             filename: `[name].min.${VERSION}.js`,
@@ -216,6 +150,7 @@ module.exports = (env, argv) => {
             new CleanWebpackPlugin([path.resolve(__dirname, 'public/' + CONSTANTS.build_folder_name)]),
             new MiniCssExtractPlugin({
                 filename: `[name].min.${VERSION}.css`,
+                chunkFilename: "[id].css"
             }),
             new WebpackOnBuildPlugin(function(stats) {
                 replaceStringInFiles(env.channel);
@@ -272,8 +207,8 @@ module.exports = (env, argv) => {
 
 function copyCorePlugins(channel) {
     let plugins = [];
-    console.log("FILTER_PLUGINS", FILTER_PLUGINS)
-    if (FILTER_PLUGINS === 'true') {
+    console.log("FILTER_PLUGINS", APP_CONFIG.filter_plugins)
+    if (APP_CONFIG.filter_plugins === 'true') {
         console.log("Plugins are filtering ")
         plugins = (channel === CONSTANTS.sunbird) ? APP_CONFIG.sunbird.plugins : APP_CONFIG.ekstep.plugins;
     } else {
@@ -282,7 +217,7 @@ function copyCorePlugins(channel) {
     }
     console.log("Plugins are ", plugins);
     plugins.forEach(plugin => {
-        if (plugin.package) {
+        if (plugin.config.package) {
             console.log("Plugins moving", plugin);
             file_extra.copy(`${FOLDER_PATHS.basePath}/public/coreplugins/${plugin.id}-${plugin.ver}`, `${FOLDER_PATHS.basePath}/public/${CONSTANTS.build_folder_name}/coreplugins/${plugin.id}-${plugin.ver}/`)
         }
