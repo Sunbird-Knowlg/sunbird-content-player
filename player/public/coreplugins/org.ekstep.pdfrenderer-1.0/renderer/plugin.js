@@ -23,7 +23,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         this._manifest = manifestData;
         EkstepRendererAPI.addEventListener('nextClick', this.nextNavigation, this);
         EkstepRendererAPI.addEventListener('previousClick', this.previousNavigation, this);
-        this.downloadIcon = EkstepRendererAPI.resolvePluginResource(this.manifest.id, this.manifest.ver, "renderer/assets/mdpi.png");
     },
     enableOverly: function () {
         EkstepRendererAPI.dispatchEvent("renderer:overlay:show");
