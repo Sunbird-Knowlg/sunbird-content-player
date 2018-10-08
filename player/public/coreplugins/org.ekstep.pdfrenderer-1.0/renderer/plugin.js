@@ -23,7 +23,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         this._manifest = manifestData;
         EkstepRendererAPI.addEventListener('nextClick', this.nextNavigation, this);
         EkstepRendererAPI.addEventListener('previousClick', this.previousNavigation, this);
-        this.downloadIcon = EkstepRendererAPI.resolvePluginResource(this.manifest.id, this.manifest.ver, "renderer/assets/mdpi.png");
     },
     enableOverly: function () {
         EkstepRendererAPI.dispatchEvent("renderer:overlay:show");
@@ -215,16 +214,10 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var instance = this;
         var downloadBtn = document.createElement("img");
         downloadBtn.id = "download-btn"; 
-        downloadBtn.src = instance.downloadIcon;
+        downloadBtn.src = "assets/icons/download.png";
         downloadBtn.className = "pdf-download-btn";
         downloadBtn.onclick = function(){
-            var link = document.createElement('a');
-            link.href = path;
-            // if path is "xxx/xxx/index.pdf?xx"
-            // then this will take only "index.pdf" string
-            link.download = path.substring(0, path.indexOf('?')).substring(path.lastIndexOf('/')+1);
-            link.dispatchEvent(new MouseEvent('click'));
-            link.remove();
+            window.open(path, '_blank');
             EkstepRendererAPI.getTelemetryService().interact("TOUCH", "Download", "TOUCH", {
                 stageId: context.CURRENT_PAGE.toString(),
                 subtype: ''
