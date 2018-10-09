@@ -261,30 +261,30 @@ module.exports = (env, argv) => {
      * @param {string} channel sunbird/ekstep
      */
     function packageChannelPlugins(channel) {
+        var execludePlugins = [{ id: "org.sunbird.player.endpage", ver: "1.0" }, { id: "org.ekstep.endpage", ver: "1.0" }];
         try {
-            //let plugins = APP_CONFIG[channel].plugins;
-            const plugins = _.filter([...new Set([...APP_CONFIG[channel].plugins, ...APP_CONFIG['general'].plugins])], function(p) {
+            const plugins = _.filter(_.filter([...new Set([...APP_CONFIG[channel].plugins, ...APP_CONFIG['general'].plugins])], function(p) {
                 return !p.config.webpack
+            }), function(plugin) {
+                return plugin.id === "org.sunbird.player.endpage" || "org.ekstep.endpage"; //
             })
             let jsDependencyPath, cssDependencyPath;
             plugins.forEach(function(plugin) {
-                if (plugin.config.minify) {
-                    console.log("Plugins are", plugin);
-                    let manifest = JSON.parse(fs.readFileSync(`${PLUGINS_BASE_PATH}${plugin.id}-${plugin.ver}/manifest.json`));
-                    let pluginContent = uglifyjs.minify(fs.readFileSync(`${PLUGINS_BASE_PATH}${plugin.id}-${plugin.ver}/${manifest.renderer.main}`, 'utf8'));
-                    if (manifest.renderer.dependencies) {
-                        manifest.renderer.dependencies.forEach(function(dependency) {
-                            jsDependencyPath = (dependency.type === 'js') && `${PLUGINS_BASE_PATH}${plugin.id}-${plugin.ver}/${dependency.src}`
-                            cssDependencyPath = (dependency.type === 'css') && `${PLUGINS_BASE_PATH}${plugin.id}-${plugin.ver}/${dependency.src}`
-                            jsDependencyPath && fs.appendFile(`${OUTPUT_PATH}${PACKAGE_JS_FILE_NAME}`, fs.readFileSync(`${jsDependencyPath}`), 'utf8');
-                            cssDependencyPath && fs.appendFile(`${OUTPUT_PATH}${PACKAGE_CSS_FILE_NAME}`, fs.readFileSync(`${cssDependencyPath}`), 'utf8');
-                        });
-                    }
-                    if (pluginContent.code) {
-                        fs.appendFile(`${OUTPUT_PATH}${PACKAGE_JS_FILE_NAME}`, 'org.ekstep.pluginframework.pluginManager.registerPlugin(' + JSON.stringify(manifest) + ',eval(\'' + pluginContent.code.replace(/'/g, "\\'") + '\'))' + '\n');
-                    } else {
-                        throw new Error('Unable to read the plugin content')
-                    }
+                console.log("Plugins are", plugin);
+                let manifest = JSON.parse(fs.readFileSync(`${PLUGINS_BASE_PATH}${plugin.id}-${plugin.ver}/manifest.json`));
+                let pluginContent = uglifyjs.minify(fs.readFileSync(`${PLUGINS_BASE_PATH}${plugin.id}-${plugin.ver}/${manifest.renderer.main}`, 'utf8'));
+                if (manifest.renderer.dependencies) {
+                    manifest.renderer.dependencies.forEach(function(dependency) {
+                        jsDependencyPath = (dependency.type === 'js') && `${PLUGINS_BASE_PATH}${plugin.id}-${plugin.ver}/${dependency.src}`
+                        cssDependencyPath = (dependency.type === 'css') && `${PLUGINS_BASE_PATH}${plugin.id}-${plugin.ver}/${dependency.src}`
+                        jsDependencyPath && fs.appendFile(`${OUTPUT_PATH}${PACKAGE_JS_FILE_NAME}`, fs.readFileSync(`${jsDependencyPath}`), 'utf8');
+                        cssDependencyPath && fs.appendFile(`${OUTPUT_PATH}${PACKAGE_CSS_FILE_NAME}`, fs.readFileSync(`${cssDependencyPath}`), 'utf8');
+                    });
+                }
+                if (pluginContent.code) {
+                    fs.appendFile(`${OUTPUT_PATH}${PACKAGE_JS_FILE_NAME}`, 'org.ekstep.pluginframework.pluginManager.registerPlugin(' + JSON.stringify(manifest) + ',eval(\'' + pluginContent.code.replace(/'/g, "\\'") + '\'))' + '\n');
+                } else {
+                    throw new Error('Unable to read the plugin content')
                 }
             });
         } catch (e) {

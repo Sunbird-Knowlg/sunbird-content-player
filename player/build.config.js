@@ -1,6 +1,11 @@
 /**
  * @description  Build specific configurations
+ * - Currently, Player is having 2 level configurations 🛠  1.Sunbird 2. Ekstep
+ * - Plugin Level config 👉 config:{webpack:true/false,(webpack defines Wether plugin should minify using webpack or not) 
+ *    package:true/false,(Package defines plugin should bundle with the preview zip/AAR or not) minify:true/false(Minify defines the plugin should not minify using webpack it should just append plugin.js and it's dependencies to coreplugins.js/coreplugins.css)}
+ * 
  * @author Manjunath Davanam <manjunathd@ilimi.in>
+ * 
  */
 module.exports = {
     build_number: process.env.build_number || 1,
@@ -15,10 +20,10 @@ module.exports = {
         splashScreen: {
             backgroundImage: "./public/assets/icons/background_1.png"
         },
-        plugins: [{ id: "org.ekstep.overlay", ver: "1.0", config: { minify: true, package: true, webpack: false } },
-            { id: "org.ekstep.userswitcher", ver: "1.0", config: { minify: true, package: true, webpack: false } },
-            { id: "org.ekstep.ecmlrenderer", ver: "1.0", config: { minify: true, package: false, webpack: false } },
-            { id: "org.ekstep.endpage", ver: "1.0", config: { minify: false, package: true, webpack: false } }
+        plugins: [{ id: "org.ekstep.overlay", ver: "1.0", config: { package: true, webpack: false } },
+            { id: "org.ekstep.userswitcher", ver: "1.0", config: { package: true, webpack: false } },
+            { id: "org.ekstep.ecmlrenderer", ver: "1.0", config: { package: false, webpack: false } },
+            { id: "org.ekstep.endpage", ver: "1.0", config: { package: true, webpack: false } }
         ],
     },
     sunbird: {
@@ -27,27 +32,27 @@ module.exports = {
             backgroundImage: "./public/assets/icons/splacebackground_1.png"
         },
         plugins: [
-            { id: "org.ekstep.overlay", ver: "1.0", config: { minify: true, package: true, webpack: false } },
-            { id: "org.sunbird.player.userswitcher", ver: "1.0", config: { minify: true, package: true, webpack: false } },
-            { id: "org.ekstep.ecmlrenderer", ver: "1.0", config: { minify: true, package: false, webpack: false } },
-            { id: "org.sunbird.player.endpage", ver: "1.1", config: { minify: false, package: true, webpack: false } }
+            { id: "org.ekstep.overlay", ver: "1.0", config: { package: true, webpack: false } },
+            { id: "org.sunbird.player.userswitcher", ver: "1.0", config: { package: true, webpack: false } },
+            { id: "org.ekstep.ecmlrenderer", ver: "1.0", config: { package: false, webpack: false } },
+            { id: "org.sunbird.player.endpage", ver: "1.1", config: { package: true, webpack: false } }
         ]
     },
     general: {
         plugins: [
-            { id: "org.ekstep.launcher", ver: "1.0", config: { minify: false, package: false, webpack: true } },
-            { id: "org.ekstep.repo", ver: "1.0", config: { minify: false, package: false, webpack: true } },
-            { id: "org.ekstep.toaster", ver: "1.0", config: { minify: false, package: false, webpack: true } },
-            { id: "org.ekstep.alert", ver: "1.0", config: { minify: false, package: false, webpack: true } },
-            { id: "org.ekstep.telemetrysync", ver: "1.0", config: { minify: false, package: false, webpack: true } },
-            { id: "org.ekstep.nextnavigation", ver: "1.0", config: { minify: false, package: false, webpack: true } },
-            { id: "org.ekstep.previousnavigation", ver: "1.0", config: { minify: false, package: false, webpack: true } },
-            { id: "org.ekstep.genie", ver: "1.0", config: { minify: false, package: false, webpack: true } },
-            { id: "org.ekstep.htmlrenderer", ver: "1.0", config: { minify: false, package: false, webpack: true } },
-            { id: "org.ekstep.videorenderer", ver: "1.0", config: { minify: false, package: false, webpack: true } },
-            { id: "org.ekstep.pdfrenderer", ver: "1.0", config: { minify: false, package: false, webpack: true } },
-            { id: "org.ekstep.epubrenderer", ver: "1.0", config: { minify: false, package: false, webpack: true } },
-            { id: "org.ekstep.extcontentpreview", ver: "1.0", config: { minify: false, package: false, webpack: true } },
+            { id: "org.ekstep.launcher", ver: "1.0", config: { package: false, webpack: true } },
+            { id: "org.ekstep.repo", ver: "1.0", config: { package: false, webpack: true } },
+            { id: "org.ekstep.toaster", ver: "1.0", config: { package: false, webpack: true } },
+            { id: "org.ekstep.alert", ver: "1.0", config: { package: false, webpack: true } },
+            { id: "org.ekstep.telemetrysync", ver: "1.0", config: { package: false, webpack: true } },
+            { id: "org.ekstep.nextnavigation", ver: "1.0", config: { package: false, webpack: true } },
+            { id: "org.ekstep.previousnavigation", ver: "1.0", config: { package: false, webpack: true } },
+            { id: "org.ekstep.genie", ver: "1.0", config: { package: false, webpack: true } },
+            { id: "org.ekstep.htmlrenderer", ver: "1.0", config: { package: false, webpack: true } },
+            { id: "org.ekstep.videorenderer", ver: "1.0", config: { package: false, webpack: true } },
+            { id: "org.ekstep.pdfrenderer", ver: "1.0", config: { package: false, webpack: true } },
+            { id: "org.ekstep.epubrenderer", ver: "1.0", config: { package: false, webpack: true } },
+            { id: "org.ekstep.extcontentpreview", ver: "1.0", config: { package: false, webpack: true } },
         ],
         scripts: {
             external: [
