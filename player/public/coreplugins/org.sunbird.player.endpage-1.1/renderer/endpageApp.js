@@ -189,24 +189,11 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
         org.ekstep.service.content.clearTelemetryEvents();
         $scope.safeApply();
     });
-    $scope.precision = function(a) {
-        if (!isFinite(a)) return 0;
-        var e = 1,
-            p = 0;
-        while (Math.round(a * e) / e !== a) {
-            e *= 10;
-            p++;
-        }
-        return p;
-    };
 
-    $scope.convert = function(totalScore) {
-        if ((!isNaN(totalScore) && totalScore.toString().indexOf('.') != -1)) {
-            var precisionLen = $scope.precision(totalScore);
-            return precisionLen > 1 ? totalScore.toFixed(2) : totalScore;
-        } else {
-            return totalScore
-        }
+    $scope.convert = function(num) {
+        num = num.toString(); //If it's not already a String
+        num = num.slice(0, (num.indexOf(".")) + 3); //With 3 exposing the hundredths place
+        return Number(num); //If you need it back as a Number
     };
      
 });
