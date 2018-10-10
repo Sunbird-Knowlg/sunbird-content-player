@@ -161,8 +161,9 @@ Content player will render inside Cordova environment and it's accepting the con
 
 * Clone the content player from [here](https://github.com/project-sunbird/sunbird-content-player)
 * Run `npm install` in PROJECT_FOLDER/player path
-* To run player in local run `node app` in the Terminal
 * Disable `isCorePluginsPackaged` variable in the `appConfig.js` to load/run the plugins without minifiying.   
+* To run player in local run `node app` in the Terminal
+* Open http://localhost:3000/ in the browser. By default player runs in the `3000` port
 
  **How to build**
     
