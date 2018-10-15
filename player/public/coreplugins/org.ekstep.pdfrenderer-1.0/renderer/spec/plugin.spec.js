@@ -71,5 +71,15 @@ describe('Pdfrenderer Plugin', function() {
             $('#pdf-next').click();
             expect('click').toHaveBeenTriggeredOn($('#pdf-next'));
         });
+        it("It should trigger click event on download pdf button", function() {
+            spyOnEvent($('#download-btn'), 'click');
+            $('#download-btn').click();
+            expect('click').toHaveBeenTriggeredOn($('#download-btn'));
+        });
+        it("It should not show download button", function() {
+            spyOn(pdfrendererInstance, "addDownloadButton").and.callThrough();
+            pdfrendererInstance.addDownloadButton(undefined, "");
+            expect($('#download-btn').length).toEqual(0);
+        });
     });
 });

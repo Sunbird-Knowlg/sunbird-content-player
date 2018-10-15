@@ -1,3 +1,11 @@
+/** 
+ * @author Manjunath Davanam<manjunathd@ilimi.in> 
+ * @description - Which minifies and bundles the all core plugins  with js/css dependency files.
+ *              - Before bundle It will read the plugins views and dependency object which is defined in the plugin manifest.json.
+ * @example     - CMD to run this file for ekstep channel.  👉 [npm run package-coreplugins -- --env.channel=ekstep]
+ *              - CMD to run this file for sunbird channel. 👉 [npm run package-coreplugins -- --env.channel=sunbird]
+ */
+
 // Dependency files 
 const path = require('path');
 const webpack = require('webpack');
@@ -9,10 +17,13 @@ const fs = require('fs');
 const entryPlus = require('webpack-entry-plus');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const WebpackOnBuildPlugin = require('on-build-webpack');
+const APP_CONFIG = require('./build.config.js')
+
 
 const PLUGINS_BASE_PATH = './public/coreplugins/'; // Plugins base path
-const PACKAGE_FILE_NAME = 'coreplugins.js'; // Packaged all plugins file name
-const OUTPUT_PATH = 'public/js'; // Package file path.
+const PACKAGE_JS_FILE_NAME = 'coreplugins.js'; // Packaged all plugins js file name
+const PACKAGE_CSS_FILE_NAME = 'coreplugins.css'; // Packaged all plugins css files name
+const OUTPUT_PATH = 'public/coreplugins-dist/'; //'public/'; // Package file path.
 const DIST_OUTPUT_FILE_PATH = '/renderer/plugin.dist.js'; // dist file path which is created in each plugins folder
 const CONFIG = {
     drop_console: process.env.drop_console || false,
@@ -27,7 +38,12 @@ const PLUGINS = process.env.plugins || [
     "org.ekstep.telemetrysync-1.0",
     "org.ekstep.nextnavigation-1.0",
     "org.ekstep.previousnavigation-1.0",
-    "org.ekstep.genie-1.0"
+    "org.ekstep.genie-1.0",
+    "org.ekstep.htmlrenderer-1.0",
+    "org.ekstep.videorenderer-1.0",
+    "org.ekstep.pdfrenderer-1.0",
+    "org.ekstep.epubrenderer-1.0",
+    "org.ekstep.extcontentpreview-1.0"
 ];
 
 let entryFiles = []
@@ -35,8 +51,10 @@ let entryFiles = []
 function getEntryFiles() {
     entryFiles = [{
         entryFiles: packagePlugins(),
-        outputName: PACKAGE_FILE_NAME,
-    }]
+        outputName: PACKAGE_JS_FILE_NAME,
+    }, {
+        entryFiles: getVendorCSS()
+    }, ]
     return entryPlus(entryFiles);
 }
 cleanDistFiles = function() {
@@ -100,7 +118,7 @@ function packagePlugins() {
 
 function getVendorCSS() {
     var cssDependencies = [];
-    corePlugins.forEach(function(plugin) {
+    PLUGINS.forEach(function(plugin) {
         var manifest = JSON.parse(fs.readFileSync(`${PLUGINS_BASE_PATH}${plugin}/manifest.json`));
         if (manifest.renderer.dependencies) {
             manifest.renderer.dependencies.forEach(function(dep) {
@@ -113,119 +131,173 @@ function getVendorCSS() {
     return cssDependencies;
 }
 
-module.exports = {
+module.exports = (env, argv) => {
+    console.info(`Plugins are packaging for ${env.channel} environment`);
+    return {
+        entry: getEntryFiles(),
 
-    entry: getEntryFiles(),
+        output: {
+            filename: '[name]',
+            path: path.resolve(__dirname, OUTPUT_PATH),
+            chunkFilename: 'chunks/[name].[chunkhash].js'
 
-    output: {
-        filename: '[name]',
-        path: path.resolve(__dirname, OUTPUT_PATH),
-    },
-    resolve: {
-        alias: {
-            'jquery': path.resolve('./public/libs/jquery.min.js'),
-        }
-    },
-    module: {
-        rules: [{
-                test: /\.html$/,
-                use: [{
-                    loader: 'html-loader',
-                    options: {
-                        minimize: true,
-                        removeComments: false,
-                        collapseWhitespace: false
-                    }
-                }],
-            },
-            {
-                test: require.resolve(`${PLUGINS_BASE_PATH}org.ekstep.telemetrysync-1.0/renderer/libs/md5.js`),
-                use: [{
-                    loader: 'expose-loader',
-                    options: 'CryptoJS'
-                }]
-            },
-            {
-                test: require.resolve(`${PLUGINS_BASE_PATH}org.ekstep.toaster-1.0/renderer/libs/toastr.min.js`),
-                use: [{
-                    loader: 'expose-loader',
-                    options: 'toastr'
-                }]
-            },
-            {
-                test: /\.(s*)css$/,
-                use: [
-                    MiniCssExtractPlugin.loader,
-                    {
-                        loader: 'css-loader',
+
+        },
+        resolve: {
+            alias: {
+                'jquery': path.resolve('./public/libs/jquery.min.js'),
+            }
+        },
+        module: {
+            rules: [{
+                    test: /\.html$/,
+                    use: [{
+                        loader: 'html-loader',
                         options: {
-                            sourceMap: false,
                             minimize: true,
-                            "preset": "advanced",
-                            discardComments: {
-                                removeAll: true
+                            removeComments: false,
+                            collapseWhitespace: false
+                        }
+                    }],
+                },
+                {
+                    test: require.resolve(`${PLUGINS_BASE_PATH}org.ekstep.toaster-1.0/renderer/libs/toastr.min.js`),
+                    use: [{
+                        loader: 'expose-loader',
+                        options: 'toastr'
+                    }]
+                },
+                {
+                    test: require.resolve(`${PLUGINS_BASE_PATH}org.ekstep.telemetrysync-1.0/renderer/libs/md5.js`),
+                    use: [{
+                        loader: 'expose-loader',
+                        options: 'CryptoJS'
+                    }]
+                },
+                {
+                    test: /\.(s*)css$/,
+                    use: [
+                        MiniCssExtractPlugin.loader,
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                sourceMap: false,
+                                minimize: true,
+                                "preset": "advanced",
+                                discardComments: {
+                                    removeAll: true
+                                }
                             }
                         }
-                    }
-                ]
-            }, {
-                test: /\.(gif|png|jpeg|svg)$/,
-                use: [
-                    'file-loader',
-                    {
-                        loader: 'url-loader',
+                    ]
+                }, {
+                    test: /\.(gif|png|jpeg|svg)$/,
+                    use: [
+                        'file-loader',
+                        {
+                            loader: 'url-loader',
+                            options: {
+                                limit: 50, //it's important
+                                outputPath: './images/assets',
+                                name: '[name].[ext]',
+                            }
+                        },
+                    ],
+                }, {
+                    test: /\.(woff|woff2|eot|ttf|otf|svg|png)$/,
+                    use: [{
+                        loader: 'file-loader',
                         options: {
-                            limit: 50, //it's important
-                            outputPath: './images/assets',
                             name: '[name].[ext]',
+                            outputPath: './fonts/',
+                            limit: 10000,
+                            fallback: 'responsive-loader'
                         }
+                    }]
+                }
+            ]
+        },
+        plugins: [
+            new MiniCssExtractPlugin({
+                filename: PACKAGE_CSS_FILE_NAME,
+            }),
+            new webpack.ProvidePlugin({
+                jQuery: 'jquery',
+                RSVP: 'rsvp',
+                toastr: path.resolve(`${PLUGINS_BASE_PATH}org.ekstep.toaster-1.0/renderer/libs/toastr.min.js`),
+                CryptoJS: path.resolve(`${PLUGINS_BASE_PATH}org.ekstep.telemetrysync-1.0/renderer/libs/md5.js`),
+                JSZip: path.resolve(`${PLUGINS_BASE_PATH}org.ekstep.epubrenderer-1.0/renderer/libs/jszip.min.js`),
+                videojs: path.resolve(`${PLUGINS_BASE_PATH}org.ekstep.videorenderer-1.0/renderer/libs/video.js`),
+            }),
+            new UglifyJsPlugin({
+                cache: false,
+                parallel: true,
+                uglifyOptions: {
+                    compress: {
+                        dead_code: true,
+                        drop_console: CONFIG.drop_console,
+                        global_defs: {
+                            DEBUG: true
+                        },
+                        passes: 1,
                     },
-                ],
-            }
-        ]
-    },
-    plugins: [
-        new MiniCssExtractPlugin({
-            filename: "[name].min.css",
-        }),
-        new webpack.ProvidePlugin({
-            jQuery: 'jquery',
-            toastr: path.resolve(`${PLUGINS_BASE_PATH}org.ekstep.toaster-1.0/renderer/libs/toastr.min.js`),
-            CryptoJS: path.resolve(`${PLUGINS_BASE_PATH}org.ekstep.telemetrysync-1.0/renderer/libs/md5.js`)
-        }),
-        new UglifyJsPlugin({
-            cache: false,
-            parallel: true,
-            uglifyOptions: {
-                compress: {
-                    dead_code: true,
-                    drop_console: CONFIG.drop_console,
-                    global_defs: {
-                        DEBUG: true
-                    },
-                    passes: 1,
+                    ecma: 5,
+                    mangle: CONFIG.mangle
                 },
-                ecma: 5,
-                mangle: CONFIG.mangle
-            },
-            sourceMap: true
-        }),
-        new WebpackOnBuildPlugin(function(stats) {
-            cleanDistFiles();
-            console.log("I am success");
-            // Remove the plugin.dist files from all plugins folder once build is done.
-        }),
+                sourceMap: true
+            }),
+            new WebpackOnBuildPlugin(function(stats) {
+                cleanDistFiles();
+                packageChannelPlugins(env.channel) // TODO: ECML Plugin is unable to pack with the webpack hence just writing the ecml plugin script to coreplugins.js 
+                console.log("Cleared all plugin.dist.js files");
+                // Remove the plugin.dist files from all plugins folder once build is done.
+            }),
 
-    ],
-    optimization: {
-        minimize: true,
-        splitChunks: {
-            chunks: 'async',
-            minSize: 30000,
-            minChunks: 1,
-            maxAsyncRequests: 5,
-            maxInitialRequests: 3,
-            automaticNameDelimiter: '~',
+        ],
+        optimization: {
+            minimize: true,
+            splitChunks: {
+                chunks: 'async',
+                minSize: 30000,
+                minChunks: 1,
+                maxAsyncRequests: 5,
+                maxInitialRequests: 3,
+                automaticNameDelimiter: '~',
+            }
+        }
+    };
+
+    /**
+     * @description     - Which is basically bundles the only manifest.json, plugin.js and external libs.
+     *                    the reset template and controller will be loaded dynamically.
+     * @param {string} channel sunbird/ekstep
+     */
+    function packageChannelPlugins(channel) {
+        try {
+            let plugins = APP_CONFIG[channel].plugins;
+            let jsDependencyPath, cssDependencyPath;
+            plugins.forEach(function(plugin) {
+                if (plugin.minify) {
+                    console.log("Plugins are", plugin);
+                    let manifest = JSON.parse(fs.readFileSync(`${PLUGINS_BASE_PATH}${plugin.id}-${plugin.ver}/manifest.json`));
+                    let pluginContent = uglifyjs.minify(fs.readFileSync(`${PLUGINS_BASE_PATH}${plugin.id}-${plugin.ver}/${manifest.renderer.main}`, 'utf8'));
+                    if (manifest.renderer.dependencies) {
+                        manifest.renderer.dependencies.forEach(function(dependency) {
+                            jsDependencyPath = (dependency.type === 'js') && `${PLUGINS_BASE_PATH}${plugin.id}-${plugin.ver}/${dependency.src}`
+                            cssDependencyPath = (dependency.type === 'css') && `${PLUGINS_BASE_PATH}${plugin.id}-${plugin.ver}/${dependency.src}`
+                            jsDependencyPath && fs.appendFile(`${OUTPUT_PATH}${PACKAGE_JS_FILE_NAME}`, fs.readFileSync(`${jsDependencyPath}`), 'utf8');
+                            cssDependencyPath && fs.appendFile(`${OUTPUT_PATH}${PACKAGE_CSS_FILE_NAME}`, fs.readFileSync(`${cssDependencyPath}`), 'utf8');
+                        });
+                    }
+                    if (pluginContent.code) {
+                        fs.appendFile(`${OUTPUT_PATH}${PACKAGE_JS_FILE_NAME}`, 'org.ekstep.pluginframework.pluginManager.registerPlugin(' + JSON.stringify(manifest) + ',eval(\'' + pluginContent.code.replace(/'/g, "\\'") + '\'))' + '\n');
+                    } else {
+                        throw new Error('Unable to read the plugin content')
+                    }
+                }
+            });
+        } catch (e) {
+            console.error("Fails to read", e);
         }
     }
-};
+}

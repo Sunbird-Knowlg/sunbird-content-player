@@ -90,12 +90,12 @@ Plugin.extend({
      * @return {Boolean}       [If the path is already present then it will return true else false in the callback]
      */
     isAvailable: function(repo, cb) {
-        var isAvailable = undefined;
         if (org.ekstep.pluginframework.resourceManager.registeredRepos) {
-            isAvailable = _.find(org.ekstep.pluginframework.resourceManager.registeredRepos, function(r) {
-                return r.basePath == repo;
+            var repos = _.filter(org.ekstep.pluginframework.resourceManager.registeredRepos, function(r) {
+                return r.basePath !== repo
             });
-            isAvailable ? cb(true) : cb(false);
+            org.ekstep.pluginframework.resourceManager.registeredRepos = repos;
+            cb(false);
         } else {
             cb(false);
         }

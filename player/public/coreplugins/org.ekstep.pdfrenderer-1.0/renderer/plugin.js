@@ -118,6 +118,10 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         pdfSearchContainer.appendChild(findTextField);
         pdfSearchContainer.appendChild(findSubmit);
 
+        if (!window.cordova){
+            this.addDownloadButton(path, pdfSearchContainer);
+        }
+
         pdfButtons.appendChild(pdfPrevButton);
         pdfButtons.appendChild(pdfNextButton);
 
@@ -205,6 +209,22 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         context.showPDF(path, context.manifest);
     },
 
+    addDownloadButton: function(path, pdfSearchContainer){
+        if(!path.length) return false;
+        var instance = this;
+        var downloadBtn = document.createElement("img");
+        downloadBtn.id = "download-btn"; 
+        downloadBtn.src = "assets/icons/download.png";
+        downloadBtn.className = "pdf-download-btn";
+        downloadBtn.onclick = function(){
+            window.open(path, '_blank');
+            EkstepRendererAPI.getTelemetryService().interact("TOUCH", "Download", "TOUCH", {
+                stageId: context.CURRENT_PAGE.toString(),
+                subtype: ''
+            });
+        };
+        pdfSearchContainer.appendChild(downloadBtn);
+    },
     nextNavigation: function() {
         if (this.sleepMode) return;
         EkstepRendererAPI.getTelemetryService().interact("TOUCH", "next", null, {

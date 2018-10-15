@@ -1,5 +1,5 @@
 /**
- * @description 
+ * @description
  * Base Launcher to launch any type launcher i.e Ecml/Html/Pdf/Youtube/video/h5p launcher.
  * child launcher can overide the specific method to change the behavior.
  * To extend the functionality of the baseLauncher child Launcher should use this._super();
@@ -22,20 +22,20 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
      */
     init: function(manifest) {
         try {
-            EkstepRendererAPI.addEventListener("renderer:telemetry:end", this.endTelemetry, this);
-            EkstepRendererAPI.addEventListener('renderer:content:end', this.end, this);
-            EkstepRendererAPI.addEventListener('renderer:content:replay', this.replay, this);
-            this.manifest = manifest;
-            this.contentMetaData = content;
-            EkstepRendererAPI.dispatchEvent('renderer:launcher:register', this);
-            this.initLauncher(this.manifest);
+            EkstepRendererAPI.addEventListener("renderer:telemetry:end", this.endTelemetry, this)
+            EkstepRendererAPI.addEventListener("renderer:content:end", this.end, this)
+            EkstepRendererAPI.addEventListener("renderer:content:replay", this.replay, this)
+            this.manifest = manifest
+            this.contentMetaData = content
+            EkstepRendererAPI.dispatchEvent("renderer:launcher:register", this)
+            this.initLauncher(this.manifest)
         } catch (error) {
-            this.throwError(error);
+            this.throwError(error)
         }
     },
 
     initLauncher: function() {
-        console.info("Base launcher should constuct.");
+        console.info("Base launcher should constuct.")
     },
 
     /**
@@ -43,18 +43,18 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
      * @memberof org.ekstep.contentrenderer.baseLauncher
      */
     start: function() {
-        var instance = this;
-        this.cleanUp();
-        EkstepRendererAPI.addEventListener('renderer:launcher:clean', this.cleanUp, this);
-        console.info('Base Launcher should construct');
-        this.resetDomElement();
-        this.sleepMode = false;
+        var instance = this
+        this.cleanUp()
+        EkstepRendererAPI.addEventListener("renderer:launcher:clean", this.cleanUp, this)
+        console.info("Base Launcher should construct")
+        this.resetDomElement()
+        this.sleepMode = false
         if (this.enableHeartBeatEvent) {
-            this.heartBeatEvent(true);
+            this.heartBeatEvent(true)
         }
-        setTimeout(function(){
-            instance.startTelemetry();
-        }, 0);
+        setTimeout(function() {
+            instance.startTelemetry()
+        }, 0)
     },
 
     /**
@@ -63,10 +63,10 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
      * @memberof org.ekstep.contentrenderer.baseLauncher
      */
     end: function() {
-        if (this.sleepMode) return;
-        this.heartBeatEvent(false);
-        this.endTelemetry();
-        EkstepRendererAPI.dispatchEvent("renderer:endpage:show");
+        if (this.sleepMode) return
+        this.heartBeatEvent(false)
+        this.endTelemetry()
+        EkstepRendererAPI.dispatchEvent("renderer:endpage:show")
     },
 
     /**
@@ -75,10 +75,10 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
      * @memberof org.ekstep.contentrenderer.baseLauncher
      */
     replay: function() {
-        if (this.sleepMode) return;
-        this.heartBeatEvent(false);
-        this.endTelemetry();
-        this.start();
+        if (this.sleepMode) return
+        this.heartBeatEvent(false)
+        this.endTelemetry()
+        this.start()
     },
 
     /**
@@ -86,9 +86,9 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
      * @memberof org.ekstep.contentrenderer.baseLauncher
      */
     cleanUp: function() {
-        console.info('Clearing the launcher instance')
-        this.sleepMode = true;	
-        EkstepRendererAPI.removeEventListener('renderer:launcher:clean', this.cleanUp, this);
+        console.info("Clearing the launcher instance")
+        this.sleepMode = true
+        EkstepRendererAPI.removeEventListener("renderer:launcher:clean", this.cleanUp, this)
     },
 
     /**
@@ -97,12 +97,12 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
      * @param totalIndex {int} Total number of stages in the content.
      */
     progres: function(currentIndex, totalIndex) {
-        var totalProgress = (currentIndex / totalIndex) * 100;
-        totalProgress = totalProgress > 100 ? 100 : totalProgress;
-        return Math.round(totalProgress);
+        var totalProgress = (currentIndex / totalIndex) * 100
+        totalProgress = totalProgress > 100 ? 100 : totalProgress
+        return Math.round(totalProgress)
     },
     contentProgress: function() {
-        console.warn("Child Launcher should calculate");
+        console.warn("Child Launcher should calculate")
     },
 
     /**
@@ -110,27 +110,27 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
      */
 
     startTelemetry: function() {
-        var data = {};
-        data.stageid = EkstepRendererAPI.getCurrentStageId();
-        data.mode = getPreviewMode();
-        var gameId = content.identifier;
-        var version = content.pkgVersion || '1.0';
-        TelemetryService.start(gameId, version, data);
+        var data = {}
+        data.stageid = EkstepRendererAPI.getCurrentStageId()
+        data.mode = getPreviewMode()
+        var gameId = content.identifier
+        var version = content.pkgVersion || "1.0"
+        TelemetryService.start(gameId, version, data)
     },
 
     /**
      * Generation of OE_END Telemetry event.
      */
     endTelemetry: function() {
-        if (this.sleepMode) return;
+        if (this.sleepMode) return
         if (TelemetryService.instance && TelemetryService.instance.telemetryStartActive()) {
-            var telemetryEndData = {};
-            telemetryEndData.stageid = getCurrentStageId();
-            telemetryEndData.progress = this.contentProgress();
-            console.info("telemetryEndData", telemetryEndData);
-            TelemetryService.end(telemetryEndData);
+            var telemetryEndData = {}
+            telemetryEndData.stageid = getCurrentStageId()
+            telemetryEndData.progress = this.contentProgress()
+            console.info("telemetryEndData", telemetryEndData)
+            TelemetryService.end(telemetryEndData)
         } else {
-            console.warn('Telemetry service end is already logged Please log start telemetry again');
+            console.warn("Telemetry service end is already logged Please log start telemetry again")
         }
     },
 
@@ -140,14 +140,14 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
      */
 
     heartBeatEvent: function(flag) {
-        var instance = this;
+        var instance = this
         if (flag) {
             instance._time = setInterval(function() {
-                EkstepRendererAPI.getTelemetryService().interact("HEARTBEAT", "", "", instance.heartBeatData || {});
-            }, EkstepRendererAPI.getGlobalConfig().heartBeatTime);
+                EkstepRendererAPI.getTelemetryService().interact("HEARTBEAT", "", "", instance.heartBeatData || {})
+            }, EkstepRendererAPI.getGlobalConfig().heartBeatTime)
         } else
         if (!flag) {
-            clearInterval(instance._time);
+            clearInterval(instance._time)
         }
     },
 
@@ -155,31 +155,31 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
      * It return the current player gameArea.
      */
     getGameArea: function() {
-        return document.getElementById('gameArea');
+        return document.getElementById("gameArea")
     },
 
     /**
      * Provides an ability to add dom element to player gamearea.
-     * Any child launcher can extends/override this functionality. 
+     * Any child launcher can extends/override this functionality.
      */
     addToGameArea: function(domElement) {
-        domElement.id = this.manifest.id;
-        jQuery('#' + this.manifest.id).insertBefore("#gameArea");
-        var gameArea = this.getGameArea();
-        gameArea.insertBefore(domElement, gameArea.childNodes[0]);
-        jQuery('#gameArea').css({
-            left: '0px',
-            top: '0px',
+        domElement.id = this.manifest.id
+        jQuery("#" + this.manifest.id).insertBefore("#gameArea")
+        var gameArea = this.getGameArea()
+        gameArea.insertBefore(domElement, gameArea.childNodes[0])
+        jQuery("#gameArea").css({
+            left: "0px",
+            top: "0px",
             width: "100%",
             height: "100%",
             marginTop: 0,
             marginLeft: 0
-        });
-        var elementId = document.getElementById(this.manifest.id);
-        elementId.style.position = 'absolute';
-        elementId.style.display = 'block';
-        elementId.style.width = '100%';
-        elementId.style.height = '100%';
+        })
+        var elementId = document.getElementById(this.manifest.id)
+        elementId.style.position = "absolute"
+        elementId.style.display = "block"
+        elementId.style.width = "100%"
+        elementId.style.height = "100%"
     },
 
     /**
@@ -187,20 +187,20 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
      * Any child launcher can extends/override this functionality.
      */
     resetDomElement: function() {
-        jQuery('#' + this.manifest.id).remove();
-        var chilElemtns = jQuery('#gameArea').children();
+        jQuery("#" + this.manifest.id).remove()
+        var chilElemtns = jQuery("#gameArea").children()
         jQuery(chilElemtns).each(function() {
             if ((this.id !== "overlay") && (this.id !== "gameCanvas")) {
-                jQuery(this).remove();
+                jQuery(this).remove()
             }
-        });
+        })
     },
 
     /**
      * Return the dom element which is being added to gameArea.
      */
     getLauncherDom: function() {
-        return document.getElementById(this.manifest.id);
+        return document.getElementById(this.manifest.id)
     },
 
     /**
@@ -208,17 +208,16 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
      * Any child launcher can extends/override this functionality.
      */
     throwError: function(errorObj) {
-        var errorStack = undefined;
         if (errorObj) {
             EkstepRendererAPI.dispatchEvent("renderer:toast:show", undefined, {
-                message: errorObj.message || 'Sorry!!.. Unable to open the Content',
+                message: errorObj.message || "Sorry!!.. Unable to open the Content",
                 type: "error",
-                custom: {timeOut: 200000}, 
+                custom: { timeOut: 200000 },
                 errorInfo: {
                     errorStack: errorObj.stack,
-                    data: errorObj.data || {'severity': 'fatal', 'type': 'content', 'action': 'play'} 
+                    data: errorObj.data || { "severity": "fatal", "type": "content", "action": "play" }
                 }
             })
         }
     }
-});
+})

@@ -240,7 +240,7 @@ module.exports = function(grunt) {
                 files: [{
                         expand: true,
                         cwd: 'public/',
-                        src: ['assets/**', '!js/tests/**', "coreplugins/**", '!js/*', '!json/*', '!libs/*', '!styles/**', 'templates/*', 'index.html', 'index_min.html'],
+                        src: ['assets/**', '!js/tests/**', '!js/*', '!json/*', '!libs/*', '!styles/**', 'templates/*', 'index.html', 'index_min.html'],
                         dest: 'www/'
                     }, {
                         expand: true,
@@ -251,8 +251,8 @@ module.exports = function(grunt) {
                     },
                     {
                         expand: true,
-                        cwd: 'public/js/',
-                        src: 'coreplugins.js',
+                        cwd: 'public/coreplugins-dist/',
+                        src: ['chunks/**', 'coreplugins.js'],
                         dest: 'www/',
                         flatten: false,
                     }
@@ -486,7 +486,8 @@ module.exports = function(grunt) {
                         'cordova-plugin-inappbrowser@1.6.1',
                         'cordova-plugin-market@1.1',
                         'https://github.com/cranberrygame/cordova-plugin-navigationbar.git',
-                        'https://github.com/apache/cordova-plugin-statusbar.git'
+                        'https://github.com/apache/cordova-plugin-statusbar.git',
+                        'https://github.com/phonegap/phonegap-mobile-accessibility.git'
                     ]
                 }
             },

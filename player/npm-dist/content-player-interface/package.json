@@ -1,0 +1,28 @@
+{
+    "name": "@project-sunbird/content-player-interface",
+    "version": "0.0.3",
+    "description": "It acts as an interface to access the content-player method",
+    "main": "htmlInterface.js",
+    "scripts": {
+        "test": "test"
+    },
+    "dependencies": {
+        "@project-sunbird/content-player": "^0.0.5"
+    },
+    "keywords": [
+        "content-player",
+        "renderer-interface",
+        "html-interface",
+        "content-player-interface",
+        "sunbird",
+        "project-sunbird",
+        "player-interface",
+        "genie-canvas-interface"
+    ],
+    "author": "Manjunath Davanam <manjunathd@ilimi.in>",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/project-sunbird/sunbird-content-player"
+    },
+    "homepage": "https://github.com/project-sunbird/sunbird-content-player#readme"
+}
