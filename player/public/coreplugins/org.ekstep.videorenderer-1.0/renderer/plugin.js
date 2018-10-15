@@ -8,15 +8,15 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     currentTime: 1,
     videoPlayer: undefined,
     stageId: undefined,
-    heartBeatData:{},
-    enableHeartBeatEvent:false,
+    heartBeatData: {},
+    enableHeartBeatEvent: false,
     _constants: {
-        mimeType: ["video/mp4", "video/x-youtube", "video/webm"],	
-        events: {	
-            launchEvent: "renderer:launch:video"	
-        }	
-    },	
-    initLauncher: function() {	
+        mimeType: ["video/mp4", "video/x-youtube", "video/webm"],
+        events: {
+            launchEvent: "renderer:launch:video"
+        }
+    },
+    initLauncher: function() {
         EkstepRendererAPI.addEventListener(this._constants.events.launchEvent, this.start, this);
         EkstepRendererAPI.addEventListener("renderer:overlay:mute", this.onOverlayAudioMute, this);
         EkstepRendererAPI.addEventListener("renderer:overlay:unmute", this.onOverlayAudioUnmute, this);
@@ -37,61 +37,142 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     createVideo: function(path, data) {
         EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
-        video = document.createElement('video');
-        video.style.width = '100%';
-        video.style.height = '100%';
-        video.controls = true;
-        if (window.cordova) video.controlsList = 'nodownload';
-        video.autoplay = true;
-        video.preload = "auto";
-        video.className = 'video-js vjs-default-skin';
-        this.addToGameArea(video);
+        // videoElement = document.createElement('video');
+        // videoElement.style.width = '100%';
+        // videoElement.style.height = '100%';
+        // videoElement.controls = true;
+        // videoElement.id = this.manifest.id;
+        // if (window.cordova) videoElement.controlsList = 'nodownload';
+        // videoElement.autoplay = true;
+        // videoElement.preload = "auto";
+        // videoElement.className = 'video-js';
+        //document.body.appendChild(videoElement);
+        //this.addToGameArea(videoElement);
         EkstepRendererAPI.dispatchEvent("renderer:content:start");
         data.mimeType === 'video/x-youtube' ? this._loadYoutube(data.artifactUrl) : this._loadVideo(path);
-        video.onvolumechange = function() {
-            (video.muted) ? EkstepRendererAPI.dispatchEvent('renderer:overlay:mute') : EkstepRendererAPI.dispatchEvent('renderer:overlay:unmute');
-        };
-        $("video").bind("contextmenu",function() {
+        // videoElement.onvolumechange = function() {
+        //     (video.muted) ? EkstepRendererAPI.dispatchEvent('renderer:overlay:mute'): EkstepRendererAPI.dispatchEvent('renderer:overlay:unmute');
+        // };
+        $("video").bind("contextmenu", function() {
             return false;
         });
     },
     _loadVideo: function(path) {
-        var source = document.createElement("source");
-        source.src = path;
-        video.appendChild(source);
-        this.addvideoListeners(video);
-        this.videoPlayer = video;
+        try {
+            // videoElement = document.createElement('video');
+            // videoElement.style.width = '100%';
+            // videoElement.style.height = '100%';
+            // videoElement.controls = true;
+            // videoElement.id = this.manifest.id;
+            // if (window.cordova) videoElement.controlsList = 'nodownload';
+            // videoElement.autoplay = true;
+            // videoElement.preload = "auto";
+            // videoElement.className = 'video-js';
+            // var source = document.createElement("source");
+            // source.src = "https://sunbirdspikemedia-inct.streaming.media.azure.net/afcc5a99-d0c4-4ef5-9dfe-dc403a1269fb/learn-colors-with-numbers-in-kid.ism/manifest(format=m3u8-aapl-v3)";
+            // videoElement.appendChild(source);
+            // document.body.appendChild(videoElement);
+            // this.addvideoListeners(videoElement);
+            var video_player = document.createElement('video');
+            video_player.style.position = "relative"
+            video_player.style.width = '100%';
+            video_player.autoplay = true;
+            video_player.style.height = '100%';
+            video_player.className = "vjs-default-skin";
+            video_player.preload = "auto";
+            video_player.controller = true;
+            video_player.id = "video_one"
+            video_player.className = "video-js vjs-default-skin";
+            document.body.appendChild(video_player);
+            var source = document.createElement("source");
+            source.type = "application/x-mpegURL";
+            video_player.appendChild(source);
+            setTimeout(function() {
+                document.getElementsByClassName("vjs-big-play-button")[0].style.display = "block";
+
+            }, 100)
+            var player = videojs('video_one');
+            player.src({
+                src: 'https://sunbirdspikemedia-inct.streaming.media.azure.net/afcc5a99-d0c4-4ef5-9dfe-dc403a1269fb/learn-colors-with-numbers-in-kid.ism/manifest(format=m3u8-aapl-v3)',
+                type: 'application/x-mpegURL',
+
+            });
+            // var player = videojs('video_one', {}, function onPlayerReady() {
+            //     videojs.log('Your player is ready!');
+
+            //     // In this context, `this` is the player that was created by Video.js.
+            //     this.play();
+
+            //     // How about an event listener?
+            //     this.on('ended', function() {
+            //         videojs.log('Awww...over so soon?!');
+            //     });
+            // });
+            this.videoPlayer = video_player;
+        } catch (e) {
+            console.error("Unable to play", e);
+        }
     },
     _loadYoutube: function(path) {
-        var instance = this;
-        if (!navigator.onLine) {
-            EkstepRendererAPI.logErrorEvent('No internet', {
-                'type': 'content',
-                'action': 'play',
-                'severity': 'error'
-            });
-            instance.throwError({message:'Please connect to internet'});
-        }
-        var vid = videojs(instance.manifest.id, {
-                "techOrder": ["youtube"],
-                "src": path
-            },
-            function() {
-                $(".vjs-has-started, .vjs-poster").css("display", "none")
-            });
-        videojs(instance.manifest.id).ready(function() {
-            var youtubeInstance = this;
-            youtubeInstance.src({
+        try {
+            var video_player = document.createElement('video');
+            video_player.style.position = "absolute"
+            video_player.style.width = '100%';
+            video_player.autoplay = true;
+            video_player.style.height = '100%';
+            video_player.className = "vjs-default-skin";
+            video_player.preload = "auto";
+            video_player.controller = true;
+            video_player.id = "video_one"
+            video_player.className = "video-js vjs-default-skin";
+            document.body.appendChild(video_player);
+            var source = document.createElement("source");
+            source.type = "application/x-mpegURL";
+            video_player.appendChild(source);
+            setTimeout(function() {
+                document.getElementsByClassName("vjs-big-play-button")[0].style.display = "block";
+
+            }, 100)
+            var instance = this;
+            if (!navigator.onLine) {
+                EkstepRendererAPI.logErrorEvent('No internet', {
+                    'type': 'content',
+                    'action': 'play',
+                    'severity': 'error'
+                });
+                instance.throwError({ message: 'Please connect to internet' });
+            }
+            // var vid = videojs(video_player, {
+            //         "techOrder": ["youtube"],
+            //         "src": path
+            //     },
+            //     function() {
+            //         $(".vjs-has-started, .vjs-poster").css("display", "none")
+            //     });
+            var player = videojs('video_one');
+            player.src({
+                src: path,
+                // src: 'https://sunbirdspikemedia-inct.streaming.media.azure.net/afcc5a99-d0c4-4ef5-9dfe-dc403a1269fb/learn-colors-with-numbers-in-kid.ism/manifest(format=m3u8-aapl-v3)',
                 type: 'video/youtube',
-                src: path
+
             });
-            instance.addYOUTUBEListeners(youtubeInstance);
-            instance.setYoutubeStyles(youtubeInstance);
-            instance.videoPlayer = youtubeInstance;
-            youtubeInstance.on('volumechange', function(){
-                (youtubeInstance.muted()) ? EkstepRendererAPI.dispatchEvent('renderer:overlay:mute') : EkstepRendererAPI.dispatchEvent('renderer:overlay:unmute');
-              })
-        });
+            // videojs(video_player).ready(function() {
+            //     console.log("Youtube is ready..")
+            //     var youtubeInstance = this;
+            //     youtubeInstance.src({
+            //         type: 'video/youtube',
+            //         src: path
+            //     });
+            //     instance.addYOUTUBEListeners(youtubeInstance);
+            //     instance.setYoutubeStyles(youtubeInstance);
+            //     instance.videoPlayer = youtubeInstance;
+            //     youtubeInstance.on('volumechange', function() {
+            //         (youtubeInstance.muted()) ? EkstepRendererAPI.dispatchEvent('renderer:overlay:mute'): EkstepRendererAPI.dispatchEvent('renderer:overlay:unmute');
+            //     })
+            // });
+        } catch (e) {
+            console.error("Youtube fails to load", e);
+        }
     },
     setYoutubeStyles: function(youtube) {
         var instance = this;
@@ -150,11 +231,11 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var instance = this;
 
         videoPlayer.onplay = function(e) {
-            instance.play("videostage", Math.floor(instance.videoPlayer.timeStamp)*1000);
+            instance.play("videostage", Math.floor(instance.videoPlayer.timeStamp) * 1000);
         };
 
         videoPlayer.onpause = function(e) {
-            instance.pause("videostage", Math.floor(instance.videoPlayer.timeStamp)*1000);
+            instance.pause("videostage", Math.floor(instance.videoPlayer.timeStamp) * 1000);
         };
 
         videoPlayer.onended = function(e) {
@@ -162,7 +243,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         };
 
         videoPlayer.onseeked = function(e) {
-            instance.seeked("videostage", Math.floor(instance.videoPlayer.timeStamp)*1000);
+            instance.seeked("videostage", Math.floor(instance.videoPlayer.timeStamp) * 1000);
         };
 
     },
@@ -170,27 +251,27 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var instance = this;
 
         videoPlayer.on('play', function(e) {
-            instance.play("youtubestage", Math.floor(videoPlayer.currentTime())*1000);
+            instance.play("youtubestage", Math.floor(videoPlayer.currentTime()) * 1000);
         });
 
         videoPlayer.on('pause', function(e) {
-            instance.pause("youtubestage", Math.floor(videoPlayer.currentTime())*1000);
+            instance.pause("youtubestage", Math.floor(videoPlayer.currentTime()) * 1000);
         });
 
         videoPlayer.on('ended', function() {
             instance.ended("youtubestage");
         });
         videoPlayer.on('seeked', function(e) {
-            instance.seeked("youtubestage", Math.floor(videoPlayer.currentTime())*1000);
+            instance.seeked("youtubestage", Math.floor(videoPlayer.currentTime()) * 1000);
         });
     },
     logTelemetry: function(type, eksData) {
         EkstepRendererAPI.getTelemetryService().interact(type || 'TOUCH', "", "", eksData);
     },
-    replay:function(){
+    replay: function() {
         if (this.sleepMode) return;
-       EkstepRendererAPI.dispatchEvent('renderer:overlay:unmute');
-       this.start();
+        EkstepRendererAPI.dispatchEvent('renderer:overlay:unmute');
+        this.start();
     },
     configOverlay: function() {
         setTimeout(function() {
@@ -232,8 +313,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }
     },
     onOverlayAudioUnmute: function() {
-    	if (!this.videoPlayer) return false
-        if(this.videoPlayer.currentType_ === 'video/youtube') {
+        if (!this.videoPlayer) return false
+        if (this.videoPlayer.currentType_ === 'video/youtube') {
             if (this.videoPlayer.muted()) {
                 this.videoPlayer.muted(false);
             }
@@ -242,7 +323,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }
     },
     cleanUp: function() {
-        if (this.sleepMode) return;	
+        if (this.sleepMode) return;
         this.sleepMode = true;
         if (document.getElementById(this.manifest.id)) {
             videojs(this.manifest.id).dispose();
