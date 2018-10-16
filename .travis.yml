@@ -7,7 +7,7 @@ addons:
 before_script:
     - cd player
     - npm install
-    - npm run build-preview sunbird
+    - npm run build-preview ekstep
     - grunt compress:preview
     - grunt generate-libs
     - grunt build-jsdoc
