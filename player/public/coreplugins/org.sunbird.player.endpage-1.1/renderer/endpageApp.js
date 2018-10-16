@@ -38,7 +38,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
                     maxScore = maxScore + 0;
                 }
             });
-            $scope.score = (totalScore + "/" + maxScore);
+            $scope.score = ($scope.convert(totalScore) + "/" + $scope.convert(maxScore));
         } else {
             $scope.score = undefined;
         }
@@ -189,4 +189,11 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
         org.ekstep.service.content.clearTelemetryEvents();
         $scope.safeApply();
     });
+
+    $scope.convert = function(num) {
+        num = num.toString(); //If it's not already a String
+        num = num.slice(0, (num.indexOf(".")) + 3); //With 3 exposing the hundredths place
+        return Number(num); //If you need it back as a Number
+    };
+     
 });
