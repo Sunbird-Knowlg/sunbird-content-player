@@ -8,9 +8,9 @@
  * 
  */
 module.exports = {
-    build_number: process.env.build_number || 1,
-    player_ver: process.env.player_version_number || 1,
-    filter_plugins: process.env.filter_plugins || 'false',
+    build_number: process.env.build_number,
+    player_ver: process.env.player_version_number,
+    filter_plugins: process.env.filter_plugins || 'true',
     minification: {
         drop_console: process.env.drop_console || false,
         mangle: process.env.mangle || false,
