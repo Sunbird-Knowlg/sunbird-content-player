@@ -261,12 +261,13 @@ module.exports = (env, argv) => {
      * @param {string} channel sunbird/ekstep
      */
     function packageChannelPlugins(channel) {
-        var execludePlugins = [{ id: "org.sunbird.player.endpage", ver: "1.0" }, { id: "org.ekstep.endpage", ver: "1.0" }];
+        var execludePlugins = ["org.sunbird.player.endpage", "org.ekstep.endpage"];
         try {
-            const plugins = _.filter(_.filter([...new Set([...APP_CONFIG[channel].plugins, ...APP_CONFIG['general'].plugins])], function(p) {
+            const _plugins = _.filter([...new Set([...APP_CONFIG[channel].plugins, ...APP_CONFIG['general'].plugins])], function(p) {
                 return !p.config.webpack
-            }), function(plugin) {
-                return plugin.id === "org.sunbird.player.endpage" || "org.ekstep.endpage"; //
+            });
+            var plugins = _.filter(_plugins, function(person) {
+                return execludePlugins.indexOf(person.id) === -1; // -1 means not present
             })
             let jsDependencyPath, cssDependencyPath;
             plugins.forEach(function(plugin) {
