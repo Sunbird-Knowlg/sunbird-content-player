@@ -7,10 +7,7 @@ addons:
 before_script:
     - cd player
     - npm install
-    - grunt build-telemetry-lib
-    - npm run package-coreplugins
-    - npm run build-ekstep 
-    - grunt build-preview
+    - npm run build-preview sunbird
     - grunt compress:preview
     - grunt generate-libs
     - grunt build-jsdoc
