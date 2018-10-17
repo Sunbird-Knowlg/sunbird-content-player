@@ -34226,7 +34226,6 @@ var PDFImage = (function PDFImageClosure() {
         }else{
           kind = ImageKind.RGB_24BPP;
         }
-       
         if (kind && !this.smask && !this.mask &&
             drawWidth === originalWidth && drawHeight === originalHeight) {
           imgData.kind = kind;
@@ -34252,8 +34251,6 @@ var PDFImage = (function PDFImageClosure() {
               buffer[i] ^= 0xff;
             }
           }
-
-
           return imgData;
         }
         if (this.image instanceof JpegStream && !this.smask && !this.mask &&
