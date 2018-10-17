@@ -34195,22 +34195,6 @@ var PDFImage = (function PDFImageClosure() {
       }
     },
 
-    /**
-     * Resize large resolution PDFS as to improve rendering time
-     * @param {TypedArray} imgData The original image with one component.
-     * @param {Number} components Number of color components.
-     * @param {Number} bpc Number of bits per component.
-     * @param {Number} alpha01 (Optional) Size reserved for the alpha channel.
-     * @return {TypedArray} Resized image data.
-     */
-    resizeColorImage: function (imgData, components, bpc, alpha01) {
-      if (components !== 1 && components !== 3) {
-        error('Unsupported component count for resizing.');
-      }
-
-      return imgData;
-    },
-
     createImageData: function PDFImage_createImageData(forceRGBA) {
       var drawWidth = this.drawWidth;
       var drawHeight = this.drawHeight;
@@ -34286,22 +34270,6 @@ var PDFImage = (function PDFImageClosure() {
 
       imgArray = this.getImageBytes(originalHeight * rowBytes);
 
-      if (this.colorSpace.name === 'DeviceGray') {
-        var resizedImgData = {
-          data: imgArray,
-          width: originalWidth,
-          height: originalHeight
-        };
-         if (!this.print) {
-          if (this.shallResizeImage(numComps, bpc)) {
-            this.resizeGrayPixels(resizedImgData, numComps, bpc);
-            imgArray = resizedImgData.data;
-            originalHeight = resizedImgData.height;
-            originalWidth = resizedImgData.width;
-            rowBytes = (originalWidth * numComps * bpc + 7) >> 3;
-          }
-        }
-      }
       // imgArray can be incomplete (e.g. after CCITT fax encoding).
       var actualHeight = 0 | (imgArray.length / rowBytes *
                          drawHeight / originalHeight);
