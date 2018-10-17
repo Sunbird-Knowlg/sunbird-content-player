@@ -34208,64 +34208,6 @@ var PDFImage = (function PDFImageClosure() {
         error('Unsupported component count for resizing.');
       }
 
-      var scaleBits = 1;
-      var h1 = imgData.height;
-      var w1 = imgData.width;
-      var xScaled = [],
-          yRatio;
-
-      // We selected scaleBits based on experimentation.
-      if ((h1 > 12000) || (w1 > 12000)) {
-        scaleBits = 3;
-      } else if ((h1 > 6000) || (w1 > 6000)) {
-        scaleBits = 2;
-      } else if ((h1 > 3000) || (w1 > 3000)) {
-        scaleBits = 1;
-      } else {
-        scaleBits = 0;
-      }
-      
-      if (scaleBits > 0) {
-        var w2 = w1 >> scaleBits;
-        var h2 = h1 >> scaleBits;
-
-        var length = w2 * h2 * components;
-        var dest = (bpc <= 8 ? new Uint8Array(length) :
-          (bpc <= 16 ? new Uint16Array(length) : new Uint32Array(length)));
-        var temp = dest;
-        var i, j, py, newIndex = 0,
-          oldIndex;
-        var w1Scanline = w1 * components;
-        if (alpha01 !== 1) {
-          alpha01 = 0;
-        }
-
-        if (components === 1) {
-          for (i = 0; i < h2; i++) {
-            py = Math.floor(i * yRatio) * w1Scanline;
-            for (j = 0; j < w2; j++) {
-              oldIndex = py + xScaled[j];
-              temp[newIndex++] = imgData.data[oldIndex];
-            }
-          }
-        } else if (components === 3) {
-          for (i = 0; i < h2; i++) {
-            py = (i << scaleBits) * w1Scanline;
-            for (j = 0; j < w2; j++) {
-              oldIndex = py + (j << scaleBits) * components;
-              temp[newIndex + 1] = imgData.data[oldIndex + 1];
-              temp[newIndex + 2] = imgData.data[oldIndex + 2];
-              temp[newIndex + 3] = imgData.data[oldIndex + 3];
-              newIndex += alpha01 + 3;
-            }
-          }
-        }
-
-        imgData.data = temp;
-        imgData.width = w2;
-        imgData.height = h2;
-      }
-
       return imgData;
     },
 
@@ -34300,6 +34242,8 @@ var PDFImage = (function PDFImageClosure() {
         } else if (this.colorSpace.name === 'DeviceRGB' && bpc === 8 &&
                    !this.needsDecode) {
           kind = ImageKind.RGB_24BPP;
+        }else{
+          kind = ImageKind.RGB_24BPP;
         }
        
         if (kind && !this.smask && !this.mask &&
@@ -34325,14 +34269,6 @@ var PDFImage = (function PDFImageClosure() {
             var buffer = imgData.data;
             for (var i = 0, ii = buffer.length; i < ii; i++) {
               buffer[i] ^= 0xff;
-            }
-          }
-
-          // Not resize data when printing.
-          if (!this.print) {
-            if (kind === ImageKind.RGB_24BPP) {
-              var newImgData =  this.resizeColorImage(imgData, numComps, bpc);
-              return newImgData;
             }
           }
           return imgData;
