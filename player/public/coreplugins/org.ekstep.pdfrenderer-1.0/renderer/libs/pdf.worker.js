@@ -34223,9 +34223,6 @@ var PDFImage = (function PDFImageClosure() {
         var kind;
         if (this.colorSpace.name === 'DeviceGray' && bpc === 1) {
           kind = ImageKind.GRAYSCALE_1BPP;
-        } else if (this.colorSpace.name === 'DeviceRGB' && bpc === 8 &&
-                   !this.needsDecode) {
-          kind = ImageKind.RGB_24BPP;
         }else{
           kind = ImageKind.RGB_24BPP;
         }
@@ -34255,6 +34252,8 @@ var PDFImage = (function PDFImageClosure() {
               buffer[i] ^= 0xff;
             }
           }
+
+
           return imgData;
         }
         if (this.image instanceof JpegStream && !this.smask && !this.mask &&
@@ -34269,7 +34268,6 @@ var PDFImage = (function PDFImageClosure() {
       }
 
       imgArray = this.getImageBytes(originalHeight * rowBytes);
-
       // imgArray can be incomplete (e.g. after CCITT fax encoding).
       var actualHeight = 0 | (imgArray.length / rowBytes *
                          drawHeight / originalHeight);
