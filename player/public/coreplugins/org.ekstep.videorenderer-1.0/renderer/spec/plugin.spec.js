@@ -179,8 +179,6 @@ describe('Video Renderer Plugin', function() {
             data.mimeType = 'application/x-mpegURL';
             var prefix_url = globalConfigObj.basepath || '';
             path = prefix_url + "/" + data.artifactUrl;
-            spyOn(videoRendererInstance, "createVideo").and.callThrough();
-            spyOn(videoRendererInstance, "_loadVideo").and.callThrough();
             videoRendererInstance.createVideo(path, data);
             expect($('.vjs-vjsdownload').length).toEqual(0);
         });
@@ -190,8 +188,6 @@ describe('Video Renderer Plugin', function() {
             data.mimeType = 'video/x-youtube';
             var prefix_url = globalConfigObj.basepath || '';
             path = prefix_url + "/" + data.artifactUrl;
-            spyOn(videoRendererInstance, "createVideo").and.callThrough();
-            spyOn(videoRendererInstance, "_loadVideo").and.callThrough();
             videoRendererInstance.createVideo(path, data);
             expect($('.vjs-vjsdownload').length).toEqual(0);
         });
@@ -214,8 +210,6 @@ describe('Video Renderer Plugin', function() {
             data.mimeType = 'video/mp4';
             var prefix_url = globalConfigObj.basepath || '';
             path = prefix_url + "/" + data.artifactUrl;
-            spyOn(videoRendererInstance, "createVideo").and.callThrough();
-            spyOn(videoRendererInstance, "_loadVideo").and.callThrough();
             videoRendererInstance.createVideo(path, data);
             expect($('.vjs-vjsdownload').length).not.toEqual(0);
         });
