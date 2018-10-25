@@ -83,7 +83,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         source.type = data.mimeType;
         video.appendChild(source);
 
-        if (instance.isStreaming){
+        if (instance.isStreaming || window.cordova){
             var videoPlayer = videojs('videoElement', {
                 "controls": true, "autoplay": true, "preload": "auto"
             });
