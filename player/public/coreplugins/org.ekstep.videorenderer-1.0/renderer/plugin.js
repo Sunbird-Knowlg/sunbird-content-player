@@ -5,7 +5,7 @@
 
 org.ekstep.contentrenderer.baseLauncher.extend({
     _time: undefined,
-    supportedStreamingMimeType:"application/x-mpegURL",
+    supportedStreamingMimeType: "application/x-mpegURL",
     isStreaming: EkstepRendererAPI.getGlobalConfig().streaming || false,
     currentTime: 1,
     videoPlayer: undefined,
@@ -51,7 +51,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
         //Todo need to remove after testing
         //data.artifactUrl = "https://sunbirdspikemedia-inct.streaming.media.azure.net/afcc5a99-d0c4-4ef5-9dfe-dc403a1269fb/learn-colors-with-numbers-in-kid.ism/manifest(format=m3u8-aapl-v3)";
-        //data.mimeType = 'application/x-mpegURL';
 
         if(data.mimeType === "video/x-youtube"){
             this._loadYoutube(data.artifactUrl);
@@ -77,7 +76,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 'action': 'play',
                 'severity': 'error'
             });
-            instance.throwError({message:'Please connect to internet'});
+            instance.throwError({message:'Internet not available. Please connect and try again.'});
         }
         var source = document.createElement("source");
         source.src = path;
@@ -108,7 +107,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             });
         }
         
-        instance.addvideoListeners(videoPlayer);
+        instance.addVideoListeners(videoPlayer, path);
         instance.videoPlayer = videoPlayer;
     },
     _loadYoutube: function(path) {
@@ -119,7 +118,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 'action': 'play',
                 'severity': 'error'
             });
-            instance.throwError({message:'Please connect to internet'});
+            instance.throwError({message:'Internet not available. Please connect and try again.'});
         }
         var vid = videojs("videoElement", {
                 "techOrder": ["youtube"],
@@ -195,7 +194,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             }]
         })
     },
-    addvideoListeners: function(videoPlayer) {
+    addVideoListeners: function(videoPlayer, path) {
         var instance = this;
 
         videoPlayer.on("play", function(e) {
@@ -214,6 +213,16 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             instance.seeked("videostage", Math.floor(instance.videoPlayer.currentTime())*1000);
         });
 
+        if (instance.isStreaming){
+            videoPlayer.on("error", function(e) {
+                EventBus.dispatch("renderer:alert:show", undefined, {
+                    title: "Error",
+                    text: "Video URL not accessible",
+                    type: "error",
+                    data: "Video URL: " + path
+                });
+            });
+        }
     },
     addYOUTUBEListeners: function(videoPlayer) {
         var instance = this;
@@ -293,8 +302,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     cleanUp: function() {
         if (this.sleepMode) return;	
         this.sleepMode = true;
-        if (document.getElementById(this.manifest.id)) {
-            videojs(this.manifest.id).dispose();
+        if (document.getElementById("videoElement")) {
+            videojs("videoElement").dispose();
         }
         this.progressTimer(false);
         this.currentTime = 0;
