@@ -5,6 +5,8 @@
 
 org.ekstep.contentrenderer.baseLauncher.extend({
     _time: undefined,
+    supportedStreamingMimeType:"application/x-mpegURL",
+    isStreaming: EkstepRendererAPI.getGlobalConfig().streaming || false,
     currentTime: 1,
     videoPlayer: undefined,
     stageId: undefined,
@@ -37,30 +39,77 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     createVideo: function(path, data) {
         EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
-        video = document.createElement('video');
+        EkstepRendererAPI.dispatchEvent("renderer:content:start");
+
+        video = document.createElement('video-js');
         video.style.width = '100%';
         video.style.height = '100%';
-        video.controls = true;
-        if (window.cordova) video.controlsList = 'nodownload';
-        video.autoplay = true;
-        video.preload = "auto";
-        video.className = 'video-js vjs-default-skin';
-        this.addToGameArea(video);
-        EkstepRendererAPI.dispatchEvent("renderer:content:start");
-        data.mimeType === 'video/x-youtube' ? this._loadYoutube(data.artifactUrl) : this._loadVideo(path);
+        video.style.position = 'absolute';
+        video.id = "videoElement";
+        video.className = 'vjs-default-skin';
+        document.body.appendChild(video);
+
+        //Todo need to remove after testing
+        //data.artifactUrl = "https://sunbirdspikemedia-inct.streaming.media.azure.net/afcc5a99-d0c4-4ef5-9dfe-dc403a1269fb/learn-colors-with-numbers-in-kid.ism/manifest(format=m3u8-aapl-v3)";
+        //data.mimeType = 'application/x-mpegURL';
+
+        if(data.mimeType === "video/x-youtube"){
+            this._loadYoutube(data.artifactUrl);
+        }else if(this.isStreaming && data.mimeType != "video/x-youtube"){
+            data.mimeType = this.supportedStreamingMimeType;
+            this._loadVideo(data.artifactUrl, data);
+        }else{
+            this._loadVideo(path, data);
+        }
+        
         video.onvolumechange = function() {
             (video.muted) ? EkstepRendererAPI.dispatchEvent('renderer:overlay:mute') : EkstepRendererAPI.dispatchEvent('renderer:overlay:unmute');
         };
         $("video").bind("contextmenu",function() {
             return false;
         });
-    },
-    _loadVideo: function(path) {
+    },    
+    _loadVideo: function(path, data) {
+        var instance = this;
+        if (instance.isStreaming && !navigator.onLine) {
+            EkstepRendererAPI.logErrorEvent('No internet', {
+                'type': 'content',
+                'action': 'play',
+                'severity': 'error'
+            });
+            instance.throwError({message:'Please connect to internet'});
+        }
         var source = document.createElement("source");
         source.src = path;
+        source.type = data.mimeType;
         video.appendChild(source);
-        this.addvideoListeners(video);
-        this.videoPlayer = video;
+
+        if (instance.isStreaming){
+            var videoPlayer = videojs('videoElement', {
+                "controls": true, "autoplay": true, "preload": "auto"
+            });
+        }else{
+            var videoPlayer = videojs('videoElement', {
+            "controls": true, "autoplay": true, "preload": "auto",
+            plugins: {
+                vjsdownload:{
+                beforeElement: 'playbackRateMenuButton',
+                textControl: 'Download video',
+                name: 'downloadButton'
+                }
+            }
+            } , function() {
+                this.on('downloadvideo', function(){
+                    EkstepRendererAPI.getTelemetryService().interact("TOUCH", "Download", "TOUCH", {
+                        stageId: 'videostage',
+                        subtype: ''
+                    });
+                });
+            });
+        }
+        
+        instance.addvideoListeners(videoPlayer);
+        instance.videoPlayer = videoPlayer;
     },
     _loadYoutube: function(path) {
         var instance = this;
@@ -72,14 +121,15 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             });
             instance.throwError({message:'Please connect to internet'});
         }
-        var vid = videojs(instance.manifest.id, {
+        var vid = videojs("videoElement", {
                 "techOrder": ["youtube"],
-                "src": path
+                "src": path,
+                "controls": true, "autoplay": true, "preload": "auto"
             },
             function() {
                 $(".vjs-has-started, .vjs-poster").css("display", "none")
             });
-        videojs(instance.manifest.id).ready(function() {
+        videojs("videoElement").ready(function() {
             var youtubeInstance = this;
             youtubeInstance.src({
                 type: 'video/youtube',
@@ -88,16 +138,15 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             instance.addYOUTUBEListeners(youtubeInstance);
             instance.setYoutubeStyles(youtubeInstance);
             instance.videoPlayer = youtubeInstance;
-            youtubeInstance.on('volumechange', function(){
+            /*youtubeInstance.on('volumechange', function(){
                 (youtubeInstance.muted()) ? EkstepRendererAPI.dispatchEvent('renderer:overlay:mute') : EkstepRendererAPI.dispatchEvent('renderer:overlay:unmute');
-              })
+            });*/            
         });
     },
     setYoutubeStyles: function(youtube) {
         var instance = this;
-        youtube.bigPlayButton.hide().el_.style.display = 'none';
-        videojs(this.manifest.id).ready(function() {
-            var video = document.getElementById(instance.manifest.id);
+        videojs("videoElement").ready(function() {
+            var video = document.getElementById("videoElement");
             video.style.width = '100%';
             video.style.height = '100%';
         });
@@ -149,21 +198,21 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     addvideoListeners: function(videoPlayer) {
         var instance = this;
 
-        videoPlayer.onplay = function(e) {
-            instance.play("videostage", Math.floor(instance.videoPlayer.timeStamp)*1000);
-        };
+        videoPlayer.on("play", function(e) {
+            instance.play("videostage", Math.floor(instance.videoPlayer.currentTime())*1000);
+        });
 
-        videoPlayer.onpause = function(e) {
-            instance.pause("videostage", Math.floor(instance.videoPlayer.timeStamp)*1000);
-        };
+        videoPlayer.on("pause", function(e) {
+            instance.pause("videostage", Math.floor(instance.videoPlayer.currentTime())*1000);
+        });
 
-        videoPlayer.onended = function(e) {
+        videoPlayer.on("ended", function(e) {
             instance.ended("videostage");
-        };
+        });
 
-        videoPlayer.onseeked = function(e) {
-            instance.seeked("videostage", Math.floor(instance.videoPlayer.timeStamp)*1000);
-        };
+        videoPlayer.on("seeked", function(e) {
+            instance.seeked("videostage", Math.floor(instance.videoPlayer.currentTime())*1000);
+        });
 
     },
     addYOUTUBEListeners: function(videoPlayer) {
