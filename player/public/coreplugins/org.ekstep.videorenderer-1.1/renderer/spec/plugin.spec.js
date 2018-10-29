@@ -150,6 +150,68 @@ describe('Video Renderer Plugin', function() {
             expect(videoRendererInstance.onOverlayAudioMute).not.toBeUndefined();
             expect(videoRendererInstance.onOverlayAudioMute).toHaveBeenCalled();
         });
-           
+        it("It should invoke loadYoutube", function() {
+            var data = _.clone(content);
+            data.mimeType = 'video/x-youtube';
+            var prefix_url = globalConfigObj.basepath || '';
+            path = prefix_url + "/" + data.artifactUrl;
+            spyOn(videoRendererInstance, "createVideo").and.callThrough();
+            spyOn(videoRendererInstance, "_loadYoutube").and.callThrough();
+            videoRendererInstance.createVideo(path, data);
+            expect(videoRendererInstance._loadYoutube).not.toBeUndefined();
+            expect(videoRendererInstance._loadYoutube).toHaveBeenCalled();
+        });
+        it("It should invoke for loadStream video", function() {
+            videoRendererInstance.isStreaming = true;
+            var data = _.clone(content);
+            data.mimeType = 'application/x-mpegURL';
+            var prefix_url = globalConfigObj.basepath || '';
+            path = prefix_url + "/" + data.artifactUrl;
+            spyOn(videoRendererInstance, "createVideo").and.callThrough();
+            spyOn(videoRendererInstance, "_loadVideo").and.callThrough();
+            videoRendererInstance.createVideo(path, data);
+            expect(videoRendererInstance._loadVideo).not.toBeUndefined();
+            expect(videoRendererInstance._loadVideo).toHaveBeenCalled();
+        });
+        it("if streaming video download button should not be enabled", function() {
+            videoRendererInstance.isStreaming = true;
+            var data = _.clone(content);
+            data.mimeType = 'application/x-mpegURL';
+            var prefix_url = globalConfigObj.basepath || '';
+            path = prefix_url + "/" + data.artifactUrl;
+            videoRendererInstance.createVideo(path, data);
+            expect($('.vjs-vjsdownload').length).toEqual(0);
+        });
+        it("if youtube video download button should not be enabled", function() {
+            videoRendererInstance.isStreaming = false;
+            var data = _.clone(content);
+            data.mimeType = 'video/x-youtube';
+            var prefix_url = globalConfigObj.basepath || '';
+            path = prefix_url + "/" + data.artifactUrl;
+            videoRendererInstance.createVideo(path, data);
+            expect($('.vjs-vjsdownload').length).toEqual(0);
+        });
+        it("It should not invoke for loadStream video", function() {
+            videoRendererInstance.isStreaming = false;
+            var data = _.clone(content);
+            data.mimeType = 'video/mp4';
+            var prefix_url = globalConfigObj.basepath || '';
+            path = prefix_url + "/" + data.artifactUrl;
+            spyOn(videoRendererInstance, "createVideo").and.callThrough();
+            spyOn(videoRendererInstance, "_loadVideo").and.callThrough();
+            videoRendererInstance.createVideo(path, data);
+            expect(videoRendererInstance._loadVideo).not.toBeUndefined();
+            expect(videoRendererInstance._loadVideo).toHaveBeenCalled();
+            expect(videoRendererInstance._loadVideo).toHaveBeenCalled();
+        });
+        it("if not youtube and streaming video download button should be enabled", function() {
+            videoRendererInstance.isStreaming = false;
+            var data = _.clone(content);
+            data.mimeType = 'video/mp4';
+            var prefix_url = globalConfigObj.basepath || '';
+            path = prefix_url + "/" + data.artifactUrl;
+            videoRendererInstance.createVideo(path, data);
+            expect($('.vjs-vjsdownload').length).not.toEqual(0);
+        });
     });
 });
