@@ -55,13 +55,13 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         EkstepRendererAPI.dispatchEvent("renderer:content:start");
 
         //Todo need to remove after testing
-        //data.artifactUrl = "https://sunbirdspikemedia-inct.streaming.media.azure.net/afcc5a99-d0c4-4ef5-9dfe-dc403a1269fb/learn-colors-with-numbers-in-kid.ism/manifest(format=m3u8-aapl-v3)";
+        //data.previewUrl = "https://sunbirdspikemedia-inct.streaming.media.azure.net/afcc5a99-d0c4-4ef5-9dfe-dc403a1269fb/learn-colors-with-numbers-in-kid.ism/manifest(format=m3u8-aapl-v3)";
 
         if(data.mimeType === "video/x-youtube"){
             this._loadYoutube(data.artifactUrl);
         }else if(this.isStreaming && (data.mimeType != "video/x-youtube")){
             data.mimeType = this.supportedStreamingMimeType;
-            this._loadVideo(data.artifactUrl, data);
+            this._loadVideo(data.previewUrl, data);
         }else{
             this._loadVideo(path, data);
         }
