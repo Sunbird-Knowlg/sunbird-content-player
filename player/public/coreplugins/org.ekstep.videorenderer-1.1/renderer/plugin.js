@@ -7,7 +7,7 @@
 org.ekstep.contentrenderer.baseLauncher.extend({
     _time: undefined,
     supportedStreamingMimeType: "application/x-mpegURL",
-    isStreaming: EkstepRendererAPI.getGlobalConfig().streaming || true,
+    isStreaming: EkstepRendererAPI.getGlobalConfig().streaming || false,
     messages: {
         noInternetConnection: "Internet not available. Please connect and try again.",
         unsupportedVideo: "Video URL not accessible"
