@@ -261,13 +261,14 @@ module.exports = (env, argv) => {
      * @param {string} channel sunbird/ekstep
      */
     function packageChannelPlugins(channel) {
+        // TODO: Currently, These endpage plugins are defined here, later we need to move this to build.config.js file.
         var execludePlugins = ["org.sunbird.player.endpage", "org.ekstep.endpage"];
         try {
             const _plugins = _.filter([...new Set([...APP_CONFIG[channel].plugins, ...APP_CONFIG['general'].plugins])], function(p) {
                 return !p.config.webpack
             });
-            var plugins = _.filter(_plugins, function(person) {
-                return execludePlugins.indexOf(person.id) === -1; // -1 means not present
+            var plugins = _.filter(_plugins, function(p) {
+                return execludePlugins.indexOf(p.id) === -1; // -1 means not present
             })
             let jsDependencyPath, cssDependencyPath;
             plugins.forEach(function(plugin) {
