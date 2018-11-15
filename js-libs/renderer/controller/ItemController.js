@@ -28,6 +28,7 @@ var ItemController = Controller.extend({
                 if (item) {
                     // Reset the current state of the item (in case one is going back and forth)
                     this.resetItem(item);
+                    this._data.shuffle && (item.max_score = 1) // If item.shuffle is true then set maxscore to 1
 
                     if ("undefined" == typeof item.model || null == item.model) item.model = {};
                     // Start assessment telemetry
@@ -91,6 +92,7 @@ var ItemController = Controller.extend({
                 pass = result.pass;
                 item.score = result.score;
             }
+            this._data.shuffle && result.pass && (item.score = 1)// When shuffle is true consider score and maxscore as a "1"
             if (!_.isUndefined(item.concepts)) var concepts = (!_.isArray(item.concepts) || !_.isObject(item.concepts)) ? JSON.parse(item.concepts) : item.concepts;
             var data = {
                 pass: result.pass,
