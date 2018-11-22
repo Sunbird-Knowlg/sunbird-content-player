@@ -66,7 +66,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         if (window.cordova) {
             var regex = new RegExp("^(http|https)://", "i");
             // For device index.epub will be extracted/unziped to folder. So point to the folder
-            epubPath = (!regex.test(globalConfigObj.basepath)) ? globalConfigObj.basepath : globalConfigObj.basepath + "/";
+            epubPath = (regex.test(globalConfigObj.basepath)) ? globalConfigObj.basepath : globalConfigObj.basepath + "/";
         } else {
           // For local and portal, read index.epub file
           epubPath = isbrowserpreview ? data.artifactUrl : data.baseDir + "/" + data.artifactUrl;
