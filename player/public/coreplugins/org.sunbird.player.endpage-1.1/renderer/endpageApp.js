@@ -192,7 +192,12 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
 
     $scope.convert = function(num) {
         num = num.toString(); //If it's not already a String
-        num = num.slice(0, (num.indexOf(".")) + 3); //With 3 exposing the hundredths place
+        var index = number.indexOf(".");
+        if(index > 0){
+            var floatVal = number.slice(index + 1, index + 3)
+            var numSplitVal = num.split('.');
+            num = numSplitVal[0] + '.'+ floatVal;
+        }
         return Number(num); //If you need it back as a Number
     };
      
