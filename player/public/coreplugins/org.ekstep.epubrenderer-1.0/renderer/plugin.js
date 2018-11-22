@@ -64,8 +64,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         div.id = this.manifest.id;
         this.addToGameArea(div);
         if (window.cordova) {
-          // For device index.epub will be extracted/unziped to folder. So point to the folder
-            epubPath = globalConfigObj.basepath + "/";
+            var regex = new RegExp("^(http|https)://", "i");
+            // For device index.epub will be extracted/unziped to folder. So point to the folder
+            epubPath = (!regex.test(globalConfigObj.basepath)) ? globalConfigObj.basepath : globalConfigObj.basepath + "/";
         } else {
           // For local and portal, read index.epub file
           epubPath = isbrowserpreview ? data.artifactUrl : data.baseDir + "/" + data.artifactUrl;

@@ -30,7 +30,8 @@ LoadByStageStrategy = Class.extend({
                         }
                     }
                     if (createjs.CordovaAudioPlugin.isSupported()) { // Only supported in mobile
-                        if (media.type !== 'sound' && media.type !== 'audiosprite') {
+                        var regex = new RegExp("^(http|https)://", "i");
+                        if (media.type !== 'sound' && media.type !== 'audiosprite' && !regex.test(media.src)) {
                             media.src = 'file:///' + media.src;
                         }
                     }

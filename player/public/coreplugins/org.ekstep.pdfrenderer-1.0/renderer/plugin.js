@@ -39,8 +39,12 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var path = undefined;
         var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
         if (window.cordova || !isbrowserpreview) {
-            var prefix_url = globalConfigObj.basepath || '';
-            path = prefix_url + "/" + data.artifactUrl + "?" + new Date().getSeconds();
+            var regex = new RegExp("^(http|https)://", "i");
+            if(!regex.test(globalConfigObj.basepath)){
+                var prefix_url = globalConfigObj.basepath || '';
+                path = prefix_url + "/" + data.artifactUrl + "?" + new Date().getSeconds();
+            }else   
+                path = data.previewUrl;
         } else {
             path = data.artifactUrl + "?" + new Date().getSeconds();
         }
