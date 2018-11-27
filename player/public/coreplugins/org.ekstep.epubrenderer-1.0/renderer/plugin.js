@@ -63,14 +63,17 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var div = document.createElement('div');
         div.id = this.manifest.id;
         this.addToGameArea(div);
-        if (window.cordova) {
+        if (window.cordova || !isbrowserpreview) {
             var regex = new RegExp("^(http|https)://", "i");
-            // For device index.epub will be extracted/unziped to folder. So point to the folder
-            epubPath = (regex.test(globalConfigObj.basepath)) ? globalConfigObj.basepath : globalConfigObj.basepath + "/";
+            if(!regex.test(globalConfigObj.basepath)){
+                var prefix_url = globalConfigObj.basepath || '';
+                epubPath = prefix_url + "/" + data.artifactUrl;
+            }else   
+                epubPath = data.previewUrl;
         } else {
-          // For local and portal, read index.epub file
-          epubPath = isbrowserpreview ? data.artifactUrl : data.baseDir + "/" + data.artifactUrl;
+            epubPath = data.artifactUrl;
         }
+
         org.ekstep.pluginframework.resourceManager.loadResource(epubPath, 'TEXT', function (err, data) {
             if (err) {
                 err.message = 'Unable to open the content.'
