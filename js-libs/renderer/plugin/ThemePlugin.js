@@ -45,11 +45,12 @@ var ThemePlugin = Plugin.extend({
         }
         createjs.Touch.enable(this._self);
         this._self.enableMouseOver(10);
-        this._self.mouseMoveOutside = true;
+    this._self.mouseMoveOutside = true;
         this._contentParams = {};
         if (!_.isUndefined(data.saveState)) {
             this._saveState = data.saveState;
         }
+        //var ProgressBar = require('/js-libs/progressbar/progressbar.js');
     },
     mousePoint: function() {
         return {
@@ -529,12 +530,13 @@ var ThemePlugin = Plugin.extend({
     },
     addLoaderElement: function() {
         var gameArea = document.getElementById(Renderer.divIds.gameArea);
-        var loaderArea = document.createElement('div');
+        var loaderArea = document.createElement('div'); 
         loaderArea.id = 'loaderArea';
-        var element = '<div class="preloader-wrapper"><div class="spinner-layer"><div class="circle-clipper left"><div class="circle"></div></div>' +
-            '<div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div>'
-        loaderArea.innerHTML = element;
-        gameArea.parentElement.appendChild(loaderArea);
+        var element = '<div class="loader-popup"><div class="preloader-wrapper-area"></div><div class="preloader-wrapper-area-text">Please Wait.. We are getting things ready for you</div></div>';
+        // var element = '<div class="preloader-wrapper"><div class="spinner-layer"><div class="circle-clipper left"><div class="circle"></div></div>' +
+        //     '<div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div>'
+            loaderArea.innerHTML = element;    
+        gameArea.parentElement.appendChild(loaderArea);   
     },
 
     /**

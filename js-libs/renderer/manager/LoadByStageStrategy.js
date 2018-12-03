@@ -15,7 +15,7 @@ LoadByStageStrategy = Class.extend({
         createjs.Sound.alternateExtensions = ["mp3"];
         this.destroy();
         this.loadAppAssets();
-        
+
         if (!_.isUndefined(themeData.manifest) && !_.isUndefined(themeData.manifest.media)) {
             if (!_.isArray(themeData.manifest.media)) themeData.manifest.media = [themeData.manifest.media];
 
@@ -154,7 +154,7 @@ LoadByStageStrategy = Class.extend({
                 return this.assetMap[assetId].src;
             } else
                 console.error('"' + assetId + '" Asset not found. Please check index.ecml.');
-                EkstepRendererAPI.logErrorEvent({'message':'Asset not found. Please check index.ecml'},{'type':'content','severity':'error','action':'play', 'asset':assetId, 'objectId':assetId})
+            EkstepRendererAPI.logErrorEvent({'message':'Asset not found. Please check index.ecml'},{'type':'content','severity':'error','action':'play', 'asset':assetId, 'objectId':assetId})
         };
         return asset;
     },
@@ -185,6 +185,9 @@ LoadByStageStrategy = Class.extend({
             mediaList = instance.filterMedia(mediaList, "video");
             if (_.isArray(mediaList) && mediaList.length > 0) {
                 var loader = this._createLoader();
+                var currentStageId = Renderer.theme._currentStage;
+                console.log("curentStageID", currentStageId);
+                instance.loaderWithPercentage(currentStageId, loader);
                 loader.stageLoaded = false;
                 loader.on("complete", function() {
                     loader.stageLoaded = true;
@@ -329,5 +332,55 @@ LoadByStageStrategy = Class.extend({
             return true
         }
         return false
+    },
+    loaderWithPercentage: function (currentStageId, loader) {
+        $("svg", ".preloader-wrapper-area").remove();
+        $("div", ".preloader-wrapper-area").remove();
+
+        var bar = new ProgressBar.Circle('.preloader-wrapper-area', {
+            color: '#aaa',
+            // This has to be the same size as the maximum width to
+            // prevent clipping
+            strokeWidth: 8,
+            trailWidth: 4,
+            easing: 'easeInOut',
+            duration: 2000,
+            text: {
+                autoStyleContainer: false
+            },
+            from: { color: '#aaa', width: 4 },
+            to: { color: '#0789d8', width: 8 },
+            // Set default step function for all animate calls
+            step: function (state, circle) {
+                circle.path.setAttribute('stroke', state.color);
+                circle.path.setAttribute('stroke-width', state.width);
+                var value = Math.round(circle.value() * 100);
+                if (value === 0) {
+                    circle.setText('');
+                }
+                // else if(value> 50) {
+                //     circle.setText(value + '%');
+                //     circle.stop();
+                // } 
+                else {
+                    circle.setText(value + '%');
+                }
+            }
+        });
+        bar.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
+        bar.text.style.fontSize = '2rem';
+        if (currentStageId) {
+            console.log("currentStageId", currentStageId);
+            loader.on("progress", function () {
+                if ((loader.stageLoaded || !loader.stageLoaded) && currentStageId === Renderer.theme._currentStage) {
+                    var itemsInStage = loader.getItems(loader.stageLoaded);
+                }
+                console.log("Itemsn=INsatge=====>", itemsInStage);
+                console.log("ItemsLenght", itemsInStage.length);
+                console.log("Progress:", loader.progress);
+                progressPercent = loader.progress;
+                bar.animate(loader.progress);  // Number from 0.0 to 1.0
+            });
+        }
     }
 });
