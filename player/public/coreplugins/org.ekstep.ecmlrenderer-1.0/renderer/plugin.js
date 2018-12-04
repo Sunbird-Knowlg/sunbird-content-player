@@ -259,9 +259,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         this.stageId = [];
         if (Renderer && Renderer.theme) {
             Renderer.theme.removeHtmlElements();
+            this.startTelemetry();
             Renderer.theme.reRender();
         }
-        this.startTelemetry();
     },
     
     getContentAssesmentCount: function() {
