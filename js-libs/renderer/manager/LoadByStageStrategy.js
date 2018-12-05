@@ -185,7 +185,7 @@ LoadByStageStrategy = Class.extend({
             mediaList = instance.filterMedia(mediaList, "video");
             if (_.isArray(mediaList) && mediaList.length > 0) {
                 var loader = this._createLoader();
-                var currentStageId = Renderer.theme._currentStage;
+                var currentStageId =  stageId;
                 console.log("curentStageID", currentStageId);
                 instance.loaderWithPercentage(currentStageId, loader);
                 loader.stageLoaded = false;
