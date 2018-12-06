@@ -213,12 +213,12 @@ module.exports = (env, argv) => {
                     }]
                 },
                 {
-                    test: require.resolve(`${FOLDER_PATHS.basePath}public/libs/progressbar.min.js`),
-                    use: [{
-                        loader: 'expose-loader',
-                        options: 'ProgressBar'
-                    }]
-                }
+                   test: require.resolve(`${FOLDER_PATHS.basePath}public/libs/progressbar.min.js`),
+                   use: [{
+                       loader: 'expose-loader',
+                       options: 'ProgressBar'
+                   }]
+               }
             ]
         },
         plugins: [
@@ -241,7 +241,7 @@ module.exports = (env, argv) => {
                 _: 'underscore',
                 async: "async",
                 Fingerprint2: 'Fingerprint2',
-                ProgressBar: 'ProgressBar',
+                ProgressBar: 'ProgressBar'
             }),
             new webpack.optimize.OccurrenceOrderPlugin(),
             new webpack.HotModuleReplacementPlugin(),
