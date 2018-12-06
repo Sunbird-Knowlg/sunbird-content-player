@@ -1372,9 +1372,9 @@ body {
 }
 .loader-popup {
     width: 60%;
-    height: 40%;
+    height: 60%;
     z-index: 1000;
-    top: 30%;
+    top: 20%;
     left: 20%;
     border-radius: 25px;
     position: relative;
@@ -1382,14 +1382,14 @@ body {
 }
 
 .preloader-wrapper-area {
-    width: 150px;
-    height: 150px;
+    width: 100px;
+    height: 100px;
     z-index: 2000;
     top: 20%;
     left: 40%;
     position: relative;
     color: #000000;
-    font-size: 2 rem;
+    font-size: 1 rem;
 }
 .preloader-wrapper-area-text {
     width: 80%;
@@ -1400,7 +1400,7 @@ body {
     position: relative;
     color: #000000;
     text-align: center;
-    font-size: 26px;;
+    font-size: 1 rem;
 }
 
 @-webkit-keyframes container-rotate {
