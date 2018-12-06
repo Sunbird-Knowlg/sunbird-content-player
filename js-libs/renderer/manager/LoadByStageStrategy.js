@@ -185,7 +185,7 @@ LoadByStageStrategy = Class.extend({
             mediaList = instance.filterMedia(mediaList, "video");
             if (_.isArray(mediaList) && mediaList.length > 0) {
                 var loader = this._createLoader();
-                var currentStageId =  stageId;
+                var currentStageId =  Renderer.theme._currentStage;
                 console.log("curentStageID", currentStageId);
                 instance.loaderWithPercentage(currentStageId, loader);
                 loader.stageLoaded = false;
@@ -348,8 +348,8 @@ LoadByStageStrategy = Class.extend({
             text: {
                 autoStyleContainer: false
             },
-            from: { color: '#aaa', width: 4 },
-            to: { color: '#0789d8', width: 8 },
+            from: { color: '#aaa', width: 2 },
+            to: { color: '#0789d8', width: 6 },
             // Set default step function for all animate calls
             step: function (state, circle) {
                 circle.path.setAttribute('stroke', state.color);
@@ -368,16 +368,14 @@ LoadByStageStrategy = Class.extend({
             }
         });
         bar.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
-        bar.text.style.fontSize = '2rem';
+        bar.text.style.fontSize = '1rem';
+        bar.text.style.color = 'black';
         if (currentStageId) {
             console.log("currentStageId", currentStageId);
             loader.on("progress", function () {
                 if ((loader.stageLoaded || !loader.stageLoaded) && currentStageId === Renderer.theme._currentStage) {
                     var itemsInStage = loader.getItems(loader.stageLoaded);
                 }
-                console.log("Itemsn=INsatge=====>", itemsInStage);
-                console.log("ItemsLenght", itemsInStage.length);
-                console.log("Progress:", loader.progress);
                 progressPercent = loader.progress;
                 bar.animate(loader.progress);  // Number from 0.0 to 1.0
             });
