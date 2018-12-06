@@ -63,7 +63,8 @@ const EXTERNAL_SCRIPTS = [
     './public/libs/ng-cordova.min.js',
     './public/libs/ocLazyLoad.js',
     './public/libs/eventbus.min.js',
-    './public/libs/plugin-framework.min.js'
+    './public/libs/plugin-framework.min.js',
+    './public/libs/progressbar.min.js'
 ];
 
 const APP_SCRIPTS = [
@@ -128,7 +129,8 @@ module.exports = (env, argv) => {
                 'underscore': path.resolve(`${FOLDER_PATHS.basePath}public/libs/underscore.js`),
                 'jquery-mousewheel': path.resolve(`${FOLDER_PATHS.basePath}node_modules/jquery-mousewheel/jquery.mousewheel.js`),
                 'Fingerprint2': path.resolve(`${FOLDER_PATHS.jsLibs}telemetry-lib/fingerprint2.min.js`),
-                'ajv': require.resolve(`${FOLDER_PATHS.basePath}node_modules/ajv/dist/ajv.min.js`)
+                'ajv': require.resolve(`${FOLDER_PATHS.basePath}node_modules/ajv/dist/ajv.min.js`),
+                'ProgressBar': path.resolve(`${FOLDER_PATHS.basePath}public/libs/progressbar.min.js`)
             }
         },
         module: {
@@ -209,7 +211,14 @@ module.exports = (env, argv) => {
                         loader: 'expose-loader',
                         options: 'CryptoJS'
                     }]
-                }
+                },
+                {
+                   test: require.resolve(`${FOLDER_PATHS.basePath}public/libs/progressbar.min.js`),
+                   use: [{
+                       loader: 'expose-loader',
+                       options: 'ProgressBar'
+                   }]
+               }
             ]
         },
         plugins: [
@@ -232,6 +241,7 @@ module.exports = (env, argv) => {
                 _: 'underscore',
                 async: "async",
                 Fingerprint2: 'Fingerprint2',
+                ProgressBar: 'ProgressBar'
             }),
             new webpack.optimize.OccurrenceOrderPlugin(),
             new webpack.HotModuleReplacementPlugin(),
