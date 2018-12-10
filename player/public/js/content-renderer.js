@@ -36,7 +36,7 @@ org.ekstep.contentrenderer.loadDefaultPlugins = function(cb) {
  * @param  {obj} appInfo [metadata]
  */
 org.ekstep.contentrenderer.startGame = function(appInfo) {
-        globalConfig.basepath = (appInfo.streamingUrl || appInfo.previewUrl) ? (appInfo.streamingUrl || appInfo.previewUrl) : (globalConfig.basepath || appInfo.baseDir);
+        globalConfig.basepath = (appInfo.streamingUrl) ? (appInfo.streamingUrl) : (globalConfig.basepath || appInfo.baseDir);
         org.ekstep.contentrenderer.loadDefaultPlugins(function() {
             org.ekstep.contentrenderer.loadExternalPlugins(function() {
                 var globalConfig = EkstepRendererAPI.getGlobalConfig()

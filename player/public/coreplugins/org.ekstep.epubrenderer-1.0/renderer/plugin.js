@@ -69,7 +69,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 var prefix_url = globalConfigObj.basepath || '';
                 epubPath = prefix_url + "/" + data.artifactUrl;
             }else   
-                epubPath = data.previewUrl;
+                epubPath = data.streamingUrl;
         } else {
             epubPath = data.artifactUrl;
         }

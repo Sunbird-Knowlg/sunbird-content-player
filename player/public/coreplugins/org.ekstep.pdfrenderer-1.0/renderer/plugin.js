@@ -44,7 +44,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 var prefix_url = globalConfigObj.basepath || '';
                 path = prefix_url + "/" + data.artifactUrl + "?" + new Date().getSeconds();
             }else   
-                path = data.previewUrl;
+                path = data.streamingUrl;
         } else {
             path = data.artifactUrl + "?" + new Date().getSeconds();
         }
