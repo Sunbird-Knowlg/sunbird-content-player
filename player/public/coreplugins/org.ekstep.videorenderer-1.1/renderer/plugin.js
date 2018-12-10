@@ -56,9 +56,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
         if(data.mimeType === "video/x-youtube"){
             this._loadYoutube(data.artifactUrl);
-        }else if(data.previewUrl && (data.mimeType != "video/x-youtube")){
+        }else if(data.streamingUrl && (data.mimeType != "video/x-youtube")){
             data.mimeType = this.supportedStreamingMimeType;
-            this._loadVideo(data.previewUrl, data);
+            this._loadVideo(data.streamingUrl, data);
         }else{
             this._loadVideo(path, data);
         }
@@ -69,7 +69,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },    
     _loadVideo: function(path, data) {
         var instance = this;
-        if (data.previewUrl && !navigator.onLine) {
+        if (data.streamingUrl && !navigator.onLine) {
             EkstepRendererAPI.logErrorEvent('No internet', {
                 'type': 'content',
                 'action': 'play',
@@ -84,7 +84,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         source.type = data.mimeType;
         video.appendChild(source);
 
-        if (data.previewUrl || window.cordova){
+        if (data.streamingUrl || window.cordova){
             var videoPlayer = videojs('videoElement', {
                 "controls": true, "autoplay": true, "preload": "auto"
             });
@@ -211,7 +211,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             instance.seeked("videostage", Math.floor(instance.videoPlayer.currentTime())*1000);
         });
 
-        if (data.previewUrl){
+        if (data.streamingUrl){
             videoPlayer.on("error", function(e) {
                 EventBus.dispatch("renderer:alert:show", undefined, {
                     title: "Error",
