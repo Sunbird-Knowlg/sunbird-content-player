@@ -7,7 +7,7 @@ AppConfig = {
 	recorder: "AUDIO_RECORDER",
 	flavor: "DEPLOYMENT",
 	heartBeatTime: 180000,
-	isCorePluginsPackaged: true, // Default to TRUE, For local development turn off this flag.
+	isCorePluginsPackaged: false, // Default to TRUE, For local development turn off this flag.
 	s3ContentHost: "/assets/public/content/",
 	previewPluginspath: "/content-plugins",
 	devicePluginspath: "/widgets/content-plugins",
@@ -16,6 +16,17 @@ AppConfig = {
 	telemetryEventsConfigFields: ["env", "sid", "uid", "did", "channel", "etags", "pdata", "cdata", "app", "dims", "partner", "tags", "rollup", "mode", "enableTelemetryValidation"],
 	mimetypes: [
 		"application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive", "application/vnd.ekstep.h5p-archive", "application/epub", "video/mp4", "application/pdf", "video/x-youtube", "video/webm"
+	],
+	whiteListUrl: [
+		'self',
+		'http://srv*.assets.example.com/**',
+		'https://ntp**/**',
+		'https://sunbird**/**',
+		'https://sunbirdstaging.blob.core.windows.net',
+		'https://**/ekstep**/**',
+		'https://ekstep**/**', 
+		'https://ekstep-public-qa.s3-ap-south-1.amazonaws.com/**',
+		'https://sunbirdstaging.blob.core.windows.net/sunbird-content-staging/content/**'
 	],
 	defaultMetadata: {
 		"identifier": "org.ekstep.item.sample",
