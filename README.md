@@ -26,9 +26,9 @@
 
 Content player is a customisable and configurable before launching any type of content inside any environment (preview or device) it expecting few configurations. Based on the configuration content will be rendered in the respective environment. 
 
-Download content player preview from NPM
+Download content player preview from NPM 
 
-> Run npm i @project-sunbird/content-player
+> npm i @project-sunbird/content-player
 
 	
 
@@ -136,7 +136,7 @@ var previewObj = {
 	
 	  var previewElement = jQuery('#preview')[0];
       previewElement.onload = function() {
-           previewContentIframe.contentWindow.initializePreview(configuration);
+           previewElement.contentWindow.initializePreview(configuration);
       }
 	
 	```
