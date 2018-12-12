@@ -182,6 +182,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     EkstepRendererAPI.addEventListener('renderer:endpage:show', function() {
         $scope.showEndPage = true;
         $scope.initEndpage();
+        document.webkitExitFullscreen();
         $scope.safeApply();
     });
     EkstepRendererAPI.addEventListener('renderer:endpage:hide',function() {
