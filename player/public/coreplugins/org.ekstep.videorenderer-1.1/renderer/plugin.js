@@ -37,6 +37,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             if(!regex.test(globalConfigObj.basepath)){
                 var prefix_url = globalConfigObj.basepath || '';
                 path = prefix_url ? prefix_url + "/" + data.artifactUrl : data.artifactUrl;
+                data.streamingUrl = false;
             }else   
                 path = data.streamingUrl;
         } else {
