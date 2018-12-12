@@ -34,12 +34,12 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
         if (window.cordova || !isbrowserpreview) {
             var prefix_url = globalConfigObj.basepath || '';
-            path = prefix_url + "/" + data.artifactUrl;
+            path = prefix_url ? prefix_url + "/" + data.artifactUrl : data.artifactUrl;
         } else {
             path = data.artifactUrl;
         }
         console.log("path", path);
-        console.log("path", data);
+        console.log("data", data);
         this.createVideo(path, data);
         this.configOverlay();
     },
@@ -49,9 +49,10 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         video.style.height = '100%';
         video.style.position = 'absolute';
         video.id = "videoElement";
+        video.autoplay = true;
         video.className = 'vjs-default-skin';
         document.body.appendChild(video);
-         EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
+        EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
         EkstepRendererAPI.dispatchEvent("renderer:content:start");
 
         if(data.mimeType === "video/x-youtube"){
@@ -125,9 +126,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 "techOrder": ["youtube"],
                 "src": path,
                 "controls": true, "autoplay": true, "preload": "auto"
-            },
-            function() {
-                $(".vjs-has-started, .vjs-poster").css("display", "none")
             });
         videojs("videoElement").ready(function() {
             var youtubeInstance = this;
@@ -135,6 +133,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 type: 'video/youtube',
                 src: path
             });
+            youtubeInstance.play();
             instance.addYOUTUBEListeners(youtubeInstance);
             instance.setYoutubeStyles(youtubeInstance);
             instance.videoPlayer = youtubeInstance;            
@@ -204,6 +203,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         });
 
         videoPlayer.on("ended", function(e) {
+            if(videoPlayer.isFullscreen()) videoPlayer.exitFullscreen();
             instance.ended("videostage");
         });
 
@@ -234,6 +234,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         });
 
         videoPlayer.on('ended', function() {
+            if(videoPlayer.isFullscreen()) videoPlayer.exitFullscreen();
             instance.ended("youtubestage");
         });
         videoPlayer.on('seeked', function(e) {
