@@ -41,6 +41,7 @@ table {
   font-size: 0.8em;
   vertical-align: middle;
   color: black;
+  margin: auto;
 }
 .textdeco-none{
   text-decoration: none !important;
@@ -165,7 +166,7 @@ table {
   font-weight: bold;
   position: absolute;
   width: 55%;
-  top: 46%;
+  top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
@@ -279,7 +280,7 @@ table {
   font-weight: 900;
   text-decoration: none;
   height: 5.9vw;
-  display: inline-block;
+  display: flex;
   vertical-align: middle;
   margin-right: 10px;
 }
@@ -314,7 +315,7 @@ table {
 .ps-btn-icon {
   height: 3vw;
   width: 3vw;
-  vertical-align: bottom;
+  margin: auto;
 }
 
 .ps-action-list {
