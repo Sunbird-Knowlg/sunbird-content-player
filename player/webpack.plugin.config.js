@@ -40,7 +40,6 @@ const PLUGINS = process.env.plugins || [
     "org.ekstep.previousnavigation-1.0",
     "org.ekstep.genie-1.0",
     "org.ekstep.htmlrenderer-1.0",
-    "org.ekstep.videorenderer-1.1",
     "org.ekstep.pdfrenderer-1.0",
     "org.ekstep.epubrenderer-1.0",
     "org.ekstep.extcontentpreview-1.0"
