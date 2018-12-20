@@ -329,8 +329,9 @@ var qshack = {
             } else {
                 if (EkstepRendererAPI.isStreamingContent()) {
                     // mobile online streaming
-                    console.log("------" , path);
-                    return org.ekstep.pluginframework.pluginManager.resolvePluginResource(pluginId, pluginVer, path);
+                    if(path)
+                    return EkstepRendererAPI.getBaseURL() + 'content-plugins/' + pluginId + '-' + pluginVer + '/' +path;
+                    //return org.ekstep.pluginframework.pluginManager.resolvePluginResource(pluginId, pluginVer, path);
                 } else {
                     // Loading content from mobile storage ( OFFLINE )
                     return 'file:///' + EkstepRendererAPI.getBaseURL() + 'content-plugins/' + pluginId + '-' + pluginVer + '/' + path;
@@ -344,7 +345,9 @@ var qshack = {
             } else {
                 if (EkstepRendererAPI.isStreamingContent()) {
                     // mobile online streaming
-                    return org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, path);
+                    if(path)
+                    return EkstepRendererAPI.getBaseURL() + 'content-plugins/' + this._manifest.id + '-' + this._manifest.ver + '/' + path;
+                    //return org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, path);
                 } else {
                     // Loading content from mobile storage ( OFFLINE )
                     return 'file:///' + EkstepRendererAPI.getBaseURL() + 'content-plugins/' + this._manifest.id + '-' + this._manifest.ver + '/' + path;
