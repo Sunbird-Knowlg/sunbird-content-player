@@ -11,7 +11,12 @@ LoadByStageStrategy = Class.extend({
     init: function(themeData, basePath) {
         //console.info('createjs.CordovaAudioPlugin.isSupported()', createjs.CordovaAudioPlugin.isSupported());
         var instance = this;
-        createjs.Sound.registerPlugins([createjs.WebAudioPlugin, createjs.CordovaAudioPlugin, createjs.HTMLAudioPlugin]);
+        var regex = new RegExp("^(http|https)://", "i");
+        if(regex.test(basePath)){
+            createjs.Sound.registerPlugins([createjs.WebAudioPlugin, createjs.CordovaAudioPlugin, createjs.HTMLAudioPlugin]);
+        }else{
+            createjs.Sound.registerPlugins([createjs.CordovaAudioPlugin, createjs.WebAudioPlugin, createjs.HTMLAudioPlugin]);
+        }
         createjs.Sound.alternateExtensions = ["mp3"];
         this.destroy();
         this.loadAppAssets();
@@ -30,7 +35,6 @@ LoadByStageStrategy = Class.extend({
                         }
                     }
                     if (createjs.CordovaAudioPlugin.isSupported()) { // Only supported in mobile
-                        var regex = new RegExp("^(http|https)://", "i");
                         if (media.type !== 'sound' && media.type !== 'audiosprite' && !regex.test(media.src)) {
                             media.src = 'file:///' + media.src;
                         }

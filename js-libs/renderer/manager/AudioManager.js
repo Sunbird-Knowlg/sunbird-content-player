@@ -19,8 +19,6 @@ AudioManager = {
                 }
                 instance.object.muted = this.muted;
             } else {
-                //to manually unlock the audio context
-                createjs.WebAudioPlugin.playEmptySound();
                 // Reclaim a space if necessary
                 AudioManager.reclaim();
                 // Instantiate the current audio to play
