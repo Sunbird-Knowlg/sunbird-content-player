@@ -33,13 +33,13 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         this.heartBeatData.stageId = content.mimeType === 'video/x-youtube' ? 'youtubestage' : 'videostage';
         var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
         if (window.cordova || !isbrowserpreview) {
-            var regex = new RegExp("^(http|https)://", "i");
-            if(!regex.test(globalConfigObj.basepath)){
+            if(EkstepRendererAPI.isStreamingContent()){
+                path = data.streamingUrl;
+            }else{
                 var prefix_url = globalConfigObj.basepath || '';
                 path = prefix_url ? prefix_url + "/" + data.artifactUrl : data.artifactUrl;
                 data.streamingUrl = false;
-            }else   
-                path = data.streamingUrl;
+            }
         } else {
             path = data.artifactUrl;
         }

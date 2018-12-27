@@ -11,8 +11,7 @@ LoadByStageStrategy = Class.extend({
     init: function(themeData, basePath) {
         //console.info('createjs.CordovaAudioPlugin.isSupported()', createjs.CordovaAudioPlugin.isSupported());
         var instance = this;
-        var regex = new RegExp("^(http|https)://", "i");
-        if(regex.test(basePath)){
+        if(EkstepRendererAPI.isStreamingContent()){
             createjs.Sound.registerPlugins([createjs.WebAudioPlugin, createjs.CordovaAudioPlugin, createjs.HTMLAudioPlugin]);
         }else{
             createjs.Sound.registerPlugins([createjs.CordovaAudioPlugin, createjs.WebAudioPlugin, createjs.HTMLAudioPlugin]);
@@ -35,6 +34,7 @@ LoadByStageStrategy = Class.extend({
                         }
                     }
                     if (createjs.CordovaAudioPlugin.isSupported()) { // Only supported in mobile
+                        var regex = new RegExp("^(http|https)://", "i");
                         if (media.type !== 'sound' && media.type !== 'audiosprite' && !regex.test(media.src)) {
                             media.src = 'file:///' + media.src;
                         }
@@ -191,7 +191,6 @@ LoadByStageStrategy = Class.extend({
             if (_.isArray(mediaList) && mediaList.length > 0) {
                 var loader = this._createLoader();
                 var currentStageId =  Renderer.theme._currentStage;
-                console.log("curentStageID", currentStageId);
                 instance.loaderWithPercentage(currentStageId, loader);
                 loader.stageLoaded = false;
                 loader.on("complete", function() {
@@ -362,11 +361,7 @@ LoadByStageStrategy = Class.extend({
                 var value = Math.round(circle.value() * 100);
                 if (value === 0) {
                     circle.setText('');
-                }
-                // else if(value> 50) {
-                //     circle.setText(value + '%');
-                //     circle.stop();
-                // } 
+                } 
                 else {
                     circle.setText(value + '%');
                 }
@@ -376,7 +371,6 @@ LoadByStageStrategy = Class.extend({
         bar.text.style.fontSize = '1rem';
         bar.text.style.color = 'black';
         if (currentStageId) {
-            console.log("currentStageId", currentStageId);
             loader.on("progress", function () {
                 if ((loader.stageLoaded || !loader.stageLoaded) && currentStageId === Renderer.theme._currentStage) {
                     var itemsInStage = loader.getItems(loader.stageLoaded);

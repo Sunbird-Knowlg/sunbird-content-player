@@ -87,7 +87,7 @@ var app = angular.module("genie-canvas", ["ionic", "ngCordova", "oc.lazyLoad"])
 	}).config(function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvider, $sceDelegateProvider) {
 		app.controllerProvider = $controllerProvider
 		app.compileProvider = $compileProvider
-		console.log("AppConfig", AppConfig.whiteListUrl);
+		// This will help to load the external scripts, these list of scripts are added in appconfig js file as a whitelist url 
 		$sceDelegateProvider.resourceUrlWhitelist(AppConfig.whiteListUrl);
 	}).controller("BaseCtrl", function ($scope, $rootScope, $state, $ocLazyLoad, $stateParams, $compile, $templateCache, appConstants) {
 		$scope.templates = []
@@ -168,6 +168,7 @@ var app = angular.module("genie-canvas", ["ionic", "ngCordova", "oc.lazyLoad"])
 		}, this)
 	});
 
+	// This will help to load the external scripts for questionset, these list of scripts are added in appconfig js file as a whitelist url 
 	angular.module('org.ekstep.question', []).config(function($sceDelegateProvider) {
 		$sceDelegateProvider.resourceUrlWhitelist(AppConfig.whiteListUrl);
 	}); 

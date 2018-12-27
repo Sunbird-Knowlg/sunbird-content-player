@@ -39,12 +39,12 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var path = undefined;
         var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
         if (window.cordova || !isbrowserpreview) {
-            var regex = new RegExp("^(http|https)://", "i");
-            if(!regex.test(globalConfigObj.basepath)){
+            if(EkstepRendererAPI.isStreamingContent()){
+                path = data.streamingUrl;
+            }else{
                 var prefix_url = globalConfigObj.basepath || '';
                 path = prefix_url + "/" + data.artifactUrl + "?" + new Date().getSeconds();
-            }else   
-                path = data.streamingUrl;
+            }
         } else {
             path = data.artifactUrl + "?" + new Date().getSeconds();
         }

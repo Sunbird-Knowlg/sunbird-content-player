@@ -346,8 +346,11 @@ org.ekstep.contentrenderer.device = function() {
 }
 
 org.ekstep.contentrenderer.isStreamingContent = function() {
-    var globalConfig = EkstepRendererAPI.getGlobalConfig();
-    var regex = new RegExp("^(http|https)://", "i");
-    return regex.test(globalConfig.basepath);
+    if(window.cordova || !isbrowserpreview){
+        var globalConfig = EkstepRendererAPI.getGlobalConfig();
+        var regex = new RegExp("^(http|https)://", "i");
+        return regex.test(globalConfig.basepath);
+    }
+    return false;
 }
 org.ekstep.contentrenderer.init()
