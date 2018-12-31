@@ -531,9 +531,10 @@ var ThemePlugin = Plugin.extend({
         var gameArea = document.getElementById(Renderer.divIds.gameArea);
         var loaderArea = document.createElement('div');
         loaderArea.id = 'loaderArea';
-        var element = '<div class="preloader-wrapper"><div class="spinner-layer"><div class="circle-clipper left"><div class="circle"></div></div>' +
-            '<div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div>'
-        loaderArea.innerHTML = element;
+        var element = '<div class="loader-popup"><div class="preloader-wrapper-area"></div><div class="preloader-wrapper-area-text">Please Wait.. We are getting things ready for you</div></div>';
+        // var element = '<div class="preloader-wrapper"><div class="spinner-layer"><div class="circle-clipper left"><div class="circle"></div></div>' +
+        //     '<div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div>'
+            loaderArea.innerHTML = element;    
         gameArea.parentElement.appendChild(loaderArea);
     },
 
