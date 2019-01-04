@@ -19,14 +19,8 @@ AppConfig = {
 	],
 	whiteListUrl: [
 		'self',
-		'http://srv*.assets.example.com/**',
-		'https://ntp**/**',
-		'https://sunbird**/**',
-		'https://sunbirdstaging.blob.core.windows.net',
-		'https://**/ekstep**/**',
-		'https://ekstep**/**', 
-		'https://ekstep-public-qa.s3-ap-south-1.amazonaws.com/**',
-		'https://sunbirdstaging.blob.core.windows.net/sunbird-content-staging/content/**'
+		'https://*.blob.core.windows.net/**',
+		'https://ekstep-public-qa.s3-ap-south-1.amazonaws.com/**'
 	],
 	defaultMetadata: {
 		"identifier": "org.ekstep.item.sample",
