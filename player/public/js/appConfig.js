@@ -17,17 +17,7 @@ AppConfig = {
 	mimetypes: [
 		"application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive", "application/vnd.ekstep.h5p-archive", "application/epub", "video/mp4", "application/pdf", "video/x-youtube", "video/webm"
 	],
-	whiteListUrl: [
-		'self',
-		'http://srv*.assets.example.com/**',
-		'https://ntp**/**',
-		'https://sunbird**/**',
-		'https://sunbirdstaging.blob.core.windows.net',
-		'https://**/ekstep**/**',
-		'https://ekstep**/**', 
-		'https://ekstep-public-qa.s3-ap-south-1.amazonaws.com/**',
-		'https://sunbirdstaging.blob.core.windows.net/sunbird-content-staging/content/**'
-	],
+	whiteListUrl: [],
 	defaultMetadata: {
 		"identifier": "org.ekstep.item.sample",
 		"mimeType": "application/vnd.ekstep.ecml-archive",

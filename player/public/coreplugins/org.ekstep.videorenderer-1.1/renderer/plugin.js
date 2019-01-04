@@ -69,7 +69,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             this._loadVideo(path, data);
         }
         
-        $("video-js").bind("contextmenu",function() {
+        $("video").bind("contextmenu",function() {
             return false;
         });
     },    
@@ -183,7 +183,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             stageId: stageid,
             subtype: "STOP"
         });
-        $(".vjs-has-started, .vjs-poster").css("display", "none");
         EkstepRendererAPI.dispatchEvent('renderer:content:end');
     },
     seeked: function(stageid, time) {
