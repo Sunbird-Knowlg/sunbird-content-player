@@ -161,6 +161,23 @@ OverlayManager = {
             this.defaultSubmit();
             return;
         }
+        var data = {
+            stageId: Renderer.theme._currentScene.id
+        };
+        if(!_.isUndefined(AssetManager.strategy) && AssetManager.strategy.loaders){
+            if(AssetManager.strategy.loaders[Renderer.theme._currentStage]){
+                var stageLoader = AssetManager.strategy.loaders[Renderer.theme._currentStage];
+                if(stageLoader && !_.isUndefined(Renderer.theme._currentScene.params) && Renderer.theme._currentScene.params.next){
+                    data.extra = {
+                        stageProgress: {
+                            "id": Renderer.theme._currentScene.params.next,
+                            "progress": (stageLoader.progress * 100) + '%';
+                        }
+                    }
+                }
+            }
+        }
+        TelemetryService.interact("TOUCH", "next", "TOUCH", data);
         this.skipAndNavigateNext({"target": "next"});
       }catch(e){
         showToaster('error','Current scene having some issue');
@@ -223,6 +240,23 @@ OverlayManager = {
                 return;
             }
         }
+        var data = {
+            stageId: Renderer.theme._currentScene.id
+        };
+        if(!_.isUndefined(AssetManager.strategy) && AssetManager.strategy.loaders){
+            if(AssetManager.strategy.loaders[Renderer.theme._currentStage]){
+                var stageLoader = AssetManager.strategy.loaders[Renderer.theme._currentStage];
+                if(stageLoader && !_.isUndefined(Renderer.theme._currentScene.params) && Renderer.theme._currentScene.params.previous){
+                    data.extra = {
+                        stageProgress: {
+                            "id": Renderer.theme._currentScene.params.previous,
+                            "progress": (stageLoader.progress * 100) + '%';
+                        }
+                    }
+                }
+            }
+        }
+        TelemetryService.interact("TOUCH", "previous", "TOUCH", data);
         var navigateTo = this.getNavigateTo("previous");
         if (_.isUndefined(Renderer.theme._currentScene)) return;
         this.defaultNavigation("previous", navigateTo);
