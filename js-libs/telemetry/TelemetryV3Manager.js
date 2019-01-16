@@ -203,7 +203,7 @@ TelemetryV3Manager = Class.extend({
         }
         var responseData = {
             target: target,
-            type: optionTag,
+            type: optionTag || data.type,
             values: _.isEmpty(data.res) ? [] : data.res
         }
         EkTelemetry.response(responseData);
