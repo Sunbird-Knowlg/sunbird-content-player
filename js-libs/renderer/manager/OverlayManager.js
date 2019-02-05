@@ -155,12 +155,13 @@ OverlayManager = {
     navigateNext: function() {
      try{
         if ((_.isUndefined(Renderer.theme) || _.isUndefined(Renderer.theme._currentScene))) return;
-
+        this.logNavigationTelInteract("next");
         var isItemScene = Renderer.theme._currentScene.isItemScene();
         if (isItemScene) {
             this.defaultSubmit();
             return;
-        }
+        }       
+        
         this.skipAndNavigateNext({"target": "next"});
       }catch(e){
         showToaster('error','Current scene having some issue');
@@ -216,13 +217,14 @@ OverlayManager = {
       try{
         if ((_.isUndefined(Renderer.theme) || _.isUndefined(Renderer.theme._currentScene))) return;
         var navigateToStage = this.getNavigateTo('previous');
+        this.logNavigationTelInteract("previous");
         if (_.isUndefined(navigateToStage)) {
             if (!(Renderer.theme._currentScene.isItemScene() && Renderer.theme._currentScene._stageController.hasPrevious())) {
                 var rendererData = EkstepRendererAPI.getContentData(), currentStage = getCurrentStageId();
                 if (rendererData.startStage === currentStage) contentExitCall();
                 return;
             }
-        }
+        }       
         var navigateTo = this.getNavigateTo("previous");
         if (_.isUndefined(Renderer.theme._currentScene)) return;
         this.defaultNavigation("previous", navigateTo);
@@ -231,6 +233,36 @@ OverlayManager = {
         showToaster('error','Stage having some issue');
         console.warn("Fails to navigate to previous due to",e);
       }
+    },
+    logNavigationTelInteract: function(navType){
+        if(!Renderer.theme._currentScene) return;
+
+        var data = {
+            stageId: Renderer.theme._currentScene.id
+        };
+        var navToStageId;
+        if(!_.isUndefined(Renderer.theme._currentScene.params) && Renderer.theme._currentScene.params[navType]){
+            navToStageId = Renderer.theme._currentScene.params[navType];
+        }
+
+        if(navToStageId){
+            var stageLoader = AssetManager.strategy.loaders[navToStageId]
+            var perLoaded = stageLoader ? Math.round((stageLoader.progress * 100)) : "100";   
+            data.extra = {
+                stageProgress: {
+                    "id": navToStageId,
+                    "progress": perLoaded > 100 ? '100%' : perLoaded + '%'
+                }
+            }            
+        } else {
+            data.extra = {
+                stageProgress: {
+                    "id": navType == 'next' ? 'ContentApp-EndScreen' : 'blank',
+                    "progress": '100%'
+                }
+            }
+        }
+        TelemetryService.interact("TOUCH", navType, "TOUCH", data);
     },
     showOrHideEcmlElement: function(id, showEle) {
         var plugin = PluginManager.getPluginObject(id);

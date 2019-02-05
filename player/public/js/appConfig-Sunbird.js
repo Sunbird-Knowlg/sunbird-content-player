@@ -17,6 +17,11 @@ AppConfig = {
 	mimetypes: [
 		"application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive", "application/vnd.ekstep.h5p-archive", "application/epub", "video/mp4", "application/pdf", "video/x-youtube", "video/webm"
 	],
+	whiteListUrl: [
+		'self',
+		'https://*.blob.core.windows.net/**',
+		'https://ekstep-public-qa.s3-ap-south-1.amazonaws.com/**'
+	],
 	defaultMetadata: {
 		"identifier": "org.ekstep.item.sample",
 		"mimeType": "application/vnd.ekstep.ecml-archive",
@@ -51,7 +56,7 @@ AppConfig = {
 	{
 		mimeType: ["video/mp4", "video/x-youtube", "video/webm"],
 		id: "org.ekstep.videorenderer",
-		ver: 1.0,
+		ver: 1.1,
 		type: "plugin"
 	},
 	{

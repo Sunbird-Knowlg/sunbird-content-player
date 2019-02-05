@@ -36,7 +36,7 @@ org.ekstep.contentrenderer.loadDefaultPlugins = function(cb) {
  * @param  {obj} appInfo [metadata]
  */
 org.ekstep.contentrenderer.startGame = function(appInfo) {
-        globalConfig.basepath = globalConfig.basepath ? globalConfig.basepath : appInfo.baseDir
+        globalConfig.basepath = (appInfo.streamingUrl) ? (appInfo.streamingUrl) : (globalConfig.basepath || appInfo.baseDir);
         org.ekstep.contentrenderer.loadDefaultPlugins(function() {
             org.ekstep.contentrenderer.loadExternalPlugins(function() {
                 var globalConfig = EkstepRendererAPI.getGlobalConfig()
@@ -345,4 +345,9 @@ org.ekstep.contentrenderer.device = function() {
     }
 }
 
+org.ekstep.contentrenderer.isStreamingContent = function() {
+    var globalConfig = EkstepRendererAPI.getGlobalConfig();
+    var regex = new RegExp("^(http|https)://", "i");
+    return regex.test(globalConfig.basepath);
+}
 org.ekstep.contentrenderer.init()

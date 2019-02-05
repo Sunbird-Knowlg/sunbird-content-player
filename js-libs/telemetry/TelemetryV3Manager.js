@@ -80,11 +80,7 @@ TelemetryV3Manager = Class.extend({
             "pageid": eks.stageId ? eks.stageId.toString() : "",
         }
         if(eks.extra){
-          var extraObj ={
-            "pos": (eks.extra && eks.pos) ? eks.pos : [],
-            "values": (eks.extra && eks.values) ? data.values : []
-          }
-          eksData["extra"] = extraObj;
+          eksData["extra"] = eks.extra;
         }
         if(eks.target){
             eksData["target"] = eks.target;
