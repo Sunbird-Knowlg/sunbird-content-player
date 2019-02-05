@@ -185,9 +185,12 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         EkstepRendererAPI.dispatchEvent("renderer:repo:create",undefined, {path: dataObj.path + pluginsPath, position:0});
         var resource = instance.handleRelativePath(instance.getResource(manifest), dataObj.path + '/widgets/');
         var pluginManifest = content["plugin-manifest"];
+        if(EkstepRendererAPI.isStreamingContent()) org.ekstep.pluginframework.pluginManager.asyncQueueConcurrency = 1;
+
         (_.isUndefined(pluginManifest) || _.isEmpty(pluginManifest)) && (pluginManifest = { plugin: [] });
         try {
             org.ekstep.contentrenderer.loadPlugins(pluginManifest.plugin, resource, function() {
+                qspatch.handleAssetUrl();
                 Renderer.theme.start(dataObj.path.replace('file:///', '') + "/assets/");
             });
         } catch (e) {
@@ -312,5 +315,94 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
 
 });
+
+// TODO: Temporary solution: To handle Questionset backward compatibility (online streaming in mobile)
+var qspatch = {
+    getPluginInstance: function(pluginObj){
+        if(pluginObj){
+            return pluginObj;
+        } else {
+            return false;
+        }
+    },
+    handleAssetUrl : function() {        
+        
+        var pluginInst = this.getPluginInstance(org.ekstep.contentrenderer.questionUnitPlugin);
+        this.setPluginUrl(pluginInst, "AssetUrl");
+
+        pluginInst = this.getPluginInstance(org.ekstep.questionunitmcq && org.ekstep.questionunitmcq.RendererPlugin);
+        this.setPluginUrl(pluginInst, "AssetUrl");
+        
+        pluginInst = this.getPluginInstance(org.ekstep.contentrenderer.questionUnitPlugin);
+        this.setPluginUrl(pluginInst, "AudioUrl");
+        
+        pluginInst = this.getPluginInstance(org.ekstep.contentrenderer.questionUnitPlugin);
+        this.setPluginUrl(pluginInst, "iconUrl");
+    },
+    setPluginUrl: function(pluginObj, urlType){
+        if(!pluginObj) {
+            return;
+        }
+
+        switch (urlType) {
+            case "AssetUrl":
+                pluginObj.prototype.getAssetUrl = function (url) {
+                    if (isbrowserpreview) {
+                        return url;
+                    } else {
+                        if (EkstepRendererAPI.isStreamingContent()) {
+                            // mobile online streaming
+                            if(url)
+                            return EkstepRendererAPI.getBaseURL() + url.substring(1, url.length);
+                        } else {
+                            // Loading content from mobile storage ( OFFLINE )
+                            return 'file:///' + EkstepRendererAPI.getBaseURL() + url;
+                        }
+                    }
+                }
+                break;
+
+            case "AudioUrl":
+                pluginObj.prototype.getIcon = function (path, pluginId, pluginVer) {
+                    if (isbrowserpreview) {
+                        return this.getAssetUrl(org.ekstep.pluginframework.pluginManager.resolvePluginResource(pluginId, pluginVer, path));
+                    } else {
+                        if (EkstepRendererAPI.isStreamingContent()) {
+                            // mobile online streaming
+                            if(path)
+                            return EkstepRendererAPI.getBaseURL() + 'content-plugins/' + pluginId + '-' + pluginVer + '/' +path;
+                            //return org.ekstep.pluginframework.pluginManager.resolvePluginResource(pluginId, pluginVer, path);
+                        } else {
+                            // Loading content from mobile storage ( OFFLINE )
+                            return 'file:///' + EkstepRendererAPI.getBaseURL() + 'content-plugins/' + pluginId + '-' + pluginVer + '/' + path;
+                        }
+                    }
+                }  
+            break;
+        
+            case "iconUrl":
+                pluginObj.prototype.getAudioIcon = function (path) {
+                    if (isbrowserpreview) {
+                        return this.getAssetUrl(org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, path));
+                    } else {
+                        if (EkstepRendererAPI.isStreamingContent()) {
+                            // mobile online streaming
+                            if(path)
+                            return EkstepRendererAPI.getBaseURL() + 'content-plugins/' + this._manifest.id + '-' + this._manifest.ver + '/' + path;
+                            //return org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, path);
+                        } else {
+                            // Loading content from mobile storage ( OFFLINE )
+                            return 'file:///' + EkstepRendererAPI.getBaseURL() + 'content-plugins/' + this._manifest.id + '-' + this._manifest.ver + '/' + path;
+                        }
+                    }
+                }
+            break;
+
+            default:
+                break;
+        }
+        
+    }
+}
 
 //# sourceURL=ECMLRenderer.js

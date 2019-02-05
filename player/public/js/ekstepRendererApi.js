@@ -1062,5 +1062,12 @@ window.EkstepRendererAPI = {
      */
 	isAudioMuted: function () {
 		return AudioManager.muted
+	},
+	/**
+     * Return true if streaming url is available
+     * @memberof EkstepRendererAPI
+     */
+	isStreamingContent: function () {
+		return org.ekstep.contentrenderer.isStreamingContent();
 	}
 }

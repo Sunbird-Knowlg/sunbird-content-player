@@ -1361,14 +1361,46 @@ body {
 }
 
 .preloader-wrapper {
-    width: 56px;
-    height: 56px;
+    width: 100px;
+    height: 100px;
     z-index: 2000;
     top: 44%;
     left: 45%;
     position: relative;
     -webkit-animation: container-rotate 1568ms linear infinite;
     animation: container-rotate 1568ms linear infinite
+}
+.loader-popup {
+    width: 60%;
+    height: 60%;
+    z-index: 1000;
+    top: 20%;
+    left: 20%;
+    border-radius: 25px;
+    position: relative;
+    background-color: #ffffff;
+}
+
+.preloader-wrapper-area {
+    width: 100px;
+    height: 100px;
+    z-index: 2000;
+    top: 20%;
+    left: 40%;
+    position: relative;
+    color: #000000;
+    font-size: 1 rem;
+}
+.preloader-wrapper-area-text {
+    width: 80%;
+    height: 150px;
+    z-index: 2000;
+    top: 30%;
+    left: 10%;
+    position: relative;
+    color: #000000;
+    text-align: center;
+    font-size: 1 rem;
 }
 
 @-webkit-keyframes container-rotate {
