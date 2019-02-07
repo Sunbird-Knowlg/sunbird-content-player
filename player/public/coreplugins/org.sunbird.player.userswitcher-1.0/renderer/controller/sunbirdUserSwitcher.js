@@ -41,9 +41,6 @@ app.controllerProvider.register('SunbirdUserSwitchController', ['$scope','$rootS
 
         $scope.getUsersList = function() {
             org.ekstep.service.content.getAllUserProfile($scope.appContext).then(function(usersData) {
-                _.forEach(usersData, function(user) {
-                    user.grade = Object.values(user.gradeValueMap).toString();
-                });
                 $rootScope.users = usersData;
                 if ($rootScope.users.length == 0)
                     $rootScope.users.push($rootScope.currentUser);
@@ -55,6 +52,9 @@ app.controllerProvider.register('SunbirdUserSwitchController', ['$scope','$rootS
 
         $scope.sortUserlist = function() {
             $rootScope.users = _.sortBy(_.sortBy($rootScope.users, 'handle'), 'userIndex');
+            _.forEach($rootScope.users, function(user) {
+                user.grade = Object.values(user.gradeValueMap);
+            });
         }
 
         // this function changes the selected user
