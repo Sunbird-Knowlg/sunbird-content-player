@@ -302,6 +302,7 @@ org.ekstep.contentrenderer.getContentBody = function (id) {
 org.ekstep.contentrenderer.urlparameter = function () {
 	var urlParams = decodeURIComponent(window.location.search.substring(1)).split("&")
 	var i = urlParams.length
+	// eslint-disable-next-line
 	while (i--) {
 		if ((urlParams[i].indexOf("webview") >= 0) || (urlParams[i].indexOf("id") >= 0)) {
 			urlParams.splice(i, 1)
