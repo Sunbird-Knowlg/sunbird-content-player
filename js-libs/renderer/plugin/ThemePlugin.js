@@ -112,7 +112,7 @@ var ThemePlugin = Plugin.extend({
         var instance = this;
         ControllerManager.reset();
         OverlayManager.reset();
-        EkstepRendererAPI.dispatchEvent("renderer:stage:reset");
+        EkstepRendererAPI.dispatchEvent("renderer:content:reset");
         if (this._data.controller) {
             if (_.isArray(this._data.controller)) {
                 this._data.controller.forEach(function(p) {
