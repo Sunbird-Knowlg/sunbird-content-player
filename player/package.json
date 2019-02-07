@@ -80,7 +80,6 @@
         "fs": "^0.0.1-security",
         "replace-in-file": "3.4.2",
         "replace": "1.0.0",
-        "on-build-webpack": "0.1.0",
         "fs-extra": "7.0.0",
         "if-env": "1.0.4",
         "rimraf": "2.6.2",
