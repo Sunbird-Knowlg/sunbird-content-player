@@ -223,9 +223,6 @@ var ThemePlugin = Plugin.extend({
             instance._isSceneChanging = false;
             instance.preloadStages();
             childPlugin.uncache();
-            if (!_.isUndefined(Renderer.theme._previousStage) && Renderer.theme._previousStage != Renderer.theme._currentStage) {
-                TelemetryService.navigate(Renderer.theme._previousStage, Renderer.theme._currentStage)
-            };
             // remove above scene Enter method call and dispatch an scene Enter event.
             OverlayManager.init();
             Renderer.update = true;
