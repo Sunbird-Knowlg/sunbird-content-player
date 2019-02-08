@@ -1068,6 +1068,6 @@ window.EkstepRendererAPI = {
      * @memberof EkstepRendererAPI
      */
 	isStreamingContent: function () {
-		return org.ekstep.contentrenderer.isStreamingContent();
+		return org.ekstep.contentrenderer.isStreamingContent()
 	}
 }

@@ -190,21 +190,23 @@ TelemetryV3Manager = Class.extend({
             "ver": "1.0",
             "type": "Plugin"
         };
-        var optionTag;
-        switch (data.optionTag) {
+        var typeVal = data.type;
+        if(data.optionTag)
+            typeVal = data.optionTag;
+        switch (typeVal) {
             case 'MCQ':
-                optionTag = "CHOOSE"
+                typeVal = "CHOOSE"
                 break;
             case 'FTB':
-                optionTag = "INPUT"
+                typeVal = "INPUT"
                 break;
             case 'MTF':
-                optionTag = "MATCH"
+                typeVal = "MATCH"
                 break;
         }
         var responseData = {
             target: target,
-            type: optionTag,
+            type: typeVal,
             values: _.isEmpty(data.res) ? [] : data.res
         }
         EkTelemetry.response(responseData);
