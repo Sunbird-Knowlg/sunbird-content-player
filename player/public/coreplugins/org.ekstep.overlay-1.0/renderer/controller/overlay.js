@@ -101,7 +101,6 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
         TelemetryService.interact("TOUCH", navType, null, {
             stageId: EkstepRendererAPI.getCurrentStageId()
         });
-        window.PLAYER_STAGE_START_TIME = Date.now();
         if (navType === "next") {
 
         /**
