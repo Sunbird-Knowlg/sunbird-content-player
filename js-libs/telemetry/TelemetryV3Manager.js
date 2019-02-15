@@ -175,7 +175,7 @@ TelemetryV3Manager = Class.extend({
           "type": (data && data.type) ? data.type : "workflow" ,
           "pageid": stageto,
           "uri": (data && data.uri) ? data.uri : "",
-          "duration": Date.now() - window.PLAYER_STAGE_START_TIME || 0 
+          "duration": data.duration || 0 
         }
         if (stageid != undefined) {
             EkTelemetry.impression(eksData);

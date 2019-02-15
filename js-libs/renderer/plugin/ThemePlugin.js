@@ -142,7 +142,9 @@ var ThemePlugin = Plugin.extend({
         // Content is started renderering, Dispatching event to show overlay and other
         console.log("ECML RENDERER - Content rendering started");
         EkstepRendererAPI.dispatchEvent("renderer:content:start");
-        TelemetryService.navigate(EkstepRendererAPI.getCurrentStageId(), EkstepRendererAPI.getCurrentStageId(), {})
+        TelemetryService.navigate(EkstepRendererAPI.getCurrentStageId(), EkstepRendererAPI.getCurrentStageId(), {
+            "duration": Date.now() - window.PLAYER_STAGE_START_TIME
+        })
 
     },
 
