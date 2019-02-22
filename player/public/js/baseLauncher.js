@@ -115,6 +115,7 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
 		data.mode = getPreviewMode()
 		var gameId = content.identifier
 		var version = content.pkgVersion || "1.0"
+		window.PLAYER_STAGE_START_TIME = Date.now();
 		TelemetryService.start(gameId, version, data)
 	},
 
