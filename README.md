@@ -109,11 +109,7 @@ var previewObj = {
 | `overlay` | Defines the canvas overlay that can be customized based on the flags| object| ```{}```|
 | `splash` |Before any type of content is launched, a splash screen is loaded. It can be customized. Use this field to define the splash screen objects | object |```{}```|
 | `showEndpage` | Defines if the default canvas endpage should load | boolean | ```TRUE``` | False
-| `pdata` |The producer information. It contains three objects - producer ID, build version and the component ID. The canvas logs this telemetry| object | NA  | {
-    "id": "dev.sunbird.portal",
-    "ver": "1.14.0",
-    "pid": "sunbird-portal.contentplayer"
-  }|
+| `pdata` |The producer information. It contains three objects - producer ID, build version and the component ID. The canvas logs this telemetry| object | NA  | {"id": "dev.sunbird.portal", "ver": "1.14.0", "pid": "sunbird-portal.contentplayer"} |
 | `channel` | Channel being used by the content player| string| NA  |b00bc992eg65f1a8s8fg3291e20efc8d|
 | `app` | Defines the app tags. The canvas logs in the telemetry| array |```[]``` |
 | `partner` | Defines the partner tags. The canvas logs in the telemetry|array |```[]``` |
