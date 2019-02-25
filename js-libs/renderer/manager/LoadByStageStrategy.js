@@ -191,9 +191,8 @@ LoadByStageStrategy = Class.extend({
             });
             mediaList = instance.filterMedia(mediaList, "video");
             if (_.isArray(mediaList) && mediaList.length > 0) {
-                var loader = this._createLoader();                
-                console.log("curentStageID", currentStageId);
-                instance.loaderWithPercentage(currentStageId, loader);
+                var loader = this._createLoader();
+                instance.loaderWithPercentage(stageId, loader);
                 loader.stageLoaded = false;
                 loader.on("complete", function() {
                     loader.stageLoaded = true;
@@ -208,7 +207,7 @@ LoadByStageStrategy = Class.extend({
             }
         } else {
             var stgLoader = instance.loaders[stageId];
-            instance.loaderWithPercentage(currentStageId, stgLoader);
+            instance.loaderWithPercentage(stageId, stgLoader);
         }
         this.handleStageCallback(stageId, callback);
     },
@@ -354,7 +353,6 @@ LoadByStageStrategy = Class.extend({
             strokeWidth: 8,
             trailWidth: 4,
             easing: 'easeInOut',
-            duration: 2000,
             text: {
                 autoStyleContainer: false
             },
@@ -377,7 +375,6 @@ LoadByStageStrategy = Class.extend({
                 }
             }
         });
-        console.log("loader.progress", loader.progress);
         bar.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
         bar.text.style.fontSize = '1rem';
         bar.text.style.color = 'black';
