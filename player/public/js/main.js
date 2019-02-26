@@ -296,7 +296,13 @@ function setGlobalConfig (configuration) {
 		_.extend(metadata, _.pick(configuration.metadata, "hierarchyInfo", "isAvailableLocally", "basePath", "rollup"))
 		metadata.basepath = metadata.basePath
 		configuration.basepath = configuration.basePath
-		if (metadata.rollup) { configuration.rollup = metadata.rollup }
+		if(configuration.context.rollup){
+			configuration.rollup = configuration.context.rollup
+		}
+		configuration.object = {}
+		if (metadata.rollup) { 
+			configuration.object.rollup = metadata.rollup 
+		}
 		// Override the metadata object of intent with proper structure.
 		// manifest & hierarchyInfo
 		configuration.metadata = metadata

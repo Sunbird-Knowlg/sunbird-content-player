@@ -18,7 +18,7 @@ TelemetryV3Manager = Class.extend({
       configData['env'] = "contentplayer";
       configData['uid'] = TelemetryService._user.uid || 'anonymous';
       configData['channel'] = configData.channel || 'in.ekstep';
-      configData['object'] = { id: TelemetryService.getGameId(), type: 'Content', ver: TelemetryService.getGameVer()};
+      configData['object'] = Object.assign({ id: TelemetryService.getGameId(), type: 'Content', ver: TelemetryService.getGameVer()}, configData['object']);
       configData["dispatcher"] = ("undefined" == typeof cordova) ? org.ekstep.contentrenderer.webDispatcher : org.ekstep.contentrenderer.deviceDispatcher;
       
       this._config = configData;
