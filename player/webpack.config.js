@@ -93,7 +93,7 @@ const APP_SCRIPTS = [
 ];
 const TELEMETRY = [
     './public/libs/date-format.js',
-    '../js-libs/build/telemetry.min.js',
+    './node_modules/@project-sunbird/telemetry-sdk/index.js',
     '../js-libs/telemetry/InActiveEvent.js',
     '../js-libs/telemetry/TelemetryEvent.js',
     '../js-libs/telemetry/TelemetryService.js',
@@ -128,7 +128,7 @@ module.exports = (env, argv) => {
                 'jquery': path.resolve(`${FOLDER_PATHS.basePath}public/libs/jquery.min.js`),
                 'underscore': path.resolve(`${FOLDER_PATHS.basePath}public/libs/underscore.js`),
                 'jquery-mousewheel': path.resolve(`${FOLDER_PATHS.basePath}node_modules/jquery-mousewheel/jquery.mousewheel.js`),
-                'Fingerprint2': path.resolve(`${FOLDER_PATHS.jsLibs}telemetry-lib/fingerprint2.min.js`),
+                'Fingerprint2': path.resolve(`${FOLDER_PATHS.basePath}node_modules/fingerprintjs2/dist/fingerprint2.min.js`),
                 'ajv': require.resolve(`${FOLDER_PATHS.basePath}node_modules/ajv/dist/ajv.min.js`),
                 'ProgressBar': path.resolve(`${FOLDER_PATHS.basePath}public/libs/progressbar.min.js`)
             }
@@ -192,21 +192,21 @@ module.exports = (env, argv) => {
                     }]
                 },
                 {
-                    test: require.resolve(`${FOLDER_PATHS.jsLibs}build/telemetry.min.js`),
+                    test: require.resolve(`${FOLDER_PATHS.basePath}/node_modules/@project-sunbird/telemetry-sdk/index.js`),
                     use: [{
                         loader: 'expose-loader',
                         options: 'EkTelemetry'
                     }]
                 },
                 {
-                    test: require.resolve(`${FOLDER_PATHS.jsLibs}telemetry-lib/fingerprint2.min.js`),
+                    test: require.resolve(`${FOLDER_PATHS.basePath}node_modules/fingerprintjs2/dist/fingerprint2.min.js`),
                     use: [{
                         loader: 'expose-loader',
                         options: 'Fingerprint2'
                     }]
                 },
                 {
-                    test: require.resolve('../js-libs/telemetry-lib/md5.js'),
+                    test: require.resolve(`${FOLDER_PATHS.basePath}public/libs/md5.js`),
                     use: [{
                         loader: 'expose-loader',
                         options: 'CryptoJS'
