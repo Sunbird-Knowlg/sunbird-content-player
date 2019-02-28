@@ -814,7 +814,7 @@ module.exports = function (grunt) {
 
 	// Build web prview
 	grunt.registerTask("init", ["uglify:renderermin", "copy:main", "injector:prview"])
-	grunt.registerTask("build-preview", ["clean", "mkdir:all", "build-telemetry-lib", "init", "rename:preview", "clean:minhtml", "copy:toPreview", "clean:preview"])
+	grunt.registerTask("build-preview", ["clean", "mkdir:all", "init", "rename:preview", "clean:minhtml", "copy:toPreview", "clean:preview"])
 
 	grunt.registerTask("backup-config-xml", function () {
 		grunt.file.copy("./config.xml", "./config.latest.xml")
