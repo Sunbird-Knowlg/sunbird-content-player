@@ -340,6 +340,7 @@ var qspatch = {
         this.setPluginUrl(pluginInst, "iconUrl");
     },
     setPluginUrl: function(pluginObj, urlType){
+        var instance = this;
         if(!pluginObj) {
             return;
         }
@@ -353,7 +354,7 @@ var qspatch = {
                         if (EkstepRendererAPI.isStreamingContent()) {
                             // mobile online streaming
                             if(url)
-                            return EkstepRendererAPI.getBaseURL() + url.substring(1, url.length);
+                                return instance.validateUrl(url);
                         } else {
                             // Loading content from mobile storage ( OFFLINE )
                             return 'file:///' + EkstepRendererAPI.getBaseURL() + url;
@@ -370,8 +371,7 @@ var qspatch = {
                         if (EkstepRendererAPI.isStreamingContent()) {
                             // mobile online streaming
                             if(path)
-                            return EkstepRendererAPI.getBaseURL() + 'content-plugins/' + pluginId + '-' + pluginVer + '/' +path;
-                            //return org.ekstep.pluginframework.pluginManager.resolvePluginResource(pluginId, pluginVer, path);
+                                return instance.validateUrl(path);
                         } else {
                             // Loading content from mobile storage ( OFFLINE )
                             return 'file:///' + EkstepRendererAPI.getBaseURL() + 'content-plugins/' + pluginId + '-' + pluginVer + '/' + path;
@@ -388,8 +388,7 @@ var qspatch = {
                         if (EkstepRendererAPI.isStreamingContent()) {
                             // mobile online streaming
                             if(path)
-                            return EkstepRendererAPI.getBaseURL() + 'content-plugins/' + this._manifest.id + '-' + this._manifest.ver + '/' + path;
-                            //return org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, path);
+                                return instance.validateUrl(path);
                         } else {
                             // Loading content from mobile storage ( OFFLINE )
                             return 'file:///' + EkstepRendererAPI.getBaseURL() + 'content-plugins/' + this._manifest.id + '-' + this._manifest.ver + '/' + path;
@@ -402,6 +401,10 @@ var qspatch = {
                 break;
         }
         
+    },
+    validateUrl: function(url){
+        var url = EkstepRendererAPI.getBaseURL() + url.substring(1, url.length);
+        return url.replace(/(https?:\/\/)|(\/)+/g, "$1$2");
     }
 }
 
