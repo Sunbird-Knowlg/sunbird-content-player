@@ -349,9 +349,16 @@ var qspatch = {
             case "AssetUrl":
                 pluginObj.prototype.getAssetUrl = function (url) {
                     if (isbrowserpreview) {
-                        return url;
-                    } else {
                         return instance.validateUrl(url);
+                    } else {
+                        if (EkstepRendererAPI.isStreamingContent()) {
+                            // mobile online streaming
+                            if(url)
+                            return instance.validateUrl(EkstepRendererAPI.getBaseURL() + url.substring(1, url.length));
+                        } else {
+                            // Loading content from mobile storage ( OFFLINE )
+                            return instance.validateUrl('file:///' + EkstepRendererAPI.getBaseURL() + url);
+                        }
                     }
                 }
                 break;
@@ -359,9 +366,17 @@ var qspatch = {
             case "AudioUrl":
                 pluginObj.prototype.getIcon = function (path, pluginId, pluginVer) {
                     if (isbrowserpreview) {
-                        return this.getAssetUrl(org.ekstep.pluginframework.pluginManager.resolvePluginResource(pluginId, pluginVer, path));
+                        return instance.validateUrl(this.getAssetUrl(org.ekstep.pluginframework.pluginManager.resolvePluginResource(pluginId, pluginVer, path)));
                     } else {
-                        return instance.validateUrl(path);
+                        if (EkstepRendererAPI.isStreamingContent()) {
+                            // mobile online streaming
+                            if(path)
+                            return instance.validateUrl(EkstepRendererAPI.getBaseURL() + 'content-plugins/' + pluginId + '-' + pluginVer + '/' +path);
+                            //return org.ekstep.pluginframework.pluginManager.resolvePluginResource(pluginId, pluginVer, path);
+                        } else {
+                            // Loading content from mobile storage ( OFFLINE )
+                            return instance.validateUrl('file:///' + EkstepRendererAPI.getBaseURL() + 'content-plugins/' + pluginId + '-' + pluginVer + '/' + path);
+                        }
                     }
                 }  
             break;
@@ -369,9 +384,17 @@ var qspatch = {
             case "iconUrl":
                 pluginObj.prototype.getAudioIcon = function (path) {
                     if (isbrowserpreview) {
-                        return this.getAssetUrl(org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, path));
+                        return instance.validateUrl(this.getAssetUrl(org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, path)));
                     } else {
-                        return instance.validateUrl(path);
+                        if (EkstepRendererAPI.isStreamingContent()) {
+                            // mobile online streaming
+                            if(path)
+                            return instance.validateUrl(EkstepRendererAPI.getBaseURL() + 'content-plugins/' + this._manifest.id + '-' + this._manifest.ver + '/' + path);
+                            //return org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, path);
+                        } else {
+                            // Loading content from mobile storage ( OFFLINE )
+                            return instance.validateUrl('file:///' + EkstepRendererAPI.getBaseURL() + 'content-plugins/' + this._manifest.id + '-' + this._manifest.ver + '/' + path);
+                        }
                     }
                 }
             break;
@@ -382,16 +405,7 @@ var qspatch = {
         
     },
     validateUrl: function(url){
-        if (!url) return;
-        if (EkstepRendererAPI.isStreamingContent()) {
-            // mobile online streaming
-            var url = EkstepRendererAPI.getBaseURL() + url.substring(1, url.length);
-            return url.replace(/(https?:\/\/)|(\/)+/g, "$1$2");
-        } else {
-            // Loading content from mobile storage ( OFFLINE )
-            var url= 'file:///' + EkstepRendererAPI.getBaseURL() + url;
-            return url.replace(/(file?:\/\/\/)|(\/)+/g, "$1$2");
-        }        
+        return url.replace(/(https|file?:\/\/)|(\/)+/g, "$1$2")
     }
 }
 
