@@ -351,14 +351,7 @@ var qspatch = {
                     if (isbrowserpreview) {
                         return url;
                     } else {
-                        if (EkstepRendererAPI.isStreamingContent()) {
-                            // mobile online streaming
-                            if(url)
-                                return instance.validateUrl(url);
-                        } else {
-                            // Loading content from mobile storage ( OFFLINE )
-                            return 'file:///' + EkstepRendererAPI.getBaseURL() + url;
-                        }
+                        return instance.validateUrl(url);
                     }
                 }
                 break;
@@ -368,14 +361,7 @@ var qspatch = {
                     if (isbrowserpreview) {
                         return this.getAssetUrl(org.ekstep.pluginframework.pluginManager.resolvePluginResource(pluginId, pluginVer, path));
                     } else {
-                        if (EkstepRendererAPI.isStreamingContent()) {
-                            // mobile online streaming
-                            if(path)
-                                return instance.validateUrl(path);
-                        } else {
-                            // Loading content from mobile storage ( OFFLINE )
-                            return 'file:///' + EkstepRendererAPI.getBaseURL() + 'content-plugins/' + pluginId + '-' + pluginVer + '/' + path;
-                        }
+                        return instance.validateUrl(path);
                     }
                 }  
             break;
@@ -385,14 +371,7 @@ var qspatch = {
                     if (isbrowserpreview) {
                         return this.getAssetUrl(org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, path));
                     } else {
-                        if (EkstepRendererAPI.isStreamingContent()) {
-                            // mobile online streaming
-                            if(path)
-                                return instance.validateUrl(path);
-                        } else {
-                            // Loading content from mobile storage ( OFFLINE )
-                            return 'file:///' + EkstepRendererAPI.getBaseURL() + 'content-plugins/' + this._manifest.id + '-' + this._manifest.ver + '/' + path;
-                        }
+                        return instance.validateUrl(path);
                     }
                 }
             break;
@@ -403,8 +382,16 @@ var qspatch = {
         
     },
     validateUrl: function(url){
-        var url = EkstepRendererAPI.getBaseURL() + url.substring(1, url.length);
-        return url.replace(/(https?:\/\/)|(\/)+/g, "$1$2");
+        if (!url) return;
+        if (EkstepRendererAPI.isStreamingContent()) {
+            // mobile online streaming
+            var url = EkstepRendererAPI.getBaseURL() + url.substring(1, url.length);
+            return url.replace(/(https?:\/\/)|(\/)+/g, "$1$2");
+        } else {
+            // Loading content from mobile storage ( OFFLINE )
+            var url= 'file:///' + EkstepRendererAPI.getBaseURL() + url;
+            return url.replace(/(file?:\/\/\/)|(\/)+/g, "$1$2");
+        }        
     }
 }
 
