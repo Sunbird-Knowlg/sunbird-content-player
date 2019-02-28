@@ -130,7 +130,8 @@ module.exports = (env, argv) => {
                 'jquery-mousewheel': path.resolve(`${FOLDER_PATHS.basePath}node_modules/jquery-mousewheel/jquery.mousewheel.js`),
                 'Fingerprint2': path.resolve(`${FOLDER_PATHS.basePath}node_modules/fingerprintjs2/dist/fingerprint2.min.js`),
                 'ajv': require.resolve(`${FOLDER_PATHS.basePath}node_modules/ajv/dist/ajv.min.js`),
-                'ProgressBar': path.resolve(`${FOLDER_PATHS.basePath}public/libs/progressbar.min.js`)
+                'ProgressBar': path.resolve(`${FOLDER_PATHS.basePath}public/libs/progressbar.min.js`),
+                'UAParser': path.resolve(`${FOLDER_PATHS.basePath}public/libs/ua-parser.min.js`)
             }
         },
         module: {
@@ -218,7 +219,14 @@ module.exports = (env, argv) => {
                        loader: 'expose-loader',
                        options: 'ProgressBar'
                    }]
-               }
+               },
+               {
+                    test: require.resolve(`${FOLDER_PATHS.basePath}public/libs/ua-parser.min.js`),
+                    use: [{
+                        loader: 'expose-loader',
+                        options: 'UAParser'
+                    }]
+                }
             ]
         },
         plugins: [
@@ -241,7 +249,8 @@ module.exports = (env, argv) => {
                 _: 'underscore',
                 async: "async",
                 Fingerprint2: 'Fingerprint2',
-                ProgressBar: 'ProgressBar'
+                ProgressBar: 'ProgressBar',
+                UAParser: 'UAParser'
             }),
             new webpack.optimize.OccurrenceOrderPlugin(),
             new webpack.HotModuleReplacementPlugin(),
