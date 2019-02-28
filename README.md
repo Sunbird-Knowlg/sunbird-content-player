@@ -32,7 +32,7 @@ Download content player preview from NPM
 
 	
 
-### Preview object**    
+**Preview object**     
 
 ```js
 var previewObj = {
@@ -99,29 +99,30 @@ var previewObj = {
 
 
 ```
-### Description
-
-| Property Name | Description | Property Type |Default Value   | Example |
-| --- | --- | --- | --- |--- |
-| `host` | Defines the domain from which content should load| string|```window.location.origin```  |
-| `mimetypes` | Defines the type of the content to be rendered| array | ```[ ]```|
-| `contentLaunchers` | An array of plugin objects. The content player launches content based on the mimeType that is defined| array |``` []```|
-| `overlay` | Defines the canvas overlay that can be customized based on the flags| object| ```{}```|
-| `splash` |Before any type of content is launched, a splash screen is loaded. It can be customized. Use this field to define the splash screen objects | object |```{}```|
-| `showEndpage` | Defines if the default canvas endpage should load | boolean | ```TRUE``` | False
-| `pdata` |The producer information. It contains three objects - producer ID, build version and the component ID. The canvas logs this telemetry| object | NA  | {"id": "dev.sunbird.portal", "ver": "1.14.0", "pid": "sunbird-portal.contentplayer"} |
-| `channel` | Channel being used by the content player| string| NA  |b00bc992eg65f1a8s8fg3291e20efc8d|
-| `app` | Defines the app tags. The canvas logs in the telemetry| array |```[]``` |
-| `partner` | Defines the partner tags. The canvas logs in the telemetry|array |```[]``` |
-| `dims` | Defines the encrypted dimension tags that should be passed from the respective channel. The canvas logs in the telemetry| array|```[]```  |
-| `context` | Contains information about the context of the content. It contains  It is an `object` it contains the `uid`,`did`,`sid`,`mode` etc., these will be logged inside the telemetry  | object| ```{}``` |
-| `config` | Contains information about the configurations done for the content player. It contains It is an `object` it contains the `repo`,`plugins`,`overlay`,`splash` etc., these will be used to configure the canvas  |object|```{}```
-| `apislug` | Defines the proxy setup required to make an api request |string| ```/action```
+**Description**
 
 
-### How to Render the Content Player in the Web
+| Property Name | Description | Default Value   |
+| --- | --- | --- |
+| `host` | It is a `string` which defines the from which domain content should be load|```window.location.origin```  |
+| `mimetypes` | It is an `array` which defines the what type of the content to be renderer| ```[ ]```|
+| `contentLaunchers` | It is an `array` of plugin objects it will launch the content based on the mimeType which is defined| ``` []```|
+| `overlay` | It is an `object` using this canvas overlay can be customized based on the flags| ```{}```|
+| `splash` | It is an `object` before launching any type of content splash screen will load and it is customizable |```{}```|
+| `showEndpage` | It is `boolean` which defines should default canvas endpage should load or not | ```TRUE```
+| `pdata` | It is an `object` which defines the producer information it should have identifier and version and canvas will log in the telemetry| ```{'id':'in.ekstep', 'ver':'1.0'}```|
+| `channel` | It is `string` which defines channel identifier to know which channel is currently using.| `in.ekstep` |
+| `app` | It is an `array` which defines the app tags and canvas will log in the telemetry| ```[]``` |
+| `partner` | It is an `array` which defines the partner tags and canvas will log in the telemetry|```[]``` |
+| `dims` | It is an `array` which defines the encrypted dimension tags it should be passed from the respective channel and canvas will log in the telemetry|```[]```  |
+| `context` | It is an `object` it contains the `uid`,`did`,`sid`,`mode` etc., these will be logged inside the telemetry  | ```{}``` |
+| `config` | It is an `object` it contains the `repo`,`plugins`,`overlay`,`splash` etc., these will be used to configure the canvas  | ```{}```
+| `apislug` | It is `string` which defines proxy setup to make a api request | ```/action```
 
-The content player renders inside the web environment with the configuration mentioned above.
+
+1. **How to render in Web**
+
+    Content player will render inside the web environment with the above configuration .
     
 	**HTML**
 	```html
@@ -139,46 +140,52 @@ The content player renders inside the web environment with the configuration men
       }
 	
 	```
-### How to Render the Content Player in a Device (cordova)
+2. **How to render in Device(cordova)**
 
-The content player renders inside the cordova environment by accepting the configuration using the ```cordova webintent```
+Content player will render inside Cordova environment and it's accepting the configuration through ```cordova webintent```
 
 
-## How to Set Up the Content Player on your Local Machine
+
+
+
+
+
+## How to setup content player in local
+
 
  **Prerequisites**
     
-* Install NPM, Node(v6), android-sdk, Cordova and Ionic
+   * Install NPM, Node(v6), android-sdk, Cordova and Ionic
 
-**Sequence of Commands**
+ **How to Run**
 
-1. Clone the content player from [here](https://github.com/project-sunbird/sunbird-content-player)
-2. Run `npm install` in PROJECT_FOLDER/player path
-3. Disable `isCorePluginsPackaged` variable in the `appConfig.js` to load/run the plugins without minifiying.   
-4. To run player in local run `node app` in the Terminal
-5. Open http://localhost:3000/ in the browser. By default player runs in the `3000` port
+* Clone the content player from [here](https://github.com/project-sunbird/sunbird-content-player)
+* Run `npm install` in PROJECT_FOLDER/player path
+* Disable `isCorePluginsPackaged` variable in the `appConfig.js` to load/run the plugins without minifiying.   
+* To run player in local run `node app` in the Terminal
+* Open http://localhost:3000/ in the browser. By default player runs in the `3000` port
 
- ## How to Create the Build**
+ **How to build**
     
    1. **Preview**
       
-   Run `npm run build-preview sunbird` . This creates the preview folder for the sunbird instance
+     	Run `npm run build-preview sunbird` which creates the preview folder for sunbird instance
       
    2. **AAR**
    
- Run  `npm run build-aar sunbird` . This creates an aar file for the sunbird instance
+ 		Run  `npm run build-aar sunbird`  which creates an aar file for the sunbird instance
 
- The AAR file is created in the following path:
+        The AAR file will create in the below path.
 
- >PROJECT_FOLDER/player/platforms/android/build/outputs/aar/geniecanvas-BUILD_NUMBER-debug.aar
+        >PROJECT_FOLDER/player/platforms/android/build/outputs/aar/geniecanvas-BUILD_NUMBER-debug.aar
  
    3. **Plugins Package**
 
- Run  `npm run package-coreplugins -- --env.channel sunbird` . This bundles all the coreplugins plugins and creates the `coreplugins.js` and `coreplugins.css`  files
+        Run  `npm run package-coreplugins -- --env.channel sunbird`  Which bundles all the coreplugins plugins and creates the `coreplugins.js` and `coreplugins.css`  
 
    4. **Test Cases**
 
-Run  `npm run test`. This runs the player test cases.         
+        Run  `npm run test` Which runs the player test cases.         
  	
  
 
