@@ -407,12 +407,21 @@ var qspatch = {
    validateUrl: function(url){
         var regex = new RegExp("^(http|https)://", "i");
         if(regex.test(url)){
-             var validString = url.split("://")[1].replace("//", "/");
-             return [url.split("://")[0], validString].join("://");
-             
+            var subStringUrl = url.split("://")[1];
+            if (subStringUrl){
+                var validString = subStringUrl.replace("//", "/");
+                return [url.split("://")[0], validString].join("://");
+            }else{
+                return url;
+            }             
         }else{
-            var validString = url.split(":///")[1].replace("//", "/");
-             return [url.split("://")[0], validString].join(":///");
+            var subStringUrl = url.split(":///")[1];
+            if (subStringUrl){
+                var validString = subStringUrl.replace("//", "/");
+                return [url.split(":///")[0], validString].join(":///");
+            }else{
+                return url;
+            } 
          } 
     }
 }
