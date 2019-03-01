@@ -404,13 +404,16 @@ var qspatch = {
         }
         
     },
-    validateUrl: function(url){
+   validateUrl: function(url){
         var regex = new RegExp("^(http|https)://", "i");
         if(regex.test(url)){
-             return url.replace(/(https?:\/\/)|(\/)+/g, "$1$2");
+             var validString = url.split("://")[1].replace("//", "/");
+             return [url.split("://")[0], validString].join("://");
+             
         }else{
-            return url.replace(/(file?:\/\/\/)|(\/)+/g, "$1$2");
-        } 
+            var validString = url.split(":///")[1].replace("//", "/");
+             return [url.split("://")[0], validString].join(":///");
+         } 
     }
 }
 
