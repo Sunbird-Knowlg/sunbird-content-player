@@ -139,6 +139,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
             contentMetadata = contentToPlay.content.contentData;
             _.extend(contentMetadata,  _.pick(contentToPlay.content, "hierarchyInfo", "isAvailableLocally", "basePath", "rollup"));
             contentMetadata.basepath = contentMetadata.basePath;
+            $rootScope.content = window.content = content = contentMetadata;
         }
 
         if (contentToPlay.content.isAvailableLocally) {
@@ -151,7 +152,6 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
                 GlobalContext.config = mergeJSON(AppConfig, contentMetadata);
                 window.globalConfig = GlobalContext.config;
 
-                $rootScope.content = window.content = content = contentMetadata;
                 org.ekstep.contentrenderer.initializePreview(object)
                 EkstepRendererAPI.dispatchEvent('renderer:player:show');
         } else {
