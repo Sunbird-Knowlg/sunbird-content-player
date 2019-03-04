@@ -405,6 +405,9 @@ var qspatch = {
         
     },
     validateUrl: function(url){
+        if(!url){
+            return
+        }
         var regex = new RegExp("^(http|https)://", "i");
         if(regex.test(url)){
             var tempUrl = url.split("://")
