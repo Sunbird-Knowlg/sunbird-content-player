@@ -104,6 +104,14 @@ var StagePlugin = Plugin.extend({
             return
         }
         this.invokeChildren(data, this, this, this._theme);
+        this.logImpressionEvent();
+    },
+    logImpressionEvent: function(){
+        if (!_.isUndefined(Renderer.theme._previousStage) && Renderer.theme._previousStage != Renderer.theme._currentStage) {
+            TelemetryService.navigate(Renderer.theme._previousStage, Renderer.theme._currentStage, {
+                "duration": Date.now() - window.PLAYER_STAGE_START_TIME
+            });
+        }
     },
     destroyTimeInstance: function(data) {
         if (Renderer.theme && Renderer.theme.getStagesToPreLoad) {
@@ -120,6 +128,7 @@ var StagePlugin = Plugin.extend({
     },
     invokeRenderElements: function() {
         this.invokeChildren(this._data, this, this, this._theme);
+        this.logImpressionEvent();
         Renderer.update = true;
         this.showHideLoader('none');
         if (!_.isUndefined(Renderer.theme) && !_.isUndefined(Renderer.theme._currentScene)) {

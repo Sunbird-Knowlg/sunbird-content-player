@@ -109,7 +109,6 @@
         "AppErrors": true,
         "telemetry_web": true,
         "appConfig": true,
-        "telemetry_web": true,
         "MobileAccessibility": true
     },
     "rules": {

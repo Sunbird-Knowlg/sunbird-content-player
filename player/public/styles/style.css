@@ -1899,24 +1899,24 @@ body {
 }
 
 .richText h1 {
-    min-height: 1rem;
-    font-size: 2rem;
+    min-height: 1em;
+    font-size: 2em;
 }
 
 .richText h2 {
-    font-size: 1.71428571rem;
+    font-size: 1.71428571em;
 }
 
 .richText h3 {
-    font-size: 1.28571429rem;
+    font-size: 1.28571429em;
 }
 
 .richText h4 {
-    font-size: 1.07142857rem;
+    font-size: 1.07142857em;
 }
 
 .richText h5 {
-    font-size: 1rem;
+    font-size: 1em;
 }
 
 .richText h6 {
