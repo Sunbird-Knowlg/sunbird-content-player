@@ -37,7 +37,8 @@ TelemetryV3Manager = Class.extend({
         var edata = {
           "type":  data.type || "content",
           "mode": data.mode || config.mode,
-          "pageid": data.pageid || data.stageid
+          "pageid": data.pageid || data.stageid,
+          "duration": data.duration
         }
         if(data.dspec){ 
           edata["dspec"] = data.dspec;
