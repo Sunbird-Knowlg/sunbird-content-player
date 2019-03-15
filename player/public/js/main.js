@@ -304,6 +304,8 @@ function setGlobalConfig (configuration) {
 		configuration.object = {}
 		if (metadata.rollup) { 
 			configuration.object.rollup = metadata.rollup; 
+		}else if (configuration.objcetRollup){
+			configuration.object.rollup = configuration.objcetRollup; 
 		}
 		
 		// Override the metadata object of intent with proper structure.
