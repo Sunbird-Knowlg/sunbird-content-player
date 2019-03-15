@@ -1,0 +1,34 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: g33tha/plugin:test
+        environment:
+           player_version_number: $CIRCLE_BRANCH
+           build_number: $CIRCLE_BUILD_NUM
+           filter_plugins: false
+           
+  steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          
+      - run: git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins -b $CIRCLE_BRANCH     
+      - run: cd player && npm install
+      - run: cd player && npm run build-preview sunbird
+      - run: cd player && grunt compress:preview
+      - run: cd player && grunt generate-libs
+      - run: cd player && grunt build-jsdoc
+      - store_artifacts:
+          path: player/preview.zip
+          destination: preview.zip
+      
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths: ./node_modules
+
+workflows:
+  version: 2.1
+  build_and_test:
+    jobs:
+      - build
