@@ -8,7 +8,7 @@ jobs:
            build_number: $CIRCLE_BUILD_NUM
            filter_plugins: false
            
-  steps:
+    steps:
       - checkout
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
@@ -22,7 +22,7 @@ jobs:
       - store_artifacts:
           path: player/preview.zip
           destination: preview.zip
-      
+          
       - save_cache:
           key: dependency-cache-{{ checksum "package.json" }}
           paths: ./node_modules
