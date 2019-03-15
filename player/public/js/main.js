@@ -296,7 +296,16 @@ function setGlobalConfig (configuration) {
 		_.extend(metadata, _.pick(configuration.metadata, "hierarchyInfo", "isAvailableLocally", "basePath", "rollup"))
 		metadata.basepath = metadata.basePath
 		configuration.basepath = configuration.basePath
-		if (metadata.rollup) { configuration.rollup = metadata.rollup }
+
+		if(configuration.contextRollup){
+			configuration.rollup = configuration.contextRollup;
+		}
+		
+		configuration.object = {}
+		if (metadata.rollup) { 
+			configuration.object.rollup = metadata.rollup; 
+		}
+		
 		// Override the metadata object of intent with proper structure.
 		// manifest & hierarchyInfo
 		configuration.metadata = metadata
@@ -328,6 +337,7 @@ function setTelemetryEventFields (globalConfig) {
 		"partner": otherData.partner || AppConfig.etags.partner
 	}
 	otherData.etags = etags
+	otherData.object = globalConfig.object
 	otherData.env = globalConfig.env ? globalConfig.env : getPreviewMode()
 	delete otherData.dims
 	delete otherData.app
