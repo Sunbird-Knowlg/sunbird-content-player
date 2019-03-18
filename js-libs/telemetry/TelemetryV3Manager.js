@@ -37,7 +37,8 @@ TelemetryV3Manager = Class.extend({
         var edata = {
           "type":  data.type || "content",
           "mode": data.mode || config.mode,
-          "pageid": data.pageid || data.stageid
+          "pageid": data.pageid || data.stageid,
+          "duration": data.duration
         }
         if(data.dspec){ 
           edata["dspec"] = data.dspec;
@@ -173,9 +174,13 @@ TelemetryV3Manager = Class.extend({
     navigate: function(stageid, stageto, data) {
         var eksData = {
           "type": (data && data.type) ? data.type : "workflow" ,
+          "subtype": (data && data.subtype) ? data.subtype : "" ,
           "pageid": stageto,
-          "uri": (data && data.uri) ? data.uri : "",
+          "uri": (data && data.uri) ? data.uri : stageid,
           "duration": (data && data.duration)? data.duration : 0
+        }
+        if (data && data.visits){
+            eksData.visits = [data.visits];
         }
         if (stageid != undefined) {
             EkTelemetry.impression(eksData);
