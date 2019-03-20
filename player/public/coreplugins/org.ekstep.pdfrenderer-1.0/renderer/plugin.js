@@ -78,7 +78,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         this.enableOverly();
     },
     renderPDF: function(path, canvasContainer) {
-        window.PLAYER_STAGE_START_TIME = Date.now();
         EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
         var pdfMainContainer = document.createElement("div");
         pdfMainContainer.id = "pdf-main-container";
@@ -389,12 +388,12 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         return this.progres(currentStageIndex, totalStages);
     },
     logInteractEvent(type, id, extype, eks, eid){
-        window.PLAYER_STAGE_START_TIME = Date.now();
+        window.PLAYER_STAGE_START_TIME = Math.floor(Date.now()/1000);
         EkstepRendererAPI.getTelemetryService().interact(type, id, extype, eks,eid);
     },
     logImpressionEvent(stageId, stageTo){
         EkstepRendererAPI.getTelemetryService().navigate(stageId, stageTo, {
-            "duration": Date.now() - window.PLAYER_STAGE_START_TIME
+            "duration": (Math.floor(Date.now()/1000)) - window.PLAYER_STAGE_START_TIME
         });
     }
 });
