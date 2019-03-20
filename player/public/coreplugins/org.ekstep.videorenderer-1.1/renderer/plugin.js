@@ -153,6 +153,11 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         });
     },
     play: function(stageid, time) {
+        if (time == 0){
+            EkstepRendererAPI.getTelemetryService().navigate(stageid, stageid, {
+                "duration": Date.now() - window.PLAYER_STAGE_START_TIME
+            });
+        }
         var instance = this;
         instance.heartBeatEvent(true);
         instance.progressTimer(true);
