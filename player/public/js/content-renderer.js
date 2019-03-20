@@ -36,7 +36,7 @@ org.ekstep.contentrenderer.loadDefaultPlugins = function (cb) {
  * @param  {obj} appInfo [metadata]
  */
 org.ekstep.contentrenderer.startGame = function (appInfo) {
-	window.PLAYER_START_TIME = Date.now();
+	window.PLAYER_START_TIME = Math.floor(Date.now()/1000);
 	globalConfig.basepath = (appInfo.streamingUrl) ? (appInfo.streamingUrl) : (globalConfig.basepath || appInfo.baseDir)
 	org.ekstep.contentrenderer.loadDefaultPlugins(function () {
 		org.ekstep.contentrenderer.loadExternalPlugins(function () {
