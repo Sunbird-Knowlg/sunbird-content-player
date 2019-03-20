@@ -155,7 +155,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     play: function(stageid, time) {
         if (time == 0){
             EkstepRendererAPI.getTelemetryService().navigate(stageid, stageid, {
-                "duration": (Math.floor(Date.now()/1000)) - window.PLAYER_STAGE_START_TIME
+                "duration": (Date.now()/1000) - window.PLAYER_STAGE_START_TIME
             });
         }
         var instance = this;
