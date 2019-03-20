@@ -143,7 +143,7 @@ var ThemePlugin = Plugin.extend({
         console.log("ECML RENDERER - Content rendering started");
         EkstepRendererAPI.dispatchEvent("renderer:content:start");
         TelemetryService.navigate(EkstepRendererAPI.getCurrentStageId(), EkstepRendererAPI.getCurrentStageId(), {
-            "duration": (Math.floor(Date.now()/1000)) - window.PLAYER_STAGE_START_TIME
+            "duration": (Date.now()/1000) - window.PLAYER_STAGE_START_TIME
         })
 
     },

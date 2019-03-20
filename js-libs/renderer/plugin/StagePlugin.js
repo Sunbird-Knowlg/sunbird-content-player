@@ -109,7 +109,7 @@ var StagePlugin = Plugin.extend({
     logImpressionEvent: function(){
         if (!_.isUndefined(Renderer.theme._previousStage) && Renderer.theme._previousStage != Renderer.theme._currentStage) {
             TelemetryService.navigate(Renderer.theme._previousStage, Renderer.theme._currentStage, {
-                "duration": (Math.floor(Date.now()/1000)) - window.PLAYER_STAGE_START_TIME
+                "duration": (Date.now()/1000) - window.PLAYER_STAGE_START_TIME
             });
         }
     },

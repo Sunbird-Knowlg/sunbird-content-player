@@ -263,7 +263,7 @@ OverlayManager = {
             }
         }
         TelemetryService.interact("TOUCH", navType, "TOUCH", data);
-        window.PLAYER_STAGE_START_TIME = Math.floor(Date.now()/1000);
+        window.PLAYER_STAGE_START_TIME = Date.now()/1000;
     },
     showOrHideEcmlElement: function(id, showEle) {
         var plugin = PluginManager.getPluginObject(id);
