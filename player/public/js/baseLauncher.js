@@ -113,10 +113,10 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
 		var data = {}
 		data.stageid = EkstepRendererAPI.getCurrentStageId()
 		data.mode = getPreviewMode()
-		data.duration = Date.now() - window.PLAYER_START_TIME;
+		data.duration = (Date.now()/1000) - window.PLAYER_START_TIME;
 		var gameId = content.identifier
 		var version = content.pkgVersion || "1.0"
-		window.PLAYER_STAGE_START_TIME = Date.now();
+		window.PLAYER_STAGE_START_TIME = Date.now()/1000;
 		TelemetryService.start(gameId, version, data)
 	},
 
