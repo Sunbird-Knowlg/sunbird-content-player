@@ -13,4 +13,4 @@ before_script:
     - grunt build-jsdoc
 
 script:
-    - grunt renderer-test
+    - grunt karma:app
