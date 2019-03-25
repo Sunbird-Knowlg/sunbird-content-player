@@ -42,9 +42,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
             });
             $scope.userScore = $scope.convert(totalScore);
             $scope.totalScore = $scope.convert(maxScore);
-            $scope.score = ($scope.convert(totalScore) + "/" + $scope.convert(maxScore));
         } else {
-            $scope.score = undefined;
             $scope.userScore = undefined;
             $scope.totalScore = undefined;
         }
