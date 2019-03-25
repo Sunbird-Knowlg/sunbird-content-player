@@ -15,7 +15,7 @@ jobs:
           
       - run: git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins -b $CIRCLE_BRANCH     
       - run: cd player && npm install
-      - run: cd player && npm run build-preview sunbird
+      - run: cd player && npm run build-preview ekstep
       - run: cd player && grunt compress:preview
       - run: cd player && grunt generate-libs
       - run: cd player && grunt build-jsdoc
