@@ -1,6 +1,7 @@
 version: 2.1
 jobs:
   build:
+    working_directory: ~/content-player/player
     docker:
       - image: g33tha/plugin:test
         environment:
@@ -9,16 +10,19 @@ jobs:
            filter_plugins: false
            
     steps:
-      - checkout
+      - checkout:
+          path: ~/content-player
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
           
       - run: git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins -b $CIRCLE_BRANCH     
-      - run: cd player && npm install
-      - run: cd player && npm run build-preview ekstep
-      - run: cd player && grunt compress:preview
-      - run: cd player && grunt generate-libs
-      - run: cd player && grunt build-jsdoc
+      - run: npm install
+      - run: run build-preview ekstep
+      - run: grunt compress:preview
+      - run: grunt generate-libs
+      - run: grunt build-jsdoc
+      
+      - run: grunt karma:app
       - store_artifacts:
           path: player/preview.zip
           destination: preview.zip
