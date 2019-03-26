@@ -15,7 +15,8 @@ jobs:
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
           
-      - run: git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins -b $CIRCLE_BRANCH     
+      - run: git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins -b $CIRCLE_BRANCH
+      - run: sudo npm install -g grunt-cli@1.2.0 codacy-coverage
       - run: npm install
       - run: npm run build-preview ekstep
       - run: grunt compress:preview
