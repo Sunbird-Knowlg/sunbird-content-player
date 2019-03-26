@@ -101,7 +101,7 @@ app.controllerProvider.register("endPageController", function($scope, $rootScope
         }
     }
     $scope.getTotalScore = function(id) {
-        if ("undefined" != typeof cordova) {
+        if (!isbrowserpreview) {
             org.ekstep.service.content.getLearnerAssessment(GlobalContext.user.uid, id, GlobalContext.game.contentExtras)
                 .then(function(score) {
                     if (score && score.total_questions) {
@@ -289,7 +289,7 @@ app.controllerProvider.register('RelatedContentCtrl', function($scope, $rootScop
         $scope.renderRelatedContent = function(id) {
             var contentExtras = null;
             if (_.isUndefined($scope.contentExtras) || _.isEmpty($scope.contentExtras)) {
-                if (("undefined" != typeof cordova)) {
+                if (!isbrowserpreview)) {
                     $scope.getRelatedContent(contentExtras);
                 }
             } else {
@@ -299,7 +299,7 @@ app.controllerProvider.register('RelatedContentCtrl', function($scope, $rootScop
         }
 
         $scope.init = function() {
-            if ("undefined" != typeof cordova) {
+            if (!isbrowserpreview) {
                 $scope.renderRelatedContent($rootScope.content.identifier);
             } else {
                 jQuery('#endPageLoader').hide();

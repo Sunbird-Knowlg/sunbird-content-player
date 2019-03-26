@@ -11,7 +11,7 @@ Plugin.extend({
                 template: '<div ng-class="enableGenie ? \'genie-home\' : \'icon-opacity genie-home\'" ng-click="goToGenie()"><img ng-src="{{imageBasePath}}icn_home.png"/><span> {{AppLables.exit}} </span></div>',
                 link: function(scope) {
                     scope.AppLables = AppLables
-                    scope.enableGenie = typeof cordova !== "undefined"
+                    scope.enableGenie = !isbrowserpreview
                     if (scope.enableGenie) {
                         scope.goToGenie = function() {
                             EkstepRendererAPI.hideEndPage()
