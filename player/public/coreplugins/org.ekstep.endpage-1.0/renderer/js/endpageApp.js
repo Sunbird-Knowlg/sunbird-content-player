@@ -289,7 +289,7 @@ app.controllerProvider.register('RelatedContentCtrl', function($scope, $rootScop
         $scope.renderRelatedContent = function(id) {
             var contentExtras = null;
             if (_.isUndefined($scope.contentExtras) || _.isEmpty($scope.contentExtras)) {
-                if (!isbrowserpreview)) {
+                if (!isbrowserpreview) {
                     $scope.getRelatedContent(contentExtras);
                 }
             } else {
