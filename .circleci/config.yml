@@ -3,7 +3,8 @@ jobs:
   build:
     working_directory: ~/content-player/player
     docker:
-      - image: g33tha/plugin:test
+      - image: circleci/node:6.10-browsers
+      #- image: g33tha/plugin:test
         environment:
            player_version_number: $CIRCLE_BRANCH
            build_number: $CIRCLE_BUILD_NUM
