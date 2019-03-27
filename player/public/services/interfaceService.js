@@ -237,7 +237,7 @@ org.ekstep.service.content = new (org.ekstep.service.mainService.extend({
 			org.ekstep.service.renderer.setUser(uid).then(function (data) {
 				// It will reload the app for new user once he gets out of player page.
 				if(!isbrowserpreview) {
-					window['playerActionHandlerDelegate'].onUserSwitch();
+					window['playerActionHandlerDelegate'].onUserSwitch({uid: uid});
 				}
 				resolve(data)
 			}).catch(function (err) {

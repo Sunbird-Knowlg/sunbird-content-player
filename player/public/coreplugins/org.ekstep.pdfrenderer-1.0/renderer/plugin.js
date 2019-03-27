@@ -122,7 +122,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         pdfSearchContainer.appendChild(findTextField);
         pdfSearchContainer.appendChild(findSubmit);
 
-        if (!window.cordova){
+        if (isbrowserpreview){
             this.addDownloadButton(path, pdfSearchContainer);
         }
 
