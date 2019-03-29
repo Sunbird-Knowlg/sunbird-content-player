@@ -397,5 +397,6 @@ table {
 }
 
 .ps-score-data-padding-top {
-  padding-top: 3px;
+  padding-top: 4px;
+  padding-bottom: 4px;
 }
