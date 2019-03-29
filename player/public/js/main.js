@@ -301,7 +301,7 @@ function setGlobalConfig (configuration) {
 			configuration.rollup = configuration.contextRollup;
 		}
 		
-		configuration.object = configuration.object ? configuration.object : {};
+		configuration.object = configuration.object || {};
 		var rollup = {};
 		if (metadata.rollup) { 
 			rollup = metadata.rollup; 
@@ -309,7 +309,7 @@ function setGlobalConfig (configuration) {
 			rollup = configuration.objectRollup; 
 		}
 
-		configuration.object = _.assign({rollup: rollup}, configuration.object);)
+		configuration.object = _.assign({rollup: rollup}, configuration.object);
 		// Override the metadata object of intent with proper structure.
 		// manifest & hierarchyInfo
 		configuration.metadata = metadata
