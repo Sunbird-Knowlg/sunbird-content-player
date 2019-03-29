@@ -387,11 +387,11 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var currentStageIndex = _.size(_.uniq(this.stageId)) || 1;
         return this.progres(currentStageIndex, totalStages);
     },
-    logInteractEvent(type, id, extype, eks, eid){
+    logInteractEvent: function(type, id, extype, eks, eid){
         window.PLAYER_STAGE_START_TIME = Date.now()/1000;
         EkstepRendererAPI.getTelemetryService().interact(type, id, extype, eks,eid);
     },
-    logImpressionEvent(stageId, stageTo){
+    logImpressionEvent: function(stageId, stageTo){
         EkstepRendererAPI.getTelemetryService().navigate(stageId, stageTo, {
             "duration": (Date.now()/1000) - window.PLAYER_STAGE_START_TIME
         });
