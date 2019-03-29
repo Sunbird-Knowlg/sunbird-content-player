@@ -26,7 +26,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var data = _.clone(content);
         this.heartBeatData.stageId = content.mimeType === 'video/x-youtube' ? 'youtubestage' : 'videostage';
         var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
-        if (window.cordova || !isbrowserpreview) {
+        if (!isbrowserpreview) {
             var prefix_url = globalConfigObj.basepath || '';
             path = prefix_url + "/" + data.artifactUrl;
         } else {
@@ -41,7 +41,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         video.style.width = '100%';
         video.style.height = '100%';
         video.controls = true;
-        if (window.cordova) video.controlsList = 'nodownload';
+        if (!isbrowserpreview) video.controlsList = 'nodownload';
         video.autoplay = true;
         video.preload = "auto";
         video.className = 'video-js vjs-default-skin';

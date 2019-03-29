@@ -89,7 +89,7 @@ LoadByStageStrategy = Class.extend({
         instance.loadTemplateAssets();
     },
     loadAppAssets: function() {
-        var localPath = "undefined" == typeof cordova ? "" : "file:///android_asset/www/";
+        var localPath = isbrowserpreview ? "" : "file:///android_asset/www/";
         this.commonAssets.push({
             id: "goodjob_sound",
             src: localPath + "assets/sounds/goodjob.mp3"

@@ -274,7 +274,7 @@ org.ekstep.contentrenderer.setContentMetadata = function (contentData, cb) {
 	} else {
 		data = data.localData
 	}
-	if (typeof cordova === "undefined") {
+	if (isbrowserpreview) {
 		org.ekstep.contentrenderer.getContentBody(content.metadata.identifier)
 	}
 	if (cb) cb()

@@ -63,7 +63,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var div = document.createElement('div');
         div.id = this.manifest.id;
         this.addToGameArea(div);
-        if (window.cordova || !isbrowserpreview) {
+        if (!isbrowserpreview) {
             var regex = new RegExp("^(http|https)://", "i");
             if(!regex.test(globalConfigObj.basepath)){
                 var prefix_url = globalConfigObj.basepath || '';
