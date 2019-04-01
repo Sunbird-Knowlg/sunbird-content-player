@@ -80,10 +80,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var pdfMainContainer = document.createElement("div");
         pdfMainContainer.id = "pdf-main-container";
 
-        var pdfLoader = document.createElement("div");
-        pdfLoader.id = "pdf-loader";
-        pdfLoader.textContent = "Loading document ...";
-
         var pdfNoPage = document.createElement("div");
         pdfNoPage.id = "pdf-no-page";
         pdfNoPage.textContent = "No Page Found";
@@ -168,7 +164,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         pdfContents.appendChild(pageLoader);
         pdfContents.appendChild(pdfNoPage);
 
-        pdfMainContainer.appendChild(pdfLoader);
         pdfMainContainer.appendChild(pdfContents);
 
 
