@@ -182,6 +182,8 @@ LoadByStageStrategy = Class.extend({
     },
     loadStage: function(stageId, callback) {
         var instance = this;
+        var currentStageId =  Renderer.theme._currentStage;
+        console.log("curentStageID", currentStageId);
         if (!instance.loaders[stageId]) {
             var mediaList = JSON.parse(JSON.stringify(instance.stageManifests[stageId]));
             mediaList = _.uniq(mediaList, function(media) {
@@ -190,9 +192,7 @@ LoadByStageStrategy = Class.extend({
             mediaList = instance.filterMedia(mediaList, "video");
             if (_.isArray(mediaList) && mediaList.length > 0) {
                 var loader = this._createLoader();
-                var currentStageId =  Renderer.theme._currentStage;
-                console.log("curentStageID", currentStageId);
-                instance.loaderWithPercentage(currentStageId, loader);
+                instance.loaderWithPercentage(stageId, loader);
                 loader.stageLoaded = false;
                 loader.on("complete", function() {
                     loader.stageLoaded = true;
@@ -205,6 +205,9 @@ LoadByStageStrategy = Class.extend({
                 loader.loadManifest(mediaList, true);
                 instance.loaders[stageId] = loader;
             }
+        } else {
+            var stgLoader = instance.loaders[stageId];
+            instance.loaderWithPercentage(stageId, stgLoader);
         }
         this.handleStageCallback(stageId, callback);
     },
@@ -339,6 +342,7 @@ LoadByStageStrategy = Class.extend({
         return false
     },
     loaderWithPercentage: function (currentStageId, loader) {
+        if(Renderer.theme._currentStage != currentStageId) return;
         $("svg", ".preloader-wrapper-area").remove();
         $("div", ".preloader-wrapper-area").remove();
 
@@ -349,7 +353,6 @@ LoadByStageStrategy = Class.extend({
             strokeWidth: 8,
             trailWidth: 4,
             easing: 'easeInOut',
-            duration: 2000,
             text: {
                 autoStyleContainer: false
             },
@@ -376,13 +379,14 @@ LoadByStageStrategy = Class.extend({
         bar.text.style.fontSize = '1rem';
         bar.text.style.color = 'black';
         if (currentStageId) {
-            console.log("currentStageId", currentStageId);
             loader.on("progress", function () {
                 if ((loader.stageLoaded || !loader.stageLoaded) && currentStageId === Renderer.theme._currentStage) {
                     var itemsInStage = loader.getItems(loader.stageLoaded);
                 }
                 progressPercent = loader.progress;
-                bar.animate(loader.progress);  // Number from 0.0 to 1.0
+                if (progressPercent < 1){
+                    bar.animate(loader.progress);
+                }
             });
         }
     }

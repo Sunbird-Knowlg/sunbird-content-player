@@ -29,6 +29,7 @@ window.AppErrors = {
 window.AppLables = {
 	"languageCode": "en",
 	"home": "Home",
+	"exit": "Exit",
 	"title": "TITLE",
 	"submit": "SUBMIT",
 	"image": "Image",

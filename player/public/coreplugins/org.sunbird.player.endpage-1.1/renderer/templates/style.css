@@ -318,6 +318,12 @@ table {
   margin: auto;
 }
 
+.ps-exit-icon {
+  height: 6vw;
+  width: 6vw;
+  margin: auto;
+}
+
 .ps-action-list {
   display: -webkit-box;
   display: -ms-flexbox;
