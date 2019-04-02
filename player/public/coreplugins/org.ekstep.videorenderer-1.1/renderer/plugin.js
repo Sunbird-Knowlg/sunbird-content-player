@@ -57,9 +57,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         video.autoplay = true;
         video.className = 'vjs-default-skin';
         document.body.appendChild(video);
-        EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
+        
         EkstepRendererAPI.dispatchEvent("renderer:content:start");
-
         if(data.mimeType === "video/x-youtube"){
             this._loadYoutube(data.artifactUrl);
         }else if(data.streamingUrl && (data.mimeType != "video/x-youtube")){
@@ -71,7 +70,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         
         $("video-js").bind("contextmenu",function() {
             return false;
-        });
+        }); 
     },    
     _loadVideo: function(path, data) {
         var instance = this;
@@ -256,6 +255,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
        this.start();
     },
     configOverlay: function() {
+        EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
         setTimeout(function() {
             EkstepRendererAPI.dispatchEvent("renderer:overlay:show");
             EkstepRendererAPI.dispatchEvent("renderer:next:hide");
