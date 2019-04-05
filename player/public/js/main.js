@@ -15,7 +15,7 @@ window.config = { showEndPage: true, showHTMLPages: true }
 window.isbrowserpreview = getUrlParameter("webview")
 window.isCoreplugin = undefined
 window.Renderer = undefined
-window.isMobile = undefined	
+window.isMobile = undefined
 
 document.body.addEventListener("logError", telemetryError, false)
 

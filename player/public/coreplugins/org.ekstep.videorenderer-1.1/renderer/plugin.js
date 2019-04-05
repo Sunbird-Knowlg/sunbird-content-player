@@ -90,7 +90,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         source.type = data.mimeType;
         video.appendChild(source);
 
-        if (data.streamingUrl || !isbrowserpreview){
+        if (data.streamingUrl || window.cordova){
             var videoPlayer = videojs('videoElement', {
                 "controls": true, "autoplay": true, "preload": "auto"
             });
