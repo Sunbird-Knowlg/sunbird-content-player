@@ -64,7 +64,7 @@ Plugin.extend({
             EkstepRendererAPI.addEventListener('telemetryPlugin:intialize', this.initializeTelemetryPlugin, this);
         },
         initializeTelemetryPlugin: function() {
-            if (isbrowserpreview) {
+            if ("undefined" == typeof cordova) {
                 this.listenTelementryEvent();
                 var did = detectClient();
                 this._requiredFields = {};

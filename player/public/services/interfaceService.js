@@ -117,10 +117,10 @@ org.ekstep.service.content = new (org.ekstep.service.mainService.extend({
 
 		if (item.path && data) {
 			var path = (item.path.charAt(item.path.length - 1) === "/") ? item.path.substring(0, item.path.length - 1) : item.path
-			path = (!isbrowserpreview) ? "file://" + path : path
+			path = (window.cordova) ? "file://" + path : path
 			data.baseDir = path
 			globalConfig.basepath = path
-			if (!isbrowserpreview) { data.appIcon = (data.appIcon) ? path + "/" + data.appIcon : path + "/logo.png" } else { data.appIcon = (isbrowserpreview) ? data.appIcon : path + "/logo.png" }
+			if (typeof cordova !== "undefined") { data.appIcon = (data.appIcon) ? path + "/" + data.appIcon : path + "/logo.png" } else { data.appIcon = (isbrowserpreview) ? data.appIcon : path + "/logo.png" }
 			data.mimeType = item.mimeType
 			data.status = "ready"
 			data.isAvailable = item.isAvailable
@@ -180,7 +180,7 @@ org.ekstep.service.content = new (org.ekstep.service.mainService.extend({
 						returnResult(list, "Error while fetching filterContentList:" + JSON.stringify(err))
 					})
 			} else {
-				if (!isbrowserpreview) {
+				if (typeof cordova !== "undefined") {
 					returnResult(list, "Error while fetching filtered content: Empty Collection")
 				} else {
 					org.ekstep.service.renderer.getContentList([])
@@ -236,7 +236,7 @@ org.ekstep.service.content = new (org.ekstep.service.mainService.extend({
 		return new Promise(function (resolve, reject) {
 			org.ekstep.service.renderer.setUser(uid).then(function (data) {
 				// It will reload the app for new user once he gets out of player page.
-				if(!isbrowserpreview) {
+				if(window.cordova) {
 					window['playerActionHandlerDelegate'].onUserSwitch({uid: uid});
 				}
 				resolve(data)

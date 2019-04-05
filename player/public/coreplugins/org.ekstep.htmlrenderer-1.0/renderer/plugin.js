@@ -20,7 +20,7 @@
          this._super();
          data = content;
          this.reset();
-         var isMobile = !isbrowserpreview ? true : false;
+         var isMobile = window.cordova ? true : false;
          var envHTML = isMobile ? "app" : "portal";
          var launchData = { "env": envHTML, "envpath": 'dev' };
          var globalConfigObj = EkstepRendererAPI.getGlobalConfig();

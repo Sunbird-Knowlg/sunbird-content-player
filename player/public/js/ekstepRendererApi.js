@@ -882,7 +882,7 @@ window.EkstepRendererAPI = {
 		if (!errorStack) console.error("`Error stack` object is required to log an error telemetry event")
 		try {
 			if (data) {
-				data.env = !isbrowserpreview ? "mobile" : EkstepRendererAPI.getGlobalConfig().context.mode || "preview"
+				data.env = typeof cordova !== "undefined" ? "mobile" : EkstepRendererAPI.getGlobalConfig().context.mode || "preview"
 				data.type = !_.isUndefined(data.type) ? data.type.toUpperCase() : "OTHER"
 				data.stageId = this.getCurrentStageId()
 				if (!data.objectType) {

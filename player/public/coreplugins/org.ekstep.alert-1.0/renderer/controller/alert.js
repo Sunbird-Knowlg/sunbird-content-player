@@ -46,7 +46,7 @@ app.compileProvider.directive("alert", ["$rootScope", "$compile", function ($roo
 			}
 			scope.hidePopup = function () {
 				scope.showPopup = false
-				if (!isbrowserpreview) exitApp()
+				if (typeof cordova !== "undefined") exitApp()
 				scope.safeApply()
 			}
 			scope.showDetails = function () {

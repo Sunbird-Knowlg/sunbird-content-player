@@ -38,7 +38,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         this.initContentProgress();
         var path = undefined;
         var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
-        if (!isbrowserpreview) {
+        if (window.cordova || !isbrowserpreview) {
             var regex = new RegExp("^(http|https)://", "i");
             if(!regex.test(globalConfigObj.basepath)){
                 var prefix_url = globalConfigObj.basepath || '';
@@ -122,7 +122,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         pdfSearchContainer.appendChild(findTextField);
         pdfSearchContainer.appendChild(findSubmit);
 
-        if (isbrowserpreview){
+        if (!window.cordova){
             this.addDownloadButton(path, pdfSearchContainer);
         }
 

@@ -27,6 +27,8 @@ RecorderManager = {
             });
             RecorderManager.appDataDirectory = cordova.file.externalDataDirectory || cordova.file.dataDirectory;
         });
+        // Device ready wont fire here in player
+        RecorderManager.appDataDirectory = cordova.file.externalDataDirectory || cordova.file.dataDirectory;
     },
     /*
      *	Create Audio filepath. Call Audio Recording Service to start recording.

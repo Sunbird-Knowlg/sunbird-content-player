@@ -15,7 +15,7 @@ window.config = { showEndPage: true, showHTMLPages: true }
 window.isbrowserpreview = getUrlParameter("webview")
 window.isCoreplugin = undefined
 window.Renderer = undefined
-window.isMobile = undefined
+window.isMobile = undefined	
 
 document.body.addEventListener("logError", telemetryError, false)
 
@@ -308,7 +308,7 @@ function setGlobalConfig (configuration) {
 	GlobalContext.config = mergeJSON(AppConfig, configuration)
 	window.globalConfig = GlobalContext.config
 
-	if (isbrowserpreview) {
+	if (_.isUndefined(window.cordova)) {
 		org.ekstep.service.renderer.api.setBaseUrl(window.globalConfig.host + window.globalConfig.apislug)
 	}
 	setTelemetryEventFields(window.globalConfig)
