@@ -13,7 +13,7 @@ AppConfig = {
 	devicePluginspath: "/widgets/content-plugins",
 	corePluginspath: "coreplugins",
 	apislug: "/action",
-	telemetryEventsConfigFields: ["env", "sid", "uid", "did", "channel", "etags", "pdata", "cdata", "app", "dims", "partner", "tags", "rollup", "contextRollup","mode", "enableTelemetryValidation"],
+	telemetryEventsConfigFields: ["env", "sid", "uid", "did", "channel", "etags", "pdata", "cdata", "app", "dims", "partner", "tags", "rollup", "contextRollup", "mode", "enableTelemetryValidation"],
 	mimetypes: [
 		"application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive", "application/vnd.ekstep.h5p-archive", "application/epub", "video/mp4", "application/pdf", "video/x-youtube", "video/webm"
 	],
