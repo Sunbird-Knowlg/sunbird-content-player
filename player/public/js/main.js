@@ -302,14 +302,18 @@ function setGlobalConfig (configuration) {
 		}
 		
 		configuration.object = configuration.object || {};
-		var rollup = {};
-		if (metadata.rollup) { 
-			rollup = metadata.rollup; 
-		}else if (configuration.objectRollup){
-			rollup = configuration.objectRollup; 
-		}
 
-		configuration.object = _.assign({rollup: rollup}, configuration.object);
+		if (_.isUndefined(configuration.object.rollup))
+		{
+			var rollup = {};
+			if (metadata.rollup) { 
+				rollup = metadata.rollup; 
+			}else if (configuration.objectRollup){
+				rollup = configuration.objectRollup; 
+			}
+
+			configuration.object = _.assign({rollup: rollup}, configuration.object);
+		}	
 		// Override the metadata object of intent with proper structure.
 		// manifest & hierarchyInfo
 		configuration.metadata = metadata
