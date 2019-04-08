@@ -105,7 +105,9 @@
         "build-preview": "bash -c 'grunt uglify:renderermin && if [[ ${1} == \"ekstep\" ]]; then npm run package-coreplugins -- --env.channel=ekstep && npm run build-ekstep && grunt build-preview; else echo ${1} npm run package-coreplugins -- --env.channel=sunbird && npm run build-sunbird && grunt build-preview; fi' -- ",
         "build-aar": "bash -c 'grunt uglify:renderermin && if [[ ${1} == \"ekstep\" ]]; then npm run package-coreplugins -- --env.channel=ekstep && npm run build-ekstep && grunt build-app; else npm run package-coreplugins -- --env.channel=sunbird && npm run build-sunbird && grunt build-app; fi' -- ",
         "build-npm-package": "node_modules/.bin/rimraf ./www && npm run build-preview sunbird && node_modules/.bin/cpy package.json ./www/preview && node_modules/.bin/cpy ../README.md ./www/preview",
-        "build-player-interface": "node_modules/.bin/cpy public/js/htmlInterface.js ./npm-dist/content-player-interface"
+        "build-player-interface": "node_modules/.bin/cpy public/js/htmlInterface.js ./npm-dist/content-player-interface",
+        "test-player": "npm run build-preview && grunt player-test",
+        "test-renderer": "npm run build-preview && grunt renderer-test"
     },
     "cordovaPlugins": [
         "cordova-plugin-device",
