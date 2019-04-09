@@ -26,6 +26,7 @@ const fs = require('fs');
 const replace = require('replace-in-file');
 const file_extra = require('fs-extra')
 var WebpackOnBuildPlugin = require('on-build-webpack');
+const CompressionPlugin = require('compression-webpack-plugin');
 const APP_CONFIG = require('./build.config.js')
 
 const CONSTANTS = {
@@ -113,7 +114,7 @@ if (!BUILD_NUMBER && !PLAYER_VER) {
 const VERSION = PLAYER_VER + '.' + BUILD_NUMBER;
 
 module.exports = (env, argv) => {
-    (env.channel === CONSTANTS.sunbird) ? SCRIPTS.unshift(APP_CONFIG.sunbird.configFile): SCRIPTS.unshift(APP_CONFIG.ekstep.configFile);
+    (env.channel === CONSTANTS.sunbird) ? SCRIPTS.unshift(APP_CONFIG.sunbird.configFile) : SCRIPTS.unshift(APP_CONFIG.ekstep.configFile);
     return {
         entry: {
             'script': SCRIPTS,
@@ -136,97 +137,97 @@ module.exports = (env, argv) => {
         },
         module: {
             rules: [{
-                    test: /\.(s*)css$/,
-                    use: [
-                        MiniCssExtractPlugin.loader,
-                        {
-                            loader: 'css-loader',
-                            options: {
-                                sourceMap: false,
-                                minimize: true,
-                                "preset": "advanced",
-                                discardComments: {
-                                    removeAll: true
-                                }
+                test: /\.(s*)css$/,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            sourceMap: false,
+                            minimize: true,
+                            "preset": "advanced",
+                            discardComments: {
+                                removeAll: true
                             }
                         }
-                    ]
-                },
+                    }
+                ]
+            },
 
-                {
-                    test: /\.(woff|woff2|eot|ttf|otf|svg|png)$/,
-                    use: [{
-                        loader: 'file-loader',
-                        options: {
-                            name: '[name].[ext]',
-                            outputPath: './fonts/',
-                            limit: 10000,
-                            fallback: 'responsive-loader'
-                        }
-                    }]
-                }, {
-                    test: require.resolve(`${FOLDER_PATHS.basePath}public/libs/eventbus.min.js`),
-                    use: [{
-                        loader: 'expose-loader',
-                        options: 'EventBus'
-                    }]
-                },
-                {
-                    test: require.resolve(`${FOLDER_PATHS.basePath}public/libs/jquery.min.js`),
-                    use: [{
-                        loader: 'expose-loader',
-                        options: 'jQuery'
-                    }]
-                },
-                {
-                    test: require.resolve(`${FOLDER_PATHS.basePath}public/libs/jquery.min.js`),
-                    use: [{
-                        loader: 'expose-loader',
-                        options: '$'
-                    }]
-                },
-                {
-                    test: require.resolve(`${FOLDER_PATHS.basePath}public/libs/underscore.js`),
-                    use: [{
-                        loader: 'expose-loader',
-                        options: '_'
-                    }]
-                },
-                {
-                    test: require.resolve(`${FOLDER_PATHS.basePath}/node_modules/@project-sunbird/telemetry-sdk/index.js`),
-                    use: [{
-                        loader: 'expose-loader',
-                        options: 'EkTelemetry'
-                    }]
-                },
-                {
-                    test: require.resolve(`${FOLDER_PATHS.basePath}node_modules/fingerprintjs2/dist/fingerprint2.min.js`),
-                    use: [{
-                        loader: 'expose-loader',
-                        options: 'Fingerprint2'
-                    }]
-                },
-                {
-                    test: require.resolve(`${FOLDER_PATHS.basePath}public/libs/md5.js`),
-                    use: [{
-                        loader: 'expose-loader',
-                        options: 'CryptoJS'
-                    }]
-                },
-                {
-                   test: require.resolve(`${FOLDER_PATHS.basePath}public/libs/progressbar.min.js`),
-                   use: [{
-                       loader: 'expose-loader',
-                       options: 'ProgressBar'
-                   }]
-               },
-               {
-                    test: require.resolve(`${FOLDER_PATHS.basePath}public/libs/ua-parser.min.js`),
-                    use: [{
-                        loader: 'expose-loader',
-                        options: 'UAParser'
-                    }]
-                }
+            {
+                test: /\.(woff|woff2|eot|ttf|otf|svg|png)$/,
+                use: [{
+                    loader: 'file-loader',
+                    options: {
+                        name: '[name].[ext]',
+                        outputPath: './fonts/',
+                        limit: 10000,
+                        fallback: 'responsive-loader'
+                    }
+                }]
+            }, {
+                test: require.resolve(`${FOLDER_PATHS.basePath}public/libs/eventbus.min.js`),
+                use: [{
+                    loader: 'expose-loader',
+                    options: 'EventBus'
+                }]
+            },
+            {
+                test: require.resolve(`${FOLDER_PATHS.basePath}public/libs/jquery.min.js`),
+                use: [{
+                    loader: 'expose-loader',
+                    options: 'jQuery'
+                }]
+            },
+            {
+                test: require.resolve(`${FOLDER_PATHS.basePath}public/libs/jquery.min.js`),
+                use: [{
+                    loader: 'expose-loader',
+                    options: '$'
+                }]
+            },
+            {
+                test: require.resolve(`${FOLDER_PATHS.basePath}public/libs/underscore.js`),
+                use: [{
+                    loader: 'expose-loader',
+                    options: '_'
+                }]
+            },
+            {
+                test: require.resolve(`${FOLDER_PATHS.basePath}/node_modules/@project-sunbird/telemetry-sdk/index.js`),
+                use: [{
+                    loader: 'expose-loader',
+                    options: 'EkTelemetry'
+                }]
+            },
+            {
+                test: require.resolve(`${FOLDER_PATHS.basePath}node_modules/fingerprintjs2/dist/fingerprint2.min.js`),
+                use: [{
+                    loader: 'expose-loader',
+                    options: 'Fingerprint2'
+                }]
+            },
+            {
+                test: require.resolve(`${FOLDER_PATHS.basePath}public/libs/md5.js`),
+                use: [{
+                    loader: 'expose-loader',
+                    options: 'CryptoJS'
+                }]
+            },
+            {
+                test: require.resolve(`${FOLDER_PATHS.basePath}public/libs/progressbar.min.js`),
+                use: [{
+                    loader: 'expose-loader',
+                    options: 'ProgressBar'
+                }]
+            },
+            {
+                test: require.resolve(`${FOLDER_PATHS.basePath}public/libs/ua-parser.min.js`),
+                use: [{
+                    loader: 'expose-loader',
+                    options: 'UAParser'
+                }]
+            }
             ]
         },
         plugins: [
@@ -234,7 +235,7 @@ module.exports = (env, argv) => {
             new MiniCssExtractPlugin({
                 filename: `[name].min.${VERSION}.css`,
             }),
-            new WebpackOnBuildPlugin(function(stats) {
+            new WebpackOnBuildPlugin(function (stats) {
                 replaceStringInFiles(env.channel);
                 copyCorePlugins(env.channel);
             }),
@@ -254,6 +255,13 @@ module.exports = (env, argv) => {
             }),
             new webpack.optimize.OccurrenceOrderPlugin(),
             new webpack.HotModuleReplacementPlugin(),
+            new CompressionPlugin({
+                algorithm: 'gzip',
+                minRatio: 1,
+                filename(fileIterator) {
+                    return `${fileIterator.path}.gz`
+                }
+            }),
             new OptimizeCssAssetsPlugin({
                 assetNameRegExp: /\.optimize\.css$/g,
                 cssProcessor: require('cssnano'),
@@ -304,6 +312,12 @@ function copyCorePlugins(channel) {
         if (plugin.package) {
             console.log("Plugins moving", plugin);
             file_extra.copy(`${FOLDER_PATHS.basePath}/public/coreplugins/${plugin.id}-${plugin.ver}`, `${FOLDER_PATHS.basePath}/public/${CONSTANTS.build_folder_name}/coreplugins/${plugin.id}-${plugin.ver}/`)
+                .then(() => {
+                    console.log("Plugin copying successful", plugin);
+                })
+                .catch(err => {
+                    console.log("Something went wrong while copying plugin", err);
+                })
         }
     })
 };
