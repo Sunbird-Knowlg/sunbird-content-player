@@ -332,6 +332,9 @@ var qspatch = {
 
         pluginInst = this.getPluginInstance(org.ekstep.questionunitmcq && org.ekstep.questionunitmcq.RendererPlugin);
         this.setPluginUrl(pluginInst, "AssetUrl");
+
+        pluginInst = this.getPluginInstance(org.ekstep.keyboard && org.ekstep.contentrenderer.keyboardRenderer);
+        this.setPluginUrl(pluginInst, "AssetUrl");
         
         pluginInst = this.getPluginInstance(org.ekstep.contentrenderer.questionUnitPlugin);
         this.setPluginUrl(pluginInst, "AudioUrl");
