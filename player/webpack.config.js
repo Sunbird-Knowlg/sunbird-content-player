@@ -320,8 +320,7 @@ function copyCorePlugins(channel) {
                 })
         }
     })
-};
-
+}
 function replaceStringInFiles(channel) {
     // Which is used to replace the specific string from the mentioned file 
     var replaceTo = (channel === CONSTANTS.sunbird) ? APP_CONFIG.sunbird.splashScreen.backgroundImage : APP_CONFIG.ekstep.splashScreen.backgroundImage
