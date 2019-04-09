@@ -38,16 +38,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         this.initContentProgress();
         var path = undefined;
         var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
-        if (window.cordova || !isbrowserpreview) {
-            var regex = new RegExp("^(http|https)://", "i");
-            if(!regex.test(globalConfigObj.basepath)){
-                var prefix_url = globalConfigObj.basepath || '';
-                path = prefix_url + "/" + data.artifactUrl + "?" + new Date().getSeconds();
-            }else   
-                path = data.streamingUrl;
-        } else {
-            path = data.artifactUrl + "?" + new Date().getSeconds();
-        }
+        var prefix_url = globalConfigObj.basepath || '';
+        path = prefix_url + "/" + data.artifactUrl + "?" + new Date().getSeconds();
         console.log("path pdf is ", path);
         var div = document.createElement('div');
         div.src = path;

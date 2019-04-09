@@ -46,9 +46,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         renderObj = content;
         if (_.isUndefined(renderObj)) return;
         this.initContentProgress();
-        if(isbrowserpreview){
-            renderObj.path = '';
-        }
         try {
             this.running = true;
             this.preview = renderObj.preview || false;
@@ -164,7 +161,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 attributePrefix: 'none'
             });
             var tempData = data;
-            if(isbrowserpreview){
+            if(typeof tempData ===  'string'){
                 data = x2js.xml_str2json(tempData)
                 if (!data || data.parsererror)
                     data = JSON.parse(tempData)
@@ -181,7 +178,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         instance.resizeGame(true);
         Renderer.theme.baseDir = globalConfigObj.basepath || dataObj.path;
         var manifest = content.manifest ? content.manifest : AssetManager.getManifest(content);
-        var pluginsPath = isbrowserpreview ? globalConfigObj.previewPluginspath : globalConfigObj.devicePluginspath;
+        var pluginsPath = globalConfigObj.devicePluginspath;
         EkstepRendererAPI.dispatchEvent("renderer:repo:create",undefined, {path: dataObj.path + pluginsPath, position:0});
         var resource = instance.handleRelativePath(instance.getResource(manifest), dataObj.path + '/widgets/');
         var pluginManifest = content["plugin-manifest"];
@@ -212,11 +209,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
         _.each(manifestMedia, function(p) {
             if (p.src.substring(0, 4) != 'http') {
-                if (!isbrowserpreview) {
-                    p.src = pluginPath + p.src;
-                } else {
-                    p.src = globalConfigObj.host + p.src;
-                }
+                p.src = pluginPath + p.src;
             }
         });
         return manifestMedia;
@@ -348,53 +341,41 @@ var qspatch = {
         switch (urlType) {
             case "AssetUrl":
                 pluginObj.prototype.getAssetUrl = function (url) {
-                    if (isbrowserpreview) {
-                        return instance.validateUrl(url);
+                    if (EkstepRendererAPI.isStreamingContent()) {
+                        // mobile online streaming
+                        if(url)
+                        return instance.validateUrl(EkstepRendererAPI.getBaseURL() + url.substring(1, url.length));
                     } else {
-                        if (EkstepRendererAPI.isStreamingContent()) {
-                            // mobile online streaming
-                            if(url)
-                            return instance.validateUrl(EkstepRendererAPI.getBaseURL() + url.substring(1, url.length));
-                        } else {
-                            // Loading content from mobile storage ( OFFLINE )
-                            return instance.validateUrl('file:///' + EkstepRendererAPI.getBaseURL() + url);
-                        }
+                        // Loading content from mobile storage ( OFFLINE )
+                        return instance.validateUrl(EkstepRendererAPI.getBaseURL() + url);
                     }
                 }
                 break;
 
             case "AudioUrl":
                 pluginObj.prototype.getIcon = function (path, pluginId, pluginVer) {
-                    if (isbrowserpreview) {
-                        return instance.validateUrl(this.getAssetUrl(org.ekstep.pluginframework.pluginManager.resolvePluginResource(pluginId, pluginVer, path)));
+                    if (EkstepRendererAPI.isStreamingContent()) {
+                        // mobile online streaming
+                        if(path)
+                        return instance.validateUrl(EkstepRendererAPI.getBaseURL() + 'content-plugins/' + pluginId + '-' + pluginVer + '/' +path);
+                        //return org.ekstep.pluginframework.pluginManager.resolvePluginResource(pluginId, pluginVer, path);
                     } else {
-                        if (EkstepRendererAPI.isStreamingContent()) {
-                            // mobile online streaming
-                            if(path)
-                            return instance.validateUrl(EkstepRendererAPI.getBaseURL() + 'content-plugins/' + pluginId + '-' + pluginVer + '/' +path);
-                            //return org.ekstep.pluginframework.pluginManager.resolvePluginResource(pluginId, pluginVer, path);
-                        } else {
-                            // Loading content from mobile storage ( OFFLINE )
-                            return instance.validateUrl('file:///' + EkstepRendererAPI.getBaseURL() + 'content-plugins/' + pluginId + '-' + pluginVer + '/' + path);
-                        }
+                        // Loading content from mobile storage ( OFFLINE )
+                        return instance.validateUrl(EkstepRendererAPI.getBaseURL() + 'content-plugins/' + pluginId + '-' + pluginVer + '/' + path);
                     }
                 }  
             break;
         
             case "iconUrl":
                 pluginObj.prototype.getAudioIcon = function (path) {
-                    if (isbrowserpreview) {
-                        return instance.validateUrl(this.getAssetUrl(org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, path)));
+                    if (EkstepRendererAPI.isStreamingContent()) {
+                        // mobile online streaming
+                        if(path)
+                        return instance.validateUrl(EkstepRendererAPI.getBaseURL() + 'content-plugins/' + this._manifest.id + '-' + this._manifest.ver + '/' + path);
+                        //return org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, path);
                     } else {
-                        if (EkstepRendererAPI.isStreamingContent()) {
-                            // mobile online streaming
-                            if(path)
-                            return instance.validateUrl(EkstepRendererAPI.getBaseURL() + 'content-plugins/' + this._manifest.id + '-' + this._manifest.ver + '/' + path);
-                            //return org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, path);
-                        } else {
-                            // Loading content from mobile storage ( OFFLINE )
-                            return instance.validateUrl('file:///' + EkstepRendererAPI.getBaseURL() + 'content-plugins/' + this._manifest.id + '-' + this._manifest.ver + '/' + path);
-                        }
+                        // Loading content from mobile storage ( OFFLINE )
+                        return instance.validateUrl( EkstepRendererAPI.getBaseURL() + 'content-plugins/' + this._manifest.id + '-' + this._manifest.ver + '/' + path);
                     }
                 }
             break;

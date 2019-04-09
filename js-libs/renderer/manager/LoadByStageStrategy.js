@@ -27,10 +27,7 @@ LoadByStageStrategy = Class.extend({
             themeData.manifest.media.forEach(function(media) {
                 if ((media) && (media.src)) {
                     if (media.src.substring(0, 4) != 'http') {
-                        if (isbrowserpreview) {
-                            var globalConfig = EkstepRendererAPI.getGlobalConfig();
-                            media.src = globalConfig.host + media.src;
-                        } else {
+                        if (media.type === 'image' || media.type === 'audio' || media.type === 'video') {
                             media.src = basePath + media.src;
                         }
                     }
