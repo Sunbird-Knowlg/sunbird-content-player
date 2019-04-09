@@ -32,8 +32,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var data = _.clone(content);
         this.heartBeatData.stageId = content.mimeType === 'video/x-youtube' ? 'youtubestage' : 'videostage';
         var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
-        var prefix_url = globalConfigObj.basepath || '';
-        path = prefix_url ? prefix_url + "/" + data.artifactUrl;
+        path = globalConfigObj.basepath + "/" + data.artifactUrl;
         console.log("path", path);
         console.log("data", data);
         this.createVideo(path, data);

@@ -24,8 +24,7 @@
          var envHTML = isMobile ? "app" : "portal";
          var launchData = { "env": envHTML, "envpath": 'dev' };
          var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
-         var prefix_url = globalConfigObj.basepath;
-         var path = prefix_url + '/index.html?contentId=' + data.identifier + '&launchData=' + JSON.stringify(launchData) + "&appInfo=" + JSON.stringify(GlobalContext.config.appInfo);
+         var path = globalConfigObj.basepath + '/index.html?contentId=' + data.identifier + '&launchData=' + JSON.stringify(launchData) + "&appInfo=" + JSON.stringify(GlobalContext.config.appInfo);
          if (isbrowserpreview) {
              path += "&flavor=" + "t=" + getTime();
          }
