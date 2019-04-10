@@ -251,7 +251,7 @@ function compareObject (obj1, obj2) {
 
 	// Check object 2 for any extra properties
 	// eslint-disable-next-line
-for (var p in obj2) {
+	for (var p in obj2) {
 		if (typeof (obj1[p]) === "undefined") return false
 	}
 	return true
