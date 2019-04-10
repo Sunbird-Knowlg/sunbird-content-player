@@ -32,16 +32,22 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var data = _.clone(content);
         this.heartBeatData.stageId = content.mimeType === 'video/x-youtube' ? 'youtubestage' : 'videostage';
         var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
+        var regex = new RegExp("^(http|https)://", "i");
+        var isVideoStreamingUrl = regex.test(globalConfigObj.basepath) ? true : false;
+
         if (!isbrowserpreview) {
-            var regex = new RegExp("^(http|https)://", "i");
-            if(!regex.test(globalConfigObj.basepath)){
+            if(!isVideoStreamingUrl){
                 var prefix_url = globalConfigObj.basepath || '';
                 path = prefix_url ? prefix_url + "/" + data.artifactUrl : data.artifactUrl;
                 data.streamingUrl = false;
             }else   
                 path = data.streamingUrl;
         } else {
-            path = data.artifactUrl;
+            if(isVideoStreamingUrl){
+                path = data.streamingUrl;
+            }else{
+                path = data.artifactUrl;
+            }   
         }
         console.log("path", path);
         console.log("data", data);
