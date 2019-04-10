@@ -95,7 +95,7 @@ function exitApp (stageId) {
 	} catch (err) {
 		console.error("End telemetry error:", err.message)
 	}
-	if (Object.getPrototypeOf(org.ekstep.service.renderer).endGenieCanvas) org.ekstep.service.renderer.endGenieCanvas()
+	if (!isbrowserpreview && genieservice) genieservice.endGenieCanvas();
 }
 
 function startApp (app) {

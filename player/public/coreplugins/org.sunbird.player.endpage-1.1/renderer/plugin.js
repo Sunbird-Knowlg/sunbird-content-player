@@ -27,7 +27,7 @@ org.ekstep.contentrenderer.baseEndepage.extend({
             TelemetryService.interact("TOUCH", "gc_genie", "TOUCH", {
                 stageId: stageId
             });
-            genieservice.endGenieCanvas();
+            exitApp();
         };
     }
 })
