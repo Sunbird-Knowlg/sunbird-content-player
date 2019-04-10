@@ -18,7 +18,7 @@ RecorderManager = {
     _root: undefined,
     init: function() {
 
-        if(!isbrowserpreview) {
+        document.addEventListener("deviceready", function() {
             window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
                 RecorderManager._root = fileSystem.root;
             }, function(e) {
@@ -26,7 +26,7 @@ RecorderManager = {
                 console.log(JSON.stringify(e));
             });
             RecorderManager.appDataDirectory = cordova.file.externalDataDirectory || cordova.file.dataDirectory;
-        }
+        });
     },
     /*
      *	Create Audio filepath. Call Audio Recording Service to start recording.
