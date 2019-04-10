@@ -141,6 +141,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 instance.load(dataObj);
             }, null, 'xml')
             .fail(function(err) {
+                err.responseText = "Invalid ECML please correct the Ecml";
                 EkstepRendererAPI.logErrorEvent(err, { 'severity': 'fatal', 'type': 'content', 'action': 'play' });
                 EventBus.dispatch("renderer:alert:show", undefined, {
                   title: "Error",
