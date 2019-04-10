@@ -73,7 +73,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             }else   
                 epubPath = data.streamingUrl;
         } else {
-            epubPath = isEpubStreamingUrl ? data.streamingUrl : data.artifactUrl;
+            epubPath = data.streamingUrl || data.artifactUrl;
         }
 
         org.ekstep.pluginframework.resourceManager.loadResource(epubPath, 'TEXT', function (err, data) {

@@ -48,10 +48,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             }else   
                 path = data.streamingUrl;
         } else {
-            if(!isPdfStreamingUrl){
-                path = data.artifactUrl + "?" + new Date().getSeconds();
-            }else   
-                path = data.streamingUrl;
+                path = data.streamingUrl || data.artifactUrl + "?" + new Date().getSeconds();
         }
 
         console.log("path pdf is ", path);

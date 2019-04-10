@@ -43,11 +43,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             }else   
                 path = data.streamingUrl;
         } else {
-            if(isVideoStreamingUrl){
-                path = data.streamingUrl;
-            }else{
-                path = data.artifactUrl;
-            }   
+            path = data.streamingUrl || data.artifactUrl; 
         }
         console.log("path", path);
         console.log("data", data);
