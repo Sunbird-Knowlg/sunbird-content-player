@@ -4,7 +4,6 @@ jobs:
     working_directory: ~/content-player/player
     docker:
       - image: circleci/node:6.10-browsers
-      #- image: g33tha/plugin:test
         environment:
            player_version_number: $CIRCLE_BRANCH
            build_number: $CIRCLE_BUILD_NUM
@@ -13,22 +12,28 @@ jobs:
     steps:
       - checkout:
           path: ~/content-player
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+      #- restore_cache:
+          #key: dependency-cache-{{ checksum "package.json" }}
+      
+      - run:
+          name: clone plugins
+          command: |
+            prnumber=$(echo $CI_PULL_REQUEST | awk -F'/' '{print $NF}')
+            prdata=$(curl -X GET -u $GITHUB_USER_TOKEN:x-oauth-basic https://api.github.com/repos/project-sunbird/sunbird-content-player/pulls/$prnumber)
+            target_branch=$(echo "${prdata}" | jq -r '.base.ref')
+            git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins -b $target_branch
           
-      - run: git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins -b $CIRCLE_BRANCH
+      #- run: git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins -b $CIRCLE_BRANCH
       - run: sudo npm install -g grunt-cli@1.2.0 codacy-coverage
       - run: npm install
       - run: npm run build-preview ekstep
       - run: grunt compress:preview
       - run: grunt generate-libs
       - run: grunt build-jsdoc
-      
-      #- run: grunt karma:app
-      - run: grunt player-test
-      - store_artifacts:
-          path: player/preview.zip
-          destination: preview.zip
+     
+      #- store_artifacts:
+          #path: 
+          #destination:
           
       - save_cache:
           key: dependency-cache-{{ checksum "package.json" }}
