@@ -332,7 +332,8 @@ org.ekstep.contentrenderer.web = function (id) {
 
 org.ekstep.contentrenderer.device = function () {
 	var globalconfig = EkstepRendererAPI.getGlobalConfig()
-	if (!isbrowserpreview) {
+	var isMobile = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()));
+	if (!isbrowserpreview && isMobile) {
 		if (globalconfig.metadata) {
 			org.ekstep.contentrenderer.setContentMetadata(globalconfig.metadata, function () {
 				org.ekstep.contentrenderer.startGame(content.metadata)

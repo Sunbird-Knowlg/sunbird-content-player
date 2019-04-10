@@ -41,11 +41,11 @@ function createCustomEvent (evtName, data) {
 
 function imageExists (url, callback, index) {
 	// eslint-disable-next-line
-    var img = new Image()
+	var img = new Image()
 	// eslint-disable-next-line
-    img.onload = function() { callback(true, index) }
+	img.onload = function() { callback(true, index) }
 	// eslint-disable-next-line
-    img.onerror = function() { callback(false, index) }
+	img.onerror = function() { callback(false, index) }
 	img.src = url
 }
 
@@ -95,7 +95,7 @@ function exitApp (stageId) {
 	} catch (err) {
 		console.error("End telemetry error:", err.message)
 	}
-	org.ekstep.service.renderer.endGenieCanvas()
+	if (Object.getPrototypeOf(org.ekstep.service.renderer).endGenieCanvas) org.ekstep.service.renderer.endGenieCanvas()
 }
 
 function startApp (app) {
@@ -106,7 +106,7 @@ function startApp (app) {
 			TelemetryService.exit(getCurrentStageId())
 			// TelemetryService.exit(packageName, version)
 			// eslint-disable-next-line
-        }, function(error) {
+		}, function(error) {
 			if (app === geniePackageName) { showToaster("error", "Unable to start Genie App.") } else {
 				var bool = confirm("App not found. Do you want to search on PlayStore?")
 				if (bool) cordova.plugins.market.open(app)
@@ -235,23 +235,23 @@ function compareObject (obj1, obj2) {
 		if (obj1.hasOwnProperty(p) !== obj2.hasOwnProperty(p)) return false
 
 		switch (typeof (obj1[p])) {
-		// Deep compare objects
-		case "object":
-			if (!Object.compare(obj1[p], obj2[p])) return false
-			break
+			// Deep compare objects
+			case "object":
+				if (!Object.compare(obj1[p], obj2[p])) return false
+				break
 			// Compare function code
-		case "function":
-			if (typeof (obj2[p]) === "undefined" || (p !== "compare" && obj1[p].toString() !== obj2[p].toString())) return false
-			break
+			case "function":
+				if (typeof (obj2[p]) === "undefined" || (p !== "compare" && obj1[p].toString() !== obj2[p].toString())) return false
+				break
 			// Compare values
-		default:
-			if (obj1[p] !== obj2[p]) return false
+			default:
+				if (obj1[p] !== obj2[p]) return false
 		}
 	}
 
 	// Check object 2 for any extra properties
 	// eslint-disable-next-line
-    for (var p in obj2) {
+	for (var p in obj2) {
 		if (typeof (obj1[p]) === "undefined") return false
 	}
 	return true
