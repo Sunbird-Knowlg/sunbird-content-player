@@ -40,13 +40,13 @@ function createCustomEvent (evtName, data) {
 }
 
 function imageExists (url, callback, index) {
-		// eslint-disable-next-line
-	var img = new Image()
-		// eslint-disable-next-line
-	img.onload = function() { callback(true, index) }
-		// eslint-disable-next-line
-	img.onerror = function() { callback(false, index) }
-		img.src = url
+	// eslint-disable-next-line
+    var img = new Image()
+	// eslint-disable-next-line
+    img.onload = function() { callback(true, index) }
+	// eslint-disable-next-line
+    img.onerror = function() { callback(false, index) }
+	img.src = url
 }
 
 function getUrlParameter (sParam) {
