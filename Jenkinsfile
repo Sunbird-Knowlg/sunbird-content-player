@@ -29,7 +29,7 @@ node() {
                     sh """
                         #s3 preview deployment
                         export player_version_number=${branch_name}
-                        export build_number=${BUILD_NUMBER}
+                        export build_number=${commit_hash}
                         export filter_plugins=false # For the preview build generation dont split the plugins.
                         cd player
                         npm install

@@ -24,7 +24,8 @@ jobs:
       - run: grunt generate-libs
       - run: grunt build-jsdoc
       
-      - run: grunt karma:app
+      #- run: grunt karma:app
+      - run: grunt player-test
       - store_artifacts:
           path: player/preview.zip
           destination: preview.zip
