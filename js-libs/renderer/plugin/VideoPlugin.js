@@ -231,11 +231,12 @@ var VideoPlugin = Plugin.extend({
     createVideoElement: function() {
         var videoAsset;
         videoAsset = this._theme.getAsset(this._data.asset);
+
         // Check for streamingUrl of the asset
         var asset;
         if (!_.isUndefined(window.content.assetsMap)) {
             asset = _.findWhere(window.content.assetsMap, {
-                identifier: data.asset
+                identifier: this._data.asset
             });
         }
         if (asset && asset.streamingUrl) {
