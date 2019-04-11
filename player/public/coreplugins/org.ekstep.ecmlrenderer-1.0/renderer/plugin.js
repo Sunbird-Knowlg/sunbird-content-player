@@ -141,6 +141,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 instance.load(dataObj);
             }, null, 'xml')
             .fail(function(err) {
+                err.responseText = "Invalid ECML please correct the Ecml";
                 EkstepRendererAPI.logErrorEvent(err, { 'severity': 'fatal', 'type': 'content', 'action': 'play' });
                 EventBus.dispatch("renderer:alert:show", undefined, {
                   title: "Error",
@@ -331,6 +332,9 @@ var qspatch = {
         this.setPluginUrl(pluginInst, "AssetUrl");
 
         pluginInst = this.getPluginInstance(org.ekstep.questionunitmcq && org.ekstep.questionunitmcq.RendererPlugin);
+        this.setPluginUrl(pluginInst, "AssetUrl");
+
+        pluginInst = this.getPluginInstance(org.ekstep.keyboard && org.ekstep.contentrenderer.keyboardRenderer);
         this.setPluginUrl(pluginInst, "AssetUrl");
         
         pluginInst = this.getPluginInstance(org.ekstep.contentrenderer.questionUnitPlugin);
