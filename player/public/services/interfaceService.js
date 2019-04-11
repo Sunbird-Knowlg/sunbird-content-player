@@ -235,9 +235,9 @@ org.ekstep.service.content = new (org.ekstep.service.mainService.extend({
 	setUser: function (uid) {
 		return new Promise(function (resolve, reject) {
 			org.ekstep.service.renderer.setUser(uid).then(function (data) {
-				// It will reload the app for new user once he gets out of player page.
-				if(window.cordova) {
-					window['playerActionHandlerDelegate'].onUserSwitch({uid: uid});
+				// This will reload the app for new user, once he gets out of player page.
+				if (!isbrowserpreview && window.parent.hasOwnProperty('onUserSwitch')) {
+					window.parent.onUserSwitch({uid: uid});
 				}
 				resolve(data)
 			}).catch(function (err) {

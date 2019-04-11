@@ -156,8 +156,8 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
                 org.ekstep.contentrenderer.initializePreview(object)
                 EkstepRendererAPI.dispatchEvent('renderer:player:show');
         } else {
-            if(contentMetadata.identifier) {
-                window['playerActionHandlerDelegate'].onContentNotFound(contentMetadata.identifier, contentMetadata.hierarchyInfo);
+            if(contentMetadata.identifier && window.parent.hasOwnProperty('onContentNotFound')) {
+                window.parent.onContentNotFound(contentMetadata.identifier, contentMetadata.hierarchyInfo);
             } else {
                 console.warn('Content not Available');
             }

@@ -72,16 +72,7 @@ function getCurrentStageId () {
 }
 
 function contentExitCall () {
-	var stageId = getCurrentStageId()
-	var type = (Renderer && !Renderer.running) ? "EXIT_APP" : "EXIT_CONTENT"
-	if (confirm(AppLables.backButtonText)) {
-		TelemetryService.interact("END", "ALERT_OK", "EXIT", { type: type, stageId: stageId })
-		TelemetryService.interrupt("OTHER", stageId)
-		EkstepRendererAPI.dispatchEvent("renderer:telemetry:end")
-		exitApp(stageId)
-	} else {
-		TelemetryService.interact("TOUCH", "ALERT_CANCEL", "EXIT", { type: type, stageId: stageId })
-	}
+	org.ekstep.service.renderer.showExitConfirmPopup();
 }
 
 // After integration with Genie, onclick of exit we should go to previous Activity of the Genie.
@@ -95,7 +86,7 @@ function exitApp (stageId) {
 	} catch (err) {
 		console.error("End telemetry error:", err.message)
 	}
-	if (!isbrowserpreview && genieservice) genieservice.endGenieCanvas();
+	org.ekstep.service.renderer.endGenieCanvas()
 }
 
 function startApp (app) {
