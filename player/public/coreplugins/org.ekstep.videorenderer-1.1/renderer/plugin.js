@@ -213,7 +213,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     addVideoListeners: function (videoPlayer, path, data) {
         var instance = this;
-        var isLoadingHidden = document.getElementById('loaderArea').style.display;
         videoPlayer.on("play", function (e) {
             if (jQuery('#loaderArea').css("display") == "block") {
                 jQuery('#loaderArea').hide();
