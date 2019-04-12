@@ -611,7 +611,7 @@ var qspatch = {
             var ele = $.parseHTML(element);
             return $(ele).text();
         };
-        //upon stringifying and object if a property value is undefined the property will be deleted and will be stringified
+        //upon stringifying an object, if a property value is undefined the property will be deleted and will be stringified
         return JSON.stringify({
             'text' : data.text ? extractHTML(data.text) : undefined,
             'image' : data.image ? data.image : undefined,
