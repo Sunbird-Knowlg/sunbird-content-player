@@ -579,11 +579,11 @@ var qspatch = {
         var quesTitle, quesDesc, quesScore;
         if (this._qData.questionnaire) {
             for (var quesIdentifier in this._qData.questionnaire.items) {
-            if (this._qData.questionnaire.items.hasOwnProperty(quesIdentifier)) {
-                quesTitle = this._qData.questionnaire.items[quesIdentifier][0].title;
-                quesDesc = this._qData.questionnaire.items[quesIdentifier][0].description;
-                quesScore = result.pass != 0 ? this._qData.questionnaire.items[quesIdentifier][0].max_score : 0;
-            }
+                if (this._qData.questionnaire.items.hasOwnProperty(quesIdentifier)) {
+                    quesTitle = this._qData.questionnaire.items[quesIdentifier][0].title;
+                    quesDesc = this._qData.questionnaire.items[quesIdentifier][0].description;
+                    quesScore = result.pass != 0 ? this._qData.questionnaire.items[quesIdentifier][0].max_score : 0;
+                }
             }
         }
         else{
