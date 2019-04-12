@@ -541,8 +541,8 @@ var qspatch = {
         QSTelemetryLogger.logAssessEnd = function(result){
 
             var plugin = {
-                'id' : QSTelemetryLogger._plugin._manifest.id,
-                'ver': QSTelemetryLogger._plugin._manifest.ver,
+                'id' : this._plugin._manifest.id,
+                'ver': this._plugin._manifest.ver,
             }
             var pluginToPatch; 
             var isPatchRequired = false;
