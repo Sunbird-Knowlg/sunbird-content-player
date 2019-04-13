@@ -192,6 +192,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         try {
             org.ekstep.contentrenderer.loadPlugins(pluginManifest.plugin, resource, function() {
                 qspatch.handleAssetUrl();
+                qspatch.telemetryPatch();
                 Renderer.theme.start(dataObj.path.replace('file:///', '') + "/assets/");
             });
         } catch (e) {
@@ -427,7 +428,197 @@ var qspatch = {
             }
         } 
         return url.split("//").join("/");
+    },
+    telemetryPatch : function() {
+        var _super_logAssessEnd = QSTelemetryLogger.logAssessEnd; // Reference to the original function, As for new Assessment bundles telemetry should handled normally
+        var instance = this;
+        var qsPlugins = {   
+            'FTB' : {
+                'id':'org.ekstep.questionunit.ftb',
+                'versions' : ['1.0'],
+                'patchHandler' : function(result, tuple){
+                    this._plugin._question.data.answer.forEach((expected, index) => {
+                        tuple.params.push({
+                            [index + 1] : {'text' : expected}
+                        })
+                    })
+
+                    result.state.val.forEach((actual, index) => {
+                        tuple.resvalues.push({
+                            [index + 1] : {'text' : actual}
+                        })
+                    })
+                }
+            },
+            'REORDER' : {
+                'id':'org.ekstep.questionunit.reorder',
+                'versions' : ['1.0'],
+                'patchHandler' : function(result, tuple){
+                    result.state.keys.forEach((key, index) => {
+                        delete key.$$hashKey; // Currently reorder 1.0 sending with $$hashKey property
+                        tuple.params.push({
+                            [index + 1] : instance.generateTelemetryTupleValue(key)
+                        })
+                    })
+                    result.state.val.forEach(function(word, wordIndex){
+                        tuple.resvalues.push({
+                            [wordIndex + 1] : instance.generateTelemetryTupleValue(word.text)
+                        })
+                    })
+                }
+            },
+            'SEQUENCE' : {
+                'id':'org.ekstep.questionunit.sequence',
+                'versions' : ['1.0'],
+                'patchHandler' : function(result, tuple){
+                    result.state.val.seq_rearranged.forEach((seqIndex, index) => {
+                        tuple.params.push({ 
+                            [index + 1] : instance.generateTelemetryTupleValue(result.state.seq_rendered[index])
+                        });
+
+                        tuple.resvalues.push({
+                            [index + 1] : instance.generateTelemetryTupleValue(result.state.seq_rendered.find(seq => {
+                                return seq.sequenceOrder == seqIndex;
+                            }))
+                        })
+                    });
+                }      
+            },
+            'MCQ' : {
+                'id':'org.ekstep.questionunit.mcq',
+                'versions' : ['1.0', '1.1'],
+                'patchHandler' : function(result, tuple){
+                    result.state.options.forEach((option, index) => {
+                        tuple.params.push({ 
+                            [index + 1] : instance.generateTelemetryTupleValue(option)
+                        });
+                    });
+                    
+                    result.state.options[result.state.val] && tuple.resvalues.push({
+                        [result.state.val + 1] : instance.generateTelemetryTupleValue(result.state.options[result.state.val])
+                    })
+                }
+            },
+            'MTF' : {
+                'id':'org.ekstep.questionunit.mtf',
+                'versions' : ['1.0', '1.1'],
+                'patchHandler' : function(result, tuple){
+                    var lhsParams = [];
+                    var rhsParams = [];
+                    result.state.rhs_rendered.forEach((rhs, index) => {
+                        var lhs = this._plugin._question.data.option.optionsLHS[index];
+                        lhsParams.push({
+                            [index + 1] : instance.generateTelemetryTupleValue(lhs)
+                        })
+                        rhsParams.push({
+                            [index + 1] : instance.generateTelemetryTupleValue(rhs)
+                        })
+                    })
+                    tuple.params.push({'lhs':lhsParams})
+                    tuple.params.push({'rhs':rhsParams})
+
+                    var lhsResvalues = [];
+                    var rhsResvalues = [];
+                    result.state.val.rhs_rearranged.forEach((rhsIndex, index) => {
+                        var lhs = this._plugin._question.data.option.optionsLHS[index];
+                        lhsResvalues.push({
+                            [index + 1] : instance.generateTelemetryTupleValue(lhs)
+                        })
+
+                        rhsResvalues.push({
+                            [index+1] : result.state.rhs_rendered.find(rhs => {
+                                return rhs.mapIndex == rhsIndex;
+                            })
+                        })
+                    })
+
+                    tuple.resvalues.push({'lhs':lhsResvalues})
+                    tuple.resvalues.push({'rhs':rhsResvalues})  
+                }
+            }   
+        }
+        // New function over-ride
+        QSTelemetryLogger.logAssessEnd = function(result){
+
+            var plugin = {
+                'id' : this._plugin._manifest.id,
+                'ver': this._plugin._manifest.ver,
+            }
+            var pluginToPatch; 
+            var isPatchRequired = false;
+            Object.keys(qsPlugins).forEach((pluginShortHand) => {
+                if(plugin.id == qsPlugins[pluginShortHand].id && qsPlugins[pluginShortHand].versions.includes(plugin.ver)){
+                    pluginToPatch = pluginShortHand;
+                    isPatchRequired = true;
+                }
+            })
+
+            if(isPatchRequired == false){
+                return _super_logAssessEnd.call(QSTelemetryLogger, result);                    
+            }
+
+            var tuple = {
+                'params' : [],
+                'resvalues' : []
+            }
+
+            try{
+                tuple.params.push({'title' : instance.generateTelemetryTupleValue(this._plugin._question.data.question)});
+                qsPlugins[pluginToPatch].patchHandler.call(this, result, tuple);
+                var data = instance.generateTelemetryData.call(this, result, tuple);
+                TelemetryService.assessEnd(this._assessStart, data);
+            } catch (err) {
+                console.err(err);
+            }
+            
+        }
+
+    },
+
+    generateTelemetryData : function(result, tuple){
+        var quesTitle, quesDesc, quesScore;
+        if (this._qData.questionnaire) {
+            for (var quesIdentifier in this._qData.questionnaire.items) {
+                if (this._qData.questionnaire.items.hasOwnProperty(quesIdentifier)) {
+                    quesTitle = this._qData.questionnaire.items[quesIdentifier][0].title;
+                    quesDesc = this._qData.questionnaire.items[quesIdentifier][0].description;
+                    quesScore = result.pass != 0 ? this._qData.questionnaire.items[quesIdentifier][0].max_score : 0;
+                }
+            }
+        }
+        else{
+            quesTitle = this._qConfig.metadata.title;
+            quesDesc = this._qConfig.metadata.description ? this._qConfig.metadata.description : '';
+            quesScore = parseFloat((result.score).toFixed(2));
+        }
+        var data = {
+            pass: result.eval,
+            score: quesScore,
+            res: tuple.resvalues,
+            qindex: this._question.index,
+            qtitle: quesTitle,
+            params: tuple.params,
+            qdesc: quesDesc,
+            mc: [],
+            mmc: []
+        };
+        
+        return data;
+    },
+    
+    generateTelemetryTupleValue : function(data){
+        var extractHTML =  function(element){
+            var ele = $.parseHTML(element);
+            return $(ele).text();
+        };
+        //upon stringifying an object, if a property value is undefined the property will be deleted and will be stringified
+        return JSON.stringify({
+            'text' : data.text ? extractHTML(data.text) : undefined,
+            'image' : data.image ? data.image : undefined,
+            'audio' : data.audio ? data.audio : undefined,
+        })
     }
+    
 }
 
 //# sourceURL=ECMLRenderer.js
