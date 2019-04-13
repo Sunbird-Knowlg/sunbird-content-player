@@ -19,11 +19,11 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     stageId:[],
     qid:[],
     enableHeartBeatEvent:false,
-    _constants: {	
-        mimeType: ["application/vnd.ekstep.ecml-archive"],	
-        events: {	
-            launchEvent: "renderer:launch:ecml"	
-        }	
+    _constants: {
+        mimeType: ["application/vnd.ekstep.ecml-archive"],
+        events: {
+            launchEvent: "renderer:launch:ecml"
+        }
     },
 
     /**
@@ -192,8 +192,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         try {
             org.ekstep.contentrenderer.loadPlugins(pluginManifest.plugin, resource, function() {
                 qspatch.handleAssetUrl();
-                qspatch.telemetryPatch();
                 Renderer.theme.start(dataObj.path.replace('file:///', '') + "/assets/");
+                qspatch.telemetryPatch();
             });
         } catch (e) {
             logConsoleMessage.warn("Framework fails to load plugins", e);
@@ -234,8 +234,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
      * @memberof ecmlRenderer
      */
     cleanUp: function() {
-        if (this.sleepMode) return;	
-        this.sleepMode = true;	
+        if (this.sleepMode) return;
+        this.sleepMode = true;
         EkstepRendererAPI.removeEventListener('renderer:launcher:clean', this.cleanUp, this);
         if (this.running) {
             this.running = false;
@@ -268,7 +268,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             Renderer.theme.reRender();
         }
     },
-    
+
     getContentAssesmentCount: function() {
         var questionCount = 0;
         var itemData =undefined;
@@ -327,8 +327,8 @@ var qspatch = {
             return false;
         }
     },
-    handleAssetUrl : function() {        
-        
+    handleAssetUrl : function() {
+
         var pluginInst = this.getPluginInstance(org.ekstep.contentrenderer.questionUnitPlugin);
         this.setPluginUrl(pluginInst, "AssetUrl");
 
@@ -337,10 +337,10 @@ var qspatch = {
 
         pluginInst = this.getPluginInstance(org.ekstep.keyboard && org.ekstep.contentrenderer.keyboardRenderer);
         this.setPluginUrl(pluginInst, "AssetUrl");
-        
+
         pluginInst = this.getPluginInstance(org.ekstep.contentrenderer.questionUnitPlugin);
         this.setPluginUrl(pluginInst, "AudioUrl");
-        
+
         pluginInst = this.getPluginInstance(org.ekstep.contentrenderer.questionUnitPlugin);
         this.setPluginUrl(pluginInst, "iconUrl");
     },
@@ -383,9 +383,9 @@ var qspatch = {
                             return instance.validateUrl('file:///' + EkstepRendererAPI.getBaseURL() + 'content-plugins/' + pluginId + '-' + pluginVer + '/' + path);
                         }
                     }
-                }  
+                }
             break;
-        
+
             case "iconUrl":
                 pluginObj.prototype.getAudioIcon = function (path) {
                     if (isbrowserpreview) {
@@ -407,7 +407,7 @@ var qspatch = {
             default:
                 break;
         }
-        
+
     },
     validateUrl: function(url){
         if(!url){
@@ -419,20 +419,23 @@ var qspatch = {
             if (tempUrl.length > 1){
                 var validString = tempUrl[1].split("//").join("/");
                 return [tempUrl[0], validString].join("://");
-            }             
+            }
         }else{
             var tempUrl = url.split(":///")
             if (tempUrl.length > 1){
                 var validString = tempUrl[1].split("//").join("/");;
                 return [tempUrl[0], validString].join(":///");
             }
-        } 
+        }
         return url.split("//").join("/");
     },
     telemetryPatch : function() {
-        var _super_logAssessEnd = QSTelemetryLogger.logAssessEnd; // Reference to the original function, As for new Assessment bundles telemetry should handled normally
+        if(! (typeof QSTelemetryLogger === 'object')) return;
+
         var instance = this;
-        var qsPlugins = {   
+        var _super_logAssessEnd = QSTelemetryLogger.logAssessEnd; // Reference to the original function, As for new Assessment bundles telemetry should handled normally
+
+        var qsPlugins = {
             'FTB' : {
                 'id':'org.ekstep.questionunit.ftb',
                 'versions' : ['1.0'],
@@ -472,7 +475,7 @@ var qspatch = {
                 'versions' : ['1.0'],
                 'patchHandler' : function(result, tuple){
                     result.state.val.seq_rearranged.forEach((seqIndex, index) => {
-                        tuple.params.push({ 
+                        tuple.params.push({
                             [index + 1] : instance.generateTelemetryTupleValue(result.state.seq_rendered[index])
                         });
 
@@ -482,18 +485,18 @@ var qspatch = {
                             }))
                         })
                     });
-                }      
+                }
             },
             'MCQ' : {
                 'id':'org.ekstep.questionunit.mcq',
                 'versions' : ['1.0', '1.1'],
                 'patchHandler' : function(result, tuple){
                     result.state.options.forEach((option, index) => {
-                        tuple.params.push({ 
+                        tuple.params.push({
                             [index + 1] : instance.generateTelemetryTupleValue(option)
                         });
                     });
-                    
+
                     result.state.options[result.state.val] && tuple.resvalues.push({
                         [result.state.val + 1] : instance.generateTelemetryTupleValue(result.state.options[result.state.val])
                     })
@@ -533,9 +536,9 @@ var qspatch = {
                     })
 
                     tuple.resvalues.push({'lhs':lhsResvalues})
-                    tuple.resvalues.push({'rhs':rhsResvalues})  
+                    tuple.resvalues.push({'rhs':rhsResvalues})
                 }
-            }   
+            }
         }
         // New function over-ride
         QSTelemetryLogger.logAssessEnd = function(result){
@@ -544,7 +547,7 @@ var qspatch = {
                 'id' : this._plugin._manifest.id,
                 'ver': this._plugin._manifest.ver,
             }
-            var pluginToPatch; 
+            var pluginToPatch;
             var isPatchRequired = false;
             Object.keys(qsPlugins).forEach((pluginShortHand) => {
                 if(plugin.id == qsPlugins[pluginShortHand].id && qsPlugins[pluginShortHand].versions.includes(plugin.ver)){
@@ -554,7 +557,7 @@ var qspatch = {
             })
 
             if(isPatchRequired == false){
-                return _super_logAssessEnd.call(QSTelemetryLogger, result);                    
+                return _super_logAssessEnd.call(QSTelemetryLogger, result);
             }
 
             var tuple = {
@@ -570,7 +573,7 @@ var qspatch = {
             } catch (err) {
                 console.err(err);
             }
-            
+
         }
 
     },
@@ -602,10 +605,10 @@ var qspatch = {
             mc: [],
             mmc: []
         };
-        
+
         return data;
     },
-    
+
     generateTelemetryTupleValue : function(data){
         var extractHTML =  function(element){
             var ele = $.parseHTML(element);
@@ -618,7 +621,7 @@ var qspatch = {
             'audio' : data.audio ? data.audio : undefined,
         })
     }
-    
+
 }
 
 //# sourceURL=ECMLRenderer.js
