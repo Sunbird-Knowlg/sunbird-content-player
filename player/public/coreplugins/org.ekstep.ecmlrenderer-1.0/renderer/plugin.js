@@ -484,11 +484,14 @@ var qspatch = {
                 'resvalues' : []
             }
 
-            tuple.params.push({'title' : instance.generateTelemetryTupleValue(this._plugin._question.data.question)});
-            qsPlugins[pluginToPatch].patchHandler.call(this, instance, result, tuple);
-            var data = instance.generateTelemetryData.call(this, result, tuple);
-            TelemetryService.assessEnd(this._assessStart, data);
-            
+            try{
+                tuple.params.push({'title' : instance.generateTelemetryTupleValue(this._plugin._question.data.question)});
+                qsPlugins[pluginToPatch].patchHandler.call(this, instance, result, tuple);
+                var data = instance.generateTelemetryData.call(this, result, tuple);
+                TelemetryService.assessEnd(this._assessStart, data);   
+            }catch(err){
+                console.log(err);
+            }
             
         }
 
