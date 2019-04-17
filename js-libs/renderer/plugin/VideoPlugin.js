@@ -238,9 +238,9 @@ var VideoPlugin = Plugin.extend({
             asset = _.findWhere(window.content.assetsMap, {
                 identifier: this._data.asset
             });
-        }
-        if (asset && asset.streamingUrl) {
-            videoAsset = asset.streamingUrl
+            if (asset && asset.streamingUrl) {
+                videoAsset = asset.streamingUrl
+            }
         }
 
         if (videoAsset instanceof HTMLElement == false) {
