@@ -26,11 +26,12 @@
                 <div class="ps-score-item">
                   <img ng-src="{{scoreIcon}}" class="ps-score-icon">
                   <div class="ps-score-detail">
-                    <h2 class="ps-score-heading">SCORE</h2>
-                    <span class="ps-score-fraction">
-                      <span class="ps-score-data endpage-score ps-score-top">{{userScore}}</span>
-                      <span class="ps-score-data endpage-score ps-score-bottom">{{totalScore}}</span>
-                    </span>
+                    <h2 class="ps-score-heading">SCORE</h2> 
+                    <ul>                   
+                      <li class="ps-score-data endpage-score ps-score-data-padding-top">{{userScore}}</li>
+                      <li class="ui divider ps-score-divider"></li>
+                      <li class="ps-score-data endpage-score ps-score-data-padding-top">{{totalScore}}</li>
+                    </ul>
                     </div>
                 </div>
               </li>
