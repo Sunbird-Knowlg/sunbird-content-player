@@ -400,3 +400,17 @@ table {
   padding-top: 4px;
   padding-bottom: 4px;
 }
+
+.ps-score-fraction, .ps-score-top, .ps-score-bottom {
+    padding: 0 5px;    
+}
+
+.ps-score-fraction {
+    display: inline-block;
+    text-align: center;   
+}
+
+.ps-score-bottom{
+    border-top: 1px solid #979797;
+    display: block;
+}
