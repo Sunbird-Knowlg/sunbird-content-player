@@ -233,14 +233,37 @@ var VideoPlugin = Plugin.extend({
         videoAsset = this._theme.getAsset(this._data.asset);
 
         // Check for streamingUrl of the asset
-        var asset;
+        var asset, isStreaming = false;
         if (!_.isUndefined(window.content.assetsMap)) {
             asset = _.findWhere(window.content.assetsMap, {
                 identifier: this._data.asset
             });
             if (asset && asset.streamingUrl) {
                 videoAsset = asset.streamingUrl
+                isStreaming = true
             }
+        }
+        if(isStreaming){
+            var dims = this.relativeDims();
+            var src = videoAsset;
+            videoAsset = document.createElement("video");
+            videoAsset.style.width = dims.w + "px",
+            videoAsset.style.height = dims.h + "px",
+            videoAsset.controls = this._data.controls,
+            videoAsset.autoplay = this._data.autoplay,
+            // video.style.visibility = (data.visible===) ? "visible" : "hidden",
+            videoAsset.muted = this._data.muted;
+            videoAsset.className = 'video-js vjs-default-skin';
+            videoAsset.id = this._data.asset
+            jQuery(videoAsset).insertBefore("#gameArea");
+            var source = document.createElement("source");
+            source.src = src
+            source.type = "application/x-mpegURL"
+            videoAsset.appendChild(source);
+            var videoPlayer = videojs(this._data.asset, {
+                "controls": true, "autoplay": true, "preload": "auto"
+            });
+            return videoPlayer
         }
 
         if (videoAsset instanceof HTMLElement == false) {
