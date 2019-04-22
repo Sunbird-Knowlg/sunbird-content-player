@@ -271,9 +271,11 @@ var VideoPlugin = Plugin.extend({
                 "preload": "auto"
             });
             videojs(videoAsset.id).ready(function() {
-                var video = document.getElementById(videoAsset.id);
-                video.style.width = '100%';
-                video.style.height = '100%';
+                var videoItem = document.getElementById(videoAsset.id);
+                videoItem.style.width = '100%';
+                videoItem.style.height = '100%';
+                video.style.top = 0;
+                video.style.left = 0;
             });
             // this.videoPlayer = videoPlayer;
             this.addVideoElement(videoPlayer);
