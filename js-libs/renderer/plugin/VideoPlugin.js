@@ -248,14 +248,13 @@ var VideoPlugin = Plugin.extend({
             var dims = this.relativeDims();
             var src = videoAsset;
             videoAsset = document.createElement("video");
-            // videoAsset.style.width = dims.w + "px",
-            // videoAsset.style.height = dims.h + "px",
-            // videoAsset.style.position = 'absolute',
-            // videoAsset.style.left = dims.x + "px",
-            // videoAsset.style.top = dims.y + "px",
+            videoAsset.style.width = dims.w + "px",
+            videoAsset.style.height = dims.h + "px",
+            videoAsset.style.position = 'absolute',
+            videoAsset.style.left = dims.x + "px",
+            videoAsset.style.top = dims.y + "px",
             videoAsset.controls = this._data.controls,
             videoAsset.autoplay = this._data.autoplay,
-            // video.style.visibility = (data.visible===) ? "visible" : "hidden",
             videoAsset.muted = this._data.muted;
             videoAsset.className = 'video-js vjs-default-skin';
             videoAsset.id = this._data.asset
@@ -277,7 +276,6 @@ var VideoPlugin = Plugin.extend({
                 video.style.top = 0;
                 video.style.left = 0;
             });
-            // this.videoPlayer = videoPlayer;
             this.addVideoElement(videoPlayer);
             return videoPlayer
         }
