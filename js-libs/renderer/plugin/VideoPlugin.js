@@ -275,8 +275,8 @@ var VideoPlugin = Plugin.extend({
                 var videoItem = document.getElementById(videoAsset.id);
                 videoItem.style.width = '100%';
                 videoItem.style.height = '100%';
-                video.style.top = 0;
-                video.style.left = 0;
+                videoItem.style.top = 0;
+                videoItem.style.left = 0;
             });
             this.addVideoElement(videoPlayer);
             return videoPlayer
