@@ -263,7 +263,9 @@ var VideoPlugin = Plugin.extend({
             source.src = src
             source.type = "application/x-mpegURL"
             videoAsset.appendChild(source);
-            videojs(this._data.asset).dispose();
+            if (videojs.getPlayers()[this._data.asset]) {
+                delete videojs.getPlayers()[this._data.asset];
+            }
             var videoPlayer = videojs(this._data.asset, {
                 "controls": this._data.controls,
                 "autoplay": this._data.autoplay,
@@ -273,8 +275,8 @@ var VideoPlugin = Plugin.extend({
                 var videoItem = document.getElementById(videoAsset.id);
                 videoItem.style.width = '100%';
                 videoItem.style.height = '100%';
-                video.style.top = 0;
-                video.style.left = 0;
+                videoItem.style.top = 0;
+                videoItem.style.left = 0;
             });
             this.addVideoElement(videoPlayer);
             return videoPlayer
