@@ -55,6 +55,7 @@ var VideoPlugin = Plugin.extend({
      */
 
     _replayIcon: 'assets/icons/video_replay.png',
+    isStreaming: false,
 
     initPlugin: function(data) {
         this._data = data;
@@ -71,7 +72,7 @@ var VideoPlugin = Plugin.extend({
         if (!data.asset) return false;
         var lItem = this.createVideoElement();
         var videoEle = this.getVideo();
-        videoEle.load();
+        if(!this.isStreaming) videoEle.load();
         this.registerEvents();
         this._self = new createjs.Bitmap(lItem);
         if (data.autoplay == true) {
@@ -240,7 +241,43 @@ var VideoPlugin = Plugin.extend({
             });
             if (asset && asset.streamingUrl) {
                 videoAsset = asset.streamingUrl
+                this.isStreaming = true
             }
+        }
+        if(this.isStreaming){
+            var dims = this.relativeDims();
+            var src = videoAsset;
+            videoAsset = document.createElement("video");
+            videoAsset.style.width = dims.w + "px",
+            videoAsset.style.height = dims.h + "px",
+            videoAsset.style.position = 'absolute',
+            videoAsset.style.left = dims.x + "px",
+            videoAsset.style.top = dims.y + "px",
+            videoAsset.controls = this._data.controls,
+            videoAsset.autoplay = this._data.autoplay,
+            videoAsset.muted = this._data.muted;
+            videoAsset.className = 'video-js vjs-default-skin';
+            videoAsset.id = this._data.asset
+            jQuery(videoAsset).insertBefore("#gameArea");
+            var source = document.createElement("source");
+            source.src = src
+            source.type = "application/x-mpegURL"
+            videoAsset.appendChild(source);
+            videojs(this._data.asset).dispose();
+            var videoPlayer = videojs(this._data.asset, {
+                "controls": this._data.controls,
+                "autoplay": this._data.autoplay,
+                "preload": "auto"
+            });
+            videojs(videoAsset.id).ready(function() {
+                var videoItem = document.getElementById(videoAsset.id);
+                videoItem.style.width = '100%';
+                videoItem.style.height = '100%';
+                video.style.top = 0;
+                video.style.left = 0;
+            });
+            this.addVideoElement(videoPlayer);
+            return videoPlayer
         }
 
         if (videoAsset instanceof HTMLElement == false) {
