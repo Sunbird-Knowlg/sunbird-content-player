@@ -55,6 +55,7 @@ var VideoPlugin = Plugin.extend({
      */
 
     _replayIcon: 'assets/icons/video_replay.png',
+    isStreaming: false,
 
     initPlugin: function(data) {
         this._data = data;
@@ -71,7 +72,7 @@ var VideoPlugin = Plugin.extend({
         if (!data.asset) return false;
         var lItem = this.createVideoElement();
         var videoEle = this.getVideo();
-        videoEle.load();
+        if(!this.isStreaming) videoEle.load();
         this.registerEvents();
         this._self = new createjs.Bitmap(lItem);
         if (data.autoplay == true) {
@@ -233,22 +234,25 @@ var VideoPlugin = Plugin.extend({
         videoAsset = this._theme.getAsset(this._data.asset);
 
         // Check for streamingUrl of the asset
-        var asset, isStreaming = false;
+        var asset;
         if (!_.isUndefined(window.content.assetsMap)) {
             asset = _.findWhere(window.content.assetsMap, {
                 identifier: this._data.asset
             });
             if (asset && asset.streamingUrl) {
                 videoAsset = asset.streamingUrl
-                isStreaming = true
+                this.isStreaming = true
             }
         }
-        if(isStreaming){
+        if(this.isStreaming){
             var dims = this.relativeDims();
             var src = videoAsset;
             videoAsset = document.createElement("video");
-            videoAsset.style.width = dims.w + "px",
-            videoAsset.style.height = dims.h + "px",
+            // videoAsset.style.width = dims.w + "px",
+            // videoAsset.style.height = dims.h + "px",
+            // videoAsset.style.position = 'absolute',
+            // videoAsset.style.left = dims.x + "px",
+            // videoAsset.style.top = dims.y + "px",
             videoAsset.controls = this._data.controls,
             videoAsset.autoplay = this._data.autoplay,
             // video.style.visibility = (data.visible===) ? "visible" : "hidden",
@@ -260,9 +264,19 @@ var VideoPlugin = Plugin.extend({
             source.src = src
             source.type = "application/x-mpegURL"
             videoAsset.appendChild(source);
+            videojs(this._data.asset).dispose();
             var videoPlayer = videojs(this._data.asset, {
-                "controls": true, "autoplay": true, "preload": "auto"
+                "controls": this._data.controls,
+                "autoplay": this._data.autoplay,
+                "preload": "auto"
             });
+            videojs(videoAsset.id).ready(function() {
+                var video = document.getElementById(videoAsset.id);
+                video.style.width = '100%';
+                video.style.height = '100%';
+            });
+            // this.videoPlayer = videoPlayer;
+            this.addVideoElement(videoPlayer);
             return videoPlayer
         }
 
