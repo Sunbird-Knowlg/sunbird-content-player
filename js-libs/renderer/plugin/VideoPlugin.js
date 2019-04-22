@@ -263,7 +263,9 @@ var VideoPlugin = Plugin.extend({
             source.src = src
             source.type = "application/x-mpegURL"
             videoAsset.appendChild(source);
-            videojs(this._data.asset).dispose();
+            if (videojs.getPlayers()[this._data.asset]) {
+                delete videojs.getPlayers()[this._data.asset];
+            }
             var videoPlayer = videojs(this._data.asset, {
                 "controls": this._data.controls,
                 "autoplay": this._data.autoplay,
