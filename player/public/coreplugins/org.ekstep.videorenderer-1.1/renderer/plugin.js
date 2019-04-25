@@ -32,16 +32,18 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var data = _.clone(content);
         this.heartBeatData.stageId = content.mimeType === 'video/x-youtube' ? 'youtubestage' : 'videostage';
         var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
-        if (window.cordova || !isbrowserpreview) {
-            var regex = new RegExp("^(http|https)://", "i");
-            if (!regex.test(globalConfigObj.basepath)) {
+        var regex = new RegExp("^(http|https)://", "i");
+        var isVideoStreamingUrl = regex.test(globalConfigObj.basepath) ? true : false;
+
+        if (!isbrowserpreview) {
+            if(!isVideoStreamingUrl){
                 var prefix_url = globalConfigObj.basepath || '';
                 path = prefix_url ? prefix_url + "/" + data.artifactUrl : data.artifactUrl;
                 data.streamingUrl = false;
             } else
                 path = data.streamingUrl;
         } else {
-            path = data.artifactUrl;
+            path = data.streamingUrl || data.artifactUrl; 
         }
         console.log("path", path);
         console.log("data", data);
@@ -90,8 +92,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 'action': 'play',
                 'severity': 'error'
             });
-            instance.throwError({ message: instance.messages.noInternetConnection });
-            if (typeof cordova !== "undefined") exitApp();
+            instance.throwError({message: instance.messages.noInternetConnection});
+            if (!isbrowserpreview) exitApp();
             return false;
         }
         var source = document.createElement("source");
@@ -99,7 +101,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         source.type = data.mimeType;
         video.appendChild(source);
 
-        if (data.streamingUrl || window.cordova) {
+        if (data.streamingUrl || !isbrowserpreview){
             var videoPlayer = videojs('videoElement', {
                 "controls": true, "autoplay": true, "preload": "auto"
             });

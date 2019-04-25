@@ -17,7 +17,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
      * @property - {Object} which holds next content of current content
      */
     $scope.nextContent = {};
-    $scope.isCordova = window.cordova ? true : false;
+    $scope.isCordova = isbrowserpreview ? false : true;
     $scope.pluginInstance = {};
     $scope.arrayToString = function(array) {
         return (_.isString(array)) ? array : (!_.isEmpty(array) && _.isArray(array)) ? array.join(", ") : "";

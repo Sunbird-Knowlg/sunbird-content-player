@@ -6,7 +6,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     $scope.genieIcon;
     $scope.endpageBackground;
     $scope.replayIcon;
-    $scope.isCordova = window.cordova ? true : false;
+    $scope.isCordova = isbrowserpreview ? false : true;
     $scope.arrayToString = function(array) {
         return (_.isString(array)) ? array : (!_.isEmpty(array) && _.isArray(array)) ? array.join(", ") : "";
     };
@@ -15,7 +15,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     };
 
     $scope.getTotalScore = function(id) {
-        if ("undefined" != typeof cordova) {
+        if (!isbrowserpreview) {
             org.ekstep.service.content.getLearnerAssessment(GlobalContext.user.uid, id, GlobalContext.game.contentExtras)
                 .then(function(score) {
                     if (score && score.total_questions) {

@@ -38,16 +38,19 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         this.initContentProgress();
         var path = undefined;
         var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
-        if (window.cordova || !isbrowserpreview) {
-            var regex = new RegExp("^(http|https)://", "i");
-            if(!regex.test(globalConfigObj.basepath)){
+        var regex = new RegExp("^(http|https)://", "i");
+        var isPdfStreamingUrl = regex.test(globalConfigObj.basepath) ? true : false;
+
+        if (!isbrowserpreview) {
+            if(!isPdfStreamingUrl){
                 var prefix_url = globalConfigObj.basepath || '';
                 path = prefix_url + "/" + data.artifactUrl + "?" + new Date().getSeconds();
             }else   
                 path = data.streamingUrl;
         } else {
-            path = data.artifactUrl + "?" + new Date().getSeconds();
+                path = data.streamingUrl || data.artifactUrl + "?" + new Date().getSeconds();
         }
+
         console.log("path pdf is ", path);
         var div = document.createElement('div');
         div.src = path;
@@ -118,7 +121,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         pdfSearchContainer.appendChild(findTextField);
         pdfSearchContainer.appendChild(findSubmit);
 
-        if (!window.cordova){
+        if (isbrowserpreview){
             this.addDownloadButton(path, pdfSearchContainer);
         }
 

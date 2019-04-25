@@ -63,15 +63,17 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var div = document.createElement('div');
         div.id = this.manifest.id;
         this.addToGameArea(div);
-        if (window.cordova || !isbrowserpreview) {
-            var regex = new RegExp("^(http|https)://", "i");
-            if(!regex.test(globalConfigObj.basepath)){
+        var regex = new RegExp("^(http|https)://", "i");
+        var isEpubStreamingUrl = regex.test(globalConfigObj.basepath) ? true : false;
+
+        if (!isbrowserpreview) {
+            if(!isEpubStreamingUrl){
                 var prefix_url = globalConfigObj.basepath || '';
                 epubPath = prefix_url + "/" + data.artifactUrl;
             }else   
                 epubPath = data.streamingUrl;
         } else {
-            epubPath = data.artifactUrl;
+            epubPath = data.streamingUrl || data.artifactUrl;
         }
 
         org.ekstep.pluginframework.resourceManager.loadResource(epubPath, 'TEXT', function (err, data) {
