@@ -46,6 +46,7 @@ const APP_STYLE = [
     './public/styles/toastr.min.css',
     './public/styles/jquery.mCustomScrollbar.min.css',
     './public/styles/style.css',
+    './public/styles/fonts-override.css',
     './public/coreplugins-dist/coreplugins.css' // Include the coreplugins.css if have only else comment out this line
 ];
 

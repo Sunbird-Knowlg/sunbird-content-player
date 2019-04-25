@@ -1,4 +1,4 @@
-// Reference: 
+// Reference:
 // http://jsfiddle.net/CaoimhinMac/6BUgL/
 // https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement
 // http://www.w3schools.com/tags/ref_av_dom.asp
@@ -12,28 +12,28 @@
  */
 var VideoPlugin = Plugin.extend({
     /**
-     * This explains the type of the plugin 
+     * This explains the type of the plugin
      * @member {String} _type
      * @memberof VideoPlugin
      */
     _type: 'video',
 
     /**
-     * This expains video should render or not. 
+     * This expains video should render or not.
      * @member {boolean} _render
      * @memberof VideoPlugin
      */
     _render: true,
 
     /**
-     * This expains data object to the video element . 
+     * This expains data object to the video element .
      * @member {object} _data
      * @memberof VideoPlugin
      */
     _data: undefined,
 
     /**
-     * This explains instance of video plugin . 
+     * This explains instance of video plugin .
      * @member {object} _instance
      * @memberof VideoPlugin
      */
@@ -55,10 +55,11 @@ var VideoPlugin = Plugin.extend({
      */
 
     _replayIcon: 'assets/icons/video_replay.png',
+    isStreaming: false,
 
     initPlugin: function(data) {
         this._data = data;
-        this._data.muted = AudioManager.muted ? true : false; 
+        this._data.muted = AudioManager.muted ? true : this._data.muted;
         if (this._data) {
             if (_.isUndefined(this._data.autoplay)) this._data.autoplay = true;
             if (_.isUndefined(this._data.controls)) this._data.controls = false;
@@ -71,7 +72,7 @@ var VideoPlugin = Plugin.extend({
         if (!data.asset) return false;
         var lItem = this.createVideoElement();
         var videoEle = this.getVideo();
-        videoEle.load();
+        if(!this.isStreaming) videoEle.load();
         this.registerEvents();
         this._self = new createjs.Bitmap(lItem);
         if (data.autoplay == true) {
@@ -225,12 +226,62 @@ var VideoPlugin = Plugin.extend({
 
     /**
      *   Use this method to create a video element.
-     *  It will load the video asset and will create the video element if the loading of asset is failed. 
+     *  It will load the video asset and will create the video element if the loading of asset is failed.
      *   @memberof VideoPlugin
      */
     createVideoElement: function() {
         var videoAsset;
         videoAsset = this._theme.getAsset(this._data.asset);
+
+        // Check for streamingUrl of the asset
+        var asset;
+        if (!_.isUndefined(window.content.assetsMap)) {
+            asset = _.findWhere(window.content.assetsMap, {
+                identifier: this._data.asset
+            });
+            if (asset && asset.streamingUrl) {
+                videoAsset = asset.streamingUrl
+                this.isStreaming = true
+            }
+        }
+        if(this.isStreaming){
+            var dims = this.relativeDims();
+            var src = videoAsset;
+            videoAsset = document.createElement("video");
+            videoAsset.style.width = dims.w + "px",
+            videoAsset.style.height = dims.h + "px",
+            videoAsset.style.position = 'absolute',
+            videoAsset.style.left = dims.x + "px",
+            videoAsset.style.top = dims.y + "px",
+            videoAsset.controls = this._data.controls,
+            videoAsset.autoplay = this._data.autoplay,
+            videoAsset.muted = this._data.muted;
+            videoAsset.className = 'video-js vjs-default-skin';
+            videoAsset.id = this._data.asset
+            jQuery(videoAsset).insertBefore("#gameArea");
+            var source = document.createElement("source");
+            source.src = src
+            source.type = "application/x-mpegURL"
+            videoAsset.appendChild(source);
+            if (videojs.getPlayers()[this._data.asset]) {
+                delete videojs.getPlayers()[this._data.asset];
+            }
+            var videoPlayer = videojs(this._data.asset, {
+                "controls": this._data.controls,
+                "autoplay": this._data.autoplay,
+                "preload": "auto"
+            });
+            videojs(videoAsset.id).ready(function() {
+                var videoItem = document.getElementById(videoAsset.id);
+                videoItem.style.width = '100%';
+                videoItem.style.height = '100%';
+                videoItem.style.top = 0;
+                videoItem.style.left = 0;
+            });
+            this.addVideoElement(videoPlayer);
+            return videoPlayer
+        }
+
         if (videoAsset instanceof HTMLElement == false) {
             var src = videoAsset;
             videoAsset = document.createElement("video");
@@ -248,9 +299,9 @@ var VideoPlugin = Plugin.extend({
             var dims = _instance.getRelativeDims(org.ekstep.pluginframework.pluginManager.pluginInstances[event.target.id]._data);
             var img = document.createElement('img');
             var replay_id = 'replay_' + event.target.id;
-            jQuery(img).attr({src: _instance._replayIcon, id: replay_id }); 
+            jQuery(img).attr({src: _instance._replayIcon, id: replay_id });
             _instance.disableBackground(event.target.id, true);
-            if (_.isNull(document.getElementById(replay_id))) { jQuery(img).insertAfter("#" + _instance.id); } 
+            if (_.isNull(document.getElementById(replay_id))) { jQuery(img).insertAfter("#" + _instance.id); }
             !window.screenTop && !window.screenY ? _instance.onFullScreen(event) : _instance.onNormalScreen(event);
             jQuery('#' + replay_id).bind('click', _instance.hideReplay);
         } catch (e) {
@@ -270,7 +321,7 @@ var VideoPlugin = Plugin.extend({
         if (flag) {
             jQuery('#' + id).css({'opacity': '0.4', "pointer-events": "none"});
         } else {
-            jQuery('#' + id).css({'opacity': '1', "pointer-events": " "}); 
+            jQuery('#' + id).css({'opacity': '1', "pointer-events": " "});
         }
     },
     onFullScreen: function(event) {

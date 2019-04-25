@@ -19,11 +19,11 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     stageId:[],
     qid:[],
     enableHeartBeatEvent:false,
-    _constants: {	
-        mimeType: ["application/vnd.ekstep.ecml-archive"],	
-        events: {	
-            launchEvent: "renderer:launch:ecml"	
-        }	
+    _constants: {
+        mimeType: ["application/vnd.ekstep.ecml-archive"],
+        events: {
+            launchEvent: "renderer:launch:ecml"
+        }
     },
 
     /**
@@ -141,6 +141,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 instance.load(dataObj);
             }, null, 'xml')
             .fail(function(err) {
+                err.responseText = "Invalid ECML please correct the Ecml";
                 EkstepRendererAPI.logErrorEvent(err, { 'severity': 'fatal', 'type': 'content', 'action': 'play' });
                 EventBus.dispatch("renderer:alert:show", undefined, {
                   title: "Error",
@@ -232,8 +233,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
      * @memberof ecmlRenderer
      */
     cleanUp: function() {
-        if (this.sleepMode) return;	
-        this.sleepMode = true;	
+        if (this.sleepMode) return;
+        this.sleepMode = true;
         EkstepRendererAPI.removeEventListener('renderer:launcher:clean', this.cleanUp, this);
         if (this.running) {
             this.running = false;
@@ -266,7 +267,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             Renderer.theme.reRender();
         }
     },
-    
+
     getContentAssesmentCount: function() {
         var questionCount = 0;
         var itemData =undefined;
@@ -325,17 +326,20 @@ var qspatch = {
             return false;
         }
     },
-    handleAssetUrl : function() {        
-        
+    handleAssetUrl : function() {
+
         var pluginInst = this.getPluginInstance(org.ekstep.contentrenderer.questionUnitPlugin);
         this.setPluginUrl(pluginInst, "AssetUrl");
 
         pluginInst = this.getPluginInstance(org.ekstep.questionunitmcq && org.ekstep.questionunitmcq.RendererPlugin);
         this.setPluginUrl(pluginInst, "AssetUrl");
-        
+
+        pluginInst = this.getPluginInstance(org.ekstep.keyboard && org.ekstep.contentrenderer.keyboardRenderer);
+        this.setPluginUrl(pluginInst, "AssetUrl");
+
         pluginInst = this.getPluginInstance(org.ekstep.contentrenderer.questionUnitPlugin);
         this.setPluginUrl(pluginInst, "AudioUrl");
-        
+
         pluginInst = this.getPluginInstance(org.ekstep.contentrenderer.questionUnitPlugin);
         this.setPluginUrl(pluginInst, "iconUrl");
     },
@@ -378,9 +382,9 @@ var qspatch = {
                             return instance.validateUrl('file:///' + EkstepRendererAPI.getBaseURL() + 'content-plugins/' + pluginId + '-' + pluginVer + '/' + path);
                         }
                     }
-                }  
+                }
             break;
-        
+
             case "iconUrl":
                 pluginObj.prototype.getAudioIcon = function (path) {
                     if (isbrowserpreview) {
@@ -402,7 +406,7 @@ var qspatch = {
             default:
                 break;
         }
-        
+
     },
     validateUrl: function(url){
         if(!url){
@@ -414,14 +418,14 @@ var qspatch = {
             if (tempUrl.length > 1){
                 var validString = tempUrl[1].split("//").join("/");
                 return [tempUrl[0], validString].join("://");
-            }             
+            }
         }else{
             var tempUrl = url.split(":///")
             if (tempUrl.length > 1){
                 var validString = tempUrl[1].split("//").join("/");;
                 return [tempUrl[0], validString].join(":///");
             }
-        } 
+        }
         return url.split("//").join("/");
     }
 }
