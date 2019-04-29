@@ -27,7 +27,7 @@ node() {
                     sh """
                         cd plugins
                         checkout_tag=\$(git ls-remote --tags origin release-* | grep -o 'release-.*' | sort -V | tail -n1)
-                        git checkout tags/\${checkout_tag} -b /\${checkout_tag}
+                        git checkout tags/\${checkout_tag} -b \${checkout_tag}
                         
                     """
                 }
