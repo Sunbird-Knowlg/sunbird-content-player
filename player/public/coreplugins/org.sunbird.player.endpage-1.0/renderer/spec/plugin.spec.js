@@ -24,7 +24,7 @@ describe('Sunbird Endpage Plugin', function() {
             done();            
         });
 
-        it("It should invoke gotTohome", function() {
+        xit("It should invoke gotTohome", function() {
             var instance = org.ekstep.service.renderer;
             spyOn(endPageInstance, "gotTohome").and.callThrough();
             endPageInstance.gotTohome();
