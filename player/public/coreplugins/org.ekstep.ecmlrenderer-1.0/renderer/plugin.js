@@ -433,27 +433,27 @@ var qspatch = {
         var _super_logAssessEnd = QSTelemetryLogger.logAssessEnd; // Reference to the original function, As for new Assessment bundles telemetry should handled normally
         var instance = this;
         var qsPlugins = {   
-            'FTB' : {
+            'ftb' : {
                 'id':'org.ekstep.questionunit.ftb',
                 'versions' : ['1.0'],
                 'patchHandler' : instance.ftbPatchHandler
             },
-            'REORDER' : {
+            'reorder' : {
                 'id':'org.ekstep.questionunit.reorder',
                 'versions' : ['1.0'],
                 'patchHandler' : instance.reorderPatchHandler
             },
-            'SEQUENCE' : {
+            'sequence' : {
                 'id':'org.ekstep.questionunit.sequence',
                 'versions' : ['1.0'],
                 'patchHandler' : instance.sequencePatchHandler
             },
-            'MCQ' : {
+            'mcq' : {
                 'id':'org.ekstep.questionunit.mcq',
                 'versions' : ['1.0', '1.1'],
                 'patchHandler' : instance.mcqPatchHandler
             },
-            'MTF' : {
+            'mtf' : {
                 'id':'org.ekstep.questionunit.mtf',
                 'versions' : ['1.0', '1.1'],
                 'patchHandler' : instance.mtfPatchHandler
@@ -485,31 +485,33 @@ var qspatch = {
             }
 
             try{
-                tuple.params.push({'title' : instance.generateTelemetryTupleValue(this._plugin._question.data.question)});
                 qsPlugins[pluginToPatch].patchHandler.call(this, instance, result, tuple);
                 var data = instance.generateTelemetryData.call(this, result, tuple);
+                data.type = pluginToPatch;
                 TelemetryService.assessEnd(this._assessStart, data);   
             }catch(err){
                 console.log(err);
             }
-            
         }
-
     },
 
     ftbPatchHandler: function(instance, result, tuple){
         this._plugin._question.data.answer.forEach(function(expected, index){
             var objProperty, objToPush = {};
             objProperty = index + 1
-            objToPush[objProperty] = {'text' : expected};
+            objToPush[objProperty] = JSON.stringify({'text' : expected});
             tuple.params.push(objToPush)
         })
 
+        this._plugin._question.config.evalUnordered ? tuple.params.eval = "unorder" : tuple.params.eval = "order";
+
         result.state.val.forEach(function(actual, index){
-            var objProperty, objToPush = {};
-            objProperty = index + 1
-            objToPush[objProperty] = {'text' : actual};
-            tuple.resvalues.push(objToPush)
+            if(actual){
+                var objProperty, objToPush = {};
+                objProperty = index + 1
+                objToPush[objProperty] = JSON.stringify({'text' : actual});
+                tuple.resvalues.push(objToPush)
+            }
         })
     },
 
@@ -520,63 +522,94 @@ var qspatch = {
             objToPush[objProperty] = instance.generateTelemetryTupleValue(option);
             tuple.params.push(objToPush)
         });
+
+        var correctAnserIndex = result.state.options.findIndex(function(option){
+            return option.isCorrect == true;
+        })
+        tuple.params.push({"answer" : JSON.stringify({"correct": [(correctAnserIndex + 1)+ '']})})
         
-        // Condition for MCQ-1.0 questions
         if(result.state.options && result.state.val && result.state.options[result.state.val]){
             objToPush = {};
-            objProperty = result.state.val;
-            objToPush[result.state.val] = instance.generateTelemetryTupleValue(result.state.options[result.state.val]);
+            objProperty = result.state.val + 1;
+            objToPush[objProperty] = instance.generateTelemetryTupleValue(result.state.options[result.state.val]);
             tuple.resvalues.push(objToPush);
         }
     },
 
     mtfPatchHandler: function(instance, result, tuple){
-        var lhsParams = [];
+        var lhsParamsAndResValue = [];
         var rhsParams = [];
+        var answer = {
+            lhs:[],
+            rhs:[]
+        }
         var qsTelemetryLogger = this;
-        result.state && result.state.rhs_rendered && result.state.rhs_rendered.forEach(function(rhs, index) {
+
+        this._plugin._question.data.option.optionsRHS.forEach(function(rhs, index){
             var objProperty, objToPush = {};
             var lhs = qsTelemetryLogger._plugin._question.data.option.optionsLHS[index];
             objProperty = index + 1;
             objToPush[objProperty] = instance.generateTelemetryTupleValue(lhs)
-            lhsParams.push(objToPush)
+            lhsParamsAndResValue.push(objToPush);
 
             objToPush = {};
             objToPush[objProperty] = instance.generateTelemetryTupleValue(rhs);
             rhsParams.push(objToPush);
+
+            answer.lhs.push((index + 1) + '');
+            answer.rhs.push((rhs['mapIndex']) + '');
         })
-        tuple.params.push({'lhs':lhsParams})
+
+        tuple.params.push({'lhs':lhsParamsAndResValue})
         tuple.params.push({'rhs':rhsParams})
+        tuple.params.push({'answer' : JSON.stringify(answer)});
 
         var lhsResvalues = [];
         var rhsResvalues = [];
-        var qsTelemetryLogger = this;
-        result.state && result.state.val && result.state.val.rhs_rearranged && result.state.val.rhs_rearranged.forEach(function(rhsIndex, index) {
-            var objProperty, objToPush = {};
-            var lhs = qsTelemetryLogger._plugin._question.data.option.optionsLHS[index];
-            objProperty = index + 1;
-            objToPush[objProperty] = instance.generateTelemetryTupleValue(lhs);
-            lhsResvalues.push(objToPush);
-
-            objToPush = {};
-            objToPush[objProperty] = result.state.rhs_rendered.find(function(rhs){
-                return rhs.mapIndex == rhsIndex;
+        
+        // MTF-1.1 structure
+        if(result.state && result.state.val && result.state.val.rhs_rearranged){
+            result.state.val.rhs_rearranged.forEach(function(rhsIndex, index) {
+                var objProperty, objToPush = {};
+                var lhs = qsTelemetryLogger._plugin._question.data.option.optionsLHS[index];
+                objProperty = index + 1;
+                objToPush[objProperty] = instance.generateTelemetryTupleValue(lhs);
+                lhsResvalues.push(objToPush);
+    
+                objToPush = {};
+                objToPush[objProperty] = result.state.rhs_rendered.find(function(rhs){
+                    return rhs.mapIndex == rhsIndex;
+                })
+                rhsResvalues.push(objToPush);
             })
-            rhsResvalues.push(objToPush);
-        })
+        } else {
+            // MTF-1.0 structure
+            result.state.values.forEach(function(value, index){
+                var objProperty, objToPush = {};
+                objProperty = index + 1;
+                objToPush[objProperty] = instance.generateTelemetryData(value);
+                rhsResvalues.push(objToPush);
+            })
+        }
 
         tuple.resvalues.push({'lhs':lhsResvalues})
         tuple.resvalues.push({'rhs':rhsResvalues})
     },
 
     reorderPatchHandler : function(instance, result, tuple){
+        var answer = {
+            seq : []
+        };
         result.state.keys.forEach(function(key, index){
             var objProperty, objToPush = {};
             delete key.$$hashKey; // Currently reorder 1.0 sending with $$hashKey property
             objProperty = index + 1;
             objToPush[objProperty] = instance.generateTelemetryTupleValue(key);
+            answer.seq.push(key.id + '');
             tuple.params.push(objToPush)
         })
+
+        tuple.params.answer = JSON.stringify(answer);
         result.state.val.forEach(function(word, wordIndex){
             var objProperty, objToPush = {};
             objProperty = wordIndex + 1;
@@ -585,12 +618,17 @@ var qspatch = {
         })
     },
 
-    sequencePatchHandler : function(instance, result, tuple){
+    sequencePatchHandler : function(instance, result, tuple){   
+        var answer = {
+            seq : []
+        }
         result.state.val.seq_rearranged.forEach(function(seqIndex, index){
             var objProperty, objToPush = {};
             objProperty = index + 1;
             objToPush[objProperty] = instance.generateTelemetryTupleValue(result.state.seq_rendered[index]);
             tuple.params.push(objToPush)
+
+            answer.seq.push(result.state.seq_rendered[index]['sequenceOrder'] + '')
             
             objToPush = {};
             objToPush[objProperty] = instance.generateTelemetryTupleValue(result.state.seq_rendered.find(function(seq){
@@ -598,8 +636,9 @@ var qspatch = {
             }))
             tuple.resvalues.push(objToPush);
         })
-    },
 
+        tuple.params.push({'answer' : JSON.stringify(answer)});
+    },
 
     generateTelemetryData : function(result, tuple){
         var quesTitle, quesDesc, quesScore;
@@ -628,7 +667,6 @@ var qspatch = {
             mc: [],
             mmc: []
         };
-        
         return data;
     },
     
