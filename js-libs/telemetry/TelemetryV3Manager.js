@@ -117,7 +117,7 @@ TelemetryV3Manager = Class.extend({
             var v3questionItem = {
                 id: eventObj.event.edata.eks.qid,
                 maxscore: eventObj.event.edata.eks.maxscore,
-                ver: data.assessEventVer,
+                assessEventVer: data.assessEventVer,
                 type: data.type,
                 exlength: 0,
                 params: data.params || eventObj.event.edata.eks.params || [],
