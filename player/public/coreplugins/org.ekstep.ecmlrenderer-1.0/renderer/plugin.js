@@ -621,7 +621,6 @@ var qspatch = {
         tuple.params.push({'answer':JSON.stringify(answer)})
         result.state.val.forEach(function(selectedWord){
             var objProperty, objToPush = {};
-            // need to check the word in what index of rendered tuple
             objProperty = result.state.keys.findIndex(function(key, index){
                 if(key.text == selectedWord.text){
                     // handling cases incase two same words are present in the reorder sequence and if already one added to result
@@ -630,7 +629,6 @@ var qspatch = {
                     }
                 }
             })
-            // need to check whether the word index is already added to tuple.resValues anywhere
             objToPush[objProperty + 1] = instance.generateTelemetryTupleValue(selectedWord);
             tuple.resvalues.push(objToPush)
         })
