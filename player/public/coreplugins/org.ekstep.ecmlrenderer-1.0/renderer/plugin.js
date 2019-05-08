@@ -614,15 +614,24 @@ var qspatch = {
             delete key.$$hashKey; // Currently reorder 1.0 sending with $$hashKey property
             objProperty = index + 1;
             objToPush[objProperty] = instance.generateTelemetryTupleValue(key);
-            answer.seq.push(key.id + '');
+            answer.seq.push((key.id+1) + '');
             tuple.params.push(objToPush)
         })
 
         tuple.params.push({'answer':JSON.stringify(answer)})
-        result.state.val.forEach(function(word, wordIndex){
+        result.state.val.forEach(function(selectedWord){
             var objProperty, objToPush = {};
-            objProperty = wordIndex + 1;
-            objToPush[objProperty] = instance.generateTelemetryTupleValue(word);
+            // need to check the word in what index of rendered tuple
+            objProperty = result.state.keys.findIndex(function(key, index){
+                if(key.text == selectedWord.text){
+                    // handling cases incase two same words are present in the reorder sequence and if already one added to result
+                    if(Object.keys(tuple.resvalues).includes(index+1) == false){
+                        return true;
+                    }
+                }
+            })
+            // need to check whether the word index is already added to tuple.resValues anywhere
+            objToPush[objProperty + 1] = instance.generateTelemetryTupleValue(selectedWord);
             tuple.resvalues.push(objToPush)
         })
     },
