@@ -89,7 +89,7 @@ LoadByStageStrategy = Class.extend({
         instance.loadTemplateAssets();
     },
     loadAppAssets: function() {
-        var localPath = "undefined" == typeof cordova ? "" : "file:///android_asset/www/";
+        var localPath = isbrowserpreview ? "" : "file:///android_asset/www/";
         this.commonAssets.push({
             id: "goodjob_sound",
             src: localPath + "assets/sounds/goodjob.mp3"
@@ -329,7 +329,7 @@ LoadByStageStrategy = Class.extend({
         }
     },
     _createLoader: function() {
-        return "undefined" == typeof cordova ? new createjs.LoadQueue(true, null, true) : new createjs.LoadQueue(false);
+        return isbrowserpreview ? new createjs.LoadQueue(true, null, true) : new createjs.LoadQueue(false);
     },
     isStageAssetsLoaded : function(stageId) {
         // Show weather stage manifest are loaded or not.

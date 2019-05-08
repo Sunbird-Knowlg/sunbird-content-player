@@ -77,7 +77,7 @@ org.ekstep.service.html = new (org.ekstep.service.mainService.extend({
 		this.showPage(endPageStateUrl)
 	},
 	showPage: function (pageUrl) {
-		if (typeof cordova !== "undefined") {
+		if (isbrowserpreview === false) {
 			var url = "file:///android_asset/www/index.html" + pageUrl
 			window.location.href = url
 		} else if (self !== top) {
@@ -92,6 +92,6 @@ org.ekstep.service.html = new (org.ekstep.service.mainService.extend({
 	}
 
 }))()
-if (typeof cordova === "undefined" && typeof isbrowserpreview === "undefined" && typeof AppConfig === "undefined") {
+if (typeof isbrowserpreview === "undefined" && typeof AppConfig === "undefined") {
 	org.ekstep.service.renderer = org.ekstep.service.html
 }

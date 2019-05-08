@@ -35,7 +35,7 @@ var splashScreen = {
 	},
 
 	launchPortal: function () {
-		if (window.cordova) {
+		if (isbrowserpreview === false) {
 			var url = splashScreen.config.webLink
 			genieservice.launchPortal(url)
 		}
