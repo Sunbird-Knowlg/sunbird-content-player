@@ -561,7 +561,7 @@ var qspatch = {
             rhsParams.push(objToPush);
 
             answer.lhs.push((index + 1) + '');
-            answer.rhs.push((rhs['mapIndex']) + '');
+            answer.rhs[rhs.mapIndex - 1] = '' + (index + 1);
         })
 
         tuple.params.push({'lhs':JSON.stringify(lhsParamsAndResValue)})
