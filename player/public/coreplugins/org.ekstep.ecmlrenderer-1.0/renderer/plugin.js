@@ -503,13 +503,17 @@ var qspatch = {
             tuple.params.push(objToPush)
         })
 
-        this._plugin._question.config.evalUnordered ? tuple.params.eval = "unorder" : tuple.params.eval = "order";
+        if(this._plugin._question.config.evalUnordered){
+            tuple.params.push({'eval' : "unorder"})
+        } else {
+            tuple.params.push({'eval' : "order"})
+        }
 
-        result.state.val.forEach(function(actual, index){
-            if(actual){
+        result.values.forEach(function(actual, index){
+            if(actual.key){
                 var objProperty, objToPush = {};
                 objProperty = index + 1
-                objToPush[objProperty] = JSON.stringify({'text' : actual});
+                objToPush[objProperty] = JSON.stringify({'text' : actual.key});
                 tuple.resvalues.push(objToPush)
             }
         })
@@ -528,7 +532,7 @@ var qspatch = {
         })
         tuple.params.push({"answer" : JSON.stringify({"correct": [(correctAnserIndex + 1)+ '']})})
         
-        if(result.state.options && result.state.val && result.state.options[result.state.val]){
+        if(result.state.options && typeof result.state.val == "number" && result.state.options[result.state.val]){
             objToPush = {};
             objProperty = result.state.val + 1;
             objToPush[objProperty] = instance.generateTelemetryTupleValue(result.state.options[result.state.val]);
@@ -560,8 +564,8 @@ var qspatch = {
             answer.rhs.push((rhs['mapIndex']) + '');
         })
 
-        tuple.params.push({'lhs':lhsParamsAndResValue})
-        tuple.params.push({'rhs':rhsParams})
+        tuple.params.push({'lhs':JSON.stringify(lhsParamsAndResValue)})
+        tuple.params.push({'rhs':JSON.stringify(rhsParams)})
         tuple.params.push({'answer' : JSON.stringify(answer)});
 
         var lhsResvalues = [];
@@ -577,23 +581,28 @@ var qspatch = {
                 lhsResvalues.push(objToPush);
     
                 objToPush = {};
-                objToPush[objProperty] = result.state.rhs_rendered.find(function(rhs){
+                objToPush[objProperty] = instance.generateTelemetryTupleValue(result.state.rhs_rendered.find(function(rhs){
                     return rhs.mapIndex == rhsIndex;
-                })
+                }))
                 rhsResvalues.push(objToPush);
             })
         } else {
             // MTF-1.0 structure
-            result.state.values.forEach(function(value, index){
-                var objProperty, objToPush = {};
-                objProperty = index + 1;
-                objToPush[objProperty] = instance.generateTelemetryData(value);
-                rhsResvalues.push(objToPush);
+            result.values.forEach(function(value, index){
+                qsTelemetryLogger._plugin._selectedAnswers && Object.keys(qsTelemetryLogger._plugin._selectedAnswers).forEach(function(key){
+                    var objProperty, objToPush = {};
+                    objProperty = key + 1;
+                    value = qsTelemetryLogger._question.data.option.optionsRHS.find(function(rhs){
+                        return rhs.mapIndex == qsTelemetryLogger._selectedAnswers[key].mapIndex;
+                    })
+                    objToPush[objProperty] = instance.generateTelemetryTupleValue(value);
+                    rhsResvalues.push(objToPush);    
+                })
             })
         }
 
-        tuple.resvalues.push({'lhs':lhsResvalues})
-        tuple.resvalues.push({'rhs':rhsResvalues})
+        tuple.resvalues.push({'lhs':JSON.stringify(lhsResvalues)})
+        tuple.resvalues.push({'rhs':JSON.stringify(rhsResvalues)})
     },
 
     reorderPatchHandler : function(instance, result, tuple){
@@ -609,7 +618,7 @@ var qspatch = {
             tuple.params.push(objToPush)
         })
 
-        tuple.params.answer = JSON.stringify(answer);
+        tuple.params.push({'answer':JSON.stringify(answer)})
         result.state.val.forEach(function(word, wordIndex){
             var objProperty, objToPush = {};
             objProperty = wordIndex + 1;
