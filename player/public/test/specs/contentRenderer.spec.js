@@ -7,7 +7,7 @@ describe('Content Renderer Testcase', function() {
             expect(splashScreen.show).toHaveBeenCalled();
             expect(splashScreen.show.calls.count()).toEqual(1);
         });
-        it('Second time function call should not show splash screen', function() {
+        xit('Second time function call should not show splash screen', function() {
             spyOn(splashScreen, "show").and.callThrough();
             var pdfContent = youtubeContent;
             pdfContent.metadata.mimeType = "application/pdf";
