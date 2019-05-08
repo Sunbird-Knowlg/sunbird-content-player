@@ -657,6 +657,7 @@ var qspatch = {
             quesScore = parseFloat((result.score).toFixed(2));
         }
         var data = {
+            assessEventVer: "3.1",
             pass: result.eval,
             score: quesScore,
             res: tuple.resvalues,
