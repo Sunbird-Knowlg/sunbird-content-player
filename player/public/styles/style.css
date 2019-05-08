@@ -94,6 +94,10 @@
     src: url('fonts/NotoSans-Bold.woff') format('woff')
 }
 
+body {	
+    font-family: NotoSans, NotoSansOriya, NotoSansGujarati, NotoSansMalayalam;	
+} 
+
 .splashText {
     position: absolute;
     top: 20vh;
@@ -153,10 +157,6 @@ ion-popover-view.fit {
 
 ion-popover-view.fit ion-content {
     position: relative !important;
-}
-
-body {
-    font-family: NotoSans, NotoSansOriya, NotoSansGujarati, NotoSansMalayalam;
 }
 
 .platform-android ion-popover-view.fit {

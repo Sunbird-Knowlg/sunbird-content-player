@@ -12,14 +12,14 @@ describe('Html Plugin', function() {
             callback();
 		});
     });
-    describe("When plugin is initialized", function() {
+    xdescribe("When plugin is initialized", function() {
     	it("It should invoke start", function() {
             spyOn(htmlInstance, "start").and.callThrough();
             htmlInstance.initLauncher();
             expect(htmlInstance.start).toHaveBeenCalled();
         })
     });
-    describe("When start is called", function() {
+    xdescribe("When start is called", function() {
         it("It should create iframe", function() {
             spyOn(htmlInstance, "reset").and.callThrough();
             spyOn(htmlInstance, "validateSrc").and.callThrough();
@@ -28,7 +28,7 @@ describe('Html Plugin', function() {
             expect(htmlInstance.validateSrc).toHaveBeenCalled();
         })
     });
-    describe("When validateSrc is called", function() {
+    xdescribe("When validateSrc is called", function() {
         it("It should validate the html path & add log error if not valid", function() {
             var iframe = document.createElement('iframe');
             var path = 'public/test/testContent/index.html';

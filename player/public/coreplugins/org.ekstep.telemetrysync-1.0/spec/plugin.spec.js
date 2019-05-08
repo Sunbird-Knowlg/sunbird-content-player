@@ -12,7 +12,7 @@ describe('TelemetrySync Plugin', function() {
             expect(EventBus.hasEventListener('telemetryPlugin:intialize')).toBe(true);
         });
     });
-    describe("When initializeTelemetryPlugin is invoked", function() {
+    xdescribe("When initializeTelemetryPlugin is invoked", function() {
         it("It should invoke listenTelementryEvent", function() {
             expect(EkstepRendererAPI).not.toBeUndefined();
             spyOn(TelemetrySync, "listenTelementryEvent").and.callThrough();
@@ -24,7 +24,7 @@ describe('TelemetrySync Plugin', function() {
             expect(window.detectClient).toHaveBeenCalled();
         })
     });
-    describe("When listenTelementryEvent is invoked", function() {
+    xdescribe("When listenTelementryEvent is invoked", function() {
         it("It should add telemetryEvent event", function() {
             expect(EventBus.hasEventListener('telemetryEvent')).toBe(true);
         })
