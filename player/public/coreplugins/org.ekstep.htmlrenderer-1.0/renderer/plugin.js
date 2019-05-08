@@ -20,8 +20,7 @@
          this._super();
          data = content;
          this.reset();
-         var isMobile = !isbrowserpreview ? true : false;
-         var envHTML = isMobile ? "app" : "portal";
+         var envHTML = (isbrowserpreview === false) ? "app" : "portal";
          var launchData = { "env": envHTML, "envpath": 'dev' };
          var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
          var prefix_url = isbrowserpreview ? this.getAsseturl(data) : globalConfigObj.basepath;

@@ -15,7 +15,6 @@ window.config = { showEndPage: true, showHTMLPages: true }
 window.isbrowserpreview = getUrlParameter("webview")
 window.isCoreplugin = undefined
 window.Renderer = undefined
-window.isMobile = undefined
 
 document.body.addEventListener("logError", telemetryError, false)
 
@@ -72,7 +71,7 @@ function getCurrentStageId () {
 }
 
 function contentExitCall () {
-	org.ekstep.service.renderer.showExitConfirmPopup();
+	org.ekstep.service.renderer.showExitConfirmPopup()
 }
 
 // After integration with Genie, onclick of exit we should go to previous Activity of the Genie.
