@@ -129,8 +129,11 @@ var EkTelemetry = (function() {
         instance.updateValues(options);
         // assess event telemetry version changes
         var assessEventObj = instance.getEvent('ASSESS', data);
-        assessEventObj.ver = data.item.assessEventVer ? data.item.assessEventVer : EkTelemetry._version;
-        delete assessEventObj.edata.item.assessEventVer;
+        assessEventObj.ver = EkTelemetry._version;
+        if(data.item && data.item.assessEventVer){
+            assessEventObj.ver = data.item.assessEventVer;
+            delete assessEventObj.edata.item.assessEventVer;
+        }
         instance._dispatch(assessEventObj);
     }
 
