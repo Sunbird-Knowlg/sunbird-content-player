@@ -35,7 +35,7 @@ var splashScreen = {
 	},
 
 	launchPortal: function () {
-		if (isbrowserpreview === false) {
+		if (!isbrowserpreview && !_.isUndefined(isbrowserpreview)) {
 			var url = splashScreen.config.webLink
 			genieservice.launchPortal(url)
 		}

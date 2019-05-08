@@ -249,7 +249,7 @@ function compareObject (obj1, obj2) {
 
 function getPreviewMode () {
 	var mode = "preview"
-	if (isbrowserpreview === false) {
+	if (!isbrowserpreview && !_.isUndefined(isbrowserpreview)) {
 		mode = !_.isUndefined(GlobalContext.config.mode) ? GlobalContext.config.mode : "play"
 	} else if (EkstepRendererAPI.getGlobalConfig().context.mode) {
 		mode = EkstepRendererAPI.getGlobalConfig().context.mode
@@ -313,7 +313,7 @@ function setGlobalConfig (configuration) {
 	GlobalContext.config = mergeJSON(AppConfig, configuration)
 	window.globalConfig = GlobalContext.config
 
-	if (isbrowserpreview !== false) {
+	if (_.isUndefined(isbrowserpreview)) {
 		org.ekstep.service.renderer.api.setBaseUrl(window.globalConfig.host + window.globalConfig.apislug)
 	}
 	setTelemetryEventFields(window.globalConfig)

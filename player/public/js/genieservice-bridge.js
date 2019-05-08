@@ -9,8 +9,8 @@ window.genieServiceBridge = (function () {
 			localStorage.setItem("cotentId", contentId)
 		}
 
-		if (isbrowserpreview === false) {
-			if ((typeof AppConfig === "undefined") && (typeof isbrowserpreview === "undefined")) {
+		if (!isbrowserpreview && !_.isUndefined(isbrowserpreview)) {
+			if ((typeof AppConfig === "undefined") && (_.isUndefined(isbrowserpreview))) {
 				var flavor = getUrlParameter("flavor")
 				// var launchData = JSON.parse(getUrlParameter("launchData"))
 				if (flavor) {

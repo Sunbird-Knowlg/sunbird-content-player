@@ -18,7 +18,7 @@ org.ekstep.service.mainService = Class.extend({
 	initialize: function () {}
 })
 org.ekstep.service.init = function () {
-	if (isbrowserpreview === false) {
+	if (!isbrowserpreview && !_.isUndefined(isbrowserpreview)) {
 		org.ekstep.service.renderer = genieservice
 	}
 }
@@ -36,4 +36,4 @@ telemetry_web = {
 	}
 }
 // eslint-disable-next-line
-if(isbrowserpreview !== false) telemetry = telemetry_web
+if(_.isUndefined(isbrowserpreview)) telemetry = telemetry_web

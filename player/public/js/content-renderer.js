@@ -274,7 +274,7 @@ org.ekstep.contentrenderer.setContentMetadata = function (contentData, cb) {
 	} else {
 		data = data.localData
 	}
-	if (typeof isbrowserpreview === "undefined") {
+	if (isbrowserpreview) {
 		org.ekstep.contentrenderer.getContentBody(content.metadata.identifier)
 	}
 	if (cb) cb()
@@ -332,7 +332,7 @@ org.ekstep.contentrenderer.web = function (id) {
 
 org.ekstep.contentrenderer.device = function () {
 	var globalconfig = EkstepRendererAPI.getGlobalConfig()
-	if (isbrowserpreview === false) {
+	if (!isbrowserpreview) {
 		if (globalconfig.metadata) {
 			org.ekstep.contentrenderer.setContentMetadata(globalconfig.metadata, function () {
 				org.ekstep.contentrenderer.startGame(content.metadata)
