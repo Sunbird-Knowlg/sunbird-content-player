@@ -11,7 +11,8 @@
             {"type": "js", "src": "renderer/libs/createjs.min.js"},
             {"type": "js", "src": "renderer/libs/creatine-1.0.0.min.js"},
             {"type": "js", "src": "renderer/libs/cordovaaudioplugin-0.6.1.min.js"},
-            {"type": "js", "src": "renderer/libs/renderer.min.js"}
+            {"type": "js", "src": "renderer/libs/renderer.min.js"},
+            {"type": "js", "src": "renderer/qspatch.js"}
         ]
     },
     "dependencies": [
