@@ -87,6 +87,8 @@ var app = angular.module("genie-canvas", ["ionic", "ngCordova", "oc.lazyLoad"])
 		app.controllerProvider = $controllerProvider
 		app.compileProvider = $compileProvider
 		console.log("AppConfig", AppConfig.whiteListUrl)
+		
+		// TODO: Temp solution to load questionset images in mobile online case
 		$sceDelegateProvider.resourceUrlWhitelist(AppConfig.whiteListUrl)
 	}).controller("BaseCtrl", function ($scope, $rootScope, $state, $ocLazyLoad, $stateParams, $compile, $templateCache, appConstants) {
 		$scope.templates = []
@@ -167,6 +169,7 @@ var app = angular.module("genie-canvas", ["ionic", "ngCordova", "oc.lazyLoad"])
 		}, this)
 	})
 
+// TODO: Temp solution to load questionset images in mobile online case 
 angular.module("org.ekstep.question", []).config(function ($sceDelegateProvider) {
 	$sceDelegateProvider.resourceUrlWhitelist(AppConfig.whiteListUrl)
 })

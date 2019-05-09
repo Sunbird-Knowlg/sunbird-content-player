@@ -117,10 +117,10 @@ org.ekstep.service.content = new (org.ekstep.service.mainService.extend({
 
 		if (item.path && data) {
 			var path = (item.path.charAt(item.path.length - 1) === "/") ? item.path.substring(0, item.path.length - 1) : item.path
-			path = (window.cordova) ? "file://" + path : path
+			path = (!isbrowserpreview && !_.isUndefined(isbrowserpreview)) ? "file://" + path : path
 			data.baseDir = path
 			globalConfig.basepath = path
-			if (typeof cordova !== "undefined") { data.appIcon = (data.appIcon) ? path + "/" + data.appIcon : path + "/logo.png" } else { data.appIcon = (isbrowserpreview) ? data.appIcon : path + "/logo.png" }
+			if (!isbrowserpreview && !_.isUndefined(isbrowserpreview)) { data.appIcon = (data.appIcon) ? path + "/" + data.appIcon : path + "/logo.png" } else { data.appIcon = (isbrowserpreview) ? data.appIcon : path + "/logo.png" }
 			data.mimeType = item.mimeType
 			data.status = "ready"
 			data.isAvailable = item.isAvailable
@@ -180,7 +180,7 @@ org.ekstep.service.content = new (org.ekstep.service.mainService.extend({
 						returnResult(list, "Error while fetching filterContentList:" + JSON.stringify(err))
 					})
 			} else {
-				if (typeof cordova !== "undefined") {
+				if (!isbrowserpreview && !_.isUndefined(isbrowserpreview)) {
 					returnResult(list, "Error while fetching filtered content: Empty Collection")
 				} else {
 					org.ekstep.service.renderer.getContentList([])

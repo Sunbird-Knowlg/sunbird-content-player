@@ -36,7 +36,7 @@ org.ekstep.contentrenderer.loadDefaultPlugins = function (cb) {
  * @param  {obj} appInfo [metadata]
  */
 org.ekstep.contentrenderer.startGame = function (appInfo) {
-	window.PLAYER_START_TIME = Date.now()/1000;
+	window.PLAYER_START_TIME = Date.now() / 1000
 	globalConfig.basepath = (appInfo.streamingUrl) ? (appInfo.streamingUrl) : (globalConfig.basepath || appInfo.baseDir)
 	org.ekstep.contentrenderer.loadDefaultPlugins(function () {
 		org.ekstep.contentrenderer.loadExternalPlugins(function () {
@@ -69,7 +69,7 @@ org.ekstep.contentrenderer.startGame = function (appInfo) {
 org.ekstep.contentrenderer.addRepos = function () {
 	var obj = EkstepRendererAPI.getGlobalConfig()
 	if (_.isUndefined(obj.config.repos)) {
-		obj.config.repos = isMobile ? obj.devicePluginspath : obj.previewPluginspath
+		obj.config.repos = !isbrowserpreview ? obj.devicePluginspath : obj.previewPluginspath
 	}
 	var path = _.isArray(obj.config.repos) ? obj.config.repos : [obj.config.repos]
 	/**
@@ -274,7 +274,7 @@ org.ekstep.contentrenderer.setContentMetadata = function (contentData, cb) {
 	} else {
 		data = data.localData
 	}
-	if (typeof cordova === "undefined") {
+	if (isbrowserpreview) {
 		org.ekstep.contentrenderer.getContentBody(content.metadata.identifier)
 	}
 	if (cb) cb()
@@ -332,8 +332,7 @@ org.ekstep.contentrenderer.web = function (id) {
 
 org.ekstep.contentrenderer.device = function () {
 	var globalconfig = EkstepRendererAPI.getGlobalConfig()
-	var isMobile = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()));
-	if (!isbrowserpreview && isMobile) {
+	if (!isbrowserpreview) {
 		if (globalconfig.metadata) {
 			org.ekstep.contentrenderer.setContentMetadata(globalconfig.metadata, function () {
 				org.ekstep.contentrenderer.startGame(content.metadata)
