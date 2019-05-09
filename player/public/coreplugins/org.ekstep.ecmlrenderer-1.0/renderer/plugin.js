@@ -430,7 +430,7 @@ var qspatch = {
         return url.split("//").join("/");
     },
     telemetryPatch: function() {
-        var _super_logAssessEnd = QSTelemetryLogger.logAssessEnd; // Reference to the original function, For new assessments telemetry should handled as it is
+        var _super_logAssessEnd = QSTelemetryLogger.logAssessEnd; // Reference to the original function, For new assessments telemetry should be handled as it is
         var instance = this;
         var qsPlugins = {
             'ftb': {
