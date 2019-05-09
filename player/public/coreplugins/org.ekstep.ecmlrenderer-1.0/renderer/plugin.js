@@ -555,6 +555,7 @@ var qspatch = {
             objProperty = index + 1;
             objToPush[objProperty] = instance.generateTelemetryTupleValue(lhs)
             lhsParamsAndResValue.push(objToPush);
+
             objToPush = {};
             objToPush[objProperty] = instance.generateTelemetryTupleValue(rhs);
             rhsParams.push(objToPush);
@@ -570,17 +571,11 @@ var qspatch = {
         tuple.params.push({
             'answer': JSON.stringify(answer)
         });
-        var lhsResvalues = [];
         var rhsResvalues = [];
         // MTF-1.1 structure
         if (result.state && result.state.val && result.state.val.rhs_rearranged) {
             result.state.val.rhs_rearranged.forEach(function(rhsIndex, index) {
                 var objProperty, objToPush = {};
-                var lhs = qsTelemetryLogger._plugin._question.data.option.optionsLHS[index];
-                objProperty = index + 1;
-                objToPush[objProperty] = instance.generateTelemetryTupleValue(lhs);
-                lhsResvalues.push(objToPush);
-                objToPush = {};
                 objToPush[objProperty] = instance.generateTelemetryTupleValue(result.state.rhs_rendered.find(function(rhs) {
                     return rhs.mapIndex == rhsIndex;
                 }))
@@ -588,20 +583,18 @@ var qspatch = {
             })
         } else {
             // MTF-1.0 structure
-            result.values.forEach(function(value, index) {
-                qsTelemetryLogger._plugin._selectedAnswers && Object.keys(qsTelemetryLogger._plugin._selectedAnswers).forEach(function(key) {
-                    var objProperty, objToPush = {};
-                    objProperty = key + 1;
-                    value = qsTelemetryLogger._question.data.option.optionsRHS.find(function(rhs) {
-                        return rhs.mapIndex == qsTelemetryLogger._selectedAnswers[key].mapIndex;
-                    })
-                    objToPush[objProperty] = instance.generateTelemetryTupleValue(value);
-                    rhsResvalues.push(objToPush);
+            qsTelemetryLogger._plugin._selectedAnswers && Object.keys(qsTelemetryLogger._plugin._selectedAnswers).forEach(function(key) {
+                var objProperty, objToPush = {};
+                objProperty = Number(key) + 1;
+                value = qsTelemetryLogger._plugin._question.data.option.optionsRHS.find(function(rhs) {
+                    return rhs.mapIndex == qsTelemetryLogger._plugin._selectedAnswers[key].mapIndex;
                 })
+                objToPush[objProperty] = instance.generateTelemetryTupleValue(value);
+                rhsResvalues.push(objToPush);
             })
         }
         tuple.resvalues.push({
-            'lhs': JSON.stringify(lhsResvalues)
+            'lhs': JSON.stringify(lhsParamsAndResValue)
         })
         tuple.resvalues.push({
             'rhs': JSON.stringify(rhsResvalues)
