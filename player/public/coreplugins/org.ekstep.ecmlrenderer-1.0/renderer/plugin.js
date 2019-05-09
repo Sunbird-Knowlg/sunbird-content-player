@@ -430,36 +430,36 @@ var qspatch = {
         return url.split("//").join("/");
     },
     telemetryPatch: function() {
-        var _super_logAssessEnd = QSTelemetryLogger.logAssessEnd; // Reference to the original function, As for new Assessment bundles telemetry should handled normally
+        var _super_logAssessEnd = QSTelemetryLogger.logAssessEnd; // Reference to the original function, For new assessments telemetry should handled as it is
         var instance = this;
         var qsPlugins = {
-                'ftb': {
-                    'id': 'org.ekstep.questionunit.ftb',
-                    'versions': ['1.0'],
-                    'patchHandler': instance.ftbPatchHandler
-                },
-                'reorder': {
-                    'id': 'org.ekstep.questionunit.reorder',
-                    'versions': ['1.0'],
-                    'patchHandler': instance.reorderPatchHandler
-                },
-                'sequence': {
-                    'id': 'org.ekstep.questionunit.sequence',
-                    'versions': ['1.0'],
-                    'patchHandler': instance.sequencePatchHandler
-                },
-                'mcq': {
-                    'id': 'org.ekstep.questionunit.mcq',
-                    'versions': ['1.0', '1.1'],
-                    'patchHandler': instance.mcqPatchHandler
-                },
-                'mtf': {
-                    'id': 'org.ekstep.questionunit.mtf',
-                    'versions': ['1.0', '1.1'],
-                    'patchHandler': instance.mtfPatchHandler
-                }
+            'ftb': {
+                'id': 'org.ekstep.questionunit.ftb',
+                'versions': ['1.0'],
+                'patchHandler': instance.ftbPatchHandler
+            },
+            'reorder': {
+                'id': 'org.ekstep.questionunit.reorder',
+                'versions': ['1.0'],
+                'patchHandler': instance.reorderPatchHandler
+            },
+            'sequence': {
+                'id': 'org.ekstep.questionunit.sequence',
+                'versions': ['1.0'],
+                'patchHandler': instance.sequencePatchHandler
+            },
+            'mcq': {
+                'id': 'org.ekstep.questionunit.mcq',
+                'versions': ['1.0', '1.1'],
+                'patchHandler': instance.mcqPatchHandler
+            },
+            'mtf': {
+                'id': 'org.ekstep.questionunit.mtf',
+                'versions': ['1.0', '1.1'],
+                'patchHandler': instance.mtfPatchHandler
             }
-            // New function over-ride
+        }
+        // New function over-ride
         QSTelemetryLogger.logAssessEnd = function(result) {
             var plugin = {
                 'id': this._plugin._manifest.id,
@@ -474,7 +474,7 @@ var qspatch = {
                 }
             })
             if (isPatchRequired == false) {
-                return _super_logAssessEnd.call(QSTelemetryLogger, result);
+                return _super_logAssessEnd.call(this, result);
             }
             var tuple = {
                 'params': [],
@@ -526,17 +526,17 @@ var qspatch = {
             objToPush[objProperty] = instance.generateTelemetryTupleValue(option);
             tuple.params.push(objToPush)
         });
-        var correctAnserIndex = result.state.options.findIndex(function(option) {
+        var correctAnwserIndex = result.state.options.findIndex(function(option) {
             return option.isCorrect == true;
         })
         tuple.params.push({
             "answer": JSON.stringify({
-                "correct": [(correctAnserIndex + 1) + '']
+                "correct": [(correctAnwserIndex + 1) + '']
             })
         })
-        if (result.state.options && typeof result.state.val == "number" && result.state.options[result.state.val]) {
+        if (result.state.options && result.state.options[result.state.val]) {
             objToPush = {};
-            objProperty = result.state.val + 1;
+            objProperty = Number(result.state.val) + 1;
             objToPush[objProperty] = instance.generateTelemetryTupleValue(result.state.options[result.state.val]);
             tuple.resvalues.push(objToPush);
         }
@@ -572,17 +572,18 @@ var qspatch = {
             'answer': JSON.stringify(answer)
         });
         var rhsResvalues = [];
-        // MTF-1.1 structure
         if (result.state && result.state.val && result.state.val.rhs_rearranged) {
+            // Handler for MTF-1.1
             result.state.val.rhs_rearranged.forEach(function(rhsIndex, index) {
                 var objProperty, objToPush = {};
+                objProperty = index + 1;
                 objToPush[objProperty] = instance.generateTelemetryTupleValue(result.state.rhs_rendered.find(function(rhs) {
                     return rhs.mapIndex == rhsIndex;
                 }))
                 rhsResvalues.push(objToPush);
             })
         } else {
-            // MTF-1.0 structure
+            // Handler for MTF-1.0
             qsTelemetryLogger._plugin._selectedAnswers && Object.keys(qsTelemetryLogger._plugin._selectedAnswers).forEach(function(key) {
                 var objProperty, objToPush = {};
                 objProperty = Number(key) + 1;
@@ -606,10 +607,10 @@ var qspatch = {
         };
         result.state.keys.forEach(function(key, index) {
             var objProperty, objToPush = {};
-            delete key.$$hashKey; // Currently reorder 1.0 sending with $$hashKey property
+            delete key.$$hashKey; // reorder 1.0 sending with $$hashKey property
             objProperty = index + 1;
             objToPush[objProperty] = instance.generateTelemetryTupleValue(key);
-            answer.seq.push((key.id + 1) + '');
+            answer.seq.push((Number(key.id) + 1) + '');
             tuple.params.push(objToPush)
         })
         tuple.params.push({
@@ -665,7 +666,7 @@ var qspatch = {
             quesScore = parseFloat((result.score).toFixed(2));
         }
         var data = {
-            assessEventVer: "3.1",
+            eventVer: "3.1",
             pass: result.eval,
             score: quesScore,
             res: tuple.resvalues,
