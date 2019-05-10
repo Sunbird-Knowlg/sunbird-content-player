@@ -110,64 +110,72 @@ var qspatch = {
         return url.split("//").join("/");
     },
     telemetryPatch: function() {
-        var _super_logAssessEnd = QSTelemetryLogger.logAssessEnd; // Reference to the original function, For new assessments telemetry should be handled as it is
         var instance = this;
-        var qsPlugins = {
-            'ftb': {
+        var qsPlugins = [
+            {
                 'id': 'org.ekstep.questionunit.ftb',
                 'versions': ['1.0'],
-                'patchHandler': instance.ftbPatchHandler
+                'patchHandler': instance.ftbPatchHandler,
+                'type':'ftb'
             },
-            'reorder': {
+            {
                 'id': 'org.ekstep.questionunit.reorder',
                 'versions': ['1.0'],
-                'patchHandler': instance.reorderPatchHandler
+                'patchHandler': instance.reorderPatchHandler,
+                'type' : 'reorder'
             },
-            'sequence': {
+            {
                 'id': 'org.ekstep.questionunit.sequence',
                 'versions': ['1.0'],
-                'patchHandler': instance.sequencePatchHandler
+                'patchHandler': instance.sequencePatchHandler,
+                'type' : 'sequence'
             },
-            'mcq': {
+            {
                 'id': 'org.ekstep.questionunit.mcq',
                 'versions': ['1.0', '1.1'],
-                'patchHandler': instance.mcqPatchHandler
+                'patchHandler': instance.mcqPatchHandler,
+                'type' : 'mcq'
             },
-            'mtf': {
+            {
                 'id': 'org.ekstep.questionunit.mtf',
                 'versions': ['1.0', '1.1'],
-                'patchHandler': instance.mtfPatchHandler
+                'patchHandler': instance.mtfPatchHandler,
+                'type' : 'mtf'
             }
-        }
+        ]
+        var isPatchRequired = false;
+        qsPlugins.every(function(plugin){
+            var isPatchPluginExist = Object.keys(org.ekstep.pluginframework.pluginManager.plugins).includes(plugin.id)
+            if(isPatchPluginExist){
+                var pluginObj = org.ekstep.pluginframework.pluginManager.plugins[plugin.id];
+                if(plugin.versions.includes(pluginObj.m.ver)){
+                    isPatchRequired = true;
+                    return false; //break
+                }
+                return true; //continue
+            }
+        })
+        if(isPatchRequired == false) return false;
         // New function over-ride
         QSTelemetryLogger.logAssessEnd = function(result) {
-            var plugin = {
-                'id': this._plugin._manifest.id,
-                'ver': this._plugin._manifest.ver,
-            }
+            var pluginInstance = this; 
+           
             var pluginToPatch;
-            var isPatchRequired = false;
-            Object.keys(qsPlugins).forEach(function(pluginShortHand) {
-                if (plugin.id == qsPlugins[pluginShortHand].id && qsPlugins[pluginShortHand].versions.includes(plugin.ver)) {
-                    pluginToPatch = pluginShortHand;
-                    isPatchRequired = true;
+            qsPlugins.every(function(plugin){
+                if(plugin.id == pluginInstance._plugin._manifest.id){
+                    pluginToPatch = plugin;
+                    return false;
                 }
+                return true;
             })
-            if (isPatchRequired == false) {
-                return _super_logAssessEnd.call(this, result);
-            }
             var tuple = {
                 'params': [],
                 'resvalues': []
             }
-            try {
-                qsPlugins[pluginToPatch].patchHandler.call(this, instance, result, tuple);
-                var data = instance.generateTelemetryData.call(this, result, tuple);
-                data.type = pluginToPatch;
-                TelemetryService.assessEnd(this._assessStart, data);
-            } catch (err) {
-                console.log(err);
-            }
+            pluginToPatch.patchHandler.call(pluginInstance, instance, result, tuple);
+            var data = instance.generateTelemetryData.call(pluginInstance, result, tuple);
+            data.type = pluginToPatch.type;
+            TelemetryService.assessEnd(pluginInstance._assessStart, data);
         }
     },
     ftbPatchHandler: function(instance, result, tuple) {
@@ -372,3 +380,4 @@ var qspatch = {
         })
     }
 }
+//# sourceURL=ECMLRenderer_qspatch.js
