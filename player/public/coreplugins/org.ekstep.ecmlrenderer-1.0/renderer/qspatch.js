@@ -169,7 +169,7 @@ var qspatch = {
                 'params': [],
                 'resvalues': []
             }
-            pluginToPatch.patchHandler.call(this, result, tuple);
+            pluginToPatch.patchHandler.call(this, result, tuple); // tuple object will be updated as a result of calling the patchHandler function
             var data = qspatch.generateTelemetryData.call(this, result, tuple);
             data.type = pluginToPatch.type;
             TelemetryService.assessEnd(this._assessStart, data);
