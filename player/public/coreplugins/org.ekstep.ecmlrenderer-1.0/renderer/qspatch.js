@@ -265,7 +265,7 @@ var qspatch = {
                     return rhs.mapIndex == rhsIndex;
                 }))
                 rhsResvalues.push(objToPush);
-            }, this)
+            })
         } else {
             // Handler for MTF-1.0
             this._plugin._selectedAnswers && Object.keys(this._plugin._selectedAnswers).forEach(function(key) {
