@@ -110,7 +110,6 @@ var qspatch = {
         return url.split("//").join("/");
     },
     telemetryPatch: function() {
-        var _super_QSTelemetryLogger_logAssessEnd = QSTelemetryLogger.logAssessEnd; //reference to original, if error thrown from patch code, original function will invoked as a fallback mechanism
         var qsPlugins = [
             {
                 'id': 'org.ekstep.questionunit.ftb',
@@ -157,6 +156,7 @@ var qspatch = {
         })
         if(isPatchRequired == false) return false;
         // Function over-ride
+        var _super_QSTelemetryLogger_logAssessEnd = QSTelemetryLogger.logAssessEnd; //reference to original, if error thrown from patch code, original function will invoked as a fallback mechanism
         QSTelemetryLogger.logAssessEnd = function(result) {
             try{ // if any error occurs, default logAssessEnd Event will be invoked 
                 var pluginToPatch;
