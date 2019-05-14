@@ -110,6 +110,7 @@ var qspatch = {
         return url.split("//").join("/");
     },
     telemetryPatch: function() {
+        var _super_QSTelemetryLogger_logAssessEnd = QSTelemetryLogger.logAssessEnd; //reference to original, if error thrown from patch code, original function will invoked as a fallback mechanism
         var qsPlugins = [
             {
                 'id': 'org.ekstep.questionunit.ftb',
@@ -157,22 +158,26 @@ var qspatch = {
         if(isPatchRequired == false) return false;
         // Function over-ride
         QSTelemetryLogger.logAssessEnd = function(result) {
-            var pluginToPatch;
-            qsPlugins.every(function(plugin){
-                if(plugin.id == this._plugin._manifest.id){
-                    pluginToPatch = plugin;
-                    return false;
+            try{ // if any error occurs, default logAssessEnd Event will be invoked 
+                var pluginToPatch;
+                qsPlugins.every(function(plugin){
+                    if(plugin.id == this._plugin._manifest.id){
+                        pluginToPatch = plugin;
+                        return false;
+                    }
+                    return true;
+                }, this)
+                var tuple = {
+                    'params': [],
+                    'resvalues': []
                 }
-                return true;
-            }, this)
-            var tuple = {
-                'params': [],
-                'resvalues': []
+                pluginToPatch.patchHandler.call(this, result, tuple); // tuple object will be updated as a result of calling the patchHandler function
+                var data = qspatch.generateTelemetryData.call(this, result, tuple);
+                data.type = pluginToPatch.type;
+                TelemetryService.assessEnd(this._assessStart, data);
+            }catch(err){
+                _super_QSTelemetryLogger_logAssessEnd(result);        
             }
-            pluginToPatch.patchHandler.call(this, result, tuple); // tuple object will be updated as a result of calling the patchHandler function
-            var data = qspatch.generateTelemetryData.call(this, result, tuple);
-            data.type = pluginToPatch.type;
-            TelemetryService.assessEnd(this._assessStart, data);
         }
     },
     ftbPatchHandler: function(result, tuple) {
