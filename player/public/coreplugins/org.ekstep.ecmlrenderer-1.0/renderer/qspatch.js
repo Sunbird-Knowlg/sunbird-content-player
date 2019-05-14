@@ -176,6 +176,7 @@ var qspatch = {
                 data.type = pluginToPatch.type;
                 TelemetryService.assessEnd(this._assessStart, data);
             }catch(err){
+                EkstepRendererAPI.logErrorEvent(err, { 'severity': 'error', 'type': 'plugin', 'action': 'play' });
                 _super_QSTelemetryLogger_logAssessEnd(result);        
             }
         }
