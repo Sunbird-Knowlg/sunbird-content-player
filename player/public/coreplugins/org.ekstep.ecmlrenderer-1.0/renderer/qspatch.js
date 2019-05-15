@@ -331,7 +331,12 @@ var qspatch = {
             tuple.params.push(objToPush)
             answer.seq.push(result.state.seq_rendered[index].sequenceOrder + '')
             objToPush = {};
-            objToPush[objProperty] = qspatch.generateTelemetryTupleValue(result.state.seq_rendered.find(function(seq) {
+            objProperty = result.state.seq_rendered.findIndex(function(seq){
+                if(seq.sequenceOrder == seqIndex){
+                    return true;
+                }
+            })
+            objToPush[objProperty + 1] = qspatch.generateTelemetryTupleValue(result.state.seq_rendered.find(function(seq) {
                 return seq.sequenceOrder == seqIndex;
             }))
             tuple.resvalues.push(objToPush);
