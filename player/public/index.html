@@ -51,6 +51,11 @@
         <div ng-include="template.path || template.id"></div>
     </div>
 
+    <script>
+        document.domain = "ENV_DOMAIN";
+        console.log("document.domain", document.domain)
+    </script>
+    
     <!-- injector:js -->
     <script type="text/javascript" src="libs/jquery.min.js"></script>
     <script type="text/javascript" src="libs/jquery.easing.1.3.js"></script>

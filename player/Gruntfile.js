@@ -7,6 +7,7 @@ module.exports = function (grunt) {
 		pkg: grunt.file.readJSON("package.json"),
 		version: "3.2.",
 		buildNumber: process.env.BUILD_NUMBER,
+		envDomain: process.env.ENV_DOMAIN,
 		mkdir: {
 			all: {
 				options: {
@@ -657,6 +658,14 @@ module.exports = function (grunt) {
 					from: "genie-canvas-version",
 					to: "<%= version %>"
 				}]
+			},
+			evn_domain: {
+				src: ["www/preview.html", "www/preview/preview.html"],
+				overwrite: true,
+				replacements: [{
+					from: /ENV_DOMAIN/g,
+					to: "<%= envDomain %>"
+				}]
 			}
 		},
 		jsdoc: {
@@ -814,7 +823,7 @@ module.exports = function (grunt) {
 
 	// Build web prview
 	grunt.registerTask("init", ["uglify:renderermin", "copy:main", "injector:prview"])
-	grunt.registerTask("build-preview", ["clean", "mkdir:all", "init", "rename:preview", "clean:minhtml", "copy:toPreview", "clean:preview"])
+	grunt.registerTask("build-preview", ["clean", "mkdir:all", "init", "rename:preview", "clean:minhtml", "copy:toPreview", "clean:preview", "replace:evn_domain"])
 
 	grunt.registerTask("backup-config-xml", function () {
 		grunt.file.copy("./config.xml", "./config.latest.xml")
