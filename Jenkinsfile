@@ -45,7 +45,7 @@ node() {
                         grunt compress:preview
                         grunt generate-libs
                         #grunt renderer-test
-                        grunt build-jsdoc
+                        #grunt build-jsdoc
                     """
                 }
                 stage('ArchiveArtifacts') {
