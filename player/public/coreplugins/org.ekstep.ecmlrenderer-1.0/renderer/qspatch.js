@@ -151,8 +151,8 @@ var qspatch = {
                     isPatchRequired = true;
                     return false; //break
                 }
-                return true; //continue
             }
+            return true; //continue
         })
         if(isPatchRequired == false) return false;
         // Function over-ride
@@ -329,9 +329,19 @@ var qspatch = {
             objProperty = index + 1;
             objToPush[objProperty] = qspatch.generateTelemetryTupleValue(result.state.seq_rendered[index]);
             tuple.params.push(objToPush)
-            answer.seq.push(result.state.seq_rendered[index].sequenceOrder + '')
+            var answerIndex = result.state.seq_rendered.findIndex(function(seq){
+                if(Number(seq.sequenceOrder) == index+1){
+                    return true;
+                }
+            })
+            answer.seq.push((answerIndex+1) + '')
             objToPush = {};
-            objToPush[objProperty] = qspatch.generateTelemetryTupleValue(result.state.seq_rendered.find(function(seq) {
+            objProperty = result.state.seq_rendered.findIndex(function(seq){
+                if(seq.sequenceOrder == seqIndex){
+                    return true;
+                }
+            })
+            objToPush[objProperty + 1] = qspatch.generateTelemetryTupleValue(result.state.seq_rendered.find(function(seq) {
                 return seq.sequenceOrder == seqIndex;
             }))
             tuple.resvalues.push(objToPush);
