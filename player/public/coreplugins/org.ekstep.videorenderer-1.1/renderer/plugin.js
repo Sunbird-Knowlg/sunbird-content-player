@@ -14,31 +14,31 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     currentTime: 1,
     videoPlayer: undefined,
     stageId: undefined,
-    heartBeatData:{},
-    enableHeartBeatEvent:false,
+    heartBeatData: {},
+    enableHeartBeatEvent: false,
     _constants: {
         mimeType: ["video/mp4", "video/x-youtube", "video/webm"],
         events: {
             launchEvent: "renderer:launch:video"
         }
     },
-    initLauncher: function() {
+    initLauncher: function () {
         EkstepRendererAPI.addEventListener(this._constants.events.launchEvent, this.start, this);
         EkstepRendererAPI.addEventListener("renderer:overlay:mute", this.onOverlayAudioMute, this);
         EkstepRendererAPI.addEventListener("renderer:overlay:unmute", this.onOverlayAudioUnmute, this);
     },
-    start: function() {
+    start: function () {
         this._super();
         var data = _.clone(content);
         this.heartBeatData.stageId = content.mimeType === 'video/x-youtube' ? 'youtubestage' : 'videostage';
         var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
         if (window.cordova || !isbrowserpreview) {
             var regex = new RegExp("^(http|https)://", "i");
-            if(!regex.test(globalConfigObj.basepath)){
+            if (!regex.test(globalConfigObj.basepath)) {
                 var prefix_url = globalConfigObj.basepath || '';
                 path = prefix_url ? prefix_url + "/" + data.artifactUrl : data.artifactUrl;
                 data.streamingUrl = false;
-            }else
+            } else
                 path = data.streamingUrl;
         } else {
             path = data.artifactUrl;
@@ -48,7 +48,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         this.createVideo(path, data);
         this.configOverlay();
     },
-    createVideo: function(path, data) {
+    createVideo: function (path, data) {
         video = document.createElement('video-js');
         video.style.width = '100%';
         video.style.height = '100%';
@@ -57,7 +57,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         video.autoplay = true;
         video.className = 'vjs-default-skin';
 		document.body.appendChild(video);
-		$('.vjs-default-skin').css('opacity','0');
+		$('.vjs-default-skin').css('opacity', '0');
 
         var loaderArea = document.createElement('div');
         loaderArea.id = 'loaderArea';
@@ -71,19 +71,19 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         document.body.appendChild(loaderArea);
         jQuery('#loaderArea').show();
 
-        if(data.mimeType === "video/x-youtube"){
+        if (data.mimeType === "video/x-youtube") {
             this._loadYoutube(data.artifactUrl);
-        }else if(data.streamingUrl && (data.mimeType != "video/x-youtube")){
+        } else if (data.streamingUrl && (data.mimeType != "video/x-youtube")) {
             data.mimeType = this.supportedStreamingMimeType;
             this._loadVideo(data.streamingUrl, data);
-        }else{
+        } else {
             this._loadVideo(path, data);
         }
-        $("video-js").bind("contextmenu",function() {
+        $("video-js").bind("contextmenu", function () {
             return false;
         });
     },
-    _loadVideo: function(path, data) {
+    _loadVideo: function (path, data) {
         var instance = this;
         if (data.streamingUrl && !navigator.onLine) {
             EkstepRendererAPI.logErrorEvent('No internet', {
@@ -91,7 +91,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 'action': 'play',
                 'severity': 'error'
             });
-            instance.throwError({message: instance.messages.noInternetConnection});
+            instance.throwError({ message: instance.messages.noInternetConnection });
             if (typeof cordova !== "undefined") exitApp();
             return false;
         }
@@ -100,22 +100,22 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         source.type = data.mimeType;
         video.appendChild(source);
 
-        if (data.streamingUrl || window.cordova){
+        if (data.streamingUrl || window.cordova) {
             var videoPlayer = videojs('videoElement', {
                 "controls": true, "autoplay": true, "preload": "auto"
             });
-        }else{
+        } else {
             var videoPlayer = videojs('videoElement', {
                 "controls": true, "autoplay": true, "preload": "auto",
                 plugins: {
-                    vjsdownload:{
+                    vjsdownload: {
                         beforeElement: 'playbackRateMenuButton',
                         textControl: 'Download video',
                         name: 'downloadButton'
                     }
                 }
-            } , function() {
-                this.on('downloadvideo', function(){
+            }, function () {
+                this.on('downloadvideo', function () {
                     EkstepRendererAPI.getTelemetryService().interact("TOUCH", "Download", "TOUCH", {
                         stageId: 'videostage',
                         subtype: ''
@@ -143,7 +143,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         });
         videojs("videoElement").ready(function () {
 			var youtubeInstance = this;
-			$('.vjs-default-skin').css('opacity','1');
+			$('.vjs-default-skin').css('opacity', '1');
             youtubeInstance.src({
                 type: 'video/youtube',
                 src: path
