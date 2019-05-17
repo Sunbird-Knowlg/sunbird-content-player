@@ -56,7 +56,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         video.id = "videoElement";
         video.autoplay = true;
         video.className = 'vjs-default-skin';
-        document.body.appendChild(video);
+		    document.body.appendChild(video);
+		    $('.vjs-default-skin').css('opacity', '0');
+
 
         var loaderArea = document.createElement('div');
         loaderArea.id = 'loaderArea';
@@ -141,7 +143,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             "controls": true, "autoplay": true, "preload": "auto"
         });
         videojs("videoElement").ready(function () {
-            var youtubeInstance = this;
+			     var youtubeInstance = this;
+			     $('.vjs-default-skin').css('opacity', '1');
+
             youtubeInstance.src({
                 type: 'video/youtube',
                 src: path
