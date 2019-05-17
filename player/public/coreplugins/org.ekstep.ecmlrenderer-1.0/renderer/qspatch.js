@@ -154,7 +154,7 @@ var qspatch = {
             }
             return true; //continue
         })
-        if(isPatchRequired == false) return false;
+        if(isPatchRequired == false || typeof QSTelemetryLogger == undefined) return false;
         // Function over-ride
         var super_QSTelemetryLogger_logAssessEnd = QSTelemetryLogger.logAssessEnd; //reference to original, if error thrown from patch code, original function will invoked as a fallback mechanism
         QSTelemetryLogger.logAssessEnd = function(result) {
