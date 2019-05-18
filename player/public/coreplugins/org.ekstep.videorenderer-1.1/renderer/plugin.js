@@ -294,7 +294,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     contentProgress: function () {
         console.log("Content progress");
-        var totalDuration = 0;
+        var totalDuration = 1;
         if (this.videoPlayer){
             if (_.isFunction(this.videoPlayer.duration)) {
                 totalDuration = this.videoPlayer.duration();
