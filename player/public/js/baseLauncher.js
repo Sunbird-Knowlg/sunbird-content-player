@@ -98,7 +98,7 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
      */
 	progres: function (currentIndex, totalIndex) {
 		var totalProgress = (currentIndex / totalIndex) * 100
-		totalProgress = _.isFinite(totalProgress) ? totalProgress : 1
+		totalProgress = _.isFinite(totalProgress) ? totalProgress : 0
 		totalProgress = totalProgress > 100 ? 100 : Math.round(totalProgress)
 		return totalProgress
 	},
