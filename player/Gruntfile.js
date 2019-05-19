@@ -338,6 +338,17 @@ module.exports = function (grunt) {
 					dest: "www/preview"
 				}]
 			},
+			previewHtml: {
+				files: [{
+					expand: true,
+					cwd: "www/preview",
+					src: ["preview.html"],
+					dest: "www/preview/",
+					rename: function (dest, src, data) {
+						return dest + src.replace("preview.html", "preview_cdn.html")
+					}
+				}]
+			},
 			authtoken: {
 				files: [{
 					expand: true,
@@ -707,13 +718,22 @@ module.exports = function (grunt) {
 				files: {
 					"www/index.html": [
 						"www/script.*.js",
+						"www/coreplugins.js",
 						"www/*.css"
-						// 'www/scripts/renderer.external.min.js',
-						// 'www/scripts/renderer.script.min.js',
-						// 'www/scripts/renderer.telemetry.min.js',
-						// 'www/scripts/AudioManager.js',
-						// 'www/coreplugins/LauncherPlugin.js',
-						// 'www/styles/*.css'
+					]
+				}
+			},
+			previewCdn: {
+				options: {
+					ignorePath: "www/preview",
+					addRootSlash: false,
+					prefix: "cdn_path/"
+				},
+				files: {
+					"www/preview/preview_cdn.html": [
+						"www/preview/script.*.js",
+						"www/preview/coreplugins.js",
+						"www/preview/*.css"
 					]
 				}
 			}
@@ -814,7 +834,7 @@ module.exports = function (grunt) {
 
 	// Build web prview
 	grunt.registerTask("init", ["uglify:renderermin", "copy:main", "injector:prview"])
-	grunt.registerTask("build-preview", ["clean", "mkdir:all", "init", "rename:preview", "clean:minhtml", "copy:toPreview", "clean:preview"])
+	grunt.registerTask("build-preview", ["clean", "mkdir:all", "init", "rename:preview", "clean:minhtml", "copy:toPreview", "clean:preview", "copy:previewHtml", "injector:previewCdn"])
 
 	grunt.registerTask("backup-config-xml", function () {
 		grunt.file.copy("./config.xml", "./config.latest.xml")
