@@ -717,8 +717,8 @@ module.exports = function (grunt) {
 				},
 				files: {
 					"www/index.html": [
+						// "www/coreplugins.js",
 						"www/script.*.js",
-						"www/coreplugins.js",
 						"www/*.css"
 					]
 				}
@@ -731,8 +731,8 @@ module.exports = function (grunt) {
 				},
 				files: {
 					"www/preview/preview_cdn.html": [
+						// "www/preview/coreplugins.js",
 						"www/preview/script.*.js",
-						"www/preview/coreplugins.js",
 						"www/preview/*.css"
 					]
 				}
