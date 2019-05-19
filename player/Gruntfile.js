@@ -720,12 +720,6 @@ module.exports = function (grunt) {
 						"www/script.*.js",
 						"www/coreplugins.js",
 						"www/*.css"
-						// 'www/scripts/renderer.external.min.js',
-						// 'www/scripts/renderer.script.min.js',
-						// 'www/scripts/renderer.telemetry.min.js',
-						// 'www/scripts/AudioManager.js',
-						// 'www/coreplugins/LauncherPlugin.js',
-						// 'www/styles/*.css'
 					]
 				}
 			},
@@ -740,12 +734,6 @@ module.exports = function (grunt) {
 						"www/preview/script.*.js",
 						"www/preview/coreplugins.js",
 						"www/preview/*.css"
-						// 'www/scripts/renderer.external.min.js',
-						// 'www/scripts/renderer.script.min.js',
-						// 'www/scripts/renderer.telemetry.min.js',
-						// 'www/scripts/AudioManager.js',
-						// 'www/coreplugins/LauncherPlugin.js',
-						// 'www/styles/*.css'
 					]
 				}
 			}
