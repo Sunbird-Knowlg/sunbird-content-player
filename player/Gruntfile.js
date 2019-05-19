@@ -727,7 +727,7 @@ module.exports = function (grunt) {
 				options: {
 					ignorePath: "www/preview",
 					addRootSlash: false,
-					prefix: "cdn_path/"
+					prefix: "cdn_url/"
 				},
 				files: {
 					"www/preview/preview_cdn.html": [
