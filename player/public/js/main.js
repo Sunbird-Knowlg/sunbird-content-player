@@ -182,7 +182,7 @@ function startTelemetry (id, ver, cb) {
 function getAsseturl (content) {
 	var contentType = content.mimeType === "application/vnd.ekstep.html-archive" ? "html/" : "ecml/"
 	var globalConfig = EkstepRendererAPI.getGlobalConfig()
-	var path = window.location.origin + globalConfig.s3ContentHost + contentType
+	var path = globalConfig.host + globalConfig.s3ContentHost + contentType
 	path += content.status === "Live" ? content.identifier + "-latest" : content.identifier + "-snapshot"
 	return path
 }
