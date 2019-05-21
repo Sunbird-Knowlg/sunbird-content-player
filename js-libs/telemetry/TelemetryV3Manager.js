@@ -39,7 +39,7 @@ TelemetryV3Manager = Class.extend({
           "type":  data.type || "content",
           "mode": data.mode || config.mode,
           "pageid": data.pageid || data.stageid,
-          "duration": data.duration ? data.duration.toFixed(2): 0
+          "duration": data.duration ? Number(data.duration.toFixed(2)): 0
         }
         if(data.dspec){ 
           edata["dspec"] = data.dspec;
@@ -135,7 +135,7 @@ TelemetryV3Manager = Class.extend({
                 pass: data.pass ? 'Yes' : 'No',
                 score: data.score || (data.pass == 'Yes' ? 1 : 0),
                 resvalues: data.res || data.resvalues || [],
-                duration: Math.round((getCurrentTime() - eventObj.startTime ) / 1000).toFixed(2)
+                duration: Number(Math.round((getCurrentTime() - eventObj.startTime ) / 1000).toFixed(2))
             }
             EkTelemetry.assess(v3questionData);
         } else {
@@ -178,7 +178,7 @@ TelemetryV3Manager = Class.extend({
           "subtype": (data && data.subtype) ? data.subtype : "" ,
           "pageid": stageto,
           "uri": (data && data.uri) ? data.uri : stageid,
-          "duration": (data && data.duration)? data.duration.toFixed(2) : 0
+          "duration": (data && data.duration)? Number(data.duration.toFixed(2)) : 0
         }
         if (data && data.visits){
             eksData.visits = [data.visits];
