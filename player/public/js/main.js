@@ -72,7 +72,7 @@ function getCurrentStageId () {
 }
 
 function contentExitCall () {
-	org.ekstep.service.renderer.showExitConfirmPopup();
+	org.ekstep.service.renderer.showExitConfirmPopup()
 }
 
 // After integration with Genie, onclick of exit we should go to previous Activity of the Genie.
@@ -288,24 +288,27 @@ function setGlobalConfig (configuration) {
 		metadata.basepath = metadata.basePath
 		configuration.basepath = configuration.basePath
 
-		if (configuration.contextRollup) {
-			configuration.rollup = configuration.contextRollup
-		}
-
-		configuration.object = configuration.object || {}
-
-		if (_.isUndefined(configuration.object.rollup)) {
-			var rollup = {}
-			if (metadata.rollup) {
-				rollup = metadata.rollup
-			} else if (configuration.objectRollup) {
-				rollup = configuration.objectRollup
-			}
-			configuration.object = _.assign({rollup: rollup}, configuration.object)
-		}
 		// Override the metadata object of intent with proper structure.
 		// manifest & hierarchyInfo
 		configuration.metadata = metadata
+	}
+
+	// To set Organization heirarchy
+	if (configuration.contextRollup) {
+		configuration.rollup = configuration.contextRollup
+	}
+
+	configuration.object = configuration.object || {}
+
+	// To set Textbook heirarchy
+	if (_.isUndefined(configuration.object.rollup)) {
+		var rollup = {}
+		if (configuration.metadata.rollup) {
+			rollup = configuration.metadata.rollup
+		} else if (configuration.objectRollup) {
+			rollup = configuration.objectRollup
+		}
+		configuration.object = _.assign({rollup: rollup}, configuration.object)
 	}
 
 	if (!_.isUndefined(configuration.context.pdata) && !_.isUndefined(configuration.context.pdata.pid) && !configuration.context.pdata.pid.includes("." + AppConfig.pdata.pid)) {
