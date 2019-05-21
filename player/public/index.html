@@ -104,7 +104,13 @@
 
     <script type="text/javascript" src="renderer/manager/AudioManager.js"></script>
     <!-- endinjector -->
-
+    <script>
+        window.previewCdnUrl = "https://static.loadtest.ntp.net.in/player";
+        if (globalConfig && globalConfig.previewCdnUrl) {
+            window.previewCdnUrl = globalConfig.previewCdnUrl;
+        }
+        console.log("window.previewCdnUrl" + window.previewCdnUrl);
+    </script>
 </body>
 
 </html>
