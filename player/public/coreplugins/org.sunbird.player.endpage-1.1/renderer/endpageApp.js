@@ -7,6 +7,8 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     $scope.genieIcon;
     $scope.endpageBackground;
     $scope.replayIcon;
+    $scope.userScore = undefined;
+    $scope.totalScore = undefined;
     /**
      * @property - {Object} which holds previous content of current content
      */     
@@ -38,14 +40,13 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
                     maxScore = maxScore + 0;
                 }
             });
-            $scope.score = ($scope.convert(totalScore) + "/" + $scope.convert(maxScore));
-        } else {
-            $scope.score = undefined;
-        }
+            $scope.userScore = $scope.convert(totalScore);
+            $scope.totalScore = $scope.convert(maxScore);
+        } 
     };
    
     $scope.replayContent = function() {
-        if(isMobile && ($rootScope.users.length > 1)) {
+        if(!isbrowserpreview && ($rootScope.users.length > 1)) {
             EkstepRendererAPI.dispatchEvent("event:openUserSwitchingModal", {'logGEEvent': $scope.pluginInstance._isAvailable});
         }else {
             $scope.replayCallback();
@@ -155,11 +156,10 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
                 org.ekstep.contentrenderer.initializePreview(object)
                 EkstepRendererAPI.dispatchEvent('renderer:player:show');
         } else {
-            if(globalConfig.deeplinkBasePath){
-                var deepLinkURL = globalConfig.deeplinkBasePath + "c/" + contentToPlay.content.identifier + "?hierarchyInfo=" + JSON.stringify($rootScope.content.hierarchyInfo);
-                window.open(deepLinkURL, "_system");
+            if(contentMetadata.identifier && window.parent.hasOwnProperty('onContentNotFound')) {
+                window.parent.onContentNotFound(contentMetadata.identifier, contentMetadata.hierarchyInfo);
             } else {
-                console.warn(window.AppLables.noDeeplinkBasePath);
+                console.warn('Content not Available');
             }
         }
     };

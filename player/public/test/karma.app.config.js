@@ -20,6 +20,7 @@ module.exports = function(config) {
             'public/coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs/createjs.min.js',
             'public/coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs/cordovaaudioplugin-0.6.1.min.js',
             'public/coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs/creatine-1.0.0.min.js',
+            'public/libs/md5.js',
             'www/preview/script.min.*.js',
             'node_modules/angular-mocks/angular-mocks.js',
             'public/coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs/renderer.min.js',
