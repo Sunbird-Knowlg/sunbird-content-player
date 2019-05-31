@@ -12,7 +12,7 @@ window.collectionPathMap = {}
 window.collectionChildren = true
 window.content = {}
 window.config = { showEndPage: true, showHTMLPages: true }
-window.isbrowserpreview = getUrlParameter("webview")
+window.isbrowserpreview = getUrlParameter("webview") ? getUrlParameter("webview") === "true" : getUrlParameter("webview")
 window.isCoreplugin = undefined
 window.Renderer = undefined
 

@@ -60,7 +60,7 @@ var splashScreen = {
 		splashScreen.progressEle = document.getElementById("progressBar")
 		jQuery("#progressBar").width(0)
 		jQuery("#loading").show()
-		!isbrowserpreview && setTimeout(function () {
+		!isbrowserpreview && !_.isUndefined(isbrowserpreview) && setTimeout(function () {
 			navigator.splashscreen.hide()
 		}, 100)
 		var width = 1
