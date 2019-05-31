@@ -69,7 +69,7 @@ org.ekstep.contentrenderer.startGame = function (appInfo) {
 org.ekstep.contentrenderer.addRepos = function () {
 	var obj = EkstepRendererAPI.getGlobalConfig()
 	if (_.isUndefined(obj.config.repos)) {
-		obj.config.repos = !isbrowserpreview ? obj.devicePluginspath : obj.previewPluginspath
+		obj.config.repos = (!isbrowserpreview && !_.isUndefined(isbrowserpreview)) ? obj.devicePluginspath : obj.previewPluginspath
 	}
 	var path = _.isArray(obj.config.repos) ? obj.config.repos : [obj.config.repos]
 	/**
@@ -332,7 +332,7 @@ org.ekstep.contentrenderer.web = function (id) {
 
 org.ekstep.contentrenderer.device = function () {
 	var globalconfig = EkstepRendererAPI.getGlobalConfig()
-	if (!isbrowserpreview) {
+	if (!isbrowserpreview && !_.isUndefined(isbrowserpreview)) {
 		if (globalconfig.metadata) {
 			org.ekstep.contentrenderer.setContentMetadata(globalconfig.metadata, function () {
 				org.ekstep.contentrenderer.startGame(content.metadata)
