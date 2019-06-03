@@ -15,7 +15,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     };
 
     $scope.getTotalScore = function(id) {
-        if (!isbrowserpreview) {
+        if (!isbrowserpreview && !_.isUndefined(isbrowserpreview)) {
             org.ekstep.service.content.getLearnerAssessment(GlobalContext.user.uid, id, GlobalContext.game.contentExtras)
                 .then(function(score) {
                     if (score && score.total_questions) {

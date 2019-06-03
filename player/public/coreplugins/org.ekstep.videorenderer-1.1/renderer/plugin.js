@@ -93,7 +93,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 'severity': 'error'
             });
             instance.throwError({message: instance.messages.noInternetConnection});
-            if (!isbrowserpreview) exitApp();
+            if (!isbrowserpreview && !_.isUndefined(isbrowserpreview)) exitApp();
             return false;
         }
         var source = document.createElement("source");

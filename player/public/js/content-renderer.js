@@ -274,7 +274,7 @@ org.ekstep.contentrenderer.setContentMetadata = function (contentData, cb) {
 	} else {
 		data = data.localData
 	}
-	if (isbrowserpreview) {
+	if (isbrowserpreview || _.isUndefined(isbrowserpreview)) {
 		org.ekstep.contentrenderer.getContentBody(content.metadata.identifier)
 	}
 	if (cb) cb()

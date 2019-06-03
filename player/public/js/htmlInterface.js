@@ -51,7 +51,7 @@ var RendererInterface = function () {
      * @memberof org.ekstep.contentrenderer.interface
      */
 	this.htmlInterfaceObj.isMobile = function () {
-		return !isbrowserpreview
+		return (!isbrowserpreview && !_.isUndefined(isbrowserpreview))
 	}
 
 	/**

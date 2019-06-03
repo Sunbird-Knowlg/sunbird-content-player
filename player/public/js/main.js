@@ -313,7 +313,7 @@ function setGlobalConfig (configuration) {
 	GlobalContext.config = mergeJSON(AppConfig, configuration)
 	window.globalConfig = GlobalContext.config
 
-	if (_.isUndefined(isbrowserpreview)) {
+	if (!isbrowserpreview) {
 		org.ekstep.service.renderer.api.setBaseUrl(window.globalConfig.host + window.globalConfig.apislug)
 	}
 	setTelemetryEventFields(window.globalConfig)
