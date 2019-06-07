@@ -10,6 +10,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     stageId: [],
     heartBeatData: {},
     enableHeartBeatEvent: true,
+    previousScale: undefined,
+    pinchType :undefined,
     headerTimer: undefined,
     _constants: {
         mimeType: ["application/pdf"],
@@ -18,6 +20,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }
     },
     initLauncher: function(manifestData) {
+        console.log("222222222222222",manifestData);
         console.info('PDF Renderer init', manifestData)
         EkstepRendererAPI.addEventListener(this._constants.events.launchEvent, this.start, this);
         this._manifest = manifestData;
@@ -35,6 +38,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         this._super();
         context = this;
         var data = _.clone(content);
+        console.log(data);
         this.initContentProgress();
         var path = undefined;
         var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
@@ -43,7 +47,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             if(!regex.test(globalConfigObj.basepath)){
                 var prefix_url = globalConfigObj.basepath || '';
                 path = prefix_url + "/" + data.artifactUrl + "?" + new Date().getSeconds();
-            }else   
+            }else
                 path = data.streamingUrl;
         } else {
             path = data.artifactUrl + "?" + new Date().getSeconds();
@@ -77,6 +81,29 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         this._super();
         this.enableOverly();
     },
+
+    renderCurrentScaledPage: function() {
+        var instance = this;
+        context.PDF_DOC.getPage(context.CURRENT_PAGE).then(function(page) {
+            if(instance.headerTimer) clearTimeout(instance.headerTimer);    
+            // Get viewport of the page at required scale
+            
+            var viewport = page.getViewport(previousScale);
+            // Set canvas height
+            context.CANVAS.height = viewport.height;
+            var renderContext = {
+                canvasContext: context.CANVAS_CTX,
+                viewport: viewport
+            };
+
+            // Render the page contents in the canvas
+            page.render(renderContext).then(function() {
+                context.PAGE_RENDERING_IN_PROGRESS = 0;
+            });
+        });
+    },
+
+
     renderPDF: function(path, canvasContainer) {
         EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
         var pdfMainContainer = document.createElement("div");
@@ -167,6 +194,26 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
         pdfContents.appendChild(pdfMetaData);
         pdfContents.appendChild(pdfCanvas);
+
+        var mc = new Hammer(pdfContents);
+        mc.get('pinch').set({ enable: true });
+
+        mc.on("pinchin", function (ev) {
+            pinchType = 'pinchIn';
+        });
+        mc.on("pinchout", function (ev) {
+            pinchType = 'pinchOut';
+        });
+        mc.on("pinchend", function (ev) {
+            if (pinchType === 'pinchIn') {
+                previousScale = previousScale - 0.25;
+            } else if (pinchType === 'pinchOut') {
+                previousScale = previousScale + 0.25;
+            }
+            context.renderCurrentScaledPage();
+            pinchType = undefined;
+        }); 
+    
         pdfContents.appendChild(pageLoader);
         pdfContents.appendChild(pdfNoPage);
 
@@ -188,14 +235,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         console.log("CANVAS", context.CANVAS);
 
         $("#pdf-find").on('click', function() {
-            var searchText = document.getElementById("pdf-find-text");
-            console.log("SEARCH TEXT", searchText.value);
-            context.logInteractEvent("TOUCH", "navigate", "TOUCH", {
-                stageId: context.CURRENT_PAGE.toString(),
-                subtype: ''
-            });
-            context.logImpressionEvent(context.CURRENT_PAGE.toString(), searchText.value);
-            context.showPage(parseInt(searchText.value));
+          previousScale = previousScale - 0.25;
+          context.renderCurrentScaledPage();
         });
 
         $('#pdf-prev').on('click', function() {
@@ -222,11 +263,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         downloadBtn.src = "assets/icons/download.png";
         downloadBtn.className = "pdf-download-btn";
         downloadBtn.onclick = function(){
-            window.open(path, '_blank');
-            context.logInteractEvent("TOUCH", "Download", "TOUCH", {
-                stageId: context.CURRENT_PAGE.toString(),
-                subtype: ''
-            });
+            previousScale = previousScale + 0.25;
+            instance.renderCurrentScaledPage();
         };
         pdfSearchContainer.appendChild(downloadBtn);
     },
@@ -255,6 +293,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             context.showPage(--context.CURRENT_PAGE);
     },
     showPDF: function(pdf_url) {
+        console.log("11111111111111");
         $("#pdf-loader").show(); // use rendere loader
         PDFJS.disableWorker = true;
         console.log("MANIFEST DATA", this.manifest)
@@ -284,6 +323,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         });
     },
     showPage: function(page_no) {
+        console.log("23333333333333333333333333333");
         var instance = this;
 
         /** To log telemetyr impression event **/
@@ -316,7 +356,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 if(instance.headerTimer) clearTimeout(instance.headerTimer);
                 // As the canvas is of a fixed width we need to set the scale of the viewport accordingly
                 var scale_required = context.CANVAS.width / page.getViewport(1).width;
-
+                previousScale = scale_required
+                //scale_required = scale_required + 0.75;
                 // Get viewport of the page at required scale
                 var viewport = page.getViewport(scale_required);
 
@@ -338,9 +379,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                     // Show the canvas and hide the page loader
                     $("#pdf-canvas").show();
                     $("#page-loader").hide();
- 
+
                     instance.logImpressionEvent(navigateStageId, navigateStageTo);
-                    
+
                     instance.applyOpacityToNavbar(true);
                     instance.headerTimer = setTimeout(function() {
                         clearTimeout(instance.headerTimer);
@@ -367,7 +408,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }
     },
     applyOpacityToNavbar: function(opacity) {
-        if (!opacity) {                     
+        if (!opacity) {
             $("#pdf-meta, #page-count-container, #pdf-search-container").removeClass('higheropacity');
             $("#pdf-meta, #page-count-container, #pdf-search-container").addClass('loweropacity');
         } else {
