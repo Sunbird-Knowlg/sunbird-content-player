@@ -117,6 +117,7 @@ TelemetryV3Manager = Class.extend({
             var v3questionItem = {
                 id: eventObj.event.edata.eks.qid,
                 maxscore: eventObj.event.edata.eks.maxscore,
+                type: data.type,
                 exlength: 0,
                 params: data.params || eventObj.event.edata.eks.params || [],
                 uri: data.uri || "",
@@ -137,7 +138,7 @@ TelemetryV3Manager = Class.extend({
                 resvalues: data.res || data.resvalues || [],
                 duration: Number(Math.round((getCurrentTime() - eventObj.startTime ) / 1000).toFixed(2))
             }
-            EkTelemetry.assess(v3questionData);
+            EkTelemetry.assess(v3questionData, {'eventVer': data.eventVer});
         } else {
             console.error("question id is required to create assess event.");
             // TelemetryService.logError("OE_ASSESS", "qid is required to create assess event.")
