@@ -385,8 +385,8 @@ LoadByStageStrategy = Class.extend({
                 }
                 progressPercent = loader.progress;
                 if (progressPercent < 1){
-                    if(document.body.contains(bar.path) ){ //condition SB-12210
-                        bar.animate(loader.progress)
+                    if(document.body.contains(bar.path) ){
+                        bar.animate(loader.progress);
                     }
                 }
             });
