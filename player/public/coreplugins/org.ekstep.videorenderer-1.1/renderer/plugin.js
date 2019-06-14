@@ -99,7 +99,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         source.type = data.mimeType;
         video.appendChild(source);
 
-        if (data.streamingUrl || window.cordova) {
+        if (window.cordova) {
             var videoPlayer = videojs('videoElement', {
                 "controls": true, "autoplay": true, "preload": "auto"
             });
@@ -110,7 +110,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                     vjsdownload: {
                         beforeElement: 'playbackRateMenuButton',
                         textControl: 'Download video',
-                        name: 'downloadButton'
+                        name: 'downloadButton',
+                        downloadURL: data.artifactUrl
                     }
                 }
             }, function () {
