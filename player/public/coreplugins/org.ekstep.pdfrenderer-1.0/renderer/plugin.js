@@ -9,6 +9,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     context: undefined,
     stageId: [],
     heartBeatData: {},
+    isPageRenderingInProgress: undefined,
     enableHeartBeatEvent: true,
     headerTimer: undefined,
     _constants: {
@@ -43,7 +44,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             if(!regex.test(globalConfigObj.basepath)){
                 var prefix_url = globalConfigObj.basepath || '';
                 path = prefix_url + "/" + data.artifactUrl + "?" + new Date().getSeconds();
-            }else   
+            }else
                 path = data.streamingUrl;
         } else {
             path = data.artifactUrl + "?" + new Date().getSeconds();
@@ -212,13 +213,25 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         });
         this.heartBeatData.stageId = context.CURRENT_PAGE.toString();
         context.showPDF(path, context.manifest);
+
+        // listening to scroll event for pdf
+        document.getElementById(this.manifest.id).onscroll = function () {
+            if (!isPageRenderingInProgress) {
+                if ($(this)[0].offsetHeight + $(this).scrollTop() >= $(this)[0].scrollHeight) {
+                    context.logInteractEvent("TOUCH", "next", "TOUCH", {
+                        stageId: context.CURRENT_PAGE.toString()
+                    })
+                    context.nextNavigation()
+                }
+            }
+        }
     },
 
     addDownloadButton: function(path, pdfSearchContainer){
         if(!path.length) return false;
         var instance = this;
         var downloadBtn = document.createElement("img");
-        downloadBtn.id = "download-btn"; 
+        downloadBtn.id = "download-btn";
         downloadBtn.src = "assets/icons/download.png";
         downloadBtn.className = "pdf-download-btn";
         downloadBtn.onclick = function(){
@@ -284,6 +297,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         });
     },
     showPage: function(page_no) {
+        isPageRenderingInProgress = true;
         var instance = this;
 
         /** To log telemetyr impression event **/
@@ -338,9 +352,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                     // Show the canvas and hide the page loader
                     $("#pdf-canvas").show();
                     $("#page-loader").hide();
- 
+
                     instance.logImpressionEvent(navigateStageId, navigateStageTo);
-                    
+
                     instance.applyOpacityToNavbar(true);
                     instance.headerTimer = setTimeout(function() {
                         clearTimeout(instance.headerTimer);
@@ -356,18 +370,19 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                         if($("#pdf-meta").hasClass("higheropacity"))
                             instance.applyOpacityToNavbar(false);
                     });
-
+                    isPageRenderingInProgress = false;
                 });
             });
         } else {
             showToaster('error', "Page not found");
             //$("#pdf-no-page").show();
             $("#page-loader").hide();
+            isPageRenderingInProgress = false;
             //$("#pdf-canvas").hide();
         }
     },
     applyOpacityToNavbar: function(opacity) {
-        if (!opacity) {                     
+        if (!opacity) {
             $("#pdf-meta, #page-count-container, #pdf-search-container").removeClass('higheropacity');
             $("#pdf-meta, #page-count-container, #pdf-search-container").addClass('loweropacity');
         } else {
