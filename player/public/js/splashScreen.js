@@ -2,6 +2,12 @@ var splashScreen = {
 	elementId: "#loading",
 	progressEle: undefined,
 	config: {},
+	loadType: {
+		"corePlugins": {"name": "corePlugins", "startProgress": 0, "endProgress": 25},
+		"externalPlugins": {"name": "externalPlugins", "startProgress": 25, "endProgress": 25},
+		"contentPlugins": {"name": "contentPlugins", "startProgress": 50, "endProgress": 25},
+		"contentAssets": {"name": "contentAssets", "startProgress": 75, "endProgress": 25}
+	},
 	initialize: function () {
 		var globalConfig = EkstepRendererAPI.getGlobalConfig()
 		var appConfigKeys = Object.keys(globalConfig.splash)
@@ -28,6 +34,7 @@ var splashScreen = {
 		EkstepRendererAPI.addEventListener("renderer:splash:show", splashScreen.show)
 		EkstepRendererAPI.addEventListener("renderer:splash:hide", splashScreen.hide)
 		EkstepRendererAPI.addEventListener("renderer:content:start", splashScreen.hide)
+		EkstepRendererAPI.addEventListener("renderer:content:progress", splashScreen.progress)
 	},
 	createHtml: function () {
 		var html = "<img src=\"" + splashScreen.config.bgImage + "\" class=\"gc-loader-img\" onerror=\"this.style.display='none'\" /><P class=\"splashText\" id=\"splashTextId\"> Loading your content</p><div id=\"progressArea\"><div id=\"progressBar\"></div><p id=\"progressCount\" class=\"font-lato gc-loader-prog\"></p></div><a href=\"" + splashScreen.config.webLink + "\" target=\"_blank\"><div id=\"splashScreen\" class=\"splashScreen\"> <img src=\"" + splashScreen.config.icon + "\" class=\"splash-icon \" onerror=\"this.style.display='none'\" /> <span>" + splashScreen.config.text + "</span> </div></a>"
@@ -63,20 +70,32 @@ var splashScreen = {
 		isMobile && setTimeout(function () {
 			navigator.splashscreen.hide()
 		}, 100)
-		var width = 1
-		// eslint-disable-next-line
-        clearInterval(id)
-		var id = setInterval(frame, 50)
+		splashScreen.setProgress(1)
+	},
 
-		function frame () {
-			if (width >= 100) {
-				clearInterval(id)
-			} else {
-				width++
-				if (splashScreen.progressEle && splashScreen.progressEle.style) { splashScreen.progressEle.style.width = width + "%" }
-				jQuery("#progressCount").text(width + "%")
-			}
+	progress: function (event) {
+		console.log(event)
+	},
+
+	setProgress: function (value) {
+		var width = value
+		// eslint-disable-next-line
+        // clearInterval(id)
+		// var id = setInterval(frame, 50)
+
+		// function frame () {
+		// 	if (width >= 100) {
+		// 		clearInterval(id)
+		// 	} else {
+		// 		width++
+		// 		if (splashScreen.progressEle && splashScreen.progressEle.style) { splashScreen.progressEle.style.width = width + "%" }
+		// 		jQuery("#progressCount").text(width + "%")
+		// 	}
+		// }
+		if (splashScreen.progressEle && splashScreen.progressEle.style) {
+			splashScreen.progressEle.style.width = width + "%"
 		}
+		jQuery("#progressCount").text(width + "%")
 	},
 
 	hideProgressBar: function () {
