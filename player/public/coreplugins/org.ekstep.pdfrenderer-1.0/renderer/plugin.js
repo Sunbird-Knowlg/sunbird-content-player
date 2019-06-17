@@ -11,6 +11,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     heartBeatData: {},
     enableHeartBeatEvent: true,
     headerTimer: undefined,
+    previousScale: undefined,
+    pinchType :undefined,
     _constants: {
         mimeType: ["application/pdf"],
         events: {
@@ -24,6 +26,26 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         EkstepRendererAPI.addEventListener('nextClick', this.nextNavigation, this);
         EkstepRendererAPI.addEventListener('previousClick', this.previousNavigation, this);
     },
+
+    renderCurrentScaledPage: function () {
+        var instance = this;
+        context.PDF_DOC.getPage(context.CURRENT_PAGE).then(function (page) {
+            if (instance.headerTimer) clearTimeout(instance.headerTimer);
+            // Get viewport of the page at required scale
+            var viewport = page.getViewport(previousScale);
+            // Set canvas height
+            context.CANVAS.height = viewport.height;
+            var renderContext = {
+                canvasContext: context.CANVAS_CTX,
+                viewport: viewport
+            };
+            // Render the page contents in the canvas
+            page.render(renderContext).then(function () {
+                context.PAGE_RENDERING_IN_PROGRESS = 0;
+            });
+        });
+    },
+
     enableOverly: function () {
         EkstepRendererAPI.dispatchEvent("renderer:overlay:show");
         EkstepRendererAPI.dispatchEvent('renderer:stagereload:hide');
@@ -178,6 +200,28 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
         document.getElementById(this.manifest.id).style.overflow = "auto";
 
+        var hammerManager = new Hammer(pdfContents, {
+            touchAction: "pan-x pan-y"
+        });
+        hammerManager.get('pinch').set({ enable: true });
+
+        hammerManager.on("pinchin", function (ev) {
+            pinchType = 'pinchIn';
+        });
+        hammerManager.on("pinchout", function (ev) {
+            pinchType = 'pinchOut';
+        });
+        hammerManager.on("pinchend", function (ev) {
+            if (pinchType === 'pinchIn' && previousScale >= 0.50) {
+                previousScale = previousScale - 0.25;
+                context.renderCurrentScaledPage();
+            } else if (pinchType === 'pinchOut' && previousScale <= 3) {
+                previousScale = previousScale + 0.25;
+                context.renderCurrentScaledPage();
+            }
+            pinchType = undefined;
+        }); 
+
         context.PDF_DOC = 0;
         context.CURRENT_PAGE = 0;
         context.TOTAL_PAGES = 0;
@@ -316,7 +360,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 if(instance.headerTimer) clearTimeout(instance.headerTimer);
                 // As the canvas is of a fixed width we need to set the scale of the viewport accordingly
                 var scale_required = context.CANVAS.width / page.getViewport(1).width;
-
+                previousScale = scale_required;
                 // Get viewport of the page at required scale
                 var viewport = page.getViewport(scale_required);
 
