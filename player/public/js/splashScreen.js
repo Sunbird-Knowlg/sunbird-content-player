@@ -2,6 +2,9 @@ var splashScreen = {
 	elementId: "#loading",
 	progressEle: undefined,
 	config: {},
+	files: [],
+	currentProgress: 0,
+	progressIncrement: 0,
 	loadType: {
 		"corePlugins": {"name": "corePlugins", "startProgress": 0, "endProgress": 25},
 		"externalPlugins": {"name": "externalPlugins", "startProgress": 25, "endProgress": 25},
@@ -72,11 +75,31 @@ var splashScreen = {
 		}, 100)
 		splashScreen.setProgress(1)
 	},
-
 	progress: function (event) {
 		console.log(event)
+		if (event.target && event.target.name) {
+			splashScreen.changeProgressType(event.target)
+		} else if (event.target && event.target.file) {
+			splashScreen.updateProgress(event.target.file)
+		} else {
+			// This file is not valid for this progress
+			// Log telemetry event(LOG event) code issue
+		}
 	},
-
+	changeProgressType: function (data) {
+		splashScreen.setProgress(splashScreen.currentProgress)
+		splashScreen.files = data.files
+		splashScreen.progressIncrement = (data.name.endProgress / splashScreen.files)
+	},
+	updateProgress: function (fileName) {
+		if (splashScreen.files[fileName]) {
+			// If the current loadType endProgress is lessthan the CurrentProgress+value then only increament
+			splashScreen.setProgress(splashScreen.currentProgress += splashScreen.progressIncrement)
+		} else {
+			// This file is not valid for this progress
+			// Log telemetry event(LOG event) code issue
+		}
+	},
 	setProgress: function (value) {
 		var width = value
 		// eslint-disable-next-line
@@ -96,11 +119,17 @@ var splashScreen = {
 			splashScreen.progressEle.style.width = width + "%"
 		}
 		jQuery("#progressCount").text(width + "%")
+		splashScreen.currentProgress += value
 	},
-
+	resetProgressBar: function () {
+		// reset all the values
+		// all private varibles used to track progress
+		splashScreen.currentProgress = 0
+	},
 	hideProgressBar: function () {
 		//   splashScreen.progressEle.style.width = 0 + '%'
 		jQuery("#loading").hide()
+		splashScreen.reset()
 	}
 }
 window.splashScreen = splashScreen
