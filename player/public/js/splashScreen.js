@@ -129,7 +129,7 @@ var splashScreen = {
 	hideProgressBar: function () {
 		//   splashScreen.progressEle.style.width = 0 + '%'
 		jQuery("#loading").hide()
-		splashScreen.reset()
+		splashScreen.resetProgressBar()
 	}
 }
 window.splashScreen = splashScreen
