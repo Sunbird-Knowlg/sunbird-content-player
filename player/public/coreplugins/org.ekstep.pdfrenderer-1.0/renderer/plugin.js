@@ -370,7 +370,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                         if($("#pdf-meta").hasClass("higheropacity"))
                             instance.applyOpacityToNavbar(false);
                     });
-                    isPageRenderingInProgress = false;
+                    setTimeout(function () {
+                        isPageRenderingInProgress = false;
+                    }, 100)
                 });
             });
         } else {
