@@ -30,6 +30,7 @@ org.ekstep.contentrenderer.loadDefaultPlugins = function (cb) {
 	console.log("globalConfig.previewCdnUrl: " + globalConfig.previewCdnUrl)
 	if (globalConfig.isCorePluginsPackaged) {
 		org.ekstep.pluginframework.resourceManager.loadResource(corePluginsPath + globalConfig.version, "script", function () {
+			EkstepRendererAPI.dispatchEventListener("renderer:content:progress", {"name": window.splashScreen.loadType.corePlugins})
 			org.ekstep.contentrenderer.loadPlugins(globalConfig.defaultPlugins, [], function () {
 				if (cb) cb()
 			})
@@ -104,6 +105,7 @@ org.ekstep.contentrenderer.loadExternalPlugins = function (cb) {
 	var globalConfig = EkstepRendererAPI.getGlobalConfig()
 	org.ekstep.contentrenderer.addRepos()
 	if (globalConfig.config.plugins) {
+		EkstepRendererAPI.dispatchEventListener("renderer:content:progress", {"name": window.splashScreen.loadType.externalPlugins});
 		org.ekstep.contentrenderer.loadPlugins(globalConfig.config.plugins, [], function () {
 			console.info("External plugins are loaded")
 			EkstepRendererAPI.dispatchEvent("renderer:launcher:loadRendererPlugins", cb)
