@@ -6,7 +6,7 @@ var splashScreen = {
 	currentProgress: 0,
 	progressIncrement: 0,
 	loadType: {
-		"corePlugins": {"name": "corePlugins", "startProgress": 0, "endProgress": 25},
+		"corePlugins": {"name": "corePlugins", "startProgress": 1, "endProgress": 25},
 		"externalPlugins": {"name": "externalPlugins", "startProgress": 25, "endProgress": 25},
 		"contentPlugins": {"name": "contentPlugins", "startProgress": 50, "endProgress": 25},
 		"contentAssets": {"name": "contentAssets", "startProgress": 75, "endProgress": 25}
@@ -38,6 +38,7 @@ var splashScreen = {
 		EkstepRendererAPI.addEventListener("renderer:splash:hide", splashScreen.hide)
 		EkstepRendererAPI.addEventListener("renderer:content:start", splashScreen.hide)
 		EkstepRendererAPI.addEventListener("renderer:content:progress", splashScreen.progress)
+		EkstepRendererAPI.addEventListener("plugin:load:success", splashScreen.pluginLoadSuccess)
 	},
 	createHtml: function () {
 		var html = "<img src=\"" + splashScreen.config.bgImage + "\" class=\"gc-loader-img\" onerror=\"this.style.display='none'\" /><P class=\"splashText\" id=\"splashTextId\"> Loading your content</p><div id=\"progressArea\"><div id=\"progressBar\"></div><p id=\"progressCount\" class=\"font-lato gc-loader-prog\"></p></div><a href=\"" + splashScreen.config.webLink + "\" target=\"_blank\"><div id=\"splashScreen\" class=\"splashScreen\"> <img src=\"" + splashScreen.config.icon + "\" class=\"splash-icon \" onerror=\"this.style.display='none'\" /> <span>" + splashScreen.config.text + "</span> </div></a>"
@@ -62,10 +63,16 @@ var splashScreen = {
 	},
 
 	hide: function (event) {
-		jQuery(splashScreen.elementId).hide()
-		splashScreen.hideProgressBar()
+		splashScreen.setProgress(100)
+		setTimeout(function () {
+			jQuery(splashScreen.elementId).hide()
+			splashScreen.hideProgressBar()
+		}, 100)
 	},
-
+	pluginLoadSuccess: function (event) {
+		event.target.file = event.target.id
+		splashScreen.progress(event)
+	},
 	showProgressBar: function () {
 		splashScreen.progressEle = document.getElementById("progressBar")
 		jQuery("#progressBar").width(0)
@@ -87,21 +94,23 @@ var splashScreen = {
 		}
 	},
 	changeProgressType: function (data) {
-		splashScreen.setProgress(splashScreen.currentProgress)
+		splashScreen.setProgress(data.name.startProgress)
 		splashScreen.files = data.files
-		splashScreen.progressIncrement = (data.name.endProgress / splashScreen.files)
+		splashScreen.progressIncrement = (data.name.endProgress / splashScreen.files.length)
 	},
 	updateProgress: function (fileName) {
-		if (splashScreen.files[fileName]) {
-			// If the current loadType endProgress is lessthan the CurrentProgress+value then only increament
-			splashScreen.setProgress(splashScreen.currentProgress += splashScreen.progressIncrement)
-		} else {
-			// This file is not valid for this progress
-			// Log telemetry event(LOG event) code issue
-		}
+		splashScreen.setProgress(splashScreen.currentProgress += splashScreen.progressIncrement)
+		// if (splashScreen.files[fileName]) {
+		// 	// If the current loadType endProgress is lessthan the CurrentProgress+value then only increament
+		// 	splashScreen.setProgress(splashScreen.currentProgress += splashScreen.progressIncrement)
+		// } else {
+		// 	// This file is not valid for this progress
+		// 	// Log telemetry event(LOG event) code issue
+		// }
 	},
 	setProgress: function (value) {
-		var width = value
+		var width = Math.trunc(value)
+		console.log("value", width)
 		// eslint-disable-next-line
         // clearInterval(id)
 		// var id = setInterval(frame, 50)
@@ -119,7 +128,7 @@ var splashScreen = {
 			splashScreen.progressEle.style.width = width + "%"
 		}
 		jQuery("#progressCount").text(width + "%")
-		splashScreen.currentProgress += value
+		splashScreen.currentProgress = width
 	},
 	resetProgressBar: function () {
 		// reset all the values

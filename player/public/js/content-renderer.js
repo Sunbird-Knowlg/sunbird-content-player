@@ -24,13 +24,12 @@ org.ekstep.contentrenderer.init = function () {
 org.ekstep.contentrenderer.loadDefaultPlugins = function (cb) {
 	org.ekstep.contentrenderer.initPlugins("", "coreplugins")
 	var globalConfig = EkstepRendererAPI.getGlobalConfig()
-
+	EkstepRendererAPI.dispatchEvent("renderer:content:progress", {"name": window.splashScreen.loadType.corePlugins, "files": globalConfig.defaultPlugins})
 	// This is to load preview from CDN or proxy(relative path)
 	var corePluginsPath = globalConfig.previewCdnUrl ? globalConfig.previewCdnUrl + "/coreplugins.js?" : "./coreplugins.js?"
 	console.log("globalConfig.previewCdnUrl: " + globalConfig.previewCdnUrl)
 	if (globalConfig.isCorePluginsPackaged) {
 		org.ekstep.pluginframework.resourceManager.loadResource(corePluginsPath + globalConfig.version, "script", function () {
-			EkstepRendererAPI.dispatchEvent("renderer:content:progress", {"name": window.splashScreen.loadType.corePlugins})
 			org.ekstep.contentrenderer.loadPlugins(globalConfig.defaultPlugins, [], function () {
 				if (cb) cb()
 			})
@@ -103,9 +102,9 @@ org.ekstep.contentrenderer.addRepos = function () {
  */
 org.ekstep.contentrenderer.loadExternalPlugins = function (cb) {
 	var globalConfig = EkstepRendererAPI.getGlobalConfig()
+	EkstepRendererAPI.dispatchEvent("renderer:content:progress", {"name": window.splashScreen.loadType.externalPlugins, "files": globalConfig.contentLaunchers})
 	org.ekstep.contentrenderer.addRepos()
 	if (globalConfig.config.plugins) {
-		EkstepRendererAPI.dispatchEvent("renderer:content:progress", {"name": window.splashScreen.loadType.externalPlugins})
 		org.ekstep.contentrenderer.loadPlugins(globalConfig.config.plugins, [], function () {
 			console.info("External plugins are loaded")
 			EkstepRendererAPI.dispatchEvent("renderer:launcher:loadRendererPlugins", cb)
