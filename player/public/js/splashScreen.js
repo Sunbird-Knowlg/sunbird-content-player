@@ -38,7 +38,8 @@ var splashScreen = {
 		EkstepRendererAPI.addEventListener("renderer:splash:hide", splashScreen.hide)
 		EkstepRendererAPI.addEventListener("renderer:content:start", splashScreen.hide)
 		EkstepRendererAPI.addEventListener("renderer:content:progress", splashScreen.progress)
-		EkstepRendererAPI.addEventListener("plugin:load:success", splashScreen.pluginLoadSuccess)
+		EkstepRendererAPI.addEventListener("plugin:add", splashScreen.pluginLoadSuccess)
+		// EkstepRendererAPI.addEventListener("plugin:load:success", splashScreen.pluginLoadSuccess)
 	},
 	createHtml: function () {
 		var html = "<img src=\"" + splashScreen.config.bgImage + "\" class=\"gc-loader-img\" onerror=\"this.style.display='none'\" /><P class=\"splashText\" id=\"splashTextId\"> Loading your content</p><div id=\"progressArea\"><div id=\"progressBar\"></div><p id=\"progressCount\" class=\"font-lato gc-loader-prog\"></p></div><a href=\"" + splashScreen.config.webLink + "\" target=\"_blank\"><div id=\"splashScreen\" class=\"splashScreen\"> <img src=\"" + splashScreen.config.icon + "\" class=\"splash-icon \" onerror=\"this.style.display='none'\" /> <span>" + splashScreen.config.text + "</span> </div></a>"
@@ -70,8 +71,10 @@ var splashScreen = {
 		}, 100)
 	},
 	pluginLoadSuccess: function (event) {
-		event.target.file = event.target.id
-		splashScreen.progress(event)
+		if (event && event.target) {
+			event.target.file = event.target.plugin
+			splashScreen.progress(event)
+		}
 	},
 	showProgressBar: function () {
 		splashScreen.progressEle = document.getElementById("progressBar")
