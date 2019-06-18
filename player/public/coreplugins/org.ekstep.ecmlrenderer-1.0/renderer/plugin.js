@@ -192,6 +192,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         try {
             org.ekstep.contentrenderer.loadPlugins(pluginManifest.plugin, resource, function() {
                 qspatch.handleAssetUrl();
+                qspatch.telemetryPatch();
                 Renderer.theme.start(dataObj.path.replace('file:///', '') + "/assets/");
             });
         } catch (e) {
@@ -312,122 +313,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
        var totalStages = Renderer.theme._data.stage.length + this.getContentAssesmentCount();
 
         return this.progres(currentStageIndex, totalStages);
-    },
-
-
-});
-
-// TODO: Temporary solution: To handle Questionset backward compatibility (online streaming in mobile)
-var qspatch = {
-    getPluginInstance: function(pluginObj){
-        if(pluginObj){
-            return pluginObj;
-        } else {
-            return false;
-        }
-    },
-    handleAssetUrl : function() {
-
-        var pluginInst = this.getPluginInstance(org.ekstep.contentrenderer.questionUnitPlugin);
-        this.setPluginUrl(pluginInst, "AssetUrl");
-
-        pluginInst = this.getPluginInstance(org.ekstep.questionunitmcq && org.ekstep.questionunitmcq.RendererPlugin);
-        this.setPluginUrl(pluginInst, "AssetUrl");
-
-        pluginInst = this.getPluginInstance(org.ekstep.keyboard && org.ekstep.contentrenderer.keyboardRenderer);
-        this.setPluginUrl(pluginInst, "AssetUrl");
-
-        pluginInst = this.getPluginInstance(org.ekstep.contentrenderer.questionUnitPlugin);
-        this.setPluginUrl(pluginInst, "AudioUrl");
-
-        pluginInst = this.getPluginInstance(org.ekstep.contentrenderer.questionUnitPlugin);
-        this.setPluginUrl(pluginInst, "iconUrl");
-    },
-    setPluginUrl: function(pluginObj, urlType){
-        var instance = this;
-        if(!pluginObj) {
-            return;
-        }
-
-        switch (urlType) {
-            case "AssetUrl":
-                pluginObj.prototype.getAssetUrl = function (url) {
-                    if (isbrowserpreview) {
-                        return instance.validateUrl(url);
-                    } else {
-                        if (EkstepRendererAPI.isStreamingContent()) {
-                            // mobile online streaming
-                            if(url)
-                            return instance.validateUrl(EkstepRendererAPI.getBaseURL() + url.substring(1, url.length));
-                        } else {
-                            // Loading content from mobile storage ( OFFLINE )
-                            return instance.validateUrl('file:///' + EkstepRendererAPI.getBaseURL() + url);
-                        }
-                    }
-                }
-                break;
-
-            case "AudioUrl":
-                pluginObj.prototype.getIcon = function (path, pluginId, pluginVer) {
-                    if (isbrowserpreview) {
-                        return instance.validateUrl(this.getAssetUrl(org.ekstep.pluginframework.pluginManager.resolvePluginResource(pluginId, pluginVer, path)));
-                    } else {
-                        if (EkstepRendererAPI.isStreamingContent()) {
-                            // mobile online streaming
-                            if(path)
-                            return instance.validateUrl(EkstepRendererAPI.getBaseURL() + 'content-plugins/' + pluginId + '-' + pluginVer + '/' +path);
-                            //return org.ekstep.pluginframework.pluginManager.resolvePluginResource(pluginId, pluginVer, path);
-                        } else {
-                            // Loading content from mobile storage ( OFFLINE )
-                            return instance.validateUrl('file:///' + EkstepRendererAPI.getBaseURL() + 'content-plugins/' + pluginId + '-' + pluginVer + '/' + path);
-                        }
-                    }
-                }
-            break;
-
-            case "iconUrl":
-                pluginObj.prototype.getAudioIcon = function (path) {
-                    if (isbrowserpreview) {
-                        return instance.validateUrl(this.getAssetUrl(org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, path)));
-                    } else {
-                        if (EkstepRendererAPI.isStreamingContent()) {
-                            // mobile online streaming
-                            if(path)
-                            return instance.validateUrl(EkstepRendererAPI.getBaseURL() + 'content-plugins/' + this._manifest.id + '-' + this._manifest.ver + '/' + path);
-                            //return org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, path);
-                        } else {
-                            // Loading content from mobile storage ( OFFLINE )
-                            return instance.validateUrl('file:///' + EkstepRendererAPI.getBaseURL() + 'content-plugins/' + this._manifest.id + '-' + this._manifest.ver + '/' + path);
-                        }
-                    }
-                }
-            break;
-
-            default:
-                break;
-        }
-
-    },
-    validateUrl: function(url){
-        if(!url){
-            return
-        }
-        var regex = new RegExp("^(http|https)://", "i");
-        if(regex.test(url)){
-            var tempUrl = url.split("://")
-            if (tempUrl.length > 1){
-                var validString = tempUrl[1].split("//").join("/");
-                return [tempUrl[0], validString].join("://");
-            }
-        }else{
-            var tempUrl = url.split(":///")
-            if (tempUrl.length > 1){
-                var validString = tempUrl[1].split("//").join("/");;
-                return [tempUrl[0], validString].join(":///");
-            }
-        }
-        return url.split("//").join("/");
     }
-}
-
+});
 //# sourceURL=ECMLRenderer.js

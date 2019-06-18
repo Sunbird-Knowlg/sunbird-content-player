@@ -30,7 +30,7 @@ org.ekstep.contentrenderer.loadDefaultPlugins = function (cb) {
 	console.log("globalConfig.previewCdnUrl: " + globalConfig.previewCdnUrl)
 	if (globalConfig.isCorePluginsPackaged) {
 		org.ekstep.pluginframework.resourceManager.loadResource(corePluginsPath + globalConfig.version, "script", function () {
-			EkstepRendererAPI.dispatchEventListener("renderer:content:progress", {"name": window.splashScreen.loadType.corePlugins})
+			EkstepRendererAPI.dispatchEvent("renderer:content:progress", {"name": window.splashScreen.loadType.corePlugins})
 			org.ekstep.contentrenderer.loadPlugins(globalConfig.defaultPlugins, [], function () {
 				if (cb) cb()
 			})
@@ -52,7 +52,7 @@ org.ekstep.contentrenderer.loadDefaultPlugins = function (cb) {
  * @param  {obj} appInfo [metadata]
  */
 org.ekstep.contentrenderer.startGame = function (appInfo) {
-	window.PLAYER_START_TIME = Date.now()/1000;
+	window.PLAYER_START_TIME = Date.now() / 1000
 	globalConfig.basepath = (appInfo.streamingUrl) ? (appInfo.streamingUrl) : (globalConfig.basepath || appInfo.baseDir)
 	org.ekstep.contentrenderer.loadDefaultPlugins(function () {
 		org.ekstep.contentrenderer.loadExternalPlugins(function () {
@@ -105,7 +105,7 @@ org.ekstep.contentrenderer.loadExternalPlugins = function (cb) {
 	var globalConfig = EkstepRendererAPI.getGlobalConfig()
 	org.ekstep.contentrenderer.addRepos()
 	if (globalConfig.config.plugins) {
-		EkstepRendererAPI.dispatchEventListener("renderer:content:progress", {"name": window.splashScreen.loadType.externalPlugins});
+		EkstepRendererAPI.dispatchEvent("renderer:content:progress", {"name": window.splashScreen.loadType.externalPlugins})
 		org.ekstep.contentrenderer.loadPlugins(globalConfig.config.plugins, [], function () {
 			console.info("External plugins are loaded")
 			EkstepRendererAPI.dispatchEvent("renderer:launcher:loadRendererPlugins", cb)
@@ -349,7 +349,7 @@ org.ekstep.contentrenderer.web = function (id) {
 
 org.ekstep.contentrenderer.device = function () {
 	var globalconfig = EkstepRendererAPI.getGlobalConfig()
-	var isMobile = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()));
+	var isMobile = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()))
 	if (!isbrowserpreview && isMobile) {
 		if (globalconfig.metadata) {
 			org.ekstep.contentrenderer.setContentMetadata(globalconfig.metadata, function () {
