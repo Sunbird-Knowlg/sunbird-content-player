@@ -58,17 +58,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         video.className = 'vjs-default-skin';
 		document.body.appendChild(video);
 
-        var loaderArea = document.createElement('div');
-        loaderArea.id = 'loaderArea';
-        var element = '<div class="loading">Loading&#8230;</div>'
-        loaderArea.innerHTML = element;
-
         EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
         EkstepRendererAPI.dispatchEvent("renderer:content:start");
-
-
-        document.body.appendChild(loaderArea);
-        jQuery('#loaderArea').show();
 
         if (data.mimeType === "video/x-youtube") {
         $('.vjs-default-skin').css('opacity', '0');
@@ -149,7 +140,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 type: 'video/youtube',
                 src: path
             });
-            jQuery('#loaderArea').hide();
             youtubeInstance.play();
             instance.addYOUTUBEListeners(youtubeInstance);
             instance.setYoutubeStyles(youtubeInstance);
@@ -217,9 +207,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     addVideoListeners: function (videoPlayer, path, data) {
         var instance = this;
         videoPlayer.on("play", function (e) {
-            if (jQuery('#loaderArea').css("display") == "block") {
-                jQuery('#loaderArea').hide();
-            }
             instance.play("videostage", Math.floor(instance.videoPlayer.currentTime()) * 1000);
         });
 

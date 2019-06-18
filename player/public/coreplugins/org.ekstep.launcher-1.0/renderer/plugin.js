@@ -32,7 +32,8 @@ Plugin.extend({
                 console.error("Plugin mimetype is not defined ", error);	
             }	
         },
-        start: function(evt, contentObj) {	
+        start: function(evt, contentObj) {
+            EkstepRendererAPI.dispatchEvent("renderer:content:progress", {"name": window.splashScreen.loadType.contentAssets, "files": ["file"]})
             content = contentObj;	
             var launcherPluginMap = this.rendererMap[content.mimeType];	
             if (_.isUndefined(launcherPluginMap)) return;
