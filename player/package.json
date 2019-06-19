@@ -98,7 +98,7 @@
         "eslint-plugin-standard": "^3.1.0"
     },
     "watch": {
-        "build-preview": {
+        "build-preview-windows": {
             "patterns": ["src", "test"],
             "extensions": "js,jsx",
             "quiet": true,
