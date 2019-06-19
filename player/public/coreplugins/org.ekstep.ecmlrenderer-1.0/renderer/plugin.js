@@ -189,6 +189,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         if(EkstepRendererAPI.isStreamingContent()) org.ekstep.pluginframework.pluginManager.asyncQueueConcurrency = 1;
 
         (_.isUndefined(pluginManifest) || _.isEmpty(pluginManifest)) && (pluginManifest = { plugin: [] });
+        EkstepRendererAPI.dispatchEvent("renderer:content:progress", {"name": window.splashScreen.loadType.contentAssets, "files": pluginManifest.plugin})
         try {
             org.ekstep.contentrenderer.loadPlugins(pluginManifest.plugin, resource, function() {
                 qspatch.handleAssetUrl();
