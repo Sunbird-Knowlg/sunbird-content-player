@@ -43,8 +43,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         } else {
             path = data.artifactUrl;
         }
-        console.log("path", path);
-        console.log("data", data);
         this.createVideo(path, data);
         this.configOverlay();
     },
@@ -58,12 +56,11 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         video.className = 'vjs-default-skin';
 		document.body.appendChild(video);
 
-        EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
         EkstepRendererAPI.dispatchEvent("renderer:content:start");
 
         if (data.mimeType === "video/x-youtube") {
         $('.vjs-default-skin').css('opacity', '0');
-        this._loadYoutube(data.artifactUrl);
+            this._loadYoutube(data.artifactUrl);
         } else if (data.streamingUrl && (data.mimeType != "video/x-youtube")) {
             data.mimeType = this.supportedStreamingMimeType;
             this._loadVideo(data.streamingUrl, data);
@@ -95,6 +92,11 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             var videoPlayer = videojs('videoElement', {
                 "controls": true, "autoplay": true, "preload": "auto",
                 "nativeControlsForTouch": true
+            }, function () {
+                this.on('downloadvideo', function () {
+                    EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
+                    console.log("downloadvideo");
+                })
             });
         } else {
             var videoPlayer = videojs('videoElement', {
@@ -108,6 +110,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 }
             }, function () {
                 this.on('downloadvideo', function () {
+                    EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
+                    console.log("downloadvideo");
                     EkstepRendererAPI.getTelemetryService().interact("TOUCH", "Download", "TOUCH", {
                         stageId: 'videostage',
                         subtype: ''
@@ -135,7 +139,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         });
         videojs("videoElement").ready(function () {
 			var youtubeInstance = this;
-			$('.vjs-default-skin').css('opacity', '1');
+            $('.vjs-default-skin').css('opacity', '1');
             youtubeInstance.src({
                 type: 'video/youtube',
                 src: path
@@ -144,6 +148,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             instance.addYOUTUBEListeners(youtubeInstance);
             instance.setYoutubeStyles(youtubeInstance);
             instance.videoPlayer = youtubeInstance;
+            EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
+            console.log("downloadvideo");
         });
     },
     setYoutubeStyles: function (youtube) {
