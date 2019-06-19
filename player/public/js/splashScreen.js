@@ -38,8 +38,8 @@ var splashScreen = {
 		EkstepRendererAPI.addEventListener("renderer:splash:hide", splashScreen.hide)
 		EkstepRendererAPI.addEventListener("renderer:content:start", splashScreen.hide)
 		EkstepRendererAPI.addEventListener("renderer:content:progress", splashScreen.progress)
-		EkstepRendererAPI.addEventListener("plugin:add", splashScreen.pluginLoadSuccess)
-		// EkstepRendererAPI.addEventListener("plugin:load:success", splashScreen.pluginLoadSuccess)
+		// EkstepRendererAPI.addEventListener("plugin:add", splashScreen.pluginLoadSuccess)
+		EkstepRendererAPI.addEventListener("plugin:load:success", splashScreen.pluginLoadSuccess)
 	},
 	createHtml: function () {
 		var html = "<img src=\"" + splashScreen.config.bgImage + "\" class=\"gc-loader-img\" onerror=\"this.style.display='none'\" /><P class=\"splashText\" id=\"splashTextId\"> Loading your content</p><div id=\"progressArea\"><div id=\"progressBar\"></div><p id=\"progressCount\" class=\"font-lato gc-loader-prog\"></p></div><a href=\"" + splashScreen.config.webLink + "\" target=\"_blank\"><div id=\"splashScreen\" class=\"splashScreen\"> <img src=\"" + splashScreen.config.icon + "\" class=\"splash-icon \" onerror=\"this.style.display='none'\" /> <span>" + splashScreen.config.text + "</span> </div></a>"
@@ -72,7 +72,7 @@ var splashScreen = {
 	},
 	pluginLoadSuccess: function (event) {
 		if (event && event.target) {
-			event.target.file = event.target.plugin
+			event.target.file = event.target.id
 			splashScreen.progress(event)
 		}
 	},
@@ -86,7 +86,6 @@ var splashScreen = {
 		splashScreen.setProgress(1)
 	},
 	progress: function (event) {
-		console.log(event)
 		if (event.target && event.target.name) {
 			splashScreen.changeProgressType(event.target)
 		} else if (event.target && event.target.file) {
@@ -97,12 +96,15 @@ var splashScreen = {
 		}
 	},
 	changeProgressType: function (data) {
-		splashScreen.setProgress(data.name.startProgress)
+		console.log("Progress Change type: ", data)
 		splashScreen.files = data.files
-		splashScreen.progressIncrement = (data.name.endProgress / splashScreen.files.length)
+		splashScreen.progressIncrement = (data.name.endProgress / data.files.length)
+		splashScreen.setProgress(data.name.startProgress)
+		console.log("Progress Increment: ", splashScreen.progressIncrement)
 	},
 	updateProgress: function (fileName) {
 		splashScreen.setProgress(splashScreen.currentProgress += splashScreen.progressIncrement)
+		console.log("Progress : " + fileName + ", value: " + splashScreen.currentProgress)
 		// if (splashScreen.files[fileName]) {
 		// 	// If the current loadType endProgress is lessthan the CurrentProgress+value then only increament
 		// 	splashScreen.setProgress(splashScreen.currentProgress += splashScreen.progressIncrement)
