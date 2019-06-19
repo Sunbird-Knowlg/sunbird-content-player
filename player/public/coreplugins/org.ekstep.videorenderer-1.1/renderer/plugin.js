@@ -58,7 +58,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         video.className = 'vjs-default-skin';
 		document.body.appendChild(video);
 
-        EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
         EkstepRendererAPI.dispatchEvent("renderer:content:start");
 
         if (data.mimeType === "video/x-youtube") {
@@ -156,6 +155,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     play: function (stageid, time) {
         if (time == 0) {
+            EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
             EkstepRendererAPI.getTelemetryService().navigate(stageid, stageid, {
                 "duration": (Date.now() / 1000) - window.PLAYER_STAGE_START_TIME
             });
