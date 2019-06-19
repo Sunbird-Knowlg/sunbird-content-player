@@ -72,7 +72,7 @@ Plugin.extend({
             if (GlobalContext.config.overlay.showOverlay) {
                 plugins.push({ "id": "org.ekstep.overlay", "ver": "1.0", "type": 'plugin' });
             }
-            EkstepRendererAPI.dispatchEvent("renderer:content:progress", {"name": window.splashScreen.loadType.externalPlugins, "files": plugins})
+            EkstepRendererAPI.dispatchEvent("renderer:content:progress", {"name": window.splashScreen.loadType.contentPlugins, "files": plugins})
             org.ekstep.contentrenderer.loadPlugins(plugins, [], function() {
                 if (cb && typeof cb.target == "function") cb.target();
             });
