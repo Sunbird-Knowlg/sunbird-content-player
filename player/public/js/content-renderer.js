@@ -101,7 +101,6 @@ org.ekstep.contentrenderer.addRepos = function () {
  */
 org.ekstep.contentrenderer.loadExternalPlugins = function (cb) {
 	var globalConfig = EkstepRendererAPI.getGlobalConfig()
-	EkstepRendererAPI.dispatchEvent("renderer:content:progress", {"name": window.splashScreen.loadType.externalPlugins, "files": globalConfig.contentLaunchers})
 	org.ekstep.contentrenderer.addRepos()
 	if (globalConfig.config.plugins) {
 		EkstepRendererAPI.dispatchEvent("renderer:content:progress", {"name": window.splashScreen.loadType.externalPlugins, "files": globalConfig.config.plugins})
