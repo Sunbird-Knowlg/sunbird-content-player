@@ -276,7 +276,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             }
         }
     },
-
     addDownloadButton: function(path, pdfSearchContainer){
         if(!path.length) return false;
         var instance = this;
