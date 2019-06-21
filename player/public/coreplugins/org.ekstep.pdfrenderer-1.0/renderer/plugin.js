@@ -265,7 +265,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                     context.logInteractEvent("TOUCH", "previous", "TOUCH", {
                         stageId: context.CURRENT_PAGE.toString()
                     });
-                    context.previousNavigation();
+                    if (context.CURRENT_PAGE != 1)
+                        context.previousNavigation();
                 } else if ($(this)[0].offsetHeight + $(this).scrollTop() >= $(this)[0].scrollHeight) {
                     context.logInteractEvent("TOUCH", "next", "TOUCH", {
                         stageId: context.CURRENT_PAGE.toString()
@@ -420,6 +421,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                     });
                     setTimeout(function () {
                         isPageRenderingInProgress = false;
+                        $(document.getElementById(instance.manifest.id)).scrollTop(1);
                     }, 100)
                 });
             });
