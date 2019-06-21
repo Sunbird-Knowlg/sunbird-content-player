@@ -261,7 +261,17 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         // listening to scroll event for pdf
         document.getElementById(this.manifest.id).onscroll = function () {
             if (!isPageRenderingInProgress) {
+<<<<<<< Updated upstream
                 if ($(this)[0].offsetHeight + $(this).scrollTop() >= $(this)[0].scrollHeight) {
+=======
+                if ($(this).scrollTop() <= 0) {
+                    context.logInteractEvent("TOUCH", "previous", "TOUCH", {
+                        stageId: context.CURRENT_PAGE.toString()
+                    });
+                    if (context.CURRENT_PAGE != 1)
+                        context.previousNavigation();
+                } else if ($(this)[0].offsetHeight + $(this).scrollTop() >= $(this)[0].scrollHeight) {
+>>>>>>> Stashed changes
                     context.logInteractEvent("TOUCH", "next", "TOUCH", {
                         stageId: context.CURRENT_PAGE.toString()
                     })
@@ -416,6 +426,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                     });
                     setTimeout(function () {
                         isPageRenderingInProgress = false;
+                        $(document.getElementById(instance.manifest.id)).scrollTop(1);
                     }, 100)
                 });
             });
