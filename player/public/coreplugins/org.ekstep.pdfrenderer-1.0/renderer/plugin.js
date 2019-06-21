@@ -261,7 +261,12 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         // listening to scroll event for pdf
         document.getElementById(this.manifest.id).onscroll = function () {
             if (!isPageRenderingInProgress) {
-                if ($(this)[0].offsetHeight + $(this).scrollTop() >= $(this)[0].scrollHeight) {
+                if ($(this).scrollTop() <= 0) {
+                    context.logInteractEvent("TOUCH", "previous", "TOUCH", {
+                        stageId: context.CURRENT_PAGE.toString()
+                    });
+                    context.previousNavigation();
+                } else if ($(this)[0].offsetHeight + $(this).scrollTop() >= $(this)[0].scrollHeight) {
                     context.logInteractEvent("TOUCH", "next", "TOUCH", {
                         stageId: context.CURRENT_PAGE.toString()
                     })
@@ -270,7 +275,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             }
         }
     },
-
     addDownloadButton: function(path, pdfSearchContainer){
         if(!path.length) return false;
         var instance = this;
