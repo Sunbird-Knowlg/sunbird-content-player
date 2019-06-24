@@ -190,7 +190,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             org.ekstep.pluginframework.pluginManager.asyncQueueConcurrency = 1;
         }
         (_.isUndefined(pluginManifest) || _.isEmpty(pluginManifest)) && (pluginManifest = { plugin: [] });
-        EkstepRendererAPI.dispatchEvent("renderer:content:progress", {"name": window.splashScreen.loadType.contentAssets, "files": pluginManifest.plugin})
         try {
             EkstepRendererAPI.dispatchEvent("renderer:content:progress", {"name": window.splashScreen.loadType.contentAssets, "files": pluginManifest.plugin})
             org.ekstep.contentrenderer.loadPlugins(pluginManifest.plugin, resource, function() {
