@@ -194,8 +194,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         try {
             EkstepRendererAPI.dispatchEvent("renderer:content:progress", {"name": window.splashScreen.loadType.contentAssets, "files": pluginManifest.plugin})
             org.ekstep.contentrenderer.loadPlugins(pluginManifest.plugin, resource, function() {
-                // qspatch.handleAssetUrl();
-                // qspatch.telemetryPatch();
+                qspatch.handleAssetUrl();
+                qspatch.telemetryPatch();
                 Renderer.theme.start(dataObj.path.replace('file:///', '') + "/assets/");
             });
         } catch (e) {
