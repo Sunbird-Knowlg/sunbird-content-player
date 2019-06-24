@@ -60,6 +60,7 @@ Plugin.extend({
             EkstepRendererAPI.dispatchEvent("renderer:player:show");
         },
         loadLauncherPlugins: function(cb) {
+            console.log("Loading launchers")
             var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
             var plugins = globalConfigObj.contentLaunchers;
             EkstepRendererAPI.dispatchEvent("renderer:repo:create", undefined, {

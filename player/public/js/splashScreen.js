@@ -93,6 +93,7 @@ var splashScreen = {
 		} else {
 			// This file is not valid for this progress
 			// Log telemetry event(LOG event) code issue
+			console.log("renderer:content:progress event triggered without target name/file: ", event)
 		}
 	},
 	changeProgressType: function (data) {
@@ -129,11 +130,16 @@ var splashScreen = {
 		// 		jQuery("#progressCount").text(width + "%")
 		// 	}
 		// }
-		if (splashScreen.progressEle && splashScreen.progressEle.style) {
-			splashScreen.progressEle.style.width = width + "%"
+		if (width <= 100) {
+			if (splashScreen.progressEle && splashScreen.progressEle.style) {
+				splashScreen.progressEle.style.width = width + "%"
+			}
+
+			jQuery("#progressCount").text(width + "%")
+			splashScreen.currentProgress = width
+		} else {
+			console.log("Progress value is >100.", value)
 		}
-		jQuery("#progressCount").text(width + "%")
-		splashScreen.currentProgress = width
 	},
 	resetProgressBar: function () {
 		// reset all the values
