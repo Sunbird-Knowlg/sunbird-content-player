@@ -72,7 +72,7 @@ function getCurrentStageId () {
 }
 
 function contentExitCall () {
-	org.ekstep.service.renderer.showExitConfirmPopup()
+	if(window.cordova || !isbrowserpreview) org.ekstep.service.renderer.showExitConfirmPopup()
 }
 
 // After integration with Genie, onclick of exit we should go to previous Activity of the Genie.
