@@ -60,6 +60,7 @@ Plugin.extend({
             EkstepRendererAPI.dispatchEvent("renderer:player:show");
         },
         loadLauncherPlugins: function(cb) {
+            console.log("Loading launchers")
             var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
             var plugins = globalConfigObj.contentLaunchers;
             EkstepRendererAPI.dispatchEvent("renderer:repo:create", undefined, {
@@ -72,7 +73,6 @@ Plugin.extend({
             if (GlobalContext.config.overlay.showOverlay) {
                 plugins.push({ "id": "org.ekstep.overlay", "ver": "1.0", "type": 'plugin' });
             }
-            EkstepRendererAPI.dispatchEvent("renderer:content:progress", {"name": window.splashScreen.loadType.contentPlugins, "files": plugins})
             org.ekstep.contentrenderer.loadPlugins(plugins, [], function() {
                 if (cb && typeof cb.target == "function") cb.target();
             });
