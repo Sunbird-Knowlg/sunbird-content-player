@@ -177,7 +177,7 @@ TelemetryV3Manager = Class.extend({
         var eksData = {
           "type": (data && data.type) ? data.type : "workflow" ,
           "subtype": (data && data.subtype) ? data.subtype : "" ,
-          "pageid": stageto,
+          "pageid": stageto.toString(),
           "uri": (data && data.uri) ? data.uri : stageid,
           "duration": (data && data.duration)? Number(data.duration.toFixed(2)) : 0
         }
