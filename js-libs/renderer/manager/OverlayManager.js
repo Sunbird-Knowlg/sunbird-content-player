@@ -215,7 +215,7 @@ OverlayManager = {
     },
     navigatePrevious: function() {
       try{
-        if ((_.isUndefined(Renderer.theme) || _.isUndefined(Renderer.theme._currentScene))) return;
+        if (_.isUndefined(Renderer.theme) || _.isUndefined(Renderer.theme._currentScene) || _.isUndefined(Renderer.theme._previousStage)) return false;
         var navigateToStage = this.getNavigateTo('previous');
         this.logNavigationTelInteract("previous");
         if (_.isUndefined(navigateToStage)) {
