@@ -7,7 +7,6 @@ module.exports = function (grunt) {
 		pkg: grunt.file.readJSON("package.json"),
 		version: "3.2.",
 		buildNumber: process.env.BUILD_NUMBER,
-		envDomain: process.env.ENV_DOMAIN,
 		mkdir: {
 			all: {
 				options: {
@@ -668,14 +667,6 @@ module.exports = function (grunt) {
 				replacements: [{
 					from: "genie-canvas-version",
 					to: "<%= version %>"
-				}]
-			},
-			evn_domain: {
-				src: ["www/preview.html", "www/preview/preview.html"],
-				overwrite: true,
-				replacements: [{
-					from: /ENV_DOMAIN/g,
-					to: "<%= envDomain %>"
 				}]
 			}
 		},
