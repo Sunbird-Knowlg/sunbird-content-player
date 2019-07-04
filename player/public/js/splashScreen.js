@@ -6,10 +6,10 @@ var splashScreen = {
 	currentProgress: 0,
 	progressIncrement: 0,
 	loadType: {
-		"corePlugins": {"name": "corePlugins", "startProgress": 1, "endProgress": 25},
-		"externalPlugins": {"name": "externalPlugins", "startProgress": 25, "endProgress": 25},
-		"contentPlugins": {"name": "contentPlugins", "startProgress": 50, "endProgress": 25},
-		"contentAssets": {"name": "contentAssets", "startProgress": 75, "endProgress": 25}
+		"corePlugins": { "name": "corePlugins", "startProgress": 1, "endProgress": 25 },
+		"externalPlugins": { "name": "externalPlugins", "startProgress": 25, "endProgress": 25 },
+		"contentPlugins": { "name": "contentPlugins", "startProgress": 50, "endProgress": 25 },
+		"contentAssets": { "name": "contentAssets", "startProgress": 75, "endProgress": 25 }
 	},
 	initialize: function () {
 		var globalConfig = EkstepRendererAPI.getGlobalConfig()
