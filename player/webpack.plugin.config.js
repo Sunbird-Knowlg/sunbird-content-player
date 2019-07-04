@@ -21,8 +21,12 @@ const UglifyJsPlugin = require("uglifyjs-webpack-plugin")
 const WebpackOnBuildPlugin = require("on-build-webpack")
 const APP_CONFIG = require("./build.config.js")
 
+const BUILD_NUMBER = process.env.build_number;
+const PLAYER_VER = process.env.player_version_number;
+const VERSION = PLAYER_VER + '.' + BUILD_NUMBER;
+
 const PLUGINS_BASE_PATH = "./public/coreplugins/" // Plugins base path
-const PACKAGE_JS_FILE_NAME = "coreplugins.js" // Packaged all plugins js file name
+const PACKAGE_JS_FILE_NAME = "coreplugins." + VERSION + ".js" // Packaged all plugins js file name
 const PACKAGE_CSS_FILE_NAME = "coreplugins.css" // Packaged all plugins css files name
 const OUTPUT_PATH = "public/coreplugins-dist/" // 'public/'; // Package file path.
 const DIST_OUTPUT_FILE_PATH = "/renderer/plugin.dist.js" // dist file path which is created in each plugins folder
