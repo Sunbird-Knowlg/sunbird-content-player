@@ -12,7 +12,7 @@ LoadByStageStrategy = Class.extend({
         //console.info('createjs.CordovaAudioPlugin.isSupported()', createjs.CordovaAudioPlugin.isSupported());
         var instance = this;
         var regex = new RegExp("^(http|https)://", "i");
-        if(regex.test(basePath)){
+        if(regex.test(basePath) && isbrowserpreview){
             createjs.Sound.registerPlugins([createjs.WebAudioPlugin, createjs.CordovaAudioPlugin, createjs.HTMLAudioPlugin]);
         }else{
             createjs.Sound.registerPlugins([createjs.CordovaAudioPlugin, createjs.WebAudioPlugin, createjs.HTMLAudioPlugin]);
@@ -393,3 +393,4 @@ LoadByStageStrategy = Class.extend({
         }
     }
 });
+//# sourceURL=LoadByStageStrategy.js
