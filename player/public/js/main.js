@@ -308,7 +308,7 @@ function setGlobalConfig (configuration) {
 		} else if (configuration.objectRollup) {
 			rollup = configuration.objectRollup
 		}
-		configuration.object = _.assign({rollup: rollup}, configuration.object)
+		configuration.object = _.assign({ rollup: rollup }, configuration.object)
 	}
 
 	if (!_.isUndefined(configuration.context.pdata) && !_.isUndefined(configuration.context.pdata.pid) && !configuration.context.pdata.pid.includes("." + AppConfig.pdata.pid)) {
