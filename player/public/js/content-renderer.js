@@ -24,7 +24,7 @@ org.ekstep.contentrenderer.init = function () {
 org.ekstep.contentrenderer.loadDefaultPlugins = function (cb) {
 	org.ekstep.contentrenderer.initPlugins("", "coreplugins")
 	var globalConfig = EkstepRendererAPI.getGlobalConfig()
-	EkstepRendererAPI.dispatchEvent("renderer:content:progress", {"name": window.splashScreen.loadType.corePlugins, "files": globalConfig.defaultPlugins})
+	EkstepRendererAPI.dispatchEvent("renderer:content:progress", { "name": window.splashScreen.loadType.corePlugins, "files": globalConfig.defaultPlugins })
 	// This is to load preview from CDN or proxy(relative path)
 	var corePluginsPath = globalConfig.previewCdnUrl ? globalConfig.previewCdnUrl + "/coreplugins.js?" : "./coreplugins.js?"
 	if (globalConfig.isCorePluginsPackaged) {
