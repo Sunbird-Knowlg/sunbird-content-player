@@ -78,15 +78,41 @@ RecorderManager = {
                     var stageId = stagePlugin._id;
                     if ("success" == response.status) {
                         var currentRecId = "current_rec";
-                        AssetManager.loadAsset(stageId, currentRecId, response.filePath);
-                        AudioManager.destroy(stageId, currentRecId);
-                        if (action.success) stagePlugin.dispatchEvent(action.success);
+                        RecorderManager.switchToCordova()
+                        try {
+                            AssetManager.loadAsset(stageId, currentRecId, response.filePath);
+                            AudioManager.destroy(stageId, currentRecId);
+                            if (action.success) stagePlugin.dispatchEvent(action.success);
+                        } catch(err){
+                            console.log('Error Occurred while trying to load to recorded audio');
+                        }
+                        RecorderManager.switchBackToDefault()
                     } else if ("error" == response.status && action.failure) {
                         stagePlugin.dispatchEvent(action.failure);
                     }
                 }
             });
         }
+    },
+    
+    switchToCordova : function(){
+        if(createjs.Sound.activePlugin instanceof createjs.CordovaAudioPlugin == false){
+            if(createjs.Sound.activePlugin_Cordova == undefined){
+                createjs.Sound.activePlugin_Cordova = new createjs.CordovaAudioPlugin;
+            }
+            createjs.Sound.activePlugin_Default = createjs.Sound.activePlugin;
+            createjs.Sound.activePlugin = createjs.Sound.activePlugin_Cordova;
+            
+            return true;
+        }
+        return false;
+    },
+    switchBackToDefault : function(){
+        if(createjs.Sound.activePlugin_Default){
+            createjs.Sound.activePlugin = createjs.Sound.activePlugin_Default;
+            return true;
+        }
+        return false;
     },
     processRecording: function(action) {
         var plugin = PluginManager.getPluginObject(action.asset);
