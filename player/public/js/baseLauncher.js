@@ -98,8 +98,9 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
      */
 	progres: function (currentIndex, totalIndex) {
 		var totalProgress = (currentIndex / totalIndex) * 100
-		totalProgress = totalProgress > 100 ? 100 : totalProgress
-		return Math.round(totalProgress)
+		totalProgress = _.isFinite(totalProgress) ? totalProgress : 0
+		totalProgress = totalProgress > 100 ? 100 : Math.round(totalProgress)
+		return totalProgress
 	},
 	contentProgress: function () {
 		console.warn("Child Launcher should calculate")
@@ -113,9 +114,10 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
 		var data = {}
 		data.stageid = EkstepRendererAPI.getCurrentStageId()
 		data.mode = getPreviewMode()
+		data.duration = (Date.now() / 1000) - window.PLAYER_START_TIME
 		var gameId = content.identifier
 		var version = content.pkgVersion || "1.0"
-		window.PLAYER_STAGE_START_TIME = Date.now();
+		window.PLAYER_STAGE_START_TIME = Date.now() / 1000
 		TelemetryService.start(gameId, version, data)
 	},
 

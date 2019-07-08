@@ -39,7 +39,7 @@ describe('Launcher Plugin', function() {
             expect(EventBus.hasEventListener('renderer:launcher:load')).toBe(true);
         });
     });
-    describe("When common plugins is loading", function() {
+    xdescribe("When common plugins is loading", function() {
         it("It should load common plugins", function() {
             var contentrenderer = org.ekstep.contentrenderer;
             spyOn(contentrenderer, "loadPlugins").and.callThrough();
@@ -53,7 +53,7 @@ describe('Launcher Plugin', function() {
             expect(EventBus.hasEventListener('renderer:launcher:load')).toBe(true);
         });
     });
-    describe("When load plugin is called", function() {
+    xdescribe("When load plugin is called", function() {
         it("It should invoke content renderer loadPlugins", function(done) {
             var contentrenderer = org.ekstep.contentrenderer;
             spyOn(instance, "eventReciever").and.callThrough();

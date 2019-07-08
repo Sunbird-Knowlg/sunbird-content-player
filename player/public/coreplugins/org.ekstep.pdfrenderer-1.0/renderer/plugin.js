@@ -9,8 +9,11 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     context: undefined,
     stageId: [],
     heartBeatData: {},
+    isPageRenderingInProgress: undefined,
     enableHeartBeatEvent: true,
     headerTimer: undefined,
+    previousScale: undefined,
+    pinchType :undefined,
     _constants: {
         mimeType: ["application/pdf"],
         events: {
@@ -24,6 +27,26 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         EkstepRendererAPI.addEventListener('nextClick', this.nextNavigation, this);
         EkstepRendererAPI.addEventListener('previousClick', this.previousNavigation, this);
     },
+
+    renderCurrentScaledPage: function () {
+        var instance = this;
+        context.PDF_DOC.getPage(context.CURRENT_PAGE).then(function (page) {
+            if (instance.headerTimer) clearTimeout(instance.headerTimer);
+            // Get viewport of the page at required scale
+            var viewport = page.getViewport(previousScale);
+            // Set canvas height
+            context.CANVAS.height = viewport.height;
+            var renderContext = {
+                canvasContext: context.CANVAS_CTX,
+                viewport: viewport
+            };
+            // Render the page contents in the canvas
+            page.render(renderContext).then(function () {
+                context.PAGE_RENDERING_IN_PROGRESS = 0;
+            });
+        });
+    },
+
     enableOverly: function () {
         EkstepRendererAPI.dispatchEvent("renderer:overlay:show");
         EkstepRendererAPI.dispatchEvent('renderer:stagereload:hide');
@@ -43,7 +66,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             if(!regex.test(globalConfigObj.basepath)){
                 var prefix_url = globalConfigObj.basepath || '';
                 path = prefix_url + "/" + data.artifactUrl + "?" + new Date().getSeconds();
-            }else   
+            }else
                 path = data.streamingUrl;
         } else {
             path = data.artifactUrl + "?" + new Date().getSeconds();
@@ -61,10 +84,11 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     onScrollEvents: function() {
         var timeout = null;
+        var context = this;
         $('#' + this.manifest.id).bind('scroll', function() {
             clearTimeout(timeout);
             timeout = setTimeout(function() {
-                EkstepRendererAPI.getTelemetryService().interact('SCROLL', 'page', '', {
+               context.logInteractEvent('SCROLL', 'page', '', {
                     stageId: context.CURRENT_PAGE.toString(),
                     subtype: ''
                 });
@@ -177,6 +201,28 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
         document.getElementById(this.manifest.id).style.overflow = "auto";
 
+        var hammerManager = new Hammer(pdfContents, {
+            touchAction: "pan-x pan-y"
+        });
+        hammerManager.get('pinch').set({ enable: true });
+
+        hammerManager.on("pinchin", function (ev) {
+            pinchType = 'pinchIn';
+        });
+        hammerManager.on("pinchout", function (ev) {
+            pinchType = 'pinchOut';
+        });
+        hammerManager.on("pinchend", function (ev) {
+            if (pinchType === 'pinchIn' && previousScale >= 0.50) {
+                previousScale = previousScale - 0.25;
+                context.renderCurrentScaledPage();
+            } else if (pinchType === 'pinchOut' && previousScale <= 3) {
+                previousScale = previousScale + 0.25;
+                context.renderCurrentScaledPage();
+            }
+            pinchType = undefined;
+        }); 
+
         context.PDF_DOC = 0;
         context.CURRENT_PAGE = 0;
         context.TOTAL_PAGES = 0;
@@ -189,40 +235,57 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         $("#pdf-find").on('click', function() {
             var searchText = document.getElementById("pdf-find-text");
             console.log("SEARCH TEXT", searchText.value);
-            EkstepRendererAPI.getTelemetryService().interact("TOUCH", "navigate", "TOUCH", {
+            context.logInteractEvent("TOUCH", "navigate", "TOUCH", {
                 stageId: context.CURRENT_PAGE.toString(),
                 subtype: ''
             });
-            EkstepRendererAPI.getTelemetryService().navigate(context.CURRENT_PAGE.toString(), searchText.value);
+            context.logImpressionEvent(context.CURRENT_PAGE.toString(), searchText.value);
             context.showPage(parseInt(searchText.value));
         });
 
         $('#pdf-prev').on('click', function() {
-            EkstepRendererAPI.getTelemetryService().interact("TOUCH", "previous", "TOUCH", {
+            context.logInteractEvent("TOUCH", "previous", "TOUCH", {
                 stageId: context.CURRENT_PAGE.toString()
             });
             context.previousNavigation();
         });
         $('#pdf-next').on('click', function() {
-            EkstepRendererAPI.getTelemetryService().interact("TOUCH", "next", "TOUCH", {
+            context.logInteractEvent("TOUCH", "next", "TOUCH", {
                 stageId: context.CURRENT_PAGE.toString()
             });
             context.nextNavigation();
         });
         this.heartBeatData.stageId = context.CURRENT_PAGE.toString();
         context.showPDF(path, context.manifest);
-    },
 
+        // listening to scroll event for pdf
+        document.getElementById(this.manifest.id).onscroll = function () {
+            if (!isPageRenderingInProgress) {
+                if ($(this).scrollTop() <= 0) {
+                    context.logInteractEvent("TOUCH", "previous", "TOUCH", {
+                        stageId: context.CURRENT_PAGE.toString()
+                    });
+                    if (context.CURRENT_PAGE != 1)
+                        context.previousNavigation();
+                } else if ($(this)[0].offsetHeight + $(this).scrollTop() >= $(this)[0].scrollHeight) {
+                    context.logInteractEvent("TOUCH", "next", "TOUCH", {
+                        stageId: context.CURRENT_PAGE.toString()
+                    })
+                    context.nextNavigation()
+                }
+            }
+        }
+    },
     addDownloadButton: function(path, pdfSearchContainer){
         if(!path.length) return false;
         var instance = this;
         var downloadBtn = document.createElement("img");
-        downloadBtn.id = "download-btn"; 
+        downloadBtn.id = "download-btn";
         downloadBtn.src = "assets/icons/download.png";
         downloadBtn.className = "pdf-download-btn";
         downloadBtn.onclick = function(){
             window.open(path, '_blank');
-            EkstepRendererAPI.getTelemetryService().interact("TOUCH", "Download", "TOUCH", {
+            context.logInteractEvent("TOUCH", "Download", "TOUCH", {
                 stageId: context.CURRENT_PAGE.toString(),
                 subtype: ''
             });
@@ -231,10 +294,10 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     nextNavigation: function() {
         if (this.sleepMode) return;
-        EkstepRendererAPI.getTelemetryService().interact("TOUCH", "next", null, {
+        context.logInteractEvent("TOUCH", "next", null, {
             stageId: context.CURRENT_PAGE.toString()
         });
-        EkstepRendererAPI.getTelemetryService().navigate(context.CURRENT_PAGE.toString(), (context.CURRENT_PAGE + 1).toString());
+        //EkstepRendererAPI.getTelemetryService().navigate(context.CURRENT_PAGE.toString(), (context.CURRENT_PAGE + 1).toString());
         if (context.CURRENT_PAGE != context.TOTAL_PAGES) {
             context.showPage(++context.CURRENT_PAGE);
         } else if (context.CURRENT_PAGE == context.TOTAL_PAGES) {
@@ -243,10 +306,10 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     previousNavigation: function() {
         if (this.sleepMode) return;
-        EkstepRendererAPI.getTelemetryService().interact("TOUCH", "previous", null, {
+        context.logInteractEvent("TOUCH", "previous", null, {
             stageId: context.CURRENT_PAGE.toString()
         });
-        EkstepRendererAPI.getTelemetryService().navigate(context.CURRENT_PAGE.toString(), (context.CURRENT_PAGE - 1).toString());
+        //EkstepRendererAPI.getTelemetryService().navigate(context.CURRENT_PAGE.toString(), (context.CURRENT_PAGE - 1).toString());
         if(context.CURRENT_PAGE == 1) {
             contentExitCall();
         }
@@ -283,7 +346,13 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         });
     },
     showPage: function(page_no) {
+        isPageRenderingInProgress = true;
         var instance = this;
+
+        /** To log telemetyr impression event **/
+        var navigateStageId = context.CURRENT_PAGE;
+        var navigateStageTo = page_no;
+
         EkstepRendererAPI.dispatchEvent("sceneEnter", context);
         EkstepRendererAPI.dispatchEvent("overlayPrevious", true);
         if(page_no == 1) {
@@ -310,7 +379,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 if(instance.headerTimer) clearTimeout(instance.headerTimer);
                 // As the canvas is of a fixed width we need to set the scale of the viewport accordingly
                 var scale_required = context.CANVAS.width / page.getViewport(1).width;
-
+                previousScale = scale_required;
                 // Get viewport of the page at required scale
                 var viewport = page.getViewport(scale_required);
 
@@ -333,6 +402,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                     $("#pdf-canvas").show();
                     $("#page-loader").hide();
 
+                    instance.logImpressionEvent(navigateStageId, navigateStageTo);
+
                     instance.applyOpacityToNavbar(true);
                     instance.headerTimer = setTimeout(function() {
                         clearTimeout(instance.headerTimer);
@@ -348,18 +419,22 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                         if($("#pdf-meta").hasClass("higheropacity"))
                             instance.applyOpacityToNavbar(false);
                     });
-
+                    setTimeout(function () {
+                        isPageRenderingInProgress = false;
+                        $(document.getElementById(instance.manifest.id)).scrollTop(1);
+                    }, 100)
                 });
             });
         } else {
             showToaster('error', "Page not found");
             //$("#pdf-no-page").show();
             $("#page-loader").hide();
+            isPageRenderingInProgress = false;
             //$("#pdf-canvas").hide();
         }
     },
     applyOpacityToNavbar: function(opacity) {
-        if (!opacity) {                     
+        if (!opacity) {
             $("#pdf-meta, #page-count-container, #pdf-search-container").removeClass('higheropacity');
             $("#pdf-meta, #page-count-container, #pdf-search-container").addClass('loweropacity');
         } else {
@@ -378,6 +453,15 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var totalStages = this.TOTAL_PAGES;
         var currentStageIndex = _.size(_.uniq(this.stageId)) || 1;
         return this.progres(currentStageIndex, totalStages);
+    },
+    logInteractEvent: function(type, id, extype, eks, eid){
+        window.PLAYER_STAGE_START_TIME = Date.now()/1000;
+        EkstepRendererAPI.getTelemetryService().interact(type, id, extype, eks,eid);
+    },
+    logImpressionEvent: function(stageId, stageTo){
+        EkstepRendererAPI.getTelemetryService().navigate(stageId, stageTo, {
+            "duration": (Date.now()/1000) - window.PLAYER_STAGE_START_TIME
+        });
     }
 });
 

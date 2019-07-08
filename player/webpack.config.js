@@ -247,7 +247,7 @@ module.exports = (env, argv) => {
                 $: 'jquery',
                 jQuery: 'jquery',
                 _: 'underscore',
-                async: "async",
+                async: path.resolve(path.join(__dirname, 'public/libs/async.min.js')),
                 Fingerprint2: 'Fingerprint2',
                 ProgressBar: 'ProgressBar',
                 UAParser: 'UAParser'

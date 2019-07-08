@@ -24,10 +24,24 @@ org.ekstep.contentrenderer.init = function () {
 org.ekstep.contentrenderer.loadDefaultPlugins = function (cb) {
 	org.ekstep.contentrenderer.initPlugins("", "coreplugins")
 	var globalConfig = EkstepRendererAPI.getGlobalConfig()
-	globalConfig.isCorePluginsPackaged && jQuery("body").append($("<script type='text/javascript' src='./coreplugins.js?" + globalConfig.version + "'>"))
-	org.ekstep.contentrenderer.loadPlugins(globalConfig.defaultPlugins, [], function () {
-		if (cb) cb()
-	})
+	EkstepRendererAPI.dispatchEvent("renderer:content:progress", {"name": window.splashScreen.loadType.corePlugins, "files": globalConfig.defaultPlugins})
+	// This is to load preview from CDN or proxy(relative path)
+	var corePluginsPath = globalConfig.previewCdnUrl ? globalConfig.previewCdnUrl + "/coreplugins.js?" : "./coreplugins.js?"
+	if (globalConfig.isCorePluginsPackaged) {
+		org.ekstep.pluginframework.resourceManager.loadResource(corePluginsPath + globalConfig.version, "script", function () {
+			org.ekstep.contentrenderer.loadPlugins(globalConfig.defaultPlugins, [], function () {
+				if (cb) cb()
+			})
+		})
+	} else {
+		org.ekstep.contentrenderer.loadPlugins(globalConfig.defaultPlugins, [], function () {
+			if (cb) cb()
+		})
+	}
+	// globalConfig.isCorePluginsPackaged && jQuery("body").append($("<script type='text/javascript' src='./coreplugins.js?" + globalConfig.version + "'>"))
+	// org.ekstep.contentrenderer.loadPlugins(globalConfig.defaultPlugins, [], function () {
+	// 	if (cb) cb()
+	// })
 }
 
 /**
@@ -36,17 +50,18 @@ org.ekstep.contentrenderer.loadDefaultPlugins = function (cb) {
  * @param  {obj} appInfo [metadata]
  */
 org.ekstep.contentrenderer.startGame = function (appInfo) {
+	window.PLAYER_START_TIME = Date.now() / 1000
 	globalConfig.basepath = (appInfo.streamingUrl) ? (appInfo.streamingUrl) : (globalConfig.basepath || appInfo.baseDir)
 	org.ekstep.contentrenderer.loadDefaultPlugins(function () {
 		org.ekstep.contentrenderer.loadExternalPlugins(function () {
 			var globalConfig = EkstepRendererAPI.getGlobalConfig()
 			if (globalConfig.mimetypes.indexOf(appInfo.mimeType) > -1) {
 				/**
-                     * renderer:player:init event will get dispatch after loading default & external injected plugins
-                     * @event 'renderer:player:init'
-                     * @fires 'renderer:player:init'
-                     * @memberof EkstepRendererEvents
-                     */
+				 * renderer:player:init event will get dispatch after loading default & external injected plugins
+				 * @event 'renderer:player:init'
+				 * @fires 'renderer:player:init'
+				 * @memberof EkstepRendererEvents
+				 */
 				EkstepRendererAPI.dispatchEvent("renderer:player:init")
 			} else {
 				if (!isbrowserpreview) {
@@ -88,7 +103,10 @@ org.ekstep.contentrenderer.loadExternalPlugins = function (cb) {
 	var globalConfig = EkstepRendererAPI.getGlobalConfig()
 	org.ekstep.contentrenderer.addRepos()
 	if (globalConfig.config.plugins) {
+		EkstepRendererAPI.dispatchEvent("renderer:content:progress", {"name": window.splashScreen.loadType.externalPlugins, "files": globalConfig.config.plugins})
 		org.ekstep.contentrenderer.loadPlugins(globalConfig.config.plugins, [], function () {
+			console.log("Load default plugins")
+			EkstepRendererAPI.dispatchEvent("renderer:content:progress", {"name": window.splashScreen.loadType.contentPlugins, "files": globalConfig.contentLaunchers})
 			console.info("External plugins are loaded")
 			EkstepRendererAPI.dispatchEvent("renderer:launcher:loadRendererPlugins", cb)
 			// if (cb) cb();
@@ -331,7 +349,8 @@ org.ekstep.contentrenderer.web = function (id) {
 
 org.ekstep.contentrenderer.device = function () {
 	var globalconfig = EkstepRendererAPI.getGlobalConfig()
-	if (isMobile) {
+	var isMobile = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()))
+	if (!isbrowserpreview && isMobile) {
 		if (globalconfig.metadata) {
 			org.ekstep.contentrenderer.setContentMetadata(globalconfig.metadata, function () {
 				org.ekstep.contentrenderer.startGame(content.metadata)

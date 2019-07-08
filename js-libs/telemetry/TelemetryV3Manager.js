@@ -12,15 +12,16 @@ TelemetryV3Manager = Class.extend({
     },
     getConfig: function(){
       var configData = TelemetryService._otherData || {};
+      var rollupData = (configData.object && configData.object.rollup) ? configData.object.rollup : {};
 
       //Adding Details values
       configData['cdata'] = TelemetryService._correlationData;
       configData['env'] = "contentplayer";
       configData['uid'] = TelemetryService._user.uid || 'anonymous';
       configData['channel'] = configData.channel || 'in.ekstep';
-      configData['object'] = { id: TelemetryService.getGameId(), type: 'Content', ver: TelemetryService.getGameVer()};
+      configData['object'] = { id: TelemetryService.getGameId(), type: 'Content', ver: TelemetryService.getGameVer(), rollup: rollupData};
       configData["dispatcher"] = ("undefined" == typeof cordova) ? org.ekstep.contentrenderer.webDispatcher : org.ekstep.contentrenderer.deviceDispatcher;
-      
+    
       this._config = configData;
       return this._config;
     },
@@ -37,7 +38,8 @@ TelemetryV3Manager = Class.extend({
         var edata = {
           "type":  data.type || "content",
           "mode": data.mode || config.mode,
-          "pageid": data.pageid || data.stageid
+          "pageid": data.pageid || data.stageid,
+          "duration": data.duration ? Number(data.duration.toFixed(2)): 0
         }
         if(data.dspec){ 
           edata["dspec"] = data.dspec;
@@ -115,6 +117,7 @@ TelemetryV3Manager = Class.extend({
             var v3questionItem = {
                 id: eventObj.event.edata.eks.qid,
                 maxscore: eventObj.event.edata.eks.maxscore,
+                type: data.type,
                 exlength: 0,
                 params: data.params || eventObj.event.edata.eks.params || [],
                 uri: data.uri || "",
@@ -133,9 +136,9 @@ TelemetryV3Manager = Class.extend({
                 pass: data.pass ? 'Yes' : 'No',
                 score: data.score || (data.pass == 'Yes' ? 1 : 0),
                 resvalues: data.res || data.resvalues || [],
-                duration: Math.round((getCurrentTime() - eventObj.startTime ) / 1000)
+                duration: Number(Math.round((getCurrentTime() - eventObj.startTime ) / 1000).toFixed(2))
             }
-            EkTelemetry.assess(v3questionData);
+            EkTelemetry.assess(v3questionData, {'eventVer': data.eventVer});
         } else {
             console.error("question id is required to create assess event.");
             // TelemetryService.logError("OE_ASSESS", "qid is required to create assess event.")
@@ -173,9 +176,13 @@ TelemetryV3Manager = Class.extend({
     navigate: function(stageid, stageto, data) {
         var eksData = {
           "type": (data && data.type) ? data.type : "workflow" ,
-          "pageid": stageto,
-          "uri": (data && data.uri) ? data.uri : "",
-          "duration": (data && data.duration)? data.duration : 0
+          "subtype": (data && data.subtype) ? data.subtype : "" ,
+          "pageid": stageto ? stageto.toString() : "" ,
+          "uri": (data && data.uri) ? data.uri : stageid,
+          "duration": (data && data.duration)? Number(data.duration.toFixed(2)) : 0
+        }
+        if (data && data.visits){
+            eksData.visits = [data.visits];
         }
         if (stageid != undefined) {
             EkTelemetry.impression(eksData);

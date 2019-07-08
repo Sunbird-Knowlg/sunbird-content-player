@@ -10,7 +10,7 @@ describe('Toaster Plugin', function() {
         });
     });
     describe("When Toaster plugin is initialized", function() {
-        it("It should invoke initialize", function() {
+        xit("It should invoke initialize", function() {
             spyOn(toasterInstance, "initialize").and.callThrough();
             toasterInstance.initialize();
             expect(toasterInstance.initialize).not.toBeUndefined();
