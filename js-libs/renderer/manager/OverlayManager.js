@@ -342,7 +342,7 @@ OverlayManager = {
         };
         navType = (navType === "skip") ? "next" : navType;
         action.transitionType = navType;
-        window.PLAYER_STAGE_START_TIME = Date.now();
+        window.PLAYER_STAGE_START_TIME = Date.now()/1000;
         CommandManager.handle(action);
     },
 
