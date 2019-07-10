@@ -79,7 +79,7 @@ RecorderManager = {
                     var stageId = stagePlugin._id;
                     if ("success" == response.status) {
                         var currentRecId = RecorderManager.recordedAsset;
-                        RecorderManager.switchToCordova()
+                        RecorderManager.switchToCordova() // For Recorded audio AssetManager.loadAsset requires CordovaAudioPlugin
                         try {
                             AssetManager.loadAsset(stageId, currentRecId, response.filePath);
                             AudioManager.destroy(stageId, currentRecId);
@@ -87,7 +87,7 @@ RecorderManager = {
                         } catch(err){
                             console.log('Error Occurred while trying to load to recorded audio');
                         }
-                        RecorderManager.switchBackToDefault()
+                        RecorderManager.switchBackToDefault() // For Normal audio need AssetManager.loadAsset need WebAudioPlugin in online play scenario
                     } else if ("error" == response.status && action.failure) {
                         stagePlugin.dispatchEvent(action.failure);
                     }
