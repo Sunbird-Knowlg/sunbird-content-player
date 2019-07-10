@@ -22,13 +22,13 @@ AudioManager = {
                 // Reclaim a space if necessary
                 AudioManager.reclaim();
                 // Instantiate the current audio to play
-                if(action.asset == 'current_rec'){ //To handle record and play scenario
+                if(action.asset == RecorderManager.recordedAsset){ //To handle record and play scenario
                     RecorderManager.switchToCordova();
                 }
                 instance.object = createjs.Sound.play(action.asset, {
                     interrupt: createjs.Sound.INTERRUPT_ANY
                 });
-                if(action.asset == 'current_rec'){
+                if(action.asset == RecorderManager.recordedAsset){
                     RecorderManager.switchBackToDefault();
                 }
                 

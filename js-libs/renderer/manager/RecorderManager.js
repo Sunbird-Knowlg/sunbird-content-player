@@ -1,4 +1,5 @@
 RecorderManager = {
+    recordedAsset : 'current_rec',
     mediaInstance: undefined,
     recording: false, // status - true: recording audio, false: not recording audio.
     //recorder: AppConfig.recorder, // 'android' - uses cordova-plugin-media for recording audio. :: 'sensibol': uses sensibol api for recording audio.
@@ -77,7 +78,7 @@ RecorderManager = {
                     var stagePlugin = plugin._stage || plugin;
                     var stageId = stagePlugin._id;
                     if ("success" == response.status) {
-                        var currentRecId = "current_rec";
+                        var currentRecId = RecorderManager.recordedAsset;
                         RecorderManager.switchToCordova()
                         try {
                             AssetManager.loadAsset(stageId, currentRecId, response.filePath);
