@@ -87,7 +87,7 @@ RecorderManager = {
                         } catch(err){
                             console.log('Error Occurred while trying to load to recorded audio');
                         }
-                        RecorderManager.switchBackToDefault() // For Normal audio need AssetManager.loadAsset need WebAudioPlugin in online play scenario
+                        RecorderManager.switchBackToDefault() // For Normal audio AssetManager.loadAsset need WebAudioPlugin in online play scenario
                     } else if ("error" == response.status && action.failure) {
                         stagePlugin.dispatchEvent(action.failure);
                     }
