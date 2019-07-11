@@ -22,9 +22,16 @@ AudioManager = {
                 // Reclaim a space if necessary
                 AudioManager.reclaim();
                 // Instantiate the current audio to play
+                if(action.asset == RecorderManager.recordedAsset){ //Recorded Audio use CordovaAudioPlugin to play
+                    RecorderManager.switchToCordova();
+                }
                 instance.object = createjs.Sound.play(action.asset, {
                     interrupt: createjs.Sound.INTERRUPT_ANY
                 });
+                if(action.asset == RecorderManager.recordedAsset){ //Normal audio need WebAudioPlugin to play in online play
+                    RecorderManager.switchBackToDefault();
+                }
+                
                 instance.object.muted = this.muted;
                 instance._data = {
                     id: AudioManager.uniqueId(action)
