@@ -142,6 +142,9 @@ module.exports = (env, argv) => {
 			chunkFilename: "chunks/[name].[chunkhash].js"
 
 		},
+		node: {
+			fs: "empty"
+		},
 		resolve: {
 			alias: {
 				"jquery": path.resolve("./public/libs/jquery.min.js")
@@ -184,7 +187,7 @@ module.exports = (env, argv) => {
 				test: require.resolve(`${PLUGINS_BASE_PATH}org.ekstep.pdfrenderer-1.0/renderer/libs/pdf.js`),
 				use: [{
 					loader: "expose-loader",
-					options: "pdfjs"
+					options: "pdfjsLib"
 				}]
 			},
 			{
