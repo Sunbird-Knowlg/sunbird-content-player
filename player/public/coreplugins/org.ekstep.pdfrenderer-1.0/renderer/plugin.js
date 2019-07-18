@@ -317,17 +317,18 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             context.showPage(--context.CURRENT_PAGE);
     },
     showPDF: function(pdf_url) {
-        var instance = this;
-        $("#pdf-loader").show(); // use rendere loader
-        pdfjsLib.disableWorker = true;
-        console.log("MANIFEST DATA", this.manifest)
-
-        // use api to resolve the plugin resource
-        //
-        // The workerSrc property shall be specified.
-        //
-        pdfjsLib.GlobalWorkerOptions.workerSrc = org.ekstep.pluginframework.pluginManager.resolvePluginResource(this.manifest.id, this.manifest.ver, "renderer/libs/pdf.worker.js");
         try {
+            var instance = this;
+            $("#pdf-loader").show(); // use rendere loader
+            console.log("MANIFEST DATA", this.manifest)
+            console.log("pdfjsLib", pdfjsLib);
+            pdfjsLib.disableWorker = true;
+
+            // use api to resolve the plugin resource
+            //
+            // The workerSrc property shall be specified.
+            //
+            pdfjsLib.GlobalWorkerOptions.workerSrc = org.ekstep.pluginframework.pluginManager.resolvePluginResource(this.manifest.id, this.manifest.ver, "renderer/libs/pdf.worker.js");
             var loadPDf = pdfjsLib.getDocument(pdf_url)
             loadPDf.promise.then(function(pdf_doc) {
                 context.PDF_DOC = pdf_doc;
