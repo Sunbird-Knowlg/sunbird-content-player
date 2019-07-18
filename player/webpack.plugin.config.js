@@ -142,9 +142,6 @@ module.exports = (env, argv) => {
 			chunkFilename: "chunks/[name].[chunkhash].js"
 
 		},
-		node: {
-			fs: "empty"
-		},
 		resolve: {
 			alias: {
 				"jquery": path.resolve("./public/libs/jquery.min.js")
