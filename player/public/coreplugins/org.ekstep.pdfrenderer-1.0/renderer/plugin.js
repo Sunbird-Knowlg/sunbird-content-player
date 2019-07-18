@@ -328,7 +328,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         //
         pdfjsLib.GlobalWorkerOptions.workerSrc = org.ekstep.pluginframework.pluginManager.resolvePluginResource(this.manifest.id, this.manifest.ver, "renderer/libs/pdf.worker.js");
         try {
-            var loadPDf = pdfjsLib.getDocument("./"+ pdf_url)
+            var loadPDf = pdfjsLib.getDocument(pdf_url)
             loadPDf.promise.then(function(pdf_doc) {
                 context.PDF_DOC = pdf_doc;
                 context.TOTAL_PAGES = context.PDF_DOC.numPages;

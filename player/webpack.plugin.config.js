@@ -41,7 +41,6 @@ const PLUGINS = process.env.plugins || [
 	"org.ekstep.previousnavigation-1.0",
 	"org.ekstep.genie-1.0",
 	"org.ekstep.htmlrenderer-1.0",
-	"org.ekstep.pdfrenderer-1.0",
 	"org.ekstep.epubrenderer-1.0",
 	"org.ekstep.extcontentpreview-1.0"
 ]
@@ -178,13 +177,6 @@ module.exports = (env, argv) => {
 				use: [{
 					loader: "expose-loader",
 					options: "videojs"
-				}]
-			},
-			{
-				test: require.resolve(`${PLUGINS_BASE_PATH}org.ekstep.pdfrenderer-1.0/renderer/libs/pdf.js`),
-				use: [{
-					loader: "expose-loader",
-					options: "pdfjsLib"
 				}]
 			},
 			{
