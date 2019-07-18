@@ -22615,8 +22615,6 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-var fs = require('fs');
-
 var http = require('http');
 
 var https = require('https');
@@ -23171,25 +23169,6 @@ function (_BaseFullReader2) {
       path = path.replace(/^\//, '');
     }
 
-    fs.lstat(path, function (error, stat) {
-      if (error) {
-        if (error.code === 'ENOENT') {
-          error = new _util.MissingPDFException("Missing PDF \"".concat(path, "\"."));
-        }
-
-        _this5._storedError = error;
-
-        _this5._headersCapability.reject(error);
-
-        return;
-      }
-
-      _this5._contentLength = stat.size;
-
-      _this5._setReadableStream(fs.createReadStream(path));
-
-      _this5._headersCapability.resolve();
-    });
     return _this5;
   }
 
@@ -23212,11 +23191,6 @@ function (_BaseRangeReader2) {
     if (fileUriRegex.test(_this6._url.href)) {
       path = path.replace(/^\//, '');
     }
-
-    _this6._setReadableStream(fs.createReadStream(path, {
-      start: start,
-      end: end - 1
-    }));
 
     return _this6;
   }
