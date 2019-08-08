@@ -7,8 +7,8 @@ AudioManager = {
         return action.stageId + ':' + action.asset;
     },
     play: function(action, instance) {
-        
-        if (("undefined" != typeof action) && ("undefined" != typeof action.asset) && (null != action.asset)) {
+        var isAsset = typeof (AssetManager.getAsset(Renderer.theme._currentStage, action.asset)) === "string" ? false : true;
+        if (isAsset && ("undefined" != typeof action) && ("undefined" != typeof action.asset) && (null != action.asset)) {
             instance = instance || AudioManager.instances[AudioManager.uniqueId(action)] || {};
             if (instance.object) {
                 instance.object.volume = 1;

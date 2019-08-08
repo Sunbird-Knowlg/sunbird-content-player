@@ -4,11 +4,6 @@ CommandManager = {
         CommandManager.commandMap[id] = command;
     },
     handle: function(action) {
-        var isValidAsset = typeof (AssetManager.getAsset(Renderer.theme._currentStage, action.asset)) === "string" ? false : true;
-        if (!isValidAsset){
-            console.warn("Asset is not given to play.", action);
-            return {};
-        } 
         try {
             action.stageInstanceId = _.clone(Renderer.theme._currentScene._stageInstanceId);
             if (action.delay) {
