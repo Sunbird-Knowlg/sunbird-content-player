@@ -32,8 +32,7 @@
     padding-bottom: 1%;
     position: fixed;
     border: 2px thin black;
-    background: black;
-    opacity: 0.2;
+    background: #a8a8a8;
 }
 
 #pdf-buttons {
@@ -51,15 +50,15 @@
     top: 50%;
     margin-top: 0%;
     transform: translate(-50%, -50%);
-    opacity: 0.2;
+    
 }
 
 #pdf-find-text {
     display: inline;
-    border: 1px solid black;
-    height: 24px;
-    margin-right: 5px;
-    padding: 3px;
+    border: 1px solid #024f9d;
+    height: 32px;
+    padding: 4px 24px 4px 3px;
+    border-radius: 4px;
 }
 
 #page-count-container {
@@ -68,9 +67,11 @@
     float: right;
     margin-top: 0.5%;
     font-size: 1.3em;
-    color: white;
-    opacity: 0.2;
+    color: black;
+   
 }
+
+
 
 #pdf-current-page {
     display: inline;
@@ -101,9 +102,6 @@
     height: 100%;
 }
 
-.loweropacity {
-    opacity: 0.2 !important;
-}
 
 .higheropacity {
     opacity: 1 !important;
@@ -111,8 +109,29 @@
 
 .pdf-download-btn{
     padding-left: 2.5px;
-    margin-left: 2px; 
+    margin-left: 8px; 
     width: 13.5%;
     margin-bottom: -3%;
     cursor: pointer;
+}
+
+.search-arrow-right{
+    position: absolute;
+    right: 0px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.input-page-finder {
+    position: relative;
+    display: inline-flex;
+}
+
+.vertical-bar {
+    position: absolute;
+    right: 24px;
+    height: 16px;
+    background: #a8a8a8;
+    width: 1px;
+    top: 8px;
 }

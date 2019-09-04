@@ -24,6 +24,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         console.info('PDF Renderer init', manifestData)
         EkstepRendererAPI.addEventListener(this._constants.events.launchEvent, this.start, this);
         this._manifest = manifestData;
+        this.goToPage =  org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/assets/arrow_right.svg");
         EkstepRendererAPI.addEventListener('nextClick', this.nextNavigation, this);
         EkstepRendererAPI.addEventListener('previousClick', this.previousNavigation, this);
     },
@@ -48,7 +49,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
 
     enableOverly: function () {
-        EkstepRendererAPI.dispatchEvent("renderer:overlay:show");
+        
         EkstepRendererAPI.dispatchEvent('renderer:stagereload:hide');
         $('#pdf-buttons').css({
             display: 'none'
@@ -80,7 +81,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             context.enableOverly();
         }, 100);
         context.onScrollEvents();
-
+        EkstepRendererAPI.dispatchEvent("renderer:hide:menuicon");
+        EkstepRendererAPI.dispatchEvent("renderer:use:navigation:top");
     },
     onScrollEvents: function() {
         var timeout = null;
@@ -122,6 +124,31 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var pdfButtons = document.createElement("div");
         pdfButtons.id = "pdf-buttons";
 
+        var hamBurger = document.createElement("div");
+        hamBurger.id = "burger-menu"
+        hamBurger.className = "hambergur-menu-container";
+
+        hamBurger.onclick = function () {
+            EkstepRendererAPI.dispatchEvent("renderer:open:menu");
+        }
+
+        var hamBurger_internals = document.createElement("div");
+        hamBurger_internals.className = "hambergur-menu";
+        
+
+        var hamBurger_internals_2 = document.createElement("div");
+        hamBurger_internals_2.className = "hambergur-menu";
+        
+
+        var hamBurger_internals_3 = document.createElement("div");
+        hamBurger_internals_3.className = "hambergur-menu";
+        
+
+        
+        hamBurger.appendChild(hamBurger_internals);
+        hamBurger.appendChild(hamBurger_internals_2);
+        hamBurger.appendChild(hamBurger_internals_3);
+
         var pdfPrevButton = document.createElement("button");
         pdfPrevButton.id = "pdf-prev";
         pdfPrevButton.textContent = "Previous";
@@ -133,18 +160,31 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var pdfSearchContainer = document.createElement("div");
         pdfSearchContainer.id = "pdf-search-container";
 
+        var inputPageFinder = document.createElement('div');
+        inputPageFinder.className = "input-page-finder";
+
         var findTextField = document.createElement("input");
         findTextField.type = "number";
         findTextField.id = "pdf-find-text";
         findTextField.placeholder = "Enter page number";
         findTextField.min = 1;
 
-        var findSubmit = document.createElement("button");
-        findSubmit.id = "pdf-find";
-        findSubmit.textContent = "Go";
+        var vertiaclSeprator = document.createElement('div');
+        vertiaclSeprator.className  = 'vertical-bar'
 
-        pdfSearchContainer.appendChild(findTextField);
-        pdfSearchContainer.appendChild(findSubmit);
+        var findSubmit = document.createElement("img");
+        findSubmit.id = "pdf-find";
+        findSubmit.classList = "search-arrow-right"
+        findSubmit.src = this.goToPage;
+        
+        inputPageFinder.appendChild(findTextField)
+        inputPageFinder.appendChild(vertiaclSeprator);
+        inputPageFinder.appendChild(findSubmit)
+
+        
+
+        pdfSearchContainer.appendChild(inputPageFinder);
+        
 
         if (!window.cordova){
             this.addDownloadButton(path, pdfSearchContainer);
@@ -155,6 +195,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
         var pageCountContainer = document.createElement("div");
         pageCountContainer.id = "page-count-container";
+        pageCountContainer.className = "page-count";
 
         var pageName = document.createElement("span");
         pageName.textContent = "Page ";
@@ -177,6 +218,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         pdfMetaData.appendChild(pdfButtons);
         pdfMetaData.appendChild(pdfSearchContainer);
         pdfMetaData.appendChild(pageCountContainer);
+        pdfMetaData.appendChild(hamBurger);
 
         var pdfCanvas = document.createElement("canvas");
         pdfCanvas.id = "pdf-canvas";
@@ -279,6 +321,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     addDownloadButton: function(path, pdfSearchContainer){
         if(!path.length) return false;
         var instance = this;
+
         var downloadBtn = document.createElement("img");
         downloadBtn.id = "download-btn";
         downloadBtn.src = "assets/icons/download.png";
@@ -318,7 +361,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     showPDF: function(pdf_url) {
         try {
-            var instance = this;
             $("#pdf-loader").show(); // use rendere loader
             console.log("MANIFEST DATA", this.manifest)
             console.log("pdfjsLib", pdfjsLib);
@@ -377,6 +419,12 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         EkstepRendererAPI.dispatchEvent("overlayPrevious", true);
         if(page_no == 1) {
             EkstepRendererAPI.dispatchEvent("renderer:previous:show");
+            $('#naviage_top_previous').css({backgroundColor: 'white', color: 'black'});            
+            $('#naviage_top_previous').attr("disabled", true);
+
+        }else{
+            $('#naviage_top_previous').css({backgroundColor: '#024f9d',color: 'white'});            
+            $('#naviage_top_previous').attr("disabled", false);
         }
         if (page_no <= context.TOTAL_PAGES && page_no > 0) {
 
@@ -424,21 +472,12 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
                     instance.logImpressionEvent(navigateStageId, navigateStageTo);
 
-                    instance.applyOpacityToNavbar(true);
                     instance.headerTimer = setTimeout(function() {
                         clearTimeout(instance.headerTimer);
                         instance.applyOpacityToNavbar(false);
                     }, 2000);
 
-                    $("#pdf-meta").on("mouseover click", function() {
-                        if($("#pdf-meta").hasClass("loweropacity"))
-                            instance.applyOpacityToNavbar(true);
-                    });
-
-                    $("#pdf-meta").on("mouseleave scroll", function() {
-                        if($("#pdf-meta").hasClass("higheropacity"))
-                            instance.applyOpacityToNavbar(false);
-                    });
+                   
                     setTimeout(function () {
                         isPageRenderingInProgress = false;
                         $(document.getElementById(instance.manifest.id)).scrollTop(1);
@@ -454,13 +493,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }
     },
     applyOpacityToNavbar: function(opacity) {
-        if (!opacity) {
-            $("#pdf-meta, #page-count-container, #pdf-search-container").removeClass('higheropacity');
-            $("#pdf-meta, #page-count-container, #pdf-search-container").addClass('loweropacity');
-        } else {
-            $("#pdf-meta, #page-count-container, #pdf-search-container").removeClass('loweropacity');
-            $("#pdf-meta, #page-count-container, #pdf-search-container").addClass('higheropacity');
-        }
+        
     },
     initContentProgress: function() {
         var instance = this;

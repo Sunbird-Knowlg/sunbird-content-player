@@ -17,6 +17,7 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
     $scope.showTeacherIns = true;
     $scope.showReload = true;
     $scope.showContentClose = false;
+    $scope.showOverlayMenuIcon = true;
     $scope.init = function() {
 
         /**
@@ -33,10 +34,13 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
          * @listens renderer:overlay:hide
          * @memberof EkstepRendererEvents
          */
-
         EkstepRendererAPI.addEventListener("renderer:overlay:hide", $scope.hideOverlay);
-
         EkstepRendererAPI.addEventListener("renderer:content:start", $scope.showOverlay);
+        EkstepRendererAPI.addEventListener("renderer:open:menu", $scope.openMenu);
+        EkstepRendererAPI.addEventListener("renderer:hide:menuicon", function(){
+            $scope.showOverlayMenuIcon = false;
+            $scope.safeApply();
+        });
 
         $scope.pluginInstance = EkstepRendererAPI.getPluginObjs("org.ekstep.overlay");
         if (globalConfig.languageInfo) {
@@ -199,6 +203,7 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
             "marginLeft": ["0%", 'easeOutExpo']
         }, 700, function() {});
         EkstepRendererAPI.addEventListener(EkstepRendererEvents['renderer:device:back'], $scope.hideMenu, $scope);
+        $scope.safeApply();
     }
 
     $scope.hideMenu = function() {

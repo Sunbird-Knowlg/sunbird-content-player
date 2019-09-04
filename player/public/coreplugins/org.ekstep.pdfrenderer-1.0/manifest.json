@@ -11,11 +11,15 @@
             {"type": "js", "src": "renderer/libs/pdf.js"},
             {"type": "js", "src": "renderer/libs/compatibility.js"},
             {"type": "css", "src": "renderer/libs/pdf.css"},
-            {"type": "js", "src": "renderer/libs/hammer.js"}
+            {"type": "js", "src": "renderer/libs/hammer.js"},
+            {"type": "css", "src": "renderer/styles/styles.css"}
         ]
     },
     "dependencies": [
-        
-    ] 
+        {
+            "plugin": "org.ekstep.navigation",
+            "ver": "1.0",
+            "scope": "renderer"
+        }]
 
 }

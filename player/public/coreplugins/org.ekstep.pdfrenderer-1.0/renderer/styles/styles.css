@@ -1,0 +1,17 @@
+.hambergur-menu-container {
+  display: inline-block;
+  cursor: pointer;
+  padding-left: 16px;
+  margin-top: 0.5%;
+}
+.hambergur-menu {
+  width: 24px;
+  height: 3px;
+  margin: 4px 0;
+  background-color: black;
+}
+.page-count{ 
+  position: absolute !important;
+    right: 80px;
+}
+
