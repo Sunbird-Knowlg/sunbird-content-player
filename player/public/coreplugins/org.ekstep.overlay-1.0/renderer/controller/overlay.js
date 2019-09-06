@@ -17,8 +17,11 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
     $scope.showTeacherIns = true;
     $scope.showReload = true;
     $scope.showContentClose = false;
-    $scope.init = function() {
-
+    $rootScope.enableDefaultNav = true;
+    var pluginInstance = EkstepRendererAPI.getPluginObjs("org.ekstep.overlay");
+    $scope.defaultPreviousIcon =  pluginInstance.navPreviousIcon;
+    $scope.defaultNextIcon = pluginInstance.navNextIcon;
+    $scope.init = function() {        
         /**
          * renderer:overlay:show event to show the overlay on top the content.
          * @event renderer:overlay:show
@@ -37,6 +40,15 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
         EkstepRendererAPI.addEventListener("renderer:overlay:hide", $scope.hideOverlay);
 
         EkstepRendererAPI.addEventListener("renderer:content:start", $scope.showOverlay);
+
+        EkstepRendererAPI.addEventListener("renderer:open:menu", $scope.openMenu);
+
+        EkstepRendererAPI.addEventListener("renderer:navigation:config" , function( event, data ){
+            if(data === "navigationLayoutTop"){
+                //set defaultNavigation to false
+                $rootScope.enableDefaultNav = false;
+            }
+        })
 
         $scope.pluginInstance = EkstepRendererAPI.getPluginObjs("org.ekstep.overlay");
         if (globalConfig.languageInfo) {
@@ -199,6 +211,7 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
             "marginLeft": ["0%", 'easeOutExpo']
         }, 700, function() {});
         EkstepRendererAPI.addEventListener(EkstepRendererEvents['renderer:device:back'], $scope.hideMenu, $scope);
+        $scope.safeApply(); 
     }
 
     $scope.hideMenu = function() {

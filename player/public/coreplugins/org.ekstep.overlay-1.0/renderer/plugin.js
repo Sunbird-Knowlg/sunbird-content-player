@@ -19,6 +19,8 @@ Plugin.extend({
         instance._config = _.extend(instance._config, globalConfig.overlay);
         this._templatePath = org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/templates/overlay.html");
         this.controllerPath = org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/controller/overlay.js");
+        this.navPreviousIcon = org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/assets/icons/back.png");
+        this.navNextIcon = org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/assets/icons/next.png")
         org.ekstep.service.controller.loadNgModules(this._templatePath, this.controllerPath);
 
         //Loading other related temaplated of overlay 

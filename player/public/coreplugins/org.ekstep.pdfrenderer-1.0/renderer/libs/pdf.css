@@ -1,4 +1,4 @@
-#pdf-main-container {
+/* #pdf-main-container {
     width: 100%;
     height: auto;
     margin: 0px auto;
@@ -83,7 +83,7 @@
 #pdf-canvas {
     border: 1px solid rgba(0, 0, 0, 0.2);
     box-sizing: border-box;
-    /*width: 100%;*/
+    /*width: 100%;
     height: auto;
 }
 
@@ -115,4 +115,121 @@
     width: 13.5%;
     margin-bottom: -3%;
     cursor: pointer;
+} */
+
+
+.sb-pdf-container {
+    height: 100vh;
 }
+
+.sb-pdf-container .sb-pdf-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    min-height: 12%;
+    background: #a8a8a8;
+    padding: 0.5% 1%;
+    max-height: 14%;
+    position: fixed;
+    width: 100%;
+    top: 0;
+}
+
+.sb-pdf-container .sb-pdf-body {
+    height: 90.5%;
+    /* overflow-y: auto; */
+}
+
+.sb-pdf-container .hamburger-menu {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.sb-pdf-container .hamburger-menu .menu-line {
+    height: 3px;
+    width: 24px;
+    background: black;
+    margin-bottom: 4px;
+}
+
+.sb-pdf-container .hamburger-menu .menu-line:last-child {
+    margin-bottom: 0;
+}
+
+.sb-pdf-container .pdf-searchbar {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+}
+
+.sb-pdf-container .page-search {
+    position: relative;
+    width: 100%;
+}
+
+.sb-pdf-container .page-search .search-input {
+    border: 1px solid #024f9d;
+    padding: 4% 16% 4% 4%;
+    border-radius: 4px;
+}
+
+.sb-pdf-container .page-search .vertical-bar {
+    position: absolute;
+    right: 26px;
+    height: 16px;
+    background: #a8a8a8;
+    width: 1px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.sb-pdf-container .page-search .search-arrow {
+    position: absolute;
+    right: 2px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.sb-pdf-container .download-button {
+    width: 32px;
+    height: 24px;
+    margin-left: 10%;
+} 
+
+#page-count-container {
+    margin-right: 10%;
+    margin-left: auto;
+}
+
+@media only screen and (max-width: 1024px) {
+    #page-count-container {
+        margin-right: 20%;
+    }
+}
+
+@media only screen and (min-width: 1024px) and (max-width: 1366px) {
+    .sb-pdf-container .sb-pdf-header {
+        min-height: 8%;
+    }
+}
+/* @media only screen and (max-width: 640px) {
+    .sb-pdf-container .sb-pdf-header {
+        height: 10%;
+    }
+
+    .sb-pdf-container .sb-pdf-body {
+        height: 90%;
+    }
+}
+
+@media screen and (min-width: 641px) and (max-width: 1024px) {
+    .sb-pdf-container .sb-pdf-header {
+        height: 10.5%;
+    }
+
+    .sb-pdf-container .sb-pdf-body {
+        height: 89.5%;
+    }
+}*/

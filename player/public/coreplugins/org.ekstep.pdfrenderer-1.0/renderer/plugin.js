@@ -13,7 +13,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     enableHeartBeatEvent: true,
     headerTimer: undefined,
     previousScale: undefined,
-    pinchType :undefined,
+    pinchType : undefined,
+    navigationConfig: "navigationLayoutTop",// For Default template use "navigationLayoutMiddle"
     _constants: {
         mimeType: ["application/pdf"],
         events: {
@@ -24,6 +25,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         console.info('PDF Renderer init', manifestData)
         EkstepRendererAPI.addEventListener(this._constants.events.launchEvent, this.start, this);
         this._manifest = manifestData;
+        this._asset_arrow_path = org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/assets/arrow-right.svg");
         EkstepRendererAPI.addEventListener('nextClick', this.nextNavigation, this);
         EkstepRendererAPI.addEventListener('previousClick', this.previousNavigation, this);
     },
@@ -81,6 +83,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }, 100);
         context.onScrollEvents();
 
+        // set navigation layout configuration for PDF plugin               
+        EkstepRendererAPI.dispatchEvent("renderer:navigation:config", undefined , this.navigationConfig);
     },
     onScrollEvents: function() {
         var timeout = null;
@@ -102,9 +106,31 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     renderPDF: function(path, canvasContainer) {
         EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
+        EkstepRendererAPI.dispatchEvent("renderer:next:show");
+        EkstepRendererAPI.dispatchEvent("renderer:previous:show");            
         var pdfMainContainer = document.createElement("div");
         pdfMainContainer.id = "pdf-main-container";
 
+        var hamBurger = document.createElement("div");
+        hamBurger.className= "hamburger-menu"
+        hamBurger.onclick = function() {
+            EkstepRendererAPI.dispatchEvent("renderer:open:menu");
+        }
+        
+        var hamBurgerInternals_1 = document.createElement('div');
+        hamBurgerInternals_1.className = "menu-line"
+
+        var hamBurgerInternals_2 = document.createElement('div');
+        hamBurgerInternals_2.className ="menu-line"
+
+        var hamBurgerInternals_3 = document.createElement('div');
+        hamBurgerInternals_3.className ="menu-line";
+
+
+        hamBurger.appendChild(hamBurgerInternals_1)
+        hamBurger.appendChild(hamBurgerInternals_2)
+        hamBurger.appendChild(hamBurgerInternals_3)
+        
         var pdfLoader = document.createElement("div");
         pdfLoader.id = "pdf-loader";
         pdfLoader.textContent = "Loading document ...";
@@ -113,11 +139,13 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         pdfNoPage.id = "pdf-no-page";
         pdfNoPage.textContent = "No Page Found";
 
-        var pdfContents = document.createElement("div");
+        var pdfContents = document.createElement("div");        
         pdfContents.id = "pdf-contents";
+        pdfContents.className = "sb-pdf-container"
 
         var pdfMetaData = document.createElement("div");
         pdfMetaData.id = "pdf-meta";
+        pdfMetaData.className = "sb-pdf-header"
 
         var pdfButtons = document.createElement("div");
         pdfButtons.id = "pdf-buttons";
@@ -132,19 +160,38 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
         var pdfSearchContainer = document.createElement("div");
         pdfSearchContainer.id = "pdf-search-container";
+        pdfSearchContainer.className = "pdf-searchbar"
+
+
+        var goToPageContainer = document.createElement('div');
+        goToPageContainer.className = "page-search"
+
+
+        var verticalBar = document.createElement('div');
+        verticalBar.id = "vertical-seprator";
+        verticalBar.className = "vertical-bar"
 
         var findTextField = document.createElement("input");
         findTextField.type = "number";
         findTextField.id = "pdf-find-text";
         findTextField.placeholder = "Enter page number";
         findTextField.min = 1;
+        findTextField.className = "search-input"
 
-        var findSubmit = document.createElement("button");
+        var findSubmit = document.createElement("img");
         findSubmit.id = "pdf-find";
-        findSubmit.textContent = "Go";
+        findSubmit.className = "search-arrow"
+        findSubmit.src = this._asset_arrow_path;
 
-        pdfSearchContainer.appendChild(findTextField);
-        pdfSearchContainer.appendChild(findSubmit);
+        goToPageContainer.appendChild(findTextField)
+        goToPageContainer.appendChild(verticalBar);
+        goToPageContainer.appendChild(findSubmit)
+        
+
+
+        
+
+        pdfSearchContainer.appendChild(goToPageContainer);
 
         if (!window.cordova){
             this.addDownloadButton(path, pdfSearchContainer);
@@ -167,16 +214,22 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
         var pdfTotalPages = document.createElement("span");
         pdfTotalPages.id = "pdf-total-pages";
+         var canvasContainerDiv = document.createElement('div');
+        canvasContainerDiv.className= "sb-pdf-body"
 
         pageCountContainer.appendChild(pageName);
         pageCountContainer.appendChild(pdfCurrentPage);
         pageCountContainer.appendChild(ofText);
         pageCountContainer.appendChild(pdfTotalPages);
 
-
+        if(this.navigationConfig === "navigationLayoutTop"){
+            pdfMetaData.appendChild(hamBurger);
+        }
         pdfMetaData.appendChild(pdfButtons);
         pdfMetaData.appendChild(pdfSearchContainer);
         pdfMetaData.appendChild(pageCountContainer);
+                
+       
 
         var pdfCanvas = document.createElement("canvas");
         pdfCanvas.id = "pdf-canvas";
@@ -187,9 +240,10 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         pageLoader.id = "page-loader";
         pageLoader.textContent = "Loading page ...";
 
-
+       
+        canvasContainerDiv.appendChild(pdfCanvas);
         pdfContents.appendChild(pdfMetaData);
-        pdfContents.appendChild(pdfCanvas);
+        pdfContents.appendChild(canvasContainerDiv);
         pdfContents.appendChild(pageLoader);
         pdfContents.appendChild(pdfNoPage);
 
@@ -282,7 +336,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var downloadBtn = document.createElement("img");
         downloadBtn.id = "download-btn";
         downloadBtn.src = "assets/icons/download.png";
-        downloadBtn.className = "pdf-download-btn";
+        downloadBtn.className = "download-button";
         downloadBtn.onclick = function(){
             window.open(path, '_blank');
             context.logInteractEvent("TOUCH", "Download", "TOUCH", {
@@ -375,8 +429,18 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
         EkstepRendererAPI.dispatchEvent("sceneEnter", context);
         EkstepRendererAPI.dispatchEvent("overlayPrevious", true);
-        if(page_no == 1) {
-            EkstepRendererAPI.dispatchEvent("renderer:previous:show");
+        if(page_no == 1 && instance.navigationConfig === "navigationLayoutTop") {
+            
+            document.getElementById('custom_nav_previous').disabled = true;
+            $("#custom_nav_previous").css("color", "black");
+            $("#custom_nav_previous").css("background-color", "white");             
+
+        }else if(instance.navigationConfig === "navigationLayoutTop"){
+
+            document.getElementById('custom_nav_previous').disabled = false;
+            $("#custom_nav_previous").css("background-color", "#024f9d");
+            $("#custom_nav_previous").css("color", "white");
+            
         }
         if (page_no <= context.TOTAL_PAGES && page_no > 0) {
 
