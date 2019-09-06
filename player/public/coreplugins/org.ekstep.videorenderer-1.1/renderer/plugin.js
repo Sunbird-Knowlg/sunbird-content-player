@@ -120,6 +120,24 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 });
             });
         }
+        videoPlayer.hlsQualitySelector();
+        var qualityLevels = videoPlayer.qualityLevels();
+        qualityLevels.on('change', function(event) {
+            instance.logTelemetry('TOUCH', {
+                stageId: 'videostage',
+                subtype: "CHANGE"
+            },{
+                context: {
+                    cdata: [{
+                        type: 'Feature',
+                        id: 'video:resolutionChange'
+                    }, {
+                        id: 'SB-13358',
+                        type: 'Story'
+                    }]
+                }
+            })
+        });
         instance.addVideoListeners(videoPlayer, path, data);
         instance.videoPlayer = videoPlayer;
     },
@@ -260,8 +278,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             instance.seeked("youtubestage", Math.floor(videoPlayer.currentTime()) * 1000);
         });
     },
-    logTelemetry: function (type, eksData) {
-        EkstepRendererAPI.getTelemetryService().interact(type || 'TOUCH', "", "", eksData);
+    logTelemetry: function (type, eksData, options) {
+        EkstepRendererAPI.getTelemetryService().interact(type || 'TOUCH', "", "", eksData, options);
     },
     replay: function () {
         if (this.sleepMode) return;
