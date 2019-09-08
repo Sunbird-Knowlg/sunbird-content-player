@@ -100,8 +100,8 @@ AppConfig = {
 		type: "plugin"
 	}],
 	overlay: {
-		enableUserSwitcher: false,
-		showUser: false,
+		enableUserSwitcher: true,
+		showUser: true,
 		showOverlay: true,
 		showNext: true,
 		showPrevious: true,
