@@ -257,6 +257,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         });
         this.heartBeatData.stageId = context.CURRENT_PAGE.toString();
         context.showPDF(path, context.manifest);
+        var obj = {"tempName": "navigationTop"};
+        EkstepRendererAPI.dispatchEvent("renderer:navigation:load", obj);
 
         // listening to scroll event for pdf
         document.getElementById(this.manifest.id).onscroll = function () {
@@ -321,13 +323,11 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             var instance = this;
             $("#pdf-loader").show(); // use rendere loader
             console.log("MANIFEST DATA", this.manifest)
-            console.log("pdfjsLib", pdfjsLib);
+            console.log("pdfjsLib lib", pdfjsLib)
             pdfjsLib.disableWorker = true;
 
             // use api to resolve the plugin resource
-            //
             // The workerSrc property shall be specified.
-            //
             pdfjsLib.GlobalWorkerOptions.workerSrc = org.ekstep.pluginframework.pluginManager.resolvePluginResource(this.manifest.id, this.manifest.ver, "renderer/libs/pdf.worker.js");
             var loadPDf = pdfjsLib.getDocument(pdf_url)
             loadPDf.promise.then(function(pdf_doc) {

@@ -64,7 +64,7 @@
 
 #page-count-container {
     text-align: right;
-    margin-right: 5%;
+    margin-right: 15%;
     float: right;
     margin-top: 0.5%;
     font-size: 1.3em;
@@ -111,7 +111,7 @@
 
 .pdf-download-btn{
     padding-left: 2.5px;
-    margin-left: 2px; 
+    margin-left: 2px;
     width: 13.5%;
     margin-bottom: -3%;
     cursor: pointer;
