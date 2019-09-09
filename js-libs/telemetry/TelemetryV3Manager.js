@@ -68,7 +68,7 @@ TelemetryV3Manager = Class.extend({
             console.warn("Telemetry service end is already logged Please log start telemetry again");
         }
     },
-    interact: function(type, id, extype, eks, eid) {
+    interact: function(type, id, extype, eks, eid, options) {
         if(type == undefined || id == undefined) {
             console.error('Invalid interact data');
             return;
@@ -90,7 +90,7 @@ TelemetryV3Manager = Class.extend({
         if(eks.plugin) {
             eksData["plugin"] = eks.plugin;
         }
-        EkTelemetry.interact(eksData);
+        EkTelemetry.interact(eksData, options);
     },
     assess: function(qid, subj, qlevel, data) {
         var maxscore;
