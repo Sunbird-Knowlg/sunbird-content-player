@@ -41,8 +41,13 @@ var qspatch = {
                             if(url)
                             return instance.validateUrl(EkstepRendererAPI.getBaseURL() + url.substring(1, url.length));
                         } else {
-                            // Loading content from mobile storage ( OFFLINE )
-                            return instance.validateUrl('file:///' + EkstepRendererAPI.getBaseURL() + url);
+                            if ("undefined" != typeof cordova){
+                                // Loading content from mobile storage ( OFFLINE )
+                                return instance.validateUrl('file:///' + EkstepRendererAPI.getBaseURL() + url);
+                            }else{
+                                // Loading content from offline app
+                                return instance.validateUrl(EkstepRendererAPI.getBaseURL() + url);
+                            }
                         }
                     }
                 }
@@ -59,8 +64,13 @@ var qspatch = {
                             return instance.validateUrl(EkstepRendererAPI.getBaseURL() + 'content-plugins/' + pluginId + '-' + pluginVer + '/' +path);
                             //return org.ekstep.pluginframework.pluginManager.resolvePluginResource(pluginId, pluginVer, path);
                         } else {
-                            // Loading content from mobile storage ( OFFLINE )
-                            return instance.validateUrl('file:///' + EkstepRendererAPI.getBaseURL() + 'content-plugins/' + pluginId + '-' + pluginVer + '/' + path);
+                            if ("undefined" != typeof cordova){
+                                // Loading content from mobile storage ( OFFLINE )
+                                return instance.validateUrl('file:///' + EkstepRendererAPI.getBaseURL() + 'content-plugins/' + pluginId + '-' + pluginVer + '/' + path);
+                            }else{
+                                // Loading content from offline app
+                                return instance.validateUrl(EkstepRendererAPI.getBaseURL() + 'content-plugins/' + pluginId + '-' + pluginVer + '/' + path);
+                            }
                         }
                     }
                 }
@@ -77,8 +87,13 @@ var qspatch = {
                             return instance.validateUrl(EkstepRendererAPI.getBaseURL() + 'content-plugins/' + this._manifest.id + '-' + this._manifest.ver + '/' + path);
                             //return org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, path);
                         } else {
-                            // Loading content from mobile storage ( OFFLINE )
-                            return instance.validateUrl('file:///' + EkstepRendererAPI.getBaseURL() + 'content-plugins/' + this._manifest.id + '-' + this._manifest.ver + '/' + path);
+                            if ("undefined" != typeof cordova){
+                                // Loading content from mobile storage ( OFFLINE )
+                                return instance.validateUrl('file:///' + EkstepRendererAPI.getBaseURL() + 'content-plugins/' + this._manifest.id + '-' + this._manifest.ver + '/' + path);
+                            }else{
+                                // Loading content from offline app
+                                return instance.validateUrl(EkstepRendererAPI.getBaseURL() + 'content-plugins/' + this._manifest.id + '-' + this._manifest.ver + '/' + path);
+                            }
                         }
                     }
                 }
