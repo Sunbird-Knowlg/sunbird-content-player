@@ -13,11 +13,11 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     lastPage: false,
     stageId:[],
     enableHeartBeatEvent: false,
-    _constants: {	
-        mimeType: ["application/epub"],	
-        events: {	
-            launchEvent: "renderer:launch:epub"	
-        }	
+    _constants: {
+        mimeType: ["application/epub"],
+        events: {
+            launchEvent: "renderer:launch:epub"
+        }
     },
     initLauncher: function () {
         var instance = this;
@@ -28,7 +28,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             EkstepRendererAPI.dispatchEvent('sceneEnter',instance);
             if (instance.lastPage) {
                 EkstepRendererAPI.dispatchEvent('renderer:content:end');
-                instance.removeProgressElements(); 
+                instance.removeProgressElements();
             } else {
                 instance.book.nextPage();
             }
@@ -68,7 +68,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             if(!regex.test(globalConfigObj.basepath)){
                 var prefix_url = globalConfigObj.basepath || '';
                 epubPath = prefix_url + "/" + data.artifactUrl;
-            }else   
+            }else
                 epubPath = data.streamingUrl;
         } else {
             epubPath = data.artifactUrl;
@@ -81,6 +81,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             } else {
                 EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
                 EkstepRendererAPI.dispatchEvent('renderer:overlay:show');
+
+                var obj = {"tempName": ""};
+                EkstepRendererAPI.dispatchEvent("renderer:navigation:load", obj);
                 instance.renderEpub(epubPath);
             }
         });
@@ -128,7 +131,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         this.removeProgressElements();
         this._super();
     },
-   
+
     logTelemetryInteract: function (stageId) {
         var oeInteractData = {
             type: "TOUCH",
@@ -210,7 +213,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         return this.progres(currentStageIndex + 1, totalStages);
     },
     cleanUp: function() {
-        if (this.sleepMode) return;	
+        if (this.sleepMode) return;
         this.sleepMode = true;
         this.removeProgressElements();
         EkstepRendererAPI.removeEventListener('actionNavigateNext', undefined, undefined, true);
