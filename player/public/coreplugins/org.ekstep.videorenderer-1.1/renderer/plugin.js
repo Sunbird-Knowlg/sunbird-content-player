@@ -190,8 +190,11 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }
         var vid = videojs("videoElement", {
             "techOrder": ["youtube"],
+            nativeControlsForTouch: true,
             "src": path,
-            "controls": true, "autoplay": true, "preload": "auto"
+            "controls": false, "autoplay": true, "preload": "auto",
+            "youtube": { "ytControls": 1 }
+
         });
         videojs("videoElement").ready(function () {
 			var youtubeInstance = this;
