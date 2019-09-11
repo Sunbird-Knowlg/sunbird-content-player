@@ -47,6 +47,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         this.configOverlay();
     },
     createVideo: function (path, data) {
+        // fix for Unable play/pause and mute/unmute the video in mobile view https://github.com/videojs/video.js/issues/6222
+        videojs.getComponent('Component').prototype.emitTapEvents = function () {};
         video = document.createElement('video-js');
         video.style.width = '100%';
         video.style.height = '100%';
