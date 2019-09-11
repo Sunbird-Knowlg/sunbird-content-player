@@ -115,9 +115,11 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
         var pdfContents = document.createElement("div");
         pdfContents.id = "pdf-contents";
+        pdfContents.className = "sb-pdf-container";
 
         var pdfMetaData = document.createElement("div");
         pdfMetaData.id = "pdf-meta";
+        pdfMetaData.className = "sb-pdf-header";
 
         var pdfButtons = document.createElement("div");
         pdfButtons.id = "pdf-buttons";
@@ -130,24 +132,32 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         pdfNextButton.id = "pdf-next";
         pdfNextButton.textContent = "Next";
 
+        var pdfDownloadContainer = document.createElement("div");
+        pdfDownloadContainer.id = "pdf-download-container";
+        pdfDownloadContainer.className = "download-pdf-image";
+
+        var pdfTitleContainer = document.createElement("div");
+        pdfTitleContainer.textContent = content.name;
+        pdfTitleContainer.className = "pdf-name";
+
         var pdfSearchContainer = document.createElement("div");
         pdfSearchContainer.id = "pdf-search-container";
 
-        var findTextField = document.createElement("input");
-        findTextField.type = "number";
-        findTextField.id = "pdf-find-text";
-        findTextField.placeholder = "Enter page number";
-        findTextField.min = 1;
+        // var findTextField = document.createElement("input");
+        // findTextField.type = "number";
+        // findTextField.id = "pdf-find-text";
+        // findTextField.placeholder = "Enter page number";
+        // findTextField.min = 1;
 
-        var findSubmit = document.createElement("button");
-        findSubmit.id = "pdf-find";
-        findSubmit.textContent = "Go";
+        // var findSubmit = document.createElement("button");
+        // findSubmit.id = "pdf-find";
+        // findSubmit.textContent = "Go";
 
-        pdfSearchContainer.appendChild(findTextField);
-        pdfSearchContainer.appendChild(findSubmit);
+        // pdfSearchContainer.appendChild(findTextField);
+        // pdfSearchContainer.appendChild(findSubmit);
 
         if (!window.cordova){
-            this.addDownloadButton(path, pdfSearchContainer);
+            this.addDownloadButton(path, pdfDownloadContainer);
         }
 
         pdfButtons.appendChild(pdfPrevButton);
@@ -155,27 +165,59 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
         var pageCountContainer = document.createElement("div");
         pageCountContainer.id = "page-count-container";
+        pageCountContainer.className = "pdf-searchbar";
+
+        var pdfPageSearch = document.createElement("div");
+        pdfPageSearch.className = "page-search";
+
+        var pdfPageSearchBox = document.createElement("div");
+        pdfPageSearchBox.className = "search-box";
 
         var pageName = document.createElement("span");
         pageName.textContent = "Page ";
 
-        var pdfCurrentPage = document.createElement("span");
-        pdfCurrentPage.id = "pdf-current-page";
+        var findTextField = document.createElement("input");
+        findTextField.type = "number";
+        findTextField.id = "pdf-find-text";
+        findTextField.className = "search-input";
+        findTextField.min = 1;
+
+        var goButton = document.createElement("div");
+        goButton.className = "search-page-pdf-arrow-container";
+
+        var goButtonImage = document.createElement("img");
+        goButtonImage.src = "assets/icons/arrow-pointing-to-right.png";
+        goButtonImage.id = "pdf-find";
+        goButtonImage.className = "search-page-pdf-arrow";
+
+        // var pdfCurrentPage = document.createElement("span");
+        // pdfCurrentPage.id = "pdf-current-page";
 
         var ofText = document.createElement("span");
-        ofText.textContent = " of ";
+        ofText.className = "bold-page";
+        ofText.textContent = " / ";
 
         var pdfTotalPages = document.createElement("span");
         pdfTotalPages.id = "pdf-total-pages";
+        pdfTotalPages.className = "bold-page"
 
-        pageCountContainer.appendChild(pageName);
-        pageCountContainer.appendChild(pdfCurrentPage);
+        pdfPageSearchBox.appendChild(findTextField);
+        pdfPageSearchBox.appendChild(goButton);
+        pdfPageSearchBox.appendChild(goButtonImage);
+        pdfPageSearch.appendChild(pdfPageSearchBox);
+        pageCountContainer.appendChild(pdfPageSearch);
+        // pageCountContainer.appendChild(pageName);
+        // pageCountContainer.appendChild(findTextField);
+        // pageCountContainer.appendChild(findSubmit);
+        // pageCountContainer.appendChild(pdfCurrentPage);
         pageCountContainer.appendChild(ofText);
         pageCountContainer.appendChild(pdfTotalPages);
 
 
         pdfMetaData.appendChild(pdfButtons);
         pdfMetaData.appendChild(pdfSearchContainer);
+        pdfMetaData.appendChild(pdfDownloadContainer);
+        pdfMetaData.appendChild(pdfTitleContainer);
         pdfMetaData.appendChild(pageCountContainer);
 
         var pdfCanvas = document.createElement("canvas");
@@ -283,7 +325,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var instance = this;
         var downloadBtn = document.createElement("img");
         downloadBtn.id = "download-btn";
-        downloadBtn.src = "assets/icons/download.png";
+        downloadBtn.src = "assets/icons/down-arrow.png";
         downloadBtn.className = "pdf-download-btn";
         downloadBtn.onclick = function(){
             window.open(path, '_blank');
@@ -392,7 +434,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             $("#page-loader").show();
 
             // Update current page in HTML
-            $("#pdf-current-page").text(page_no);
+            $("#pdf-find-text").val(page_no);
 
             // Fetch the page
             context.PDF_DOC.getPage(page_no).then(function(page) {
@@ -457,9 +499,12 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         if (!opacity) {
             $("#pdf-meta, #page-count-container, #pdf-search-container").removeClass('higheropacity');
             $("#pdf-meta, #page-count-container, #pdf-search-container").addClass('loweropacity');
+            $("#pdf-meta, #page-count-container, #pdf-download-container").addClass('loweropacity');
         } else {
             $("#pdf-meta, #page-count-container, #pdf-search-container").removeClass('loweropacity');
             $("#pdf-meta, #page-count-container, #pdf-search-container").addClass('higheropacity');
+            $("#pdf-meta, #page-count-container, #pdf-download-container").addClass('higheropacity');
+
         }
     },
     initContentProgress: function() {
