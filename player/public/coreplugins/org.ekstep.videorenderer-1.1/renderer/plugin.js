@@ -47,7 +47,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         this.configOverlay();
     },
     createVideo: function (path, data) {
-        // fix for Unable play/pause and mute/unmute the video in mobile view https://github.com/videojs/video.js/issues/6222
+        // fix for Unable play/pause and mute/unmute the video in mobile view 
+        // link:- https://github.com/videojs/video.js/issues/6222
         videojs.getComponent('Component').prototype.emitTapEvents = function () {};
         video = document.createElement('video-js');
         video.style.width = '100%';
@@ -135,31 +136,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         instance.videoPlayer.hlsQualitySelector();
         var qualityLevels = instance.videoPlayer.qualityLevels();
         qualityLevels.on('change', function(event) {
-            var currentResolution = "Auto";
-
-            switch (event.selectedIndex) {
-                case 0:
-                    currentResolution = "180p";
-                    break;
-                case 1:
-                    currentResolution = "270p";
-                    break;
-                case 2:
-                    currentResolution = "360p";
-                    break;
-                case 3:
-                    currentResolution = "540p";
-                    break;
-                case 4:
-                    currentResolution = "720p";
-                    break;
-                case 5:
-                    currentResolution = "1080p";
-                    break;
-            
-                default:
-                    break;
-            }
+            var qualityLevel = instance.videoPlayer.qualityLevels()[event.selectedIndex];
+            var currentResolution = (qualityLevel.height) ? qualityLevel.height : "Auto";
 
             instance.logTelemetry('TOUCH', {
                 stageId: 'videostage',
