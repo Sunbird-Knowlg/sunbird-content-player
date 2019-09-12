@@ -143,18 +143,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var pdfSearchContainer = document.createElement("div");
         pdfSearchContainer.id = "pdf-search-container";
 
-        // var findTextField = document.createElement("input");
-        // findTextField.type = "number";
-        // findTextField.id = "pdf-find-text";
-        // findTextField.placeholder = "Enter page number";
-        // findTextField.min = 1;
-
-        // var findSubmit = document.createElement("button");
-        // findSubmit.id = "pdf-find";
-        // findSubmit.textContent = "Go";
-
-        // pdfSearchContainer.appendChild(findTextField);
-        // pdfSearchContainer.appendChild(findSubmit);
 
         if (!window.cordova){
             this.addDownloadButton(path, pdfDownloadContainer);
@@ -190,9 +178,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         goButtonImage.id = "pdf-find";
         goButtonImage.className = "search-page-pdf-arrow";
 
-        // var pdfCurrentPage = document.createElement("span");
-        // pdfCurrentPage.id = "pdf-current-page";
-
         var ofText = document.createElement("span");
         ofText.className = "bold-page";
         ofText.textContent = " / ";
@@ -206,10 +191,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         pdfPageSearchBox.appendChild(goButtonImage);
         pdfPageSearch.appendChild(pdfPageSearchBox);
         pageCountContainer.appendChild(pdfPageSearch);
-        // pageCountContainer.appendChild(pageName);
-        // pageCountContainer.appendChild(findTextField);
-        // pageCountContainer.appendChild(findSubmit);
-        // pageCountContainer.appendChild(pdfCurrentPage);
         pageCountContainer.appendChild(ofText);
         pageCountContainer.appendChild(pdfTotalPages);
 
