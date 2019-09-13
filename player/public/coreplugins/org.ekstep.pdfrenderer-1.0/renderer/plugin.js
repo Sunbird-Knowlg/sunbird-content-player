@@ -172,6 +172,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
         var goButton = document.createElement("div");
         goButton.className = "search-page-pdf-arrow-container";
+        goButton.style.display = "none";
 
         var goButtonImage = document.createElement("img");
         goButtonImage.src = "assets/icons/arrow-pointing-to-right.png";
@@ -264,6 +265,15 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             });
             context.logImpressionEvent(context.CURRENT_PAGE.toString(), searchText.value);
             context.showPage(parseInt(searchText.value));
+        });
+
+        $('#pdf-find-text').on('focus blur', function(e) {
+            if( e.type == 'focus' ){
+                $(".search-page-pdf-arrow-container").css( "display", "inline" );
+              }
+              else{
+                $(".search-page-pdf-arrow-container").css( "display", "none" );
+              }
         });
 
         $('#pdf-prev').on('click', function() {
