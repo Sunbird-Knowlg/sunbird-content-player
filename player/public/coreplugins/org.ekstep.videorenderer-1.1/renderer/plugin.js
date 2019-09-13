@@ -47,7 +47,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         this.configOverlay();
     },
     createVideo: function (path, data) {
-        // fix for Unable play/pause and mute/unmute the video in mobile view 
+        // User has to long press to play/pause or mute/unmute the video in mobile view. 
+        // TO fix this problem we are removing the tap events of the videoJs library.
         // link:- https://github.com/videojs/video.js/issues/6222
         videojs.getComponent('Component').prototype.emitTapEvents = function () {};
         video = document.createElement('video-js');
@@ -149,7 +150,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                         id: 'video:resolutionChange'
                     }, {
                         id: 'SB-13358',
-                        type: 'Story'
+                        type: 'Task'
                     }, {
                         type: 'Resolution',
                         id: currentResolution

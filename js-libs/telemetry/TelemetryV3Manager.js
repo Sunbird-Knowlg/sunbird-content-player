@@ -90,8 +90,21 @@ TelemetryV3Manager = Class.extend({
         if(eks.plugin) {
             eksData["plugin"] = eks.plugin;
         }
-        EkTelemetry.interact(eksData, options);
+        EkTelemetry.interact(eksData, this.generateOptionsData(options));
     },
+	generateOptionsData: function (options) {
+		var optionsData = {
+			context:{}
+		}
+		var globalCdata = EkTelemetry.config && EkTelemetry.config.cdata ? EkTelemetry.config.cdata : [];
+		Object.assign(optionsData, options)
+		if (options && options.context && options.context.cdata) {
+			optionsData.context.cdata = optionsData.context.cdata.concat(globalCdata)
+		}else{
+			optionsData.context.cdata = globalCdata;
+		}
+		return optionsData;
+	},
     assess: function(qid, subj, qlevel, data) {
         var maxscore;
         subj = subj ? subj : "";
