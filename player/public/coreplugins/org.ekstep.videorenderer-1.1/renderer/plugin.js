@@ -99,7 +99,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                     hls: {
                         overrideNative: true,
                     }
-                }
+                },
+                inactivityTimeout: 0
             }, function () {
                 this.on('downloadvideo', function () {
                     EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
@@ -108,6 +109,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             });
         } else {
             var videoPlayer = videojs('videoElement', {
+                inactivityTimeout: 0,
                 "controls": true, "autoplay": true, "preload": "auto",
                 plugins: {
                     vjsdownload: {
@@ -171,10 +173,10 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }
         var vid = videojs("videoElement", {
             "techOrder": ["youtube"],
-            nativeControlsForTouch: true,
+            inactivityTimeout: 0,
             "src": path,
             "controls": false, "autoplay": true, "preload": "auto",
-            "youtube": { "ytControls": 1 }
+            "youtube": { "ytControls": 2 }
 
         });
         videojs("videoElement").ready(function () {
