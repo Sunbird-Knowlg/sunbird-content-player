@@ -217,7 +217,6 @@ THE SOFTWARE. */
                 this.onPlayerPlaybackQualityChange = this.options_.onPlayerPlaybackQualityChange;
             }
 
-
             // Allow undocumented options to be passed along via customVars
             if (typeof this.options_.customVars !== 'undefined') {
                 var customVars = this.options_.customVars;
@@ -263,12 +262,10 @@ THE SOFTWARE. */
                 this.activeVideoId = this.url.videoId;
             }
         },
-       
 
         onPlayerPlaybackQualityChange: function() {
 
         },
-
 
         onPlayerPlaybackRateChange: function() {
             this.trigger('ratechange');
