@@ -213,6 +213,11 @@ THE SOFTWARE. */
                 playerVars.theme = this.options_.theme;
             }
 
+            if (typeof this.options_.onPlayerPlaybackQualityChange !== 'undefined') {
+                this.onPlayerPlaybackQualityChange = this.options_.onPlayerPlaybackQualityChange;
+            }
+
+
             // Allow undocumented options to be passed along via customVars
             if (typeof this.options_.customVars !== 'undefined') {
                 var customVars = this.options_.customVars;
@@ -229,7 +234,7 @@ THE SOFTWARE. */
                 playerVars: playerVars,
                 events: {
                     onReady: this.onPlayerReady.bind(this),
-                    onPlaybackQualityChange: this.onPlayerPlaybackQualityChange.bind(this),
+                    onPlaybackQualityChange: this.onPlayerPlaybackQualityChange,
                     onPlaybackRateChange: this.onPlayerPlaybackRateChange.bind(this),
                     onStateChange: this.onPlayerStateChange.bind(this),
                     onVolumeChange: this.onPlayerVolumeChange.bind(this),
@@ -258,10 +263,12 @@ THE SOFTWARE. */
                 this.activeVideoId = this.url.videoId;
             }
         },
+       
 
         onPlayerPlaybackQualityChange: function() {
 
         },
+
 
         onPlayerPlaybackRateChange: function() {
             this.trigger('ratechange');

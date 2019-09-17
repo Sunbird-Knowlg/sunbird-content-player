@@ -141,25 +141,29 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         qualityLevels.on('change', function(event) {
             var qualityLevel = instance.videoPlayer.qualityLevels()[event.selectedIndex];
             var currentResolution = (qualityLevel.height) ? qualityLevel.height : "Auto";
+            instance.logResolution(currentResolution);
 
-            instance.logTelemetry('TOUCH', {
-                stageId: 'videostage',
-                subtype: "CHANGE"
-            }, "", {
-                context: {
-                    cdata: [{
-                        type: 'Feature',
-                        id: 'video:resolutionChange'
-                    }, {
-                        id: 'SB-13358',
-                        type: 'Task'
-                    }, {
-                        type: 'Resolution',
-                        id: currentResolution
-                    }]
-                }
-            })
         });
+    },
+    logResolution: function(currentResolution){
+        var instance = this;
+        instance.logTelemetry('TOUCH', {
+            stageId: 'videostage',
+            subtype: "CHANGE"
+        }, "", {
+            context: {
+                cdata: [{
+                    type: 'Feature',
+                    id: 'video:resolutionChange'
+                }, {
+                    id: 'SB-13358',
+                    type: 'Task'
+                }, {
+                    type: 'Resolution',
+                    id: currentResolution
+                }]
+            }
+        })
     },
     _loadYoutube: function (path) {
         var instance = this;
@@ -176,8 +180,13 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             inactivityTimeout: 0,
             "src": path,
             "controls": false, "autoplay": true, "preload": "auto",
-            "youtube": { "ytControls": 2 }
-
+            "youtube": { 
+                "ytControls": 2 , 
+                "onPlayerPlaybackQualityChange" : function(e){ 
+                    var resolution = (e && e.data) ? e.data : "Auto";
+                    instance.logResolution(resolution);
+                }
+            }
         });
         videojs("videoElement").ready(function () {
 			var youtubeInstance = this;
