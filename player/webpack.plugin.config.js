@@ -299,7 +299,7 @@ module.exports = (env, argv) => {
 						manifest.renderer.dependencies.forEach(function (dependency) {
 							jsDependencyPath = (dependency.type === "js") && `${PLUGINS_BASE_PATH}${plugin.id}-${plugin.ver}/${dependency.src}`
 							cssDependencyPath = (dependency.type === "css") && `${PLUGINS_BASE_PATH}${plugin.id}-${plugin.ver}/${dependency.src}`
-							jsDependencyPath && fs.appendFile(`${OUTPUT_PATH}${PACKAGE_JS_FILE_NAME}`, fs.readFileSync(`${jsDependencyPath}`))
+							jsDependencyPath && fs.appendFile(`${OUTPUT_PATH}${PACKAGE_JS_FILE_NAME}`, fs.readFileSync(`${jsDependencyPath}`), "utf8")
 							cssDependencyPath && fs.appendFile(`${OUTPUT_PATH}${PACKAGE_CSS_FILE_NAME}`, fs.readFileSync(`${cssDependencyPath}`), "utf8")
 						})
 					}
