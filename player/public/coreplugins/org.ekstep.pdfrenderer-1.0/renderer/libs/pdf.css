@@ -97,7 +97,7 @@ font-size: calc(11px + 0.25vw);
 
 .sb-pdf-container {
 height: 100vh;
-overflow: hidden;
+/* overflow: hidden; */
 }
 .sb-pdf-container .sb-pdf-header {
 display: flex;
@@ -124,7 +124,7 @@ z-index: 99;
 }
 .sb-pdf-container .sb-pdf-body {
 height: 90%;
-overflow-y: auto;
+/* overflow-y: auto; */
 }
 .sb-pdf-container .download-pdf-image {
 margin: 0 1.25% 0 7.75%;
