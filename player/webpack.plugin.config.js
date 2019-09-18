@@ -37,8 +37,6 @@ const PLUGINS = process.env.plugins || [
 	"org.ekstep.toaster-1.0",
 	"org.ekstep.alert-1.0",
 	"org.ekstep.telemetrysync-1.0",
-	"org.ekstep.nextnavigation-1.0",
-	"org.ekstep.previousnavigation-1.0",
 	"org.ekstep.genie-1.0",
 	"org.ekstep.htmlrenderer-1.0",
 	"org.ekstep.epubrenderer-1.0",
@@ -138,7 +136,7 @@ module.exports = (env, argv) => {
 		output: {
 			filename: "[name]",
 			path: path.resolve(__dirname, OUTPUT_PATH),
-			chunkFilename: "chunks/[name].[chunkhash].js"
+			chunkFilename: "chunks/[name][chunkhash].js"
 
 		},
 		resolve: {
