@@ -121,6 +121,10 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         pdfMetaData.id = "pdf-meta";
         pdfMetaData.className = "sb-pdf-header";
 
+        var pdfMetaDataFake = document.createElement("div");
+        pdfMetaDataFake.id = "pdf-meta-fake";
+        pdfMetaDataFake.className = "sb-pdf-headerfix";
+
         var pdfButtons = document.createElement("div");
         pdfButtons.id = "pdf-buttons";
 
@@ -187,13 +191,17 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         pdfTotalPages.id = "pdf-total-pages";
         pdfTotalPages.className = "bold-page"
 
+        var searchPdfTotalPages = document.createElement('div');
+        searchPdfTotalPages.className = "search-page-number";
+
         pdfPageSearchBox.appendChild(findTextField);
-        pdfPageSearchBox.appendChild(goButton);
-        pdfPageSearchBox.appendChild(goButtonImage);
-        pdfPageSearch.appendChild(pdfPageSearchBox);
-        pageCountContainer.appendChild(pdfPageSearch);
-        pageCountContainer.appendChild(ofText);
-        pageCountContainer.appendChild(pdfTotalPages);
+        goButton.appendChild(goButtonImage);
+        searchPdfTotalPages.appendChild(ofText);
+        searchPdfTotalPages.appendChild(pdfTotalPages);
+        // pdfPageSearch.appendChild(pdfPageSearchBox);
+        pageCountContainer.appendChild(pdfPageSearchBox);
+        pageCountContainer.appendChild(goButton);
+        pageCountContainer.appendChild(searchPdfTotalPages);
 
 
         pdfMetaData.appendChild(pdfButtons);
@@ -201,6 +209,10 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         pdfMetaData.appendChild(pdfDownloadContainer);
         pdfMetaData.appendChild(pdfTitleContainer);
         pdfMetaData.appendChild(pageCountContainer);
+
+        var sbPdfBody = document.createElement('div');
+        sbPdfBody.id = "pdf-canvas-container";
+        sbPdfBody.className = "sb-pdf-body";
 
         var pdfCanvas = document.createElement("canvas");
         pdfCanvas.id = "pdf-canvas";
@@ -211,9 +223,11 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         pageLoader.id = "page-loader";
         pageLoader.textContent = "Loading page ...";
 
+        sbPdfBody.appendChild(pdfCanvas);
 
         pdfContents.appendChild(pdfMetaData);
-        pdfContents.appendChild(pdfCanvas);
+        pdfContents.appendChild(pdfMetaDataFake);
+        pdfContents.appendChild(sbPdfBody);
         pdfContents.appendChild(pageLoader);
         pdfContents.appendChild(pdfNoPage);
 
@@ -270,9 +284,13 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         $('#pdf-find-text').on('focus blur', function(e) {
             if( e.type == 'focus' ){
                 $(".search-page-pdf-arrow-container").css( "display", "inline" );
+                $(".search-page-number").css( "display", "none" );
+                $(".search-input").css({ "border-top-right-radius": "0px", "border-bottom-right-radius": "0px"});
               }
               else{
-                $(".search-page-pdf-arrow-container").css( "display", "none" );
+                $(".search-page-pdf-arrow-container").css("display", "none");
+                $(".search-page-number").css( "display", "inline" );
+                $(".search-input").css({ "border-top-right-radius": "4px", "border-bottom-right-radius": "4px"});
               }
         });
 
