@@ -220,7 +220,7 @@ border-radius: 3px;
 -moz-user-select: none;
 -ms-user-select: none;
 user-select: none;
-z-index: 99999;
+/* z-index: 99999; */
 background: white;
 border: 1px solid white;
 color: #333;
