@@ -444,9 +444,8 @@ ion-popover-view.fit ion-content {
 }
 
 .gc-menu-btn img.icon {
-    /*position: absolute;
+    position: absolute;
     margin-top: 40%;
-    width: 100%;*/
 }
 
 .gc-menu-btn.old_menu img.icon {
@@ -454,8 +453,8 @@ ion-popover-view.fit ion-content {
 }
 
 .gc-menu-btn img.icon.nav-top {
-    /*margin-top: 8%;*/
-    /*width: 65%;*/
+    margin-top: 8%;
+    width: 65%;
 }
 
 .nav-icon {

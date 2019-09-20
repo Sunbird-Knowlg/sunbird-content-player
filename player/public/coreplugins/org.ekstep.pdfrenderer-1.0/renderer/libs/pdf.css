@@ -162,20 +162,20 @@ min-width: 128px;
 height: 100%;
 }
 .sb-pdf-container .pdf-searchbar .search-box:active {
-border-color: #024f9d;
+border-color: #005391;
 }
 .sb-pdf-container .pdf-searchbar .search-input {
 border: 1px solid #dedede;
 padding: 5% 1% 11% 1%;
 border-radius: 4px;
 max-width: 56px;
-color: #999;
+color: #333;
 height: 100%;
 text-align: center;
 }
 .sb-pdf-container .pdf-searchbar .search-page-pdf-arrow-container {
 position: relative;
-background: #024F9D;
+background: #005391;
 height: 100%;
 display: inline-block;
 width: 25%;
@@ -223,7 +223,7 @@ user-select: none;
 z-index: 99999;
 background: white;
 border: 1px solid white;
-color: black;
+color: #333;
 position: fixed;
 top: 1.75%;
 display: -webkit-box;
@@ -241,8 +241,8 @@ right: 9%;
 right: 1.25%;
 }
 .sb-btn-arrows:hover, .sb-btn-arrows.active {
-background: #024f9d;
-border: 1px solid #024f9d;
+background: #005391;
+border: 1px solid #005391;
 color: white;
 }
 .chevron {

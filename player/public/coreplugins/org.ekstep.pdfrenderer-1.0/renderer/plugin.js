@@ -270,7 +270,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
         console.log("CANVAS", context.CANVAS);
 
-        $("#pdf-find").on('click', function() {
+        $(".search-page-pdf-arrow-container").on('click', function() {
             var searchText = document.getElementById("pdf-find-text");
             console.log("SEARCH TEXT", searchText.value);
             context.logInteractEvent("TOUCH", "navigate", "TOUCH", {
@@ -292,6 +292,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 $(".search-page-number").css( "display", "inline" );
                 $(".search-input").css({ "border-top-right-radius": "4px", "border-bottom-right-radius": "4px"});
               }
+        });
+        $('.search-page-pdf-arrow-container').on('mousedown', function(event) {
+            event.preventDefault();
         });
 
         $('#pdf-prev').on('click', function() {
