@@ -28,7 +28,7 @@ module.exports = {
 			{ id: "org.sunbird.player.endpage", ver: "1.1", minify: false, package: true },
 			{ id: "org.ekstep.videorenderer", ver: "1.1", minify: false, package: true },
 			{ id: "org.ekstep.pdfrenderer", ver: "1.0", minify: false, package: true },
-			{ id: "org.ekstep.nextnavigation", ver: "1.0", minify: false, package: true }
+			{ id: "org.ekstep.nextnavigation", ver: "1.0", minify: false, package: true },
 			{ id: "org.ekstep.previousnavigation", ver: "1.0", minify: false, package: true }
 		]
 	}
