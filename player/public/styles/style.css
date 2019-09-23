@@ -449,6 +449,10 @@ ion-popover-view.fit ion-content {
 }
 
 .gc-menu-btn.old_menu img.icon {
+    width: 100%;
+}
+
+.gc-menu-btn.old_menu img.icon {
     margin-top: 0;
 }
 
