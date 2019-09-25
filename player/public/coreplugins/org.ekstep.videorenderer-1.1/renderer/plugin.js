@@ -161,7 +161,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                     type: 'Resolution',
                     id: String(currentResolution)
                 },{
-                    type: 'Resolution-change',
+                    type: 'ResolutionChange',
                     id: "Auto"
                 }]
             }
