@@ -147,6 +147,7 @@
   flex: 1;
   margin-right: 2%;
   font-size: calc(0.8rem + 0.25vw);
+  margin-left: 5%;
   }
   .sb-pdf-container .pdf-searchbar {
   margin-left: auto;
