@@ -107,8 +107,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         EkstepRendererAPI.dispatchEvent("render:overlay:applyStyles");
 
         // Navigation template to load
-        // var obj = {"tempName": ""};
-        // EkstepRendererAPI.dispatchEvent("renderer:navigation:load", obj);
+        var obj = {"tempName": ""};
+        EkstepRendererAPI.dispatchEvent("renderer:navigation:load", obj);
 
         Renderer.theme.updateCanvas(newWidth, newHeight);
         if (!disableDraw) Renderer.theme.reRender();
