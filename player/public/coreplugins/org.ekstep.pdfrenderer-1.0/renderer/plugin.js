@@ -149,6 +149,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
 
         if (!window.cordova){
+            pdfMetaData.appendChild(pdfDownloadContainer);
             this.addDownloadButton(path, pdfDownloadContainer);
         }
 
@@ -206,7 +207,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
         pdfMetaData.appendChild(pdfButtons);
         pdfMetaData.appendChild(pdfSearchContainer);
-        pdfMetaData.appendChild(pdfDownloadContainer);
         pdfMetaData.appendChild(pdfTitleContainer);
         pdfMetaData.appendChild(pageCountContainer);
 
