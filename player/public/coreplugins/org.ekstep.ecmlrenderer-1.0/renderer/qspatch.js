@@ -42,7 +42,7 @@ var qspatch = {
                             return instance.validateUrl(EkstepRendererAPI.getBaseURL() + url.substring(1, url.length));
                         } else {
                             // Loading content from mobile storage ( OFFLINE )
-                            return instance.validateUrl('file:///' + EkstepRendererAPI.getBaseURL() + url);
+                            return instance.validateUrl(EkstepRendererAPI.getBaseURL() + url);
                         }
                     }
                 }
@@ -60,7 +60,7 @@ var qspatch = {
                             //return org.ekstep.pluginframework.pluginManager.resolvePluginResource(pluginId, pluginVer, path);
                         } else {
                             // Loading content from mobile storage ( OFFLINE )
-                            return instance.validateUrl('file:///' + EkstepRendererAPI.getBaseURL() + 'content-plugins/' + pluginId + '-' + pluginVer + '/' + path);
+                            return instance.validateUrl(EkstepRendererAPI.getBaseURL() + 'content-plugins/' + pluginId + '-' + pluginVer + '/' + path);
                         }
                     }
                 }
@@ -78,7 +78,7 @@ var qspatch = {
                             //return org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, path);
                         } else {
                             // Loading content from mobile storage ( OFFLINE )
-                            return instance.validateUrl('file:///' + EkstepRendererAPI.getBaseURL() + 'content-plugins/' + this._manifest.id + '-' + this._manifest.ver + '/' + path);
+                            return instance.validateUrl(EkstepRendererAPI.getBaseURL() + 'content-plugins/' + this._manifest.id + '-' + this._manifest.ver + '/' + path);
                         }
                     }
                 }
