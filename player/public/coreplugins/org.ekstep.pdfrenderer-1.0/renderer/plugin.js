@@ -54,7 +54,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         document.addEventListener('pagesinit', function () {
             // We can use pdfViewer now, e.g. let's change default scale.
             context.pdfViewer.currentScaleValue = context.DEFAULT_SCALE_VALUE;
-            $("#pdf-loader").hide();
+            $("#pdf-loader").css("display","none");
             $("#pdf-contents").show();
             // $("#pdf-buttons").show();
              $("#pdf-find-text").val(context.pdfViewer.currentPageNumber);
@@ -249,10 +249,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         pageLoader.id = "page-loader";
         pageLoader.textContent = "Loading page ...";
 
-        var breakEl = document.createElement("div");
-                breakEl.height = "20"
-                breakEl.style = "background:#222;height:20px"
-
         sbPdfBody.appendChild(pdfCanvas);
 
         pdfContents.appendChild(pdfMetaData);
@@ -354,11 +350,11 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
                   if(pageNumber>context.pdfViewer.currentPageNumber){
                     context.logInteractEvent("TOUCH", "previous", "TOUCH", {
-                        stageId: context.CURRENT_PAGE.toString()
+                        stageId: context.pdfViewer.currentPageNumber.toString()
                     });
                   }else if(pageNumber<context.pdfViewer.currentPageNumber){
                     context.logInteractEvent("TOUCH", "next", "TOUCH", {
-                        stageId: context.CURRENT_PAGE.toString()
+                        stageId: context.pdfViewer.currentPageNumber.toString()
                     });
                   }
 
@@ -411,7 +407,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         // context.logInteractEvent("TOUCH", "next", null, {
         //     stageId: context.CURRENT_PAGE.toString()
         // });
-        // //EkstepRendererAPI.getTelemetryService().navigate(context.CURRENT_PAGE.toString(), (context.CURRENT_PAGE + 1).toString());
+        EkstepRendererAPI.getTelemetryService().navigate(context.pdfViewer.currentPageNumber.toString(), (context.pdfViewer.currentPageNumber + 1).toString());
         if (context.pdfViewer.currentPageNumber != context.pdfDocument.numPages) {
            context.pdfViewer.currentPageNumber++
         } else if (context.pdfViewer.currentPageNumber === context.pdfDocument.numPages) {
@@ -423,7 +419,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         // context.logInteractEvent("TOUCH", "previous", null, {
         //     stageId: context.CURRENT_PAGE.toString()
         // });
-        // //EkstepRendererAPI.getTelemetryService().navigate(context.CURRENT_PAGE.toString(), (context.CURRENT_PAGE - 1).toString());
+        EkstepRendererAPI.getTelemetryService().navigate(context.pdfViewer.currentPageNumber.toString(), (context.pdfViewer.currentPageNumber - 1).toString());
         if(context.pdfViewer.currentPageNumber != 1){
             context.pdfViewer.currentPageNumber--
         }
@@ -431,7 +427,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     showPDF: function(pdf_url) {
         try {
             var instance = this;
-            $("#pdf-loader").show(); // use rendere loader
+            $("#pdf-loader").css("display","block"); // use rendere loader
             console.log("MANIFEST DATA", this.manifest)
             console.log("pdfjsLib lib", pdfjsLib)
             pdfjsLib.disableWorker = true;
@@ -450,7 +446,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
             }).catch(function(error) {
                 // If error re-show the upload button
-                $("#pdf-loader").hide();
+                $("#pdf-loader").css("display","none");
                 $("#upload-button").show();
                 error.message = "Missing PDF"
                 context.throwError(error);
