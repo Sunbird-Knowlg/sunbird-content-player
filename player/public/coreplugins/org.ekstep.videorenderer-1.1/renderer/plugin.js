@@ -196,6 +196,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 src: path
             });
             youtubeInstance.play();
+            $('.vjs-loading-spinner').css({"display": "none"});
             instance.addYOUTUBEListeners(youtubeInstance);
             instance.setYoutubeStyles(youtubeInstance);
             instance.videoPlayer = youtubeInstance;
