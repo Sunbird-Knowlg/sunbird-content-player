@@ -59,6 +59,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             // $("#pdf-buttons").show();
              $("#pdf-find-text").val(context.pdfViewer.currentPageNumber);
         });
+    
     },
 
     enableOverly: function () {
@@ -86,7 +87,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         } else {
             path = data.artifactUrl + "?" + new Date().getSeconds();
         }
-        console.log("path pdf is ", path);
+        
         var div = document.createElement('div');
         div.src = path;
         context.addToGameArea(div);
@@ -245,18 +246,14 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         pdfCanvas.width = "700";
         pdfCanvas.style = "maxHeight:100px";
 
-        var pageLoader = document.createElement("div");
-        pageLoader.id = "page-loader";
-        pageLoader.textContent = "Loading page ...";
-
         sbPdfBody.appendChild(pdfCanvas);
 
         pdfContents.appendChild(pdfMetaData);
         pdfContents.appendChild(pdfMetaDataFake);
         //pdfContents.appendChild(sbPdfBody);
-        pdfContents.appendChild(pageLoader);
         pdfContents.appendChild(pdfNoPage);
 
+    
         pdfBodyContainer.appendChild(pdfLoader);
         pdfBodyContainer.appendChild(pdfContents);
         pdfBodyContainer.appendChild(sbPdfBody);
@@ -349,10 +346,12 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                $("#pdf-find-text").val(context.pdfViewer.currentPageNumber);
 
                   if(pageNumber>context.pdfViewer.currentPageNumber){
+                    $("#pLoader").css("display","block");
                     context.logInteractEvent("TOUCH", "previous", "TOUCH", {
                         stageId: context.pdfViewer.currentPageNumber.toString()
                     });
                   }else if(pageNumber<context.pdfViewer.currentPageNumber){
+                    $("#pLoader").css("display","block");
                     context.logInteractEvent("TOUCH", "next", "TOUCH", {
                         stageId: context.pdfViewer.currentPageNumber.toString()
                     });
