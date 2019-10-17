@@ -175,6 +175,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
 
         if (!window.cordova){
+            pdfMetaData.appendChild(pdfDownloadContainer);
             this.addDownloadButton(path, pdfDownloadContainer);
         }
 
@@ -232,7 +233,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         // pdfButtons.appendChild(pdfZoomOut);
         
         pdfMetaData.appendChild(pdfSearchContainer);
-        pdfMetaData.appendChild(pdfDownloadContainer);
         pdfMetaData.appendChild(pdfTitleContainer);
         //pdfMetaData.appendChild(pdfButtons);
         pdfMetaData.appendChild(pageCountContainer);
@@ -250,13 +250,13 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
         pdfContents.appendChild(pdfMetaData);
         pdfContents.appendChild(pdfMetaDataFake);
-        //pdfContents.appendChild(sbPdfBody);
+        pdfContents.appendChild(sbPdfBody);
         pdfContents.appendChild(pdfNoPage);
 
     
         pdfBodyContainer.appendChild(pdfLoader);
         pdfBodyContainer.appendChild(pdfContents);
-        pdfBodyContainer.appendChild(sbPdfBody);
+        //pdfBodyContainer.appendChild(sbPdfBody);
 
         canvasContainer.appendChild(pdfMainContainer);
         canvasContainer.appendChild(pdfBodyContainer);

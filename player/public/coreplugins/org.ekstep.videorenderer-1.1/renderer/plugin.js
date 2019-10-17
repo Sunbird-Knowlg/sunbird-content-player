@@ -95,12 +95,12 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         if (window.cordova) {
             var videoPlayer = videojs('videoElement', {
                 "controls": true, "autoplay": true, "preload": "auto",
+                "nativeControlsForTouch": true,
                 html5: {
                     hls: {
                         overrideNative: true,
                     }
-                },
-                inactivityTimeout: 0
+                }
             }, function () {
                 this.on('downloadvideo', function () {
                     EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
@@ -109,7 +109,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             });
         } else {
             var videoPlayer = videojs('videoElement', {
-                inactivityTimeout: 0,
                 "controls": true, "autoplay": true, "preload": "auto",
                 plugins: {
                     vjsdownload: {
@@ -156,11 +155,14 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                     type: 'Feature',
                     id: 'video:resolutionChange'
                 }, {
+                    type: 'Task',
                     id: 'SB-13358',
-                    type: 'Task'
                 }, {
                     type: 'Resolution',
-                    id: currentResolution
+                    id: String(currentResolution)
+                },{
+                    type: 'ResolutionChange',
+                    id: "Auto"
                 }]
             }
         })
@@ -177,11 +179,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }
         var vid = videojs("videoElement", {
             "techOrder": ["youtube"],
-            inactivityTimeout: 0,
             "src": path,
-            "controls": false, "autoplay": true, "preload": "auto",
-            "youtube": { 
-                "ytControls": 2 , 
+            "controls": true, "autoplay": true, "preload": "auto",
+            "youtube": {
                 "onPlayerPlaybackQualityChange" : function(e){ 
                     var resolution = (e && e.data) ? e.data : "Auto";
                     instance.logResolution(resolution);
@@ -196,6 +196,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 src: path
             });
             youtubeInstance.play();
+            $('.vjs-loading-spinner').css({"display": "none"});
             instance.addYOUTUBEListeners(youtubeInstance);
             instance.setYoutubeStyles(youtubeInstance);
             instance.videoPlayer = youtubeInstance;
@@ -217,6 +218,11 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             EkstepRendererAPI.getTelemetryService().navigate(stageid, stageid, {
                 "duration": (Date.now() / 1000) - window.PLAYER_STAGE_START_TIME
             });
+            $('.vjs-loading-spinner').css({"top": "46%","left": "49%",
+            "width": "72px",
+            "height": "70px",
+            "border-radius": "70px",
+            "border": "5px solid rgba(47, 51, 63, 0.7)"});
         }
         var instance = this;
         instance.heartBeatEvent(true);

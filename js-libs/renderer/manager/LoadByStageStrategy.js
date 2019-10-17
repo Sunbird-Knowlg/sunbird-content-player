@@ -34,11 +34,11 @@ LoadByStageStrategy = Class.extend({
                             media.src = basePath + media.src;
                         }
                     }
-                    if (createjs.CordovaAudioPlugin.isSupported()) { // Only supported in mobile
-                        if (media.type !== 'sound' && media.type !== 'audiosprite' && !regex.test(media.src)) {
-                            media.src = 'file:///' + media.src;
-                        }
-                    }
+                    // if (createjs.CordovaAudioPlugin.isSupported()) { // Only supported in mobile
+                    //     if (media.type !== 'sound' && media.type !== 'audiosprite' && !regex.test(media.src)) {
+                    //         media.src = 'file:///' + media.src;
+                    //     }
+                    // }
                     if (media.type == 'json') {
                         instance.commonAssets.push(_.clone(media));
                     } else if (media.type == 'spritesheet') {
