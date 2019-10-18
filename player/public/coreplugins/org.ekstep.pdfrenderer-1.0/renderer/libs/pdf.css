@@ -290,7 +290,7 @@
   }
 
   .canvasWrapper canvas{
-    box-shadow: 0px 0px 0px 6px #777474;
+    box-shadow: 0px 0px 6px 0px #777474;
     margin-top: 9%;
   }
 
@@ -300,7 +300,7 @@
   }
 
 .page .loadingIcon{
-  background: url('/assets/icons/pdfSpinner.gif') no-repeat center 50%;
+  background: url('../assets/pdfSpinner.gif') no-repeat center 50%;
   display: block;
   left: 0;
   position: absolute;

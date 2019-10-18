@@ -168,7 +168,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var pdfTitleContainer = document.createElement("div");
         pdfTitleContainer.textContent = content.name;
         pdfTitleContainer.className = "pdf-name";
-        pdfTitleContainer.id = "pdf-title";
 
         var pdfSearchContainer = document.createElement("div");
         pdfSearchContainer.id = "pdf-search-container";
@@ -430,7 +429,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             console.log("MANIFEST DATA", this.manifest)
             console.log("pdfjsLib lib", pdfjsLib)
             pdfjsLib.disableWorker = true;
-            context.setTitleUsingUrl(pdf_url);
 
             // use api to resolve the plugin resource
             // The workerSrc property shall be specified.
@@ -440,7 +438,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 context.PDF_DOC = pdfDocument;
                 context.pdfDocument = pdfDocument;
                 context.pdfViewer.setDocument(pdfDocument);
-                context.setTitleUsingMetadata(pdfDocument);
                 $("#pdf-total-pages").text(pdfDocument.numPages);
 
             }).catch(function(error) {
@@ -466,56 +463,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             });
         }
     },
-
-    setTitleUsingUrl: function pdfViewSetTitleUsingUrl(url) {
-        this.url = url;
-        var title = pdfjsLib.getFilenameFromUrl(url) || url;
-        try {
-          title = decodeURIComponent(title);
-        } catch (e) {
-          // decodeURIComponent may throw URIError,
-          // fall back to using the unprocessed url in that case
-        }
-        context.setTitle(title);
-      },
-    
-      setTitleUsingMetadata: function(pdfDocument) {
-        var self = this;
-        pdfDocument.getMetadata().then(function(data) {
-          var info = data.info, metadata = data.metadata;
-          self.documentInfo = info;
-          self.metadata = metadata;
-    
-          // Provides some basic debug information
-          console.log('PDF ' + pdfDocument.fingerprint + ' [' +
-                      info.PDFFormatVersion + ' ' + (info.Producer || '-').trim() +
-                      ' / ' + (info.Creator || '-').trim() + ']' +
-                      ' (PDF.js: ' + (pdfjsLib.version || '-') + ')');
-    
-          var pdfTitle;
-          if (metadata && metadata.has('dc:title')) {
-            var title = metadata.get('dc:title');
-            // Ghostscript sometimes returns 'Untitled', so prevent setting the
-            // title to 'Untitled.
-            if (title !== 'Untitled') {
-              pdfTitle = title;
-            }
-          }
-    
-          if (!pdfTitle && info && info['Title']) {
-            pdfTitle = info['Title'];
-          }
-    
-          if (pdfTitle) {
-            context.setTitle(pdfTitle + ' - ' + document.title);
-          }
-        });
-      },
-    
-      setTitle: function pdfViewSetTitle(title) {
-        document.title = title;
-        document.getElementById('pdf-title').textContent = title;
-      },
    
     initContentProgress: function() {
         var instance = this;
