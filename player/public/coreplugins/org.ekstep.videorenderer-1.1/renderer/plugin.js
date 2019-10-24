@@ -16,6 +16,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     stageId: undefined,
     heartBeatData: {},
     enableHeartBeatEvent: false,
+    globalConfig: EkstepRendererAPI.getGlobalConfig(),
     _constants: {
         mimeType: ["video/mp4", "video/x-youtube", "video/webm"],
         events: {
@@ -170,6 +171,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     _loadYoutube: function (path) {
         var instance = this;
+        var globalContext = instance.globalConfig.context || {};
         if (!navigator.onLine) {
             EkstepRendererAPI.logErrorEvent('No internet', {
                 'type': 'content',
@@ -190,7 +192,11 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             }
         });
         videojs("videoElement").ready(function () {
-			var youtubeInstance = this;
+            var youtubeInstance = this;
+            var iframeSrc = $('#videoElement iframe')[0].src;
+            if(window.cordova && globalContext.origin){
+                $('#videoElement iframe')[0].src = instance.replaceOrigin(iframeSrc, "origin", globalContext.origin)
+            }
             $('.vjs-default-skin').css('opacity', '1');
             youtubeInstance.src({
                 type: 'video/youtube',
@@ -379,6 +385,18 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         EkstepRendererAPI.dispatchEvent('renderer:stagereload:show');
         EkstepRendererAPI.dispatchEvent("renderer:previous:show");
         EkstepRendererAPI.removeEventListener('renderer:launcher:clean', this.cleanUp, this);
+    },
+    replaceOrigin: function(url, paramName, paramValue)
+    {
+       if (paramValue == null) {
+           paramValue = '';
+       }
+       var pattern = new RegExp('\\b('+paramName+'=).*?(&|#|$)');
+       if (url.search(pattern)>=0) {
+           return url.replace(pattern,'$1' + paramValue + '$2');
+       }
+       url = url.replace(/[?#]$/,'');
+       return url + (url.indexOf('?')>0 ? '&' : '?') + paramName + '=' + paramValue;
     }
 });
 
