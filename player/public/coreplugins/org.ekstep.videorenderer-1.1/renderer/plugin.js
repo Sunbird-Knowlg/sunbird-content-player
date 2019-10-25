@@ -170,7 +170,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     _loadYoutube: function (path) {
         var instance = this;
-        var globalContext = EkstepRendererAPI.getGlobalConfig().context || {};
         if (!navigator.onLine) {
             EkstepRendererAPI.logErrorEvent('No internet', {
                 'type': 'content',
@@ -193,8 +192,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         videojs("videoElement").ready(function () {
             var youtubeInstance = this;
             var iframeSrc = $('#videoElement iframe')[0].src;
-            if(window.cordova && globalContext.origin){
-                $('#videoElement iframe')[0].src = instance.replaceOrigin(iframeSrc, "origin", globalContext.origin)
+            var origin = (EkstepRendererAPI.getGlobalConfig().context && EkstepRendererAPI.getGlobalConfig().context.origin) ? EkstepRendererAPI.getGlobalConfig().context.origin : false;
+            if(origin){
+                $('#videoElement iframe')[0].src = instance.replaceOrigin(iframeSrc, "origin", origin)
             }
             $('.vjs-default-skin').css('opacity', '1');
             youtubeInstance.src({
