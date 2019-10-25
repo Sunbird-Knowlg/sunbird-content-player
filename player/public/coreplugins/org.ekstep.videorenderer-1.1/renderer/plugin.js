@@ -16,7 +16,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     stageId: undefined,
     heartBeatData: {},
     enableHeartBeatEvent: false,
-    globalConfig: EkstepRendererAPI.getGlobalConfig(),
     _constants: {
         mimeType: ["video/mp4", "video/x-youtube", "video/webm"],
         events: {
@@ -171,7 +170,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     _loadYoutube: function (path) {
         var instance = this;
-        var globalContext = instance.globalConfig.context || {};
+        var globalContext = EkstepRendererAPI.getGlobalConfig().context || {};
         if (!navigator.onLine) {
             EkstepRendererAPI.logErrorEvent('No internet', {
                 'type': 'content',
