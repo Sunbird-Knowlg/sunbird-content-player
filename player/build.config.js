@@ -29,6 +29,7 @@ module.exports = {
 			{ id: "org.ekstep.ecmlrenderer", ver: "1.0", minify: true, package: false },
 			{ id: "org.sunbird.player.endpage", ver: "1.1", minify: false, package: true },
 			{ id: "org.ekstep.videorenderer", ver: "1.1", minify: false, package: true },
+			{ id: "org.ekstep.youtuberenderer", ver: "1.0", minify: false, package: true },
 			{ id: "org.ekstep.pdfrenderer", ver: "1.0", minify: false, package: true }
 		]
 	}
