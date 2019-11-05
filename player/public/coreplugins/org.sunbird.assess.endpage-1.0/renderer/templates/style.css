@@ -466,15 +466,15 @@ display: inline-block;
   margin-right: 8px;
   
 }
-i.icon.check.circle:before {
+i.icon.check:before {
   content: '';
   display: block;
-  width: 4px;
-  height: 10px;
+  width: 6px;
+  height: 12px;
   border: solid #fff;
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
-  margin: 5px 10px;
+  margin: 6px 10px;
 }
 
 .assessment-result-info{
