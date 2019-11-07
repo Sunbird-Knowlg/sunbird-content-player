@@ -24,17 +24,23 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var data = _.clone(content);
         this.heartBeatData.stageId = 'youtubestage';
         var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
+        data.artifactUrl = this.getYouTubeID(data.artifactUrl)
         var Url = new URL(data.artifactUrl);
         Url.searchParams.set('enablejsapi', '1');
-        if(globalConfigObj.context.origin){
-            Url.searchParams.set('origin', globalConfigObj.context.origin);
-        }
+        Url.searchParams.set('origin', 'https://diksha.gov.in');
+        // if(globalConfigObj.context.origin){
+        //     Url.searchParams.set('origin', globalConfigObj.context.origin);
+        // }
+        
         var iframe = document.createElement('iframe');
         iframe.type = 'text/html';
         iframe.width = "100%";
         iframe.height = "100%";
-        iframe.src = Url.href;
+        iframe.src = decodeURIComponent(Url.href);
+        //iframe.src = "https://www.youtube.com/watch?v=aOdbERz7-bs&enablejsapi=1&origin=https://diksha.gov.in";
+        //iframe.src = "https://www.youtube.com/embed/5dsGWM5XGdg?autoplay=1&enablejsapi=1&origin=https://diksha.gov.in";
         iframe.id = "org.ekstep.youtuberenderer";
+        console.log(iframe.src);
         document.getElementById("gameArea").insertBefore(iframe, document.getElementById("gameArea").childNodes[0])
         jQuery("#gameArea").css({
 			left: "0px",
@@ -46,13 +52,13 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 		})
         //this.addToGameArea(iframe);
 
-        var tag = document.createElement('script');
-        tag.id = 'iframe-demo';
-        tag.src = 'https://www.youtube.com/iframe_api';
-        // var firstScriptTag = document.head || document.getElementsByTagName('head')[0];
-        // firstScriptTag.appendChild(style);
+        // var tag = document.createElement('script');
+        // tag.id = 'iframe-demo';
+        // tag.src = 'https://www.youtube.com/iframe_api';
+        // // var firstScriptTag = document.head || document.getElementsByTagName('head')[0];
+        // // firstScriptTag.appendChild(style);
 
-        jQuery("#" + this.manifest.id).insertBefore(tag);
+        // jQuery("#" + this.manifest.id).insertBefore(tag);
         jQuery("#loading").hide()
 
         function onPlayerReady(event){
@@ -77,13 +83,59 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 document.getElementById('org.ekstep.youtuberenderer').style.borderColor = color;
             }
         }
-        player = new YT.Player('org.ekstep.youtuberenderer', {
-            events: {
-            'onReady': onPlayerReady,
-            'onStateChange': onPlayerStateChange
-            }
-        });
-    }    
+
+        function apiLoaded() {
+            YT.ready(function() {
+                Youtube.isApiReady = true;
+
+                for (var i = 0; i < Youtube.apiReadyQueue.length; ++i) {
+                    Youtube.apiReadyQueue[i].initYTPlayer();
+                }
+            });
+            // YT.ready(function() {
+            //     player = new YT.Player('org.ekstep.youtuberenderer', {
+            //         events: {
+            //         'onReady': onPlayerReady,
+            //         'onStateChange': onPlayerStateChange
+            //         }
+            //     });    
+            // });
+        }
+        function loadScript(src, callback) {
+            var loaded = false;
+            var tag = document.createElement('script');
+            var firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+            tag.onload = function () {
+                if (!loaded) {
+                    loaded = true;
+                    callback();
+                }
+            };
+            tag.onreadystatechange = function () {
+                if (!loaded && (this.readyState === 'complete' || this.readyState === 'loaded')) {
+                    loaded = true;
+                    callback();
+                }
+            };
+            tag.src = src;
+        }
+        if (typeof document !== 'undefined'){
+            loadScript('https://www.youtube.com/iframe_api', apiLoaded);
+        }
+    },
+    getYouTubeID: function(url){
+        var ID = '';
+        url = url.replace(/(>|<)/gi,'').split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/);
+        if(url[2] !== undefined) {
+          ID = url[2].split(/[^0-9a-z_\-]/i);
+          ID = ID[0];
+        }
+        else {
+          ID = url;
+        }
+        return "https://www.youtube-nocookie.com/embed/"+ID;
+      }  
 });
 
 //# sourceURL=YoutubeRenderer.js
