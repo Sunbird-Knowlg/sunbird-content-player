@@ -22,6 +22,22 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     start: function () {
         this._super();
         var data = _.clone(content);
+        var instance = this;
+        
+        window.onYouTubeIframeAPIReady = function() {
+            console.log("youtube player is ready");
+            instance.videoPlayer = new YT.Player('org.ekstep.youtuberenderer', {
+                events: {
+                    'onReady': function(event) {
+                        console.log("### YTPlayer:onReady() ###", event)
+                    },
+                    'onStateChange': function(event) {
+                        console.log("### YTPlayer:onStateChange()  ###", event)
+                    }
+                }
+            });
+        }
+
         this.heartBeatData.stageId = 'youtubestage';
         var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
         data.artifactUrl = this.getYouTubeID(data.artifactUrl)
@@ -32,34 +48,27 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         //     Url.searchParams.set('origin', globalConfigObj.context.origin);
         // }
         
-        var iframe = document.createElement('iframe');
-        iframe.type = 'text/html';
-        iframe.width = "100%";
-        iframe.height = "100%";
-        iframe.src = decodeURIComponent(Url.href);
-        //iframe.src = "https://www.youtube.com/watch?v=aOdbERz7-bs&enablejsapi=1&origin=https://diksha.gov.in";
-        //iframe.src = "https://www.youtube.com/embed/5dsGWM5XGdg?autoplay=1&enablejsapi=1&origin=https://diksha.gov.in";
-        iframe.id = "org.ekstep.youtuberenderer";
-        console.log(iframe.src);
-        document.getElementById("gameArea").insertBefore(iframe, document.getElementById("gameArea").childNodes[0])
-        jQuery("#gameArea").css({
-			left: "0px",
-			top: "0px",
-			width: "100%",
-			height: "100%",
-			marginTop: 0,
-			marginLeft: 0
-		})
-        //this.addToGameArea(iframe);
-
-        // var tag = document.createElement('script');
-        // tag.id = 'iframe-demo';
-        // tag.src = 'https://www.youtube.com/iframe_api';
-        // // var firstScriptTag = document.head || document.getElementsByTagName('head')[0];
-        // // firstScriptTag.appendChild(style);
-
-        // jQuery("#" + this.manifest.id).insertBefore(tag);
-        jQuery("#loading").hide()
+        function createIframe() {
+            var iframe = document.createElement('iframe');
+            iframe.type = 'text/html';
+            iframe.width = "100%";
+            iframe.height = "100%";
+            iframe.src = decodeURIComponent(Url.href);
+            //iframe.src = "https://www.youtube.com/watch?v=aOdbERz7-bs&enablejsapi=1&origin=https://diksha.gov.in";
+            //iframe.src = "https://www.youtube.com/embed/5dsGWM5XGdg?autoplay=1&enablejsapi=1&origin=https://diksha.gov.in";
+            iframe.id = "org.ekstep.youtuberenderer";
+            console.log(iframe.src);
+            document.getElementById("gameArea").insertBefore(iframe, document.getElementById("gameArea").childNodes[0])
+            jQuery("#gameArea").css({
+                left: "0px",
+                top: "0px",
+                width: "100%",
+                height: "100%",
+                marginTop: 0,
+                marginLeft: 0
+            })
+            jQuery("#loading").hide()
+        }
 
         function onPlayerReady(event){
             document.getElementById('org.ekstep.youtuberenderer').style.borderColor = '#FF6D00';
@@ -86,20 +95,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
         function apiLoaded() {
             YT.ready(function() {
-                Youtube.isApiReady = true;
-
-                for (var i = 0; i < Youtube.apiReadyQueue.length; ++i) {
-                    Youtube.apiReadyQueue[i].initYTPlayer();
-                }
+                createIframe();
             });
-            // YT.ready(function() {
-            //     player = new YT.Player('org.ekstep.youtuberenderer', {
-            //         events: {
-            //         'onReady': onPlayerReady,
-            //         'onStateChange': onPlayerStateChange
-            //         }
-            //     });    
-            // });
         }
         function loadScript(src, callback) {
             var loaded = false;
