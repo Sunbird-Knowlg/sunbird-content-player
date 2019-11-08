@@ -26,16 +26,13 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var instance = this;
         this.heartBeatData.stageId = 'youtubestage';
         var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
-        var youtubeId= this.getYouTubeID(data.artifactUrl);
-        if(globalConfigObj.context.origin){
-            Url.searchParams.set('origin', globalConfigObj.context.origin);
-        }
+        var youtubeId = this.getYouTubeID(data.artifactUrl);
         this.configOverlay();
         var iframe = document.createElement('iframe');
         iframe.type = 'text/html';
         iframe.width = "100%";
         iframe.height = "100%";
-        iframe.src = 'https://sunbirddevtelemetry.blob.core.windows.net/public/player/youtube.html?origin=https://sunbirddevtelemetry.blob.core.windows.net&id='+youtubeId;
+        iframe.src = 'https://ntpstagingall.blob.core.windows.net/ntp-content-staging/youtube/player.html?id='+youtubeId+'&origin=https://ntpstagingall.blob.core.windows.net';
         iframe.id = "org.ekstep.youtuberenderer";
         console.log(iframe.src);
         document.getElementById("gameArea").insertBefore(iframe, document.getElementById("gameArea").childNodes[0])
