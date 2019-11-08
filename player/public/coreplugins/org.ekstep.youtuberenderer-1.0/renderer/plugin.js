@@ -88,10 +88,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 "duration": (Date.now() / 1000) - window.PLAYER_STAGE_START_TIME
             });
         }
-        var instance = this;
-        instance.heartBeatEvent(true);
-        instance.progressTimer(true);
-        instance.logTelemetry('TOUCH', {
+        this.heartBeatEvent(true);
+        this.logTelemetry('TOUCH', {
             stageId: 'youtubestage',
             subtype: "PLAY",
             values: [{
@@ -100,10 +98,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         })
     },
     pause: function (time) {
-        var instance = this;
-        instance.heartBeatEvent(false);
-        instance.progressTimer(false);
-        instance.logTelemetry('TOUCH', {
+        this.heartBeatEvent(false);
+        this.logTelemetry('TOUCH', {
             stageId: 'youtubestage',
             subtype: "PAUSE",
             values: [{
@@ -112,9 +108,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         })
     },
     ended: function () {
-        var instance = this;
-        instance.progressTimer(false);
-        instance.logTelemetry('END', {
+        this.logTelemetry('END', {
             stageId: 'youtubestage',
             subtype: "STOP"
         });
@@ -122,26 +116,13 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         EkstepRendererAPI.dispatchEvent('renderer:content:end');
     },
     seeked: function (time) {
-        var instance = this;
-
-        instance.logTelemetry('TOUCH', {
+        this.logTelemetry('TOUCH', {
             stageId: 'youtubestage',
             subtype: "DRAG",
             values: [{
                 time: time
             }]
         })
-    },
-    progressTimer: function (flag) {
-        var instance = this;
-        if (flag) {
-            instance.progressTime = setInterval(function (e) {
-                instance.currentTime = instance.currentTime + 1;
-            }, 1000);
-        }
-        if (!flag) {
-            clearInterval(instance.progressTime);
-        }
     },
     getYouTubeID: function(url){
         var ID = '';
