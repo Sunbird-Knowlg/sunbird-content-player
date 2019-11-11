@@ -5,6 +5,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         unsupportedVideo: "Video URL not accessible"
     },
     currentTime: 1,
+    totalDuration: 0,
     videoPlayer: undefined,
     stageId: undefined,
     heartBeatData: {},
@@ -26,13 +27,14 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var instance = this;
         this.heartBeatData.stageId = 'youtubestage';
         var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
-        var youtubeId = this.getYouTubeID(data.artifactUrl);
+        var youtubeId= this.getYouTubeID(data.artifactUrl);
         this.configOverlay();
         var iframe = document.createElement('iframe');
         iframe.type = 'text/html';
         iframe.width = "100%";
         iframe.height = "100%";
-        iframe.src = 'https://ntpstagingall.blob.core.windows.net/ntp-content-staging/youtube/player.html?id='+youtubeId+'&origin=https://ntpstagingall.blob.core.windows.net';
+        //iframe.src = 'https://ntpstagingall.blob.core.windows.net/ntp-content-staging/youtube/player.html?id='+youtubeId+'&origin=https://ntpstagingall.blob.core.windows.net';
+        iframe.src = 'https://sunbirddevtelemetry.blob.core.windows.net/public/player/youtube.html?origin=https://sunbirddevtelemetry.blob.core.windows.net&id='+youtubeId;
         iframe.id = "org.ekstep.youtuberenderer";
         console.log(iframe.src);
         document.getElementById("gameArea").insertBefore(iframe, document.getElementById("gameArea").childNodes[0])
@@ -50,17 +52,19 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 var eventData = JSON.parse(event.data)
                 switch (eventData.eid) {
                     case 'paly':
-                        instance.play(eventData.time);
+                        instance.play(eventData);
                         break;
                     case 'pause':
-                        instance.pause(eventData.time);
+                        instance.pause(eventData);
                         break;
                     case 'seeked':
-                        instance.seeked(eventData.time);
+                        instance.seeked(eventData);
                         break;
                     case 'end':
-                        instance.ended(eventData.time);
+                        instance.ended(eventData);
                         break;
+                    case 'qualityChange':
+                        instance.onQualityChange(eventData.resolutionVal);
                 }
             }
         });
@@ -82,47 +86,97 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             EkstepRendererAPI.dispatchEvent("renderer:previous:hide");
         }, 100);
     },
-    play: function (time) {
-        if (time == 0) {
+    play: function (eventData) {
+        this.totalDuration = eventData.duration;
+        if (eventData.time == 0) {
             EkstepRendererAPI.getTelemetryService().navigate('youtubestage', 'youtubestage', {
                 "duration": (Date.now() / 1000) - window.PLAYER_STAGE_START_TIME
             });
         }
-        this.heartBeatEvent(true);
-        this.logTelemetry('TOUCH', {
+        var instance = this;
+        instance.heartBeatEvent(true);
+        instance.progressTimer(true);
+        instance.logTelemetry('TOUCH', {
             stageId: 'youtubestage',
             subtype: "PLAY",
             values: [{
-                time: time
+                time: eventData.time
             }]
         })
     },
-    pause: function (time) {
-        this.heartBeatEvent(false);
-        this.logTelemetry('TOUCH', {
+    pause: function (eventData) {
+        var instance = this;
+        instance.heartBeatEvent(false);
+        instance.progressTimer(false);
+        instance.logTelemetry('TOUCH', {
             stageId: 'youtubestage',
             subtype: "PAUSE",
             values: [{
-                time: time
+                time: eventData.time
             }]
         })
     },
     ended: function () {
-        this.logTelemetry('END', {
+        var instance = this;
+        instance.progressTimer(false);
+        instance.logTelemetry('END', {
             stageId: 'youtubestage',
             subtype: "STOP"
         });
-        $(".vjs-has-started, .vjs-poster").css("display", "none");
         EkstepRendererAPI.dispatchEvent('renderer:content:end');
     },
-    seeked: function (time) {
-        this.logTelemetry('TOUCH', {
+    seeked: function (eventData) {
+        var instance = this;
+        instance.logTelemetry('TOUCH', {
             stageId: 'youtubestage',
             subtype: "DRAG",
             values: [{
-                time: time
+                time: eventData.time
             }]
         })
+    },
+    onQualityChange: function(resolutionVal){
+        this.logTelemetry('TOUCH', {
+            stageId: 'videostage',
+            subtype: "CHANGE"
+        }, "", {
+            context: {
+                cdata: [{
+                    type: 'Feature',
+                    id: 'video:resolutionChange'
+                }, {
+                    type: 'Task',
+                    id: 'SB-13358',
+                }, {
+                    type: 'Resolution',
+                    id: resolutionVal
+                },{
+                    type: 'ResolutionChange',
+                    id: "Auto"
+                }]
+            }
+        })
+    },
+    progressTimer: function (flag) {
+        var instance = this;
+        if (flag) {
+            instance.progressTime = setInterval(function (e) {
+                instance.currentTime = instance.currentTime + 1;
+            }, 1000);
+        }
+        if (!flag) {
+            clearInterval(instance.progressTime);
+        }
+    },
+    contentProgress: function () {
+        var progress = this.progres(this.currentTime, totalDuration);
+        return progress === 0 ? 1 : progress;  // setting default value of progress=1 when video opened
+    },
+    onOverlayAudioMute: function () {
+
+    },
+    onOverlayAudioUnmute: function () {
+        
     },
     getYouTubeID: function(url){
         var ID = '';
