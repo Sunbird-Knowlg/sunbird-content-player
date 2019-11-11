@@ -169,7 +169,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }
     },
     contentProgress: function () {
-        var progress = this.progres(this.currentTime, totalDuration);
+        var progress = this.progres(this.currentTime, this.totalDuration);
         return progress === 0 ? 1 : progress;  // setting default value of progress=1 when video opened
     },
     onOverlayAudioMute: function () {
