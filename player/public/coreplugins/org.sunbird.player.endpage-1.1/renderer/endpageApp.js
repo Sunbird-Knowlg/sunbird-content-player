@@ -61,7 +61,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
                 _.each(endpageManifest, function(value, key) { // search content type in object and get template
                     /* istanbul ignore else */
                     if (_.contains(value.contentType, contentType)) {
-                        $scope.templateToRender = value.template;
+                        $scope.templateToRender = (value.template).toLowerCase();
                     }
                 })
             }
