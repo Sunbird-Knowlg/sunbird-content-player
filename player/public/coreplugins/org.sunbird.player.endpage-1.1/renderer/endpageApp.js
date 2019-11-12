@@ -100,8 +100,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     };
 
     $scope.handleEndpage = function() {
-        var contentType = $scope.checkTemplate($scope.playerMetadata.contentType);
-        !_.isUndefined(contentType) ? $scope.checkTemplate(contentType) : '';
+        !_.isUndefined($scope.playerMetadata.contentType) ? $scope.checkTemplate($scope.playerMetadata.contentType) : '';
         $scope.setLicense();
         if (_(TelemetryService.instance).isUndefined()) {
             var otherData = GlobalContext.config.otherData;
