@@ -68,7 +68,8 @@ var app = angular.module("genie-canvas", ["ionic", "ngCordova", "oc.lazyLoad"])
 				window.StatusBar && StatusBar.styleDefault()
 				GlobalContext.init(packageName, version).then(function (appInfo) {
 					if (typeof localPreview !== "undefined" && localPreview === "local") { return }
-					if (!isbrowserpreview) {
+					var isMobile = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()))
+					if (isMobile) {
 						org.ekstep.contentrenderer.device()
 					}
 				}).catch(function (res) {
