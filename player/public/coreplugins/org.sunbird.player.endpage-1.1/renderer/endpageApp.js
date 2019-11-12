@@ -51,8 +51,8 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     // Job is to decide which template is assigned in config as part of endpage based on contenttype
     $scope.checkTemplate = function(contentType) {
             /* istanbul ignore else */
-            if (!_.isUndefined(globalConfig.endPage)) { // check if endpage Manifest/config exist
-                var endpageManifest = globalConfig.endPage;
+            if (!_.isUndefined(globalConfig.config.endPage)) { // check if endpage Manifest/config exist
+                var endpageManifest = globalConfig.config.endPage;
                 var endpageObj = [];
                 if (!Array.isArray(endpageManifest)) { // check if it a proper Array of Obj, if not convert
                     endpageObj.push(endpageManifest)
