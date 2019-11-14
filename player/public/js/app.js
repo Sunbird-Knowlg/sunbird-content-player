@@ -47,8 +47,8 @@ var app = angular.module("genie-canvas", ["ionic", "ngCordova", "oc.lazyLoad"])
 				TelemetryService.interrupt("RESUME", getCurrentStageId)
 			})
 		}
-		$timeout(function () {
-			$ionicPlatform.ready(function () {
+		// $timeout(function () {
+			// $ionicPlatform.ready(function () {
 				splashScreen.addEvents()
 				org.ekstep.service.init()
 				if (typeof Promise === "undefined") {
@@ -82,8 +82,8 @@ var app = angular.module("genie-canvas", ["ionic", "ngCordova", "oc.lazyLoad"])
 					alert(res.errors)
 					exitApp()
 				})
-			})
-		})
+			// })
+		// })
 	}).config(function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvider, $sceDelegateProvider) {
 		app.controllerProvider = $controllerProvider
 		app.compileProvider = $compileProvider
