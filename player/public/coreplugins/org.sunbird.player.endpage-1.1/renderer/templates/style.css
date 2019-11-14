@@ -53,15 +53,15 @@ table {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   height: 100%;
 }
 
@@ -106,10 +106,20 @@ table {
 
 .ps-nav {
   width: 22%;
-  margin-top: -3%;
+  /* margin-top: -3%; */
   box-shadow: 0 0 4px 1px #bcbcbc;
 }
-
+.ps-nav.left, .ps-nav.right {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.ps-nav.left {
+  left: 0px;
+}
+.ps-nav.right {
+  right: 0px;
+}
 .ps-score {
   width: 62%;
 }
@@ -140,11 +150,11 @@ table {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 
 .ps-nav-body {
@@ -166,13 +176,14 @@ table {
   font-weight: bold;
   position: absolute;
   width: 55%;
-  top: 47%;
+  top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
   background-color: #f3f3f3;
   border-radius: 5px;
   padding: 1vw 0vw;
+  height: 17vm;
 }
 
 .ps-chapter-text {
@@ -227,8 +238,8 @@ table {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   /*border-right: 1px solid #eaeaea;*/
 }
 
@@ -266,8 +277,8 @@ table {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 
 .ps-btn, .ps-btn:hover, .ps-btn:focus, .ps-btn:active {
@@ -306,8 +317,8 @@ table {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   text-align: center;
   margin: 2vw auto 3vw auto;
 }
@@ -331,7 +342,7 @@ table {
   width: 70vw;
   /* padding-top: 1vw; */
   -ms-flex-pack: distribute;
-      justify-content: space-around;
+  justify-content: space-around;
 }
 
 .ps-action-list__item {
@@ -339,8 +350,8 @@ table {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 
 .ps-action-text {
@@ -380,11 +391,11 @@ table {
 }
 
 .ellipsis-three-line{
-  -webkit-line-clamp: 3; 
+  -webkit-line-clamp: 3;
 }
 
 .buttonVisible {
- visibility: visible;
+  visibility: visible;
 }
 
 .buttonHide {
