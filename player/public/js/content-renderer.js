@@ -348,7 +348,7 @@ org.ekstep.contentrenderer.web = function (id) {
 		})
 }
 
-org.ekstep.contentrenderer.device = function () {
+/*org.ekstep.contentrenderer.device = function () {
 	var globalconfig = EkstepRendererAPI.getGlobalConfig()
 	var isMobile = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()))
 	if (!isbrowserpreview && isMobile) {
@@ -364,7 +364,7 @@ org.ekstep.contentrenderer.device = function () {
 	} else {
 		org.ekstep.contentrenderer.startGame(GlobalContext.config.appInfo)
 	}
-}
+}*/
 
 org.ekstep.contentrenderer.isStreamingContent = function () {
 	var globalConfig = EkstepRendererAPI.getGlobalConfig()

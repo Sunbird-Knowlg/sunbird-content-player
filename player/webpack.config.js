@@ -86,6 +86,8 @@ const APP_SCRIPTS = [
     './public/services/controllerservice.js',
     './public/js/ekstepRendererEvents.js',
     './public/js/iEvaluator.js',
+    './public/js/webView.js',
+    './public/js/mobileView.js',
     './public/dispatcher/idispatcher.js',
     './public/dispatcher/web-dispatcher.js',
     './public/dispatcher/device-dispatcher.js',
