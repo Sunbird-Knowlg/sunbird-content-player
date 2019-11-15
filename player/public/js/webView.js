@@ -10,7 +10,7 @@ var webView = {
 
                 // commented for now for offline desktop app. if we remove this, player will not work in local
                 //org.ekstep.contentrenderer.startGame(GlobalContext.config.appInfo)
-            }).catch(function (res) {2
+            }).catch(function (res) {
                 console.log("Error Globalcontext.init:", res)
                 EkstepRendererAPI.logErrorEvent(res, {
                     "type": "system",
