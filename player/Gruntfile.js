@@ -260,8 +260,8 @@ module.exports = function (grunt) {
 				{
 					expand: true,
 					cwd: "public/youtube/",
-					src: ["*"],
-					dest: "www/youtube",
+					src: ["youtube.html"],
+					dest: "www/",
 					flatten: false
 				}
 				]
