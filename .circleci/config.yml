@@ -27,17 +27,13 @@ jobs:
             git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins -b $target_branch
             fi
 
-      #- run: git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins -b $CIRCLE_BRANCH
       - run: sudo npm install -g grunt-cli@1.2.0
       - run: npm install
       - run: npm run build-preview ekstep
       - run: grunt compress:preview
       - run: grunt generate-libs
       - run: grunt build-jsdoc
-     
-      #- store_artifacts:
-          #path: /tmp
-          #destination:
+    
       - run: 
           name: Install sonar scanner
           command: 'sudo npm install -g sonarqube-scanner'
