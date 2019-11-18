@@ -34,7 +34,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         iframe.width = "100%";
         iframe.height = "100%";
         //iframe.src = 'https://ntpstagingall.blob.core.windows.net/ntp-content-staging/youtube/player.html?id='+youtubeId+'&origin=https://ntpstagingall.blob.core.windows.net';
-        iframe.src = 'https://sunbirddevtelemetry.blob.core.windows.net/public/player/youtube.html?origin=https://sunbirddevtelemetry.blob.core.windows.net&id='+youtubeId;
+        iframe.src = 'https://dev.sunbirded.org/public/player/youtube.html?origin=https://dev.sunbirded.org&id='+youtubeId;
         iframe.id = "org.ekstep.youtuberenderer";
         console.log(iframe.src);
         document.getElementById("gameArea").insertBefore(iframe, document.getElementById("gameArea").childNodes[0])
@@ -169,7 +169,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }
     },
     contentProgress: function () {
-        var progress = this.progres(this.currentTime, totalDuration);
+        var progress = this.progres(this.currentTime, this.totalDuration);
         return progress === 0 ? 1 : progress;  // setting default value of progress=1 when video opened
     },
     onOverlayAudioMute: function () {
