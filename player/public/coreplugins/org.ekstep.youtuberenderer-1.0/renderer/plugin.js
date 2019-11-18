@@ -34,7 +34,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         iframe.width = "100%";
         iframe.height = "100%";
         //iframe.src = 'https://ntpstagingall.blob.core.windows.net/ntp-content-staging/youtube/player.html?id='+youtubeId+'&origin=https://ntpstagingall.blob.core.windows.net';
-        iframe.src = 'https://dev.sunbirded.org/content/preview/youtube.html?origin=https://dev.sunbirded.org&id='+youtubeId;
+        iframe.src = globalConfigObj.context.origin + '/content/preview/youtube.html?origin=' + globalConfigObj.context.origin + '&id='+youtubeId;
         iframe.id = "org.ekstep.youtuberenderer";
         console.log(iframe.src);
         document.getElementById("gameArea").insertBefore(iframe, document.getElementById("gameArea").childNodes[0])
