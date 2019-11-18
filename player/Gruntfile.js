@@ -256,6 +256,13 @@ module.exports = function (grunt) {
 					src: ["chunks/**", "coreplugins.js"],
 					dest: "www/",
 					flatten: false
+				},
+				{
+					expand: true,
+					cwd: "public/youtube/",
+					src: ["*"],
+					dest: "www/youtube",
+					flatten: false
 				}
 				]
 			},
