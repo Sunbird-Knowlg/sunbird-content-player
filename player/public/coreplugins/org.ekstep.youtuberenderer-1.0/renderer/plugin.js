@@ -33,9 +33,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         iframe.type = 'text/html';
         iframe.width = "100%";
         iframe.height = "100%";
-        var origin = globalConfigObj.context.origin ? globalConfigObj.context.origin : 'https://ntpstagingall.blob.core.windows.net'; 
-        var youtubePlayer = globalConfigObj.context.youtubePlayer ? globalConfigObj.context.youtubePlayer : 'https://ntpstagingall.blob.core.windows.net/ntp-content-staging/youtube/player.html';
-        iframe.src = youtubePlayer + '?id='+youtubeId+'&origin='+origin;
+        iframe.src = globalConfigObj.context.origin + '/content/preview/youtube.html?origin=' + globalConfigObj.context.origin + '&id='+youtubeId;
         iframe.id = "org.ekstep.youtuberenderer";
         console.log(iframe.src);
         document.getElementById("gameArea").insertBefore(iframe, document.getElementById("gameArea").childNodes[0])
