@@ -30,10 +30,11 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var youtubeId= this.getYouTubeID(data.artifactUrl);
         this.configOverlay();
         var iframe = document.createElement('iframe');
+        var origin = globalConfigObj.context.origin || window.origin;
         iframe.type = 'text/html';
         iframe.width = "100%";
         iframe.height = "100%";
-        iframe.src = globalConfigObj.context.origin + '/content/preview/youtube.html?origin=' + globalConfigObj.context.origin + '&id='+youtubeId;
+        iframe.src = origin + '/content/preview/youtube.html?origin=' + origin + '&id='+youtubeId;
         iframe.id = "org.ekstep.youtuberenderer";
         console.log(iframe.src);
         document.getElementById("gameArea").insertBefore(iframe, document.getElementById("gameArea").childNodes[0])
