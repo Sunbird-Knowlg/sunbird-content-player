@@ -11,12 +11,7 @@ LoadByStageStrategy = Class.extend({
     init: function(themeData, basePath) {
         //console.info('createjs.CordovaAudioPlugin.isSupported()', createjs.CordovaAudioPlugin.isSupported());
         var instance = this;
-        var regex = new RegExp("^(http|https)://", "i");
-        if(regex.test(basePath)){
-            createjs.Sound.registerPlugins([createjs.WebAudioPlugin, createjs.CordovaAudioPlugin, createjs.HTMLAudioPlugin]);
-        }else{
-            createjs.Sound.registerPlugins([createjs.CordovaAudioPlugin, createjs.WebAudioPlugin, createjs.HTMLAudioPlugin]);
-        }
+        createjs.Sound.registerPlugins([createjs.WebAudioPlugin, createjs.CordovaAudioPlugin, createjs.HTMLAudioPlugin]);
         createjs.Sound.alternateExtensions = ["mp3"];
         this.destroy();
         this.loadAppAssets();
@@ -89,7 +84,7 @@ LoadByStageStrategy = Class.extend({
         instance.loadTemplateAssets();
     },
     loadAppAssets: function() {
-        var localPath = "";
+        var localPath = "undefined" == typeof cordova ? "" : "file:///android_asset/www/";
         this.commonAssets.push({
             id: "goodjob_sound",
             src: localPath + "assets/sounds/goodjob.mp3"
@@ -329,7 +324,13 @@ LoadByStageStrategy = Class.extend({
         }
     },
     _createLoader: function() {
-        return new createjs.LoadQueue(true, null, true);
+        var regex = new RegExp("^(http|https)://", "i");
+        var globalConfig = EkstepRendererAPI.getGlobalConfig();
+        if(regex.test(globalConfig.basepath)){
+            return new createjs.LoadQueue(true, null, true);
+        }else{
+            return new createjs.LoadQueue(false);
+        }
     },
     isStageAssetsLoaded : function(stageId) {
         // Show weather stage manifest are loaded or not.
