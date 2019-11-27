@@ -86,6 +86,8 @@ const APP_SCRIPTS = [
     './public/services/controllerservice.js',
     './public/js/ekstepRendererEvents.js',
     './public/js/iEvaluator.js',
+    //'./public/services/localView.js', // For localdevelopment use localView.js insted of webView.js
+    './public/js/mainView.js',
     './public/js/webView.js',
     './public/js/mobileView.js',
     './public/dispatcher/idispatcher.js',

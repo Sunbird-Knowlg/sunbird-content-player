@@ -26,13 +26,10 @@ var app = angular.module("genie-canvas", ["ionic", "ngCordova", "oc.lazyLoad"])
 				}
 			}
 		}
+
+		splashScreen.addEvents()
+		org.ekstep.service.init()
 		
-		var isMobile = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()))
-		if (isMobile) {
-			mobileView.init($ionicPlatform, $timeout);
-		}else{
-			webView.init();
-		}
 	}).config(function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvider, $sceDelegateProvider) {
 		app.controllerProvider = $controllerProvider
 		app.compileProvider = $compileProvider
