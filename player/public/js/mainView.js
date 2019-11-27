@@ -28,7 +28,6 @@ org.ekstep.view.mainView = Class.extend({
     }
 })
 org.ekstep.view.init = function () {
-	var isMobile = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()))
     if (isMobile) {
         org.ekstep.view.renderer = mobileView;
         org.ekstep.view.renderer.init($ionicPlatform, $timeout);
