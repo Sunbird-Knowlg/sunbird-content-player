@@ -4,13 +4,13 @@ MainView = undefined
 var isMobile = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()));
 
 org.ekstep.view.mainView = Class.extend({
-	init: function (config) {},
+    init: function (config) {},
     setGlobalContext: function(){
         return new Promise(function (resolve, reject) {
-			GlobalContext.game.id = !GlobalContext.game.id ? packageName : GlobalContext.game.id
+            GlobalContext.game.id = !GlobalContext.game.id ? packageName : GlobalContext.game.id
             GlobalContext.game.ver = !GlobalContext.game.ver ? version : GlobalContext.game.ver
-            
-			// Only for the local
+
+            // Only for the local
             GlobalContext.config = {
                 origin: "Genie",
                 contentId: "org.ekstep.num.addition.by.grouping",
@@ -24,7 +24,7 @@ org.ekstep.view.mainView = Class.extend({
             GlobalContext.config = window.globalConfig
             setTelemetryEventFields(window.globalConfig)
             resolve(GlobalContext.config)
-		})
+        })
     }
 })
 org.ekstep.view.init = function () {
