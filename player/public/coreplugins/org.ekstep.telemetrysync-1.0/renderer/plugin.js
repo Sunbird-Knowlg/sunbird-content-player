@@ -66,7 +66,7 @@ Plugin.extend({
         initializeTelemetryPlugin: function() {
             if ("undefined" == typeof cordova) {
                 this.listenTelementryEvent();
-                var did;//detectClient();
+                var did = detectClient();
                 this._requiredFields = {};
                 var extConfig = EkstepRendererAPI.getGlobalConfig();
                 this._requiredFields.uid = extConfig.context.uid || extConfig.uid;
