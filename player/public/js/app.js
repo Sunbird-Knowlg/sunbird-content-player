@@ -30,6 +30,15 @@ var app = angular.module("genie-canvas", ["ionic", "ngCordova", "oc.lazyLoad"])
 		splashScreen.addEvents()
 		org.ekstep.service.init()
 		
+		if(typeof org.ekstep.contentrenderer.local === "function") {
+			org.ekstep.contentrenderer.local()
+			return;
+		}
+
+		var isMobile = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()))
+		if(isMobile) {
+			mobileView.init($ionicPlatform, $timeout);
+		}
 	}).config(function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvider, $sceDelegateProvider) {
 		app.controllerProvider = $controllerProvider
 		app.compileProvider = $compileProvider
@@ -105,11 +114,14 @@ var app = angular.module("genie-canvas", ["ionic", "ngCordova", "oc.lazyLoad"])
 		EkstepRendererAPI.addEventListener("renderer.content.getMetadata", function () {
 			var configuration = EkstepRendererAPI.getGlobalConfig()
 			content.metadata = (_.isUndefined(configuration.metadata) || _.isNull(configuration.metadata)) ? globalConfig.defaultMetadata : configuration.metadata
+
 			if (_.isUndefined(configuration.data)) {
 				org.ekstep.contentrenderer.web(configuration.context.contentId)
 			} else {
 				content.body = configuration.data
-				org.ekstep.contentrenderer.startGame(content.metadata)
+				org.ekstep.contentrenderer.setContentMetadata(content.metadata, function () {
+					org.ekstep.contentrenderer.startGame(content.metadata)
+				})
 			}
 		}, this)
 	})

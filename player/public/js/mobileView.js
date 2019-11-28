@@ -1,5 +1,4 @@
-var mobileView = function () {
-    return {
+var mobileView = {
 		init: function($ionicPlatform, $timeout){
 			console.log("======Mobile View======");
 			var globalconfig = EkstepRendererAPI.getGlobalConfig();
@@ -18,32 +17,12 @@ var mobileView = function () {
 						globalConfig.recorder = "android"
 					}
 					window.StatusBar && StatusBar.styleDefault()
-					GlobalContext.init(packageName, version).then(function (appInfo) {
-						if (globalconfig.metadata) {
-							org.ekstep.contentrenderer.setContentMetadata(globalconfig.metadata, function () {
-								org.ekstep.contentrenderer.startGame(content.metadata)
-							})
-						} else {
-							org.ekstep.contentrenderer.getContentMetadata(globalconfig.contentId, function () {
-								org.ekstep.contentrenderer.startGame(content.metadata)
-							})
-						}
-					}).catch(function (res) {
-						console.log("Error Globalcontext.init:", res)
-						EkstepRendererAPI.logErrorEvent(res, {
-							"type": "system",
-							"severity": "fatal",
-							"action": "play"
-						})
-						alert(res.errors)
-						exitApp()
-					})
 				})
 			})
 		},
-		addIonicEvents: function($ionicPlatform){
+		addIonicEvents: function(ionicPlatform){
 			// To override back button behaviour
-			$ionicPlatform.registerBackButtonAction(function () {
+			ionicPlatform.registerBackButtonAction(function () {
 				if (EkstepRendererAPI.hasEventListener(EkstepRendererEvents["renderer:device:back"])) {
 					EkstepRendererAPI.dispatchEvent(EkstepRendererEvents["renderer:device:back"])
 				} else {
@@ -53,14 +32,14 @@ var mobileView = function () {
 					contentExitCall()
 				}
 			}, 100)
-			$ionicPlatform.on("pause", function () {
+			ionicPlatform.on("pause", function () {
 				Renderer && Renderer.pause()
 				TelemetryService.interrupt("BACKGROUND", getCurrentStageId)
 			})
-			$ionicPlatform.on("resume", function () {
+			ionicPlatform.on("resume", function () {
 				Renderer && Renderer.resume()
 				TelemetryService.interrupt("RESUME", getCurrentStageId)
 			})
-		}
-	}}();
-window.mobileView = mobileView;
+		}	
+};
+window.mobileView  = mobileView;
