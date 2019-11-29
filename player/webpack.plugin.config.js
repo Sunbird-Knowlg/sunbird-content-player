@@ -196,7 +196,14 @@ module.exports = (env, argv) => {
 				use: [
 					MiniCssExtractPlugin.loader,
 					{
-						loader: "css-loader"
+						loader: "css-loader",
+						options: {	
+							sourceMap: false,	
+							minimize: true,	
+							"preset": "advanced",	
+							discardComments: {	
+								removeAll: true	
+							}
 					}
 				]
 			}, {
