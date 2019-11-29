@@ -58,7 +58,7 @@ jobs:
         - run:
             name: Publish to NPM
             command: | 
-            npm create patch
+            npm version patch
             npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
             npm publish
 
