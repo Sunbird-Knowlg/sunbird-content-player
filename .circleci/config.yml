@@ -46,6 +46,21 @@ jobs:
       - save_cache:
           key: dependency-cache-{{ checksum "package.json" }}
           paths: ./node_modules
+      
+      - persist_to_workspace:
+          root: ~/repo
+          paths: .
+  
+  deploy:
+      steps:
+        - attach_workspace:
+            at: ~/repo
+        - run:
+            name: Publish to NPM
+            command: | 
+            npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
+            npm publish
+
 
 workflows:
   version: 2.1
