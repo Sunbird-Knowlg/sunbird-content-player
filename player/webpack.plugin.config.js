@@ -107,8 +107,13 @@ function packagePlugins () {
 			})
 		}
 		dependenciesArr.push("org.ekstep.pluginframework.pluginManager.registerPlugin(" + JSON.stringify(manifest) + "," + pluginContent.code.replace(/;\s*$/, "") + ")")
-
-		fs.appendFile(`${PLUGINS_BASE_PATH}${plugin}${DIST_OUTPUT_FILE_PATH}`, [...dependenciesArr].join("\n"))
+		try {
+			fs.appendFile(`${PLUGINS_BASE_PATH}${plugin}${DIST_OUTPUT_FILE_PATH}`, [...dependenciesArr].join("\n"))
+		} catch(e) {
+			console.log("Check this for node version 10")
+			fs.appendFile(`${PLUGINS_BASE_PATH}${plugin}${DIST_OUTPUT_FILE_PATH}`, [...dependenciesArr].join("\n"),()=>{})
+		}
+		
 		pluginPackageArr.push(`${PLUGINS_BASE_PATH}${plugin}${DIST_OUTPUT_FILE_PATH}`)
 	})
 

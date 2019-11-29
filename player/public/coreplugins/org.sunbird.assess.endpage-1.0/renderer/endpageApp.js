@@ -1,16 +1,14 @@
-var endPage = angular.module("sunbird-endpage",[]);
+var endPage = angular.module("sunbird-summary-endpage",[]);
 endPage.controller("endPageController", function($scope, $rootScope, $state,$element, $stateParams) {
     var globalConfig = EkstepRendererAPI.getGlobalConfig();
     $scope.showEndPage = false;
     $rootScope.pageId = "sunbird-player-Endpage";
-    $scope.pluginManifest = {"id": "org.sunbird.player.endpage", "ver": "1.1"};
+    $scope.pluginManifest = {"id": "org.sunbird.assess.endpage", "ver": "1.0"};
     $scope.genieIcon;
     $scope.endpageBackground;
     $scope.replayIcon;
     $scope.userScore = undefined;
     $scope.totalScore = undefined;
-    $scope.templateToRender = undefined;
-
     /**
      * @property - {Object} which holds previous content of current content
      */     
@@ -44,35 +42,11 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
             });
             $scope.userScore = $scope.convert(totalScore);
             $scope.totalScore = $scope.convert(maxScore);
-        }
-
+        } 
     };
-
-    // Job is to decide which template is assigned in config as part of endpage based on contenttype
-    $scope.checkTemplate = function(contentType) {
-            /* istanbul ignore else */
-            if (!_.isUndefined(globalConfig.config.endPage)) { // check if endpage Manifest/config exist
-                var endpageManifest = globalConfig.config.endPage;
-                var endpageObj = [];
-                if (!Array.isArray(endpageManifest)) { // check if it a proper Array of Obj, if not convert
-                    endpageObj.push(endpageManifest)
-                    endpageManifest = endpageObj
-                }
-                _.each(endpageManifest, function(value, key) { // search content type in object and get template
-                    /* istanbul ignore else */
-                    if (_.contains(value.contentType, contentType)) {
-                        $scope.templateToRender = (value.template).toLowerCase();
-                    }
-                })
-            }
-    }
    
     $scope.replayContent = function() {
-        if(!isbrowserpreview && $rootScope.enableUserSwitcher && ($rootScope.users.length > 1)) {
-            EkstepRendererAPI.dispatchEvent("event:openUserSwitchingModal", {'logGEEvent': $scope.pluginInstance._isAvailable});
-        }else {
-            $scope.replayCallback();
-        }
+        $scope.replayCallback();
     };
     $scope.replayCallback = function(){
         EkstepRendererAPI.hideEndPage();
@@ -98,9 +72,8 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     $scope.openGenie = function(){
         EkstepRendererAPI.dispatchEvent('renderer:genie:click');
     };
-
+    
     $scope.handleEndpage = function() {
-        !_.isUndefined($scope.playerMetadata.contentType) ? $scope.checkTemplate($scope.playerMetadata.contentType) : '';
         $scope.setLicense();
         if (_(TelemetryService.instance).isUndefined()) {
             var otherData = GlobalContext.config.otherData;
@@ -151,7 +124,6 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
      * @description - to play next or previous content
      */
     $scope.contentLaunch = function(contentType, contentId) {
-
         var eleId = (contentType === 'previous') ? "gc_previousContent" : "gc_nextcontentContent";
         TelemetryService.interact("TOUCH", eleId, "TOUCH", {
             stageId: "ContentApp-EndScreen",
@@ -165,10 +137,6 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
             _.extend(contentMetadata,  _.pick(contentToPlay.content, "hierarchyInfo", "isAvailableLocally", "basePath", "rollup"));
             contentMetadata.basepath = contentMetadata.basePath;
             $rootScope.content = window.content = content = contentMetadata;
-        }
-        
-        if(content.mimeType === "video/x-youtube"){
-            contentToPlay.content.isAvailableLocally = false;
         }
 
         if (contentToPlay.content.isAvailableLocally) {
@@ -193,15 +161,9 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     };
 
     $scope.initEndpage = function() {
-
         $scope.playerMetadata = content;
-        $scope.genieIcon = EkstepRendererAPI.resolvePluginResource($scope.pluginManifest.id, $scope.pluginManifest.ver, "renderer/assets/home.png");
-        $scope.scoreIcon = EkstepRendererAPI.resolvePluginResource($scope.pluginManifest.id, $scope.pluginManifest.ver, "renderer/assets/score.svg");
         $scope.leftArrowIcon = EkstepRendererAPI.resolvePluginResource($scope.pluginManifest.id, $scope.pluginManifest.ver, "renderer/assets/left-arrow.svg");
         $scope.rightArrowIcon = EkstepRendererAPI.resolvePluginResource($scope.pluginManifest.id, $scope.pluginManifest.ver, "renderer/assets/right-arrow.svg");
-        $scope.clockIcon = EkstepRendererAPI.resolvePluginResource($scope.pluginManifest.id, $scope.pluginManifest.ver, "renderer/assets/clock.svg");
-        $scope.replayIcon = EkstepRendererAPI.resolvePluginResource($scope.pluginManifest.id, $scope.pluginManifest.ver, "renderer/assets/replay.svg");
-        $scope.endpageBackground = EkstepRendererAPI.resolvePluginResource($scope.pluginManifest.id, $scope.pluginManifest.ver, "renderer/assets/endpageBackground.png");
         $scope.handleEndpage();
     };
     EkstepRendererAPI.addEventListener('renderer:content:end', function() {

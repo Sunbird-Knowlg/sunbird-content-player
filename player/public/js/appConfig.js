@@ -54,9 +54,15 @@ AppConfig = {
 		type: "plugin"
 	},
 	{
-		mimeType: ["video/mp4", "video/x-youtube", "video/webm"],
+		mimeType: ["video/mp4", "video/webm"],
 		id: "org.ekstep.videorenderer",
 		ver: 1.1,
+		type: "plugin"
+	},
+	{
+		mimeType: [ "video/x-youtube"],
+		id: "org.ekstep.youtuberenderer",
+		ver: 1.0,
 		type: "plugin"
 	},
 	{
