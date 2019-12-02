@@ -50,8 +50,9 @@ org.ekstep.contentrenderer.loadDefaultPlugins = function (cb) {
  * @param  {obj} appInfo [metadata]
  */
 org.ekstep.contentrenderer.startGame = function (appInfo) {
+	console.log("appInfo", appInfo);
 	window.PLAYER_START_TIME = Date.now() / 1000
-	globalConfig.basepath = (appInfo.streamingUrl) ? (appInfo.streamingUrl) : (globalConfig.basepath || appInfo.baseDir)
+	globalConfig.basepath = (appInfo && appInfo.streamingUrl) ? (appInfo.streamingUrl) : (globalConfig.basepath || appInfo.baseDir)
 	org.ekstep.contentrenderer.loadDefaultPlugins(function () {
 		org.ekstep.contentrenderer.loadExternalPlugins(function () {
 			var globalConfig = EkstepRendererAPI.getGlobalConfig()
@@ -347,7 +348,7 @@ org.ekstep.contentrenderer.web = function (id) {
 		})
 }
 
-org.ekstep.contentrenderer.device = function () {
+/*org.ekstep.contentrenderer.device = function () {
 	var globalconfig = EkstepRendererAPI.getGlobalConfig()
 	var isMobile = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()))
 	if (!isbrowserpreview && isMobile) {
@@ -363,7 +364,7 @@ org.ekstep.contentrenderer.device = function () {
 	} else {
 		org.ekstep.contentrenderer.startGame(GlobalContext.config.appInfo)
 	}
-}
+}*/
 
 org.ekstep.contentrenderer.isStreamingContent = function () {
 	var globalConfig = EkstepRendererAPI.getGlobalConfig()

@@ -18,7 +18,7 @@ org.ekstep.service.mainService = Class.extend({
 	initialize: function () {}
 })
 org.ekstep.service.init = function () {
-	if (!isbrowserpreview && isMobile) {
+	if (isMobile) {
 		org.ekstep.service.renderer = genieservice
 	}
 }
@@ -36,4 +36,4 @@ telemetry_web = {
 	}
 }
 // eslint-disable-next-line
-if(isbrowserpreview || !(isbrowserpreview && isMobile)) telemetry = telemetry_web
+if(isbrowserpreview || !isMobile) telemetry = telemetry_web
