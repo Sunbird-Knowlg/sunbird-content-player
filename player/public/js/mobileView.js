@@ -17,6 +17,26 @@ var mobileView = {
 						globalConfig.recorder = "android"
 					}
 					window.StatusBar && StatusBar.styleDefault()
+					GlobalContext.init(packageName, version).then(function (appInfo) {
+						if (globalconfig.metadata) {
+							org.ekstep.contentrenderer.setContentMetadata(globalconfig.metadata, function () {
+								org.ekstep.contentrenderer.startGame(content.metadata)
+							})
+						} else {
+							org.ekstep.contentrenderer.getContentMetadata(globalconfig.contentId, function () {
+								org.ekstep.contentrenderer.startGame(content.metadata)
+							})
+						}
+					}).catch(function (res) {
+						console.log("Error Globalcontext.init:", res)
+						EkstepRendererAPI.logErrorEvent(res, {
+							"type": "system",
+							"severity": "fatal",
+							"action": "play"
+						})
+						alert(res.errors)
+						exitApp()
+					})
 				})
 			})
 		},
