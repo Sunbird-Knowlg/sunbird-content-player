@@ -119,9 +119,7 @@ var app = angular.module("genie-canvas", ["ionic", "ngCordova", "oc.lazyLoad"])
 				org.ekstep.contentrenderer.web(configuration.context.contentId)
 			} else {
 				content.body = configuration.data
-				org.ekstep.contentrenderer.setContentMetadata(content.metadata, function () {
-					org.ekstep.contentrenderer.startGame(content.metadata)
-				})
+				org.ekstep.contentrenderer.startGame(content.metadata)
 			}
 		}, this)
 	})
