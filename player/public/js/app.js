@@ -27,8 +27,11 @@ var app = angular.module("genie-canvas", ["ionic", "ngCordova", "oc.lazyLoad"])
 			}
 		}
 
-		splashScreen.addEvents()
-		org.ekstep.service.init()
+		$timeout(function () {
+			splashScreen.addEvents()
+			org.ekstep.service.init()
+		});
+		
 		
 		if(typeof org.ekstep.contentrenderer.local === "function") {
 			org.ekstep.contentrenderer.local()
