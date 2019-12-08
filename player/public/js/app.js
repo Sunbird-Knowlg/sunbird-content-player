@@ -38,6 +38,16 @@ var app = angular.module("genie-canvas", ["ionic", "ngCordova", "oc.lazyLoad"])
 					contentExitCall()
 				}
 			}, 100)
+			window.addEventListener("message", function (event) {
+				if ((event.type === "message") && (typeof event.data !== "object")) {
+					if (Renderer && Renderer.theme && Renderer.theme._currentScene) {
+						var stageData = Renderer.theme._currentScene._data
+						if (stageData && stageData["org.ekstep.video"] && stageData["org.ekstep.video"].videoPlayer && (event.data === "pause.youtube")) {
+							stageData["org.ekstep.video"].videoPlayer.pause()
+						}
+					}
+				}
+			})
 			$ionicPlatform.on("pause", function () {
 				Renderer && Renderer.pause()
 				TelemetryService.interrupt("BACKGROUND", getCurrentStageId)
