@@ -41,15 +41,13 @@ describe('Gridlayout Plugin test cases', function() {
         done();
     });
 
-    it('Gridlayout plugin initPlugin', function() {
-     expect(false).toEqual(this.plugin._self.hitArea instanceof createjs.Shape);
-    
-    
-    });
-    it('Grid plugin iterate keyword availibality',function(){
+    // it('Gridlayout plugin initPlugin', function() {
+    //  expect(false).toEqual(this.plugin._self.hitArea instanceof createjs.Shape);
+    // });
+    // it('Grid plugin iterate keyword availibality',function(){
          
-         expect(this.plugin._self.iterate).not.toBeNull();
-    });
+    //      expect(this.plugin._self.iterate).not.toBeNull();
+    // });
     it('Gridlayout plugin common attributes checking',function(){
         expect(this.plugin._self.x).toBeDefined();
         expect(this.plugin._self.y).toBeDefined();
