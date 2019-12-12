@@ -35,7 +35,7 @@ TelemetryV3Manager = Class.extend({
         this._end.push("END", {});
         this._start.push({id: id , ver : ver});
         var config = this.getConfig();
-        config.cdata = this.addPlayerSession(config.cdata)
+        config.cdata = this.addPlaySession(config.cdata)
         var edata = {
           "type":  data.type || "content",
           "mode": data.mode || config.mode,
@@ -252,7 +252,7 @@ TelemetryV3Manager = Class.extend({
         });
         return isValid;
     },
-    addPlayerSession: function(cdata){
+    addPlaySession: function(cdata){
         var playerSessionObj = {
             "id": CryptoJS.MD5(Math.random().toString()).toString(),
             "type": "PlaySession"
