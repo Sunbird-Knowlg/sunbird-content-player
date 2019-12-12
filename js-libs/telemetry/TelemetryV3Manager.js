@@ -260,8 +260,8 @@ TelemetryV3Manager = Class.extend({
         var isPlaySessionAlreadyExist = false;
         cdata.forEach(function(cDataObj, index){
             if (cDataObj.type == "PlaySession"){
-                isPlaySessionAlreadyExist = true;
                 cdata[index] = playerSessionObj;
+                isPlaySessionAlreadyExist = true;
             }
         })
         if (!isPlaySessionAlreadyExist){
