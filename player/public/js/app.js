@@ -27,20 +27,16 @@ var app = angular.module("genie-canvas", ["ionic", "ngCordova", "oc.lazyLoad"])
 			}
 		}
 
-		$timeout(function () {
-			splashScreen.addEvents()
-			org.ekstep.service.init()
-		});
-		
-		
-		if(typeof org.ekstep.contentrenderer.local === "function") {
+		splashScreen.addEvents()
+		org.ekstep.service.init()
+		if (typeof org.ekstep.contentrenderer.local === "function") {
 			org.ekstep.contentrenderer.local()
-			return;
+			return
 		}
 
 		var isMobile = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()))
-		if(isMobile) {
-			mobileView.init($ionicPlatform, $timeout);
+		if (isMobile) {
+			mobileView.init($ionicPlatform, $timeout)
 		}
 	}).config(function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvider, $sceDelegateProvider) {
 		app.controllerProvider = $controllerProvider
