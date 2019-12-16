@@ -254,7 +254,7 @@ TelemetryV3Manager = Class.extend({
     },
     addPlaySession: function(cdata){
         var playerSessionObj = {
-            "id": CryptoJS.MD5(Math.random().toString()).toString(),
+            "id": this.getUid(),
             "type": "PlaySession"
         }
         var isPlaySessionAlreadyExist = false;
@@ -268,5 +268,8 @@ TelemetryV3Manager = Class.extend({
             cdata.push(playerSessionObj)
         }
         return cdata;
+    },
+    getUid: function(){
+        return CryptoJS.MD5(Math.random().toString()).toString();
     }
 })

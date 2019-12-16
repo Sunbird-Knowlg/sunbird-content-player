@@ -13,6 +13,8 @@ module.exports = function(config) {
         ],
         files: [{pattern: 'http-image/**/*', watched: false, included: false, served: true },
             '../md5.js',
+            '../ajv.min.js',
+            '../telemetry-spec.js',
             '../telemetrySyncManager.js',
             '../telemetryV3Interface.js',
             '../*.spec.js',
