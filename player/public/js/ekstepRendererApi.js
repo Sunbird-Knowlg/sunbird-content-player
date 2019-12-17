@@ -7,6 +7,9 @@
  * @author Vinu Kumar <vinu.kumat@tarento.com>
  */
 window.EkstepRendererAPI = {
+	isMobile: function(){
+		return (/version\//i.test(navigator.userAgent.toLowerCase()))
+	},
 	baseURL: "",
 	/**
      * Register an event listener callback function for the events raised by the framework.
