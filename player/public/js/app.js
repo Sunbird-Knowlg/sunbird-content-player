@@ -32,9 +32,8 @@ var app = angular.module("genie-canvas", ["ionic", "ngCordova", "oc.lazyLoad"])
 		if (typeof org.ekstep.contentrenderer.local === "function") {
 			org.ekstep.contentrenderer.local()
 			return
-		}
-
-		var isMobile = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()))
+		}		
+		var isMobile = EkstepRendererAPI.isMobile();
 		if (isMobile) {
 			mobileView.init($ionicPlatform, $timeout)
 		}

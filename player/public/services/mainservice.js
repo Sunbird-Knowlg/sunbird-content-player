@@ -4,7 +4,7 @@
 var RendererServices = function () {}
 window.org.ekstep.service = new RendererServices()
 RendererServices = undefined
-var isMobile = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()));
+var isMobile = EkstepRendererAPI.isMobile();
 
 org.ekstep.service.mainService = Class.extend({
 	getAPISlug: function () {
