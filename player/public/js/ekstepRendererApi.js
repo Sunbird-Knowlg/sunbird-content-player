@@ -8,7 +8,7 @@
  */
 window.EkstepRendererAPI = {
 	isMobile: function(){
-		return (/version\//i.test(navigator.userAgent.toLowerCase()))
+		return (/^.*?\bandroid\b.*?\bversion\/\b.*?$|^.*?\bversion\b.*?\bandroid\/\b.*?$/i.test(navigator.userAgent.toLowerCase()))
 	},
 	baseURL: "",
 	/**
