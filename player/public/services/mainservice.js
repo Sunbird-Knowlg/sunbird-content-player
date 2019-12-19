@@ -4,7 +4,6 @@
 var RendererServices = function () {}
 window.org.ekstep.service = new RendererServices()
 RendererServices = undefined
-var isMobile = (/^.*?\bandroid\b.*?\bversion\/\b.*?$|^.*?\bversion\b.*?\bandroid\/\b.*?$/i.test(navigator.userAgent.toLowerCase()));
 
 org.ekstep.service.mainService = Class.extend({
 	getAPISlug: function () {
