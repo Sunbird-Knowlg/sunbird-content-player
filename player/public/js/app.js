@@ -28,13 +28,12 @@ var app = angular.module("genie-canvas", ["ionic", "ngCordova", "oc.lazyLoad"])
 		}
 
 		splashScreen.addEvents()
+		org.ekstep.service.init()
 		if (typeof org.ekstep.contentrenderer.local === "function") {
 			org.ekstep.contentrenderer.local()
 			return
 		}		
-		var isMobile = (/^.*?\bandroid\b.*?\bversion\/\b.*?$|^.*?\bversion\b.*?\bandroid\/\b.*?$/i.test(navigator.userAgent.toLowerCase()))
-		if (isMobile && ("undefined" !== typeof cordova)) {
-			org.ekstep.service.init()
+		if (isMobile) {
 			mobileView.init($ionicPlatform, $timeout)
 		}
 	}).config(function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvider, $sceDelegateProvider) {
