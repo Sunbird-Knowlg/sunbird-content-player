@@ -172,10 +172,6 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
             contentMetadata.basepath = contentMetadata.basePath;
             $rootScope.content = window.content = content = contentMetadata;
         }
-        
-        if(content.mimeType === "video/x-youtube"){
-            contentToPlay.content.isAvailableLocally = false;
-        }
 
         if (contentToPlay.content.isAvailableLocally) {
                 EkstepRendererAPI.hideEndPage();
@@ -184,8 +180,6 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
                     'data': undefined,
                     'metadata': contentMetadata
                 }
-                GlobalContext.config = mergeJSON(AppConfig, contentMetadata);
-                window.globalConfig = GlobalContext.config;
 
                 org.ekstep.contentrenderer.initializePreview(object)
                 EkstepRendererAPI.dispatchEvent('renderer:player:show');
