@@ -13,9 +13,9 @@ window.collectionChildren = true
 window.content = {}
 window.config = { showEndPage: true, showHTMLPages: true }
 window.isbrowserpreview = getUrlParameter("webview")
+window.isMobile = getUrlParameter("isMobile")
 window.isCoreplugin = undefined
 window.Renderer = undefined
-window.isMobile = undefined
 
 document.body.addEventListener("logError", telemetryError, false)
 
