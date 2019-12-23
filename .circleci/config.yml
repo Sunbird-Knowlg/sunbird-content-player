@@ -9,7 +9,7 @@ jobs:
       - checkout:
           path: ~/content-player
       - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: dependency-cache-{{ checksum "package-lock.json" }}
       
       - run: sudo npm install -g grunt-cli@1.2.0
       - run: npm install
@@ -36,7 +36,7 @@ jobs:
             sonar-scanner -Dsonar.projectKey=project-sunbird_sunbird-content-player -Dsonar.organization=project-sunbird -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.language=js
 
       - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: dependency-cache-{{ checksum "package-lock.json" }}
           paths: ./node_modules
 
         
@@ -45,6 +45,7 @@ jobs:
           command: |
             npm version patch
             npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
+            npm pack www/preview
             npm publish
 
 workflows:
