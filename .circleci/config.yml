@@ -21,10 +21,10 @@ jobs:
       - run: 
           name: build package
           command: npm run build-npm-package
-
-      - run:
-          name: running test cases
-          command: npm run test-player
+          #
+          #      - run:
+          #          name: running test cases
+          #          command: npm run test-player
     
       - run: 
           name: Install sonar scanner
