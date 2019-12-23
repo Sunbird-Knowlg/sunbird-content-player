@@ -16,7 +16,7 @@ jobs:
       - run: npm run build-preview ekstep
       - run: grunt compress:preview
       - run: grunt generate-libs
-      - run: grunt build-jsdoc
+        #      - run: grunt build-jsdoc
 
       - run: 
           name: build package
