@@ -17,6 +17,14 @@ jobs:
       - run: grunt compress:preview
       - run: grunt generate-libs
       - run: grunt build-jsdoc
+
+      - run: 
+          name: build package
+          command: npm run build-npm-package
+
+      - run:
+          name: running test cases
+          command: npm run test-player
     
       - run: 
           name: Install sonar scanner
@@ -31,9 +39,6 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
           paths: ./node_modules
 
-      - persist_to_workspace:
-          root: ~/repo
-          paths: .
         
       - run:
           name: Publish to NPM
