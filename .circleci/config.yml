@@ -4,10 +4,6 @@ jobs:
     working_directory: ~/content-player/player
     docker:
       - image: circleci/node:6.10-browsers
-        environment:
-           player_version_number: $CIRCLE_BRANCH
-           build_number: $CIRCLE_BUILD_NUM
-           filter_plugins: false
            
     steps:
       - checkout:
@@ -15,18 +11,6 @@ jobs:
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
       
-      - run:
-          name: clone plugins
-          command: |
-            if [ -z $CIRCLE_PR_NUMBER ]; then
-            target_branch=$CIRCLE_BRANCH
-            git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins -b $target_branch
-            else
-            prdata=$(curl -X GET -u $GITHUB_USER_TOKEN:x-oauth-basic https://api.github.com/repos/project-sunbird/sunbird-content-player/pulls/$CIRCLE_PR_NUMBER)
-            target_branch=$(echo "${prdata}" | jq -r '.base.ref')
-            git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins -b $target_branch
-            fi
-
       - run: sudo npm install -g grunt-cli@1.2.0
       - run: npm install
       - run: npm run build-preview ekstep
@@ -50,13 +34,10 @@ jobs:
       - persist_to_workspace:
           root: ~/repo
           paths: .
-  deploy:
-      steps:
-        - attach_workspace:
-            at: ~/repo
-        - run:
-            name: Publish to NPM
-            command: |
+        
+      - run:
+          name: Publish to NPM
+          command: |
             npm version patch
             npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
             npm publish
