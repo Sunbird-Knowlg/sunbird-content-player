@@ -46,7 +46,7 @@ jobs:
             npm version patch
             npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
             npm pack www/preview
-            npm publish
+            npm publish project-sunbird-content-player-*
 
 workflows:
   version: 2.1
