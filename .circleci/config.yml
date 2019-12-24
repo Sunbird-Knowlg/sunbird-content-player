@@ -44,7 +44,7 @@ jobs:
           name: Publish to NPM
           command: |
             commit_hash=$(echo $CIRCLE_SHA1 | cut -c 1-7)
-            npm version prerelease --preid=alpha_${commit_hash}
+            npm version prerelease --preid=alpha-${commit_hash}
             npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
             npm pack www/preview
             npm publish project-sunbird-content-player-*
