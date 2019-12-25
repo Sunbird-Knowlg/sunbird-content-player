@@ -14,14 +14,12 @@ jobs:
       - run: 
           name: Install nvm
           command: |
-             whoami
-             curl -o- https://raw.githubusercontent.com/xtuple/nvm/master/install.sh | bash
+             sudo curl -o- https://raw.githubusercontent.com/xtuple/nvm/master/install.sh | bash
              source ~/.profile
       
       - run:
           name: Install npm
           command: |
-               whoami
                nvm install 13.1.0
    
       - run: sudo npm install -g grunt-cli@1.2.0
