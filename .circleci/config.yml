@@ -10,14 +10,25 @@ jobs:
           path: ~/content-player
       - restore_cache:
           key: dependency-cache-{{ checksum "package-lock.json" }}
+          
+      - run: 
+          name: Install nvm
+          command: |
+             curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+             source ~/.profile
       
+      - run:
+          name: Install npm
+          command: nvm install 13.1.0
+ 
       - run: sudo npm install -g grunt-cli@1.2.0
       - run: npm install
       - run: npm run build-preview ekstep
       - run: grunt compress:preview
       - run: grunt generate-libs
         #      - run: grunt build-jsdoc
-
+      - run: nvm use 13.1.0
+      
       - run: 
           name: build package
           command: npm run build-npm-package
