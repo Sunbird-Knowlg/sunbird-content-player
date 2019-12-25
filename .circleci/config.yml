@@ -19,7 +19,7 @@ jobs:
       
       - run:
           name: Install npm
-          command: nvm install 13.1.0
+          command: sudo nvm install 13.1.0
  
       - run: sudo npm install -g grunt-cli@1.2.0
       - run: npm install
@@ -27,7 +27,7 @@ jobs:
       - run: grunt compress:preview
       - run: grunt generate-libs
         #      - run: grunt build-jsdoc
-      - run: nvm use 13.1.0
+      - run: sudo nvm use 13.1.0
       
       - run: 
           name: build package
