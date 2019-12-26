@@ -30,10 +30,10 @@ jobs:
           name: Install sonar scanner
           command: 'sudo npm install -g sonarqube-scanner'
 
-      - run: 
-          name: Sonar scanner
-          command: |
-            sonar-scanner -Dsonar.projectKey=project-sunbird_sunbird-content-player -Dsonar.organization=project-sunbird -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.language=js
+    #  - run: 
+     #     name: Sonar scanner
+     #     command: |
+    #        sonar-scanner -Dsonar.projectKey=project-sunbird_sunbird-content-player -Dsonar.organization=project-sunbird -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.language=js
 
       - save_cache:
           key: dependency-cache-{{ checksum "package-lock.json" }}
