@@ -18,9 +18,13 @@ jobs:
       - run: grunt generate-libs
         #      - run: grunt build-jsdoc
       
+     
       - run: 
           name: build package
-          command: npm run build-npm-package
+          command: |
+             commit_hash=$(echo $CIRCLE_SHA1 | cut -c 1-7)
+             npm version prerelease --preid=alpha-${commit_hash}
+             npm run build-npm-package
           #
           #      - run:
           #          name: running test cases
@@ -43,8 +47,6 @@ jobs:
       - run:
           name: Publish to NPM
           command: |
-            commit_hash=$(echo $CIRCLE_SHA1 | cut -c 1-7)
-            npm version prerelease --preid=alpha-${commit_hash}
             npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
             npm pack ./www/preview
             npm publish project-sunbird-content-player-*
