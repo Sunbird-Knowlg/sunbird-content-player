@@ -15,13 +15,6 @@ jobs:
       - run: grunt generate-libs
         #      - run: grunt build-jsdoc
 
-      - run: 
-          name: build package
-          command: | 
-             commit_hash=$(echo $CIRCLE_SHA1 | cut -c 1-7)
-             npm version prerelease --preid=alpha-${commit_hash}
-             npm run build-npm-package
-            
           #
           #      - run:
           #          name: running test cases
@@ -38,10 +31,17 @@ jobs:
       - run:
           name: Publish to NPM
           command: |
-            npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
-            npm pack ./www/preview
-            npm publish project-sunbird-content-player-*
-            
+            if [ -z $CIRCLE_PR_NUMBER ]; then 
+              commit_hash=$(echo $CIRCLE_SHA1 | cut -c 1-7)
+              npm version prerelease --preid=alpha-${commit_hash}
+              npm run build-npm-package
+              npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
+              npm pack ./www/preview
+              npm publish project-sunbird-content-player-*     
+            else
+              npm run build-npm-package
+            fi
+             
 workflows:
   version: 2.1
   build_and_test:
