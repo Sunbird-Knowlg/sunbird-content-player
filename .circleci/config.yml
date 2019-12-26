@@ -31,15 +31,15 @@ jobs:
       - run:
           name: Publish to NPM
           command: |
-           if [ -z $CIRCLE_PR_NUMBER ]; then
-              npm run build-npm-package     
-           else
+            if [ -z $CIRCLE_PR_NUMBER ]; then 
               commit_hash=$(echo $CIRCLE_SHA1 | cut -c 1-7)
               npm version prerelease --preid=alpha-${commit_hash}
               npm run build-npm-package
               npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
               npm pack ./www/preview
-              npm publish project-sunbird-content-player-*
+              npm publish project-sunbird-content-player-*     
+           else
+              npm run build-npm-package
            fi
              
 workflows:
