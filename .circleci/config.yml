@@ -17,20 +17,19 @@ jobs:
              wget -qO- https://raw.githubusercontent.com/xtuple/nvm/master/install.sh | sudo bash
              source ~/.profile
       
-      - run:
-          name: Install npm
-          command: |
-              sudo nvm install 13.1.0
-              sudo npm install -g grunt-cli 
-
-   
+     
       - run: sudo npm install -g grunt-cli@1.2.0
       - run: npm install
       - run: npm run build-preview ekstep
       - run: grunt compress:preview
       - run: grunt generate-libs
         #      - run: grunt build-jsdoc
-      - run: sudo nvm use 13.1.0
+     
+      - run:
+          name: Install npm
+          command: |
+              sudo nvm install 13.1.0     
+              sudo nvm use 13.1.0
       
       - run: 
           name: build package
