@@ -7,40 +7,39 @@ jobs:
     steps:
       - checkout:
           path: ~/content-player
-          
+
       - run: sudo npm install -g grunt-cli@1.2.0
       - run: npm install
       - run: npm run build-preview ekstep
       - run: grunt compress:preview
       - run: grunt generate-libs
         #      - run: grunt build-jsdoc
-        
+
       - run: 
           name: build package
-          command: |
+          command: | 
              commit_hash=$(echo $CIRCLE_SHA1 | cut -c 1-7)
              npm version prerelease --preid=alpha-${commit_hash}
              npm run build-npm-package
-             
+            
           #
           #      - run:
           #          name: running test cases
           #          command: npm run test-player
-          
       - run: 
           name: Install sonar scanner
           command: 'sudo npm install -g sonarqube-scanner'
-    
-    - run: 
-         name: Sonar scanner
-         command: |
+          
+      - run: 
+          name: Sonar scanner
+          command: |
             sonar-scanner -Dsonar.projectKey=project-sunbird_sunbird-content-player -Dsonar.organization=project-sunbird -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.language=js
-    
-     - run:
-         name: Publish to NPM
-         command: |
+      
+      - run:
+          name: Publish to NPM
+          command: |
             npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
-            npm pack ./www/preview
+            npm pack www/preview
             npm publish project-sunbird-content-player-*
             
 workflows:
