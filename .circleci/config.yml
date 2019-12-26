@@ -3,20 +3,13 @@ jobs:
   build:
     working_directory: ~/content-player/player
     docker:
-      - image: circleci/node:6.10-browsers
+      - image: circleci/node:chakracore-10.13.0
            
     steps:
       - checkout:
           path: ~/content-player
       - restore_cache:
-          key: dependency-cache-{{ checksum "package-lock.json" }}
-          
-      - run: 
-          name: Install nvm
-          command: |
-             wget -qO- https://raw.githubusercontent.com/xtuple/nvm/master/install.sh | sudo bash
-             source ~/.profile
-      
+          key: dependency-cache-{{ checksum "package-lock.json" }}  
      
       - run: sudo npm install -g grunt-cli@1.2.0
       - run: npm install
@@ -24,13 +17,6 @@ jobs:
       - run: grunt compress:preview
       - run: grunt generate-libs
         #      - run: grunt build-jsdoc
-     
-      - run:
-          name: Install npm
-          command: |
-              sudo nvm install 6.10
-              sudo nvm install 13.1.0     
-              sudo nvm use 13.1.0
       
       - run: 
           name: build package
