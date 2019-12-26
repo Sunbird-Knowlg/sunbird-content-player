@@ -21,6 +21,8 @@ jobs:
           name: Install npm
           command: |
               sudo nvm install 13.1.0
+              sudo npm install -g grunt-cli 
+
    
       - run: sudo npm install -g grunt-cli@1.2.0
       - run: npm install
