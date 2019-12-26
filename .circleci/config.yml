@@ -28,6 +28,7 @@ jobs:
       - run:
           name: Install npm
           command: |
+              sudo nvm install 6.10
               sudo nvm install 13.1.0     
               sudo nvm use 13.1.0
       
