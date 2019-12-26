@@ -38,9 +38,9 @@ jobs:
               npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
               npm pack ./www/preview
               npm publish project-sunbird-content-player-*     
-           else
+            else
               npm run build-npm-package
-           fi
+            fi
              
 workflows:
   version: 2.1
