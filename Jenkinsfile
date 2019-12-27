@@ -40,7 +40,7 @@ node() {
                         export filter_plugins=false # For the preview build generation dont split the plugins.
                         cd player
                         npm install
-                        npm run build-preview ekstep
+                        npm run build-preview sunbird
                         grunt compress:preview
                         grunt generate-libs
                         #grunt renderer-test
