@@ -17,7 +17,7 @@ jobs:
 
       - run: sudo npm install -g grunt-cli@1.2.0
       - run: npm install
-      - run: npm run build-preview sunbird
+      - run: npm run build-preview-sunbird
       - run: grunt compress:preview
       - run: grunt generate-libs
       - run: grunt build-jsdoc
