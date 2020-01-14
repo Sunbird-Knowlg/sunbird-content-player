@@ -192,12 +192,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var pageName = document.createElement("span");
         pageName.textContent = "Page ";
 
-        var findTextField = document.createElement("input");
-        findTextField.type = "number";
-        findTextField.id = "pdf-find-text";
-        findTextField.className = "search-input";
-        findTextField.min = 1;
-        findTextField.max = pdfTotalPages;
 
         var goButton = document.createElement("div");
         goButton.className = "search-page-pdf-arrow-container";
@@ -215,6 +209,13 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var pdfTotalPages = document.createElement("span");
         pdfTotalPages.id = "pdf-total-pages";
         pdfTotalPages.className = "bold-page"
+
+        var findTextField = document.createElement("input");
+        findTextField.type = "number";
+        findTextField.id = "pdf-find-text";
+        findTextField.className = "search-input";
+        findTextField.min = 1;
+        // findTextField.max = parseInt(document.getElementById('pdf-total-pages').innerHTML);
 
         var searchPdfTotalPages = document.createElement('div');
         searchPdfTotalPages.className = "search-page-number";
@@ -296,6 +297,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
         
           context.renderCurrentScaledPage();
+        
 
         $(".search-page-pdf-arrow-container").on('click', function() {
             var searchText = document.getElementById("pdf-find-text");
@@ -442,6 +444,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 context.pdfDocument = pdfDocument;
                 context.pdfViewer.setDocument(pdfDocument);
                 $("#pdf-total-pages").text(pdfDocument.numPages);
+                $('#pdf-find-text').prop('max',context.TOTAL_PAGES);
 
             }).catch(function(error) {
                 // If error re-show the upload button
