@@ -197,6 +197,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         findTextField.id = "pdf-find-text";
         findTextField.className = "search-input";
         findTextField.min = 1;
+        findTextField.max = pdfTotalPages;
 
         var goButton = document.createElement("div");
         goButton.className = "search-page-pdf-arrow-container";
