@@ -57,9 +57,9 @@ jobs:
         - run:
             name: Publish to NPM
             command: |
-            npm version patch
-            npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
-            npm publish
+              npm version patch
+              npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
+              npm publish
 
 workflows:
   version: 2.1
