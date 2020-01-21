@@ -12,6 +12,126 @@
     "responseCode": "OK",
     "result": {
         "content": [
+            {
+                "identifier": "org.ekstep.cbse_mcq",
+                "mimeType": "application/vnd.ekstep.ecml-archive",
+                "contentData": {
+                    "questionnaire": null,
+                    "appIcon": "stories/pratham-camal/logo.png",
+                    "subject": "literacy_v2",
+                    "description": "org.ekstep.cbse_mcq",
+                    "name": "CBSE MCQ",
+                    "downloadUrl": "",
+                    "checksum": null,
+                    "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+                    "concepts": [{
+                        "identifier": "LO1",
+                        "name": "Receptive Vocabulary",
+                        "objectType": "Concept"
+                    }],
+                    "identifier": "org.ekstep.cbse_mcq",
+                    "grayScaleAppIcon": null,
+                    "pkgVersion": 1
+                },
+                "isAvailable": true,
+                "path": "fixture-stories/CBSE_MCQ"
+            },
+            {
+                "identifier": "org.ekstep.cbse_sa",
+                "mimeType": "application/vnd.ekstep.ecml-archive",
+                "contentData": {
+                    "questionnaire": null,
+                    "appIcon": "stories/pratham-camal/logo.png",
+                    "subject": "literacy_v2",
+                    "description": "org.ekstep.cbse_sa",
+                    "name": "CBSE SA",
+                    "downloadUrl": "",
+                    "checksum": null,
+                    "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+                    "concepts": [{
+                        "identifier": "LO1",
+                        "name": "Receptive Vocabulary",
+                        "objectType": "Concept"
+                    }],
+                    "identifier": "org.ekstep.cbse_sa",
+                    "grayScaleAppIcon": null,
+                    "pkgVersion": 1
+                },
+                "isAvailable": true,
+                "path": "fixture-stories/CBSE_SA"
+            },
+            {
+                "identifier": "org.ekstep.cbse_la",
+                "mimeType": "application/vnd.ekstep.ecml-archive",
+                "contentData": {
+                    "questionnaire": null,
+                    "appIcon": "stories/pratham-camal/logo.png",
+                    "subject": "literacy_v2",
+                    "description": "org.ekstep.cbse_la",
+                    "name": "CBSE LA",
+                    "downloadUrl": "",
+                    "checksum": null,
+                    "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+                    "concepts": [{
+                        "identifier": "LO1",
+                        "name": "Receptive Vocabulary",
+                        "objectType": "Concept"
+                    }],
+                    "identifier": "org.ekstep.cbse_la",
+                    "grayScaleAppIcon": null,
+                    "pkgVersion": 1
+                },
+                "isAvailable": true,
+                "path": "fixture-stories/CBSE_LA"
+            },
+            {
+                "identifier": "org.ekstep.cbse_vsa",
+                "mimeType": "application/vnd.ekstep.ecml-archive",
+                "contentData": {
+                    "questionnaire": null,
+                    "appIcon": "stories/pratham-camal/logo.png",
+                    "subject": "literacy_v2",
+                    "description": "org.ekstep.cbse_vsa",
+                    "name": "CBSE VSA",
+                    "downloadUrl": "",
+                    "checksum": null,
+                    "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+                    "concepts": [{
+                        "identifier": "LO1",
+                        "name": "Receptive Vocabulary",
+                        "objectType": "Concept"
+                    }],
+                    "identifier": "org.ekstep.cbse_vsa",
+                    "grayScaleAppIcon": null,
+                    "pkgVersion": 1
+                },
+                "isAvailable": true,
+                "path": "fixture-stories/CBSE_VSA"
+            },
+            {
+            "identifier": "org.ekstep.selfassess",
+            "mimeType": "application/vnd.ekstep.ecml-archive",
+            "contentData": {
+                "questionnaire": null,
+                "appIcon": "stories/pratham-camal/logo.png",
+                "subject": "literacy_v2",
+                "description": "Selfassess",
+                "name": "QS-SelfAssess",
+                "downloadUrl": "",
+                "checksum": null,
+                "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.selfassess",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "fixture-stories/question-set"
+        },
             {"identifier": "do_312719162116210688118940",
                 "mimeType": "video/mp4",
                 "contentData":
