@@ -36,6 +36,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         iframe.height = "100%";
         iframe.src = origin + '/content/preview/youtube.html?origin=' + origin + '&id='+youtubeId;
         iframe.id = "org.ekstep.youtuberenderer";
+        iframe.setAttribute("allowfullscreen",'')
         console.log(iframe.src);
         document.getElementById("gameArea").insertBefore(iframe, document.getElementById("gameArea").childNodes[0])
         jQuery("#gameArea").css({
