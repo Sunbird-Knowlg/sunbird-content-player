@@ -8,8 +8,8 @@
         if(params.get('origin')){
             youtubeSrc = youtubeSrc + "&origin=" + params.get('origin');   
         }
-        document.getElementById('youtubeIframe').setAttribute('src', youtubeSrc);
         document.getElementById('youtubeIframe').setAttribute('allowfullscreen', '');
+        document.getElementById('youtubeIframe').setAttribute('src', youtubeSrc);
 
         var tag = document.createElement('script');
         tag.id = 'iframe-demo';
