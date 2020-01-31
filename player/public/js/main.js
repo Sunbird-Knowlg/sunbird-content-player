@@ -195,6 +195,8 @@ function showToaster (toastType, message, customOptions) {
 	}
 	if (toastType === "error") {
 		toastr.error(message)
+		var edata = { "errtype": "CONTENT", "stacktrace": customOptions}
+		EkstepRendererAPI.logErrorEvent(customOptions, {"edata": edata});
 	}
 	if (toastType === "info") {
 		toastr.info(message)

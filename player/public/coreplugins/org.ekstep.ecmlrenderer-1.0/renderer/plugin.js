@@ -72,12 +72,12 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 }
             }
         } catch (e) {
-            showToaster('error', 'Lesson fails to play');
             EkstepRendererAPI.logErrorEvent(e, {
                 'severity': 'fatal',
                 'type': 'content',
                 'action': 'play'
             });
+            showToaster('error', 'Lesson fails to play', e);
             console.warn("Canvas Renderer init is failed", e);
         }
     },
@@ -203,9 +203,10 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 Renderer.theme.start(dataObj.path.replace('file:///', '') + "/assets/");
             });
         } catch (e) {
-            logConsoleMessage.warn("Framework fails to load plugins", e);
+            // logConsoleMessage.warn("Framework fails to load plugins", e);
+            console.warn("Framework fails to load plugins", e);
             EkstepRendererAPI.logErrorEvent(e, { 'severity': 'fatal', 'type': 'system', 'action': 'play' });
-            showToaster('error', 'Framework fails to load plugins');
+            showToaster('error', 'Framework fails to load plugins', e);
         }
 
         createjs.Ticker.addEventListener("tick", function() {
