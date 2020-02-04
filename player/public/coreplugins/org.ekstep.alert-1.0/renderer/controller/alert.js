@@ -2,7 +2,6 @@
  * User switcher controller
  * @author Gourav More <gourav_m@tekditechnologies.com>
  */
-console.log("reste");
 app.compileProvider.directive("alert", ["$rootScope", "$compile", function ($rootScope, $compile) {
 	return {
 		restrict: "E",
