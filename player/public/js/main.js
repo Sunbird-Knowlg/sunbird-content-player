@@ -195,6 +195,8 @@ function showToaster (toastType, message, customOptions) {
 	}
 	if (toastType === "error") {
 		toastr.error(message)
+		EkstepRendererAPI.logErrorEvent(message, { 'type': 'content', 'action': 'play', 'severity': 'fatal' })
+
 	}
 	if (toastType === "info") {
 		toastr.info(message)
