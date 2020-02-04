@@ -203,7 +203,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 Renderer.theme.start(dataObj.path.replace('file:///', '') + "/assets/");
             });
         } catch (e) {
-            logConsoleMessage.warn("Framework fails to load plugins", e);
+            console.warn("Framework fails to load plugins", e);
             EkstepRendererAPI.logErrorEvent(e, { 'severity': 'fatal', 'type': 'system', 'action': 'play' });
             showToaster('error', 'Framework fails to load plugins');
         }

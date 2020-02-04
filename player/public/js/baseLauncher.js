@@ -217,7 +217,7 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
 				type: "error",
 				custom: { timeOut: 200000 },
 				errorInfo: {
-					errorStack: errorObj.stack,
+					errorStack: errorObj,
 					data: errorObj.data || { "severity": "fatal", "type": "content", "action": "play" }
 				}
 			})
