@@ -902,7 +902,9 @@ window.EkstepRendererAPI = {
 						data.stacktrace = data.stacktrace.substring(0, 500)
 					}
 				}
-				EkstepRendererAPI.getTelemetryService().error(data)
+				setTimeout(function () {
+					EkstepRendererAPI.getTelemetryService().error(data)
+				}, 0)
 			}
 		} catch (e) {
 			console.warn("ERROR event fails to log", e)
