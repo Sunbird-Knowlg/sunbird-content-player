@@ -897,7 +897,7 @@ window.EkstepRendererAPI = {
 				}
 				if (errorStack) {
 					data.err = ((errorStack.status && errorStack.status.toString()) || errorStack.message) || "-1" // Status Code(By default is -1)
-					data.stacktrace = errorStack.stack || errorStack.responseText
+					data.stacktrace = errorStack.stack || errorStack.responseText || errorStack
 					if (typeof (data.stacktrace) === "string") {
 						data.stacktrace = data.stacktrace.substring(0, 500)
 					}
