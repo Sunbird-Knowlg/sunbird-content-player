@@ -79,13 +79,8 @@ app.compileProvider.directive("alert", ["$rootScope", "$compile", function ($roo
 				}
 			}
 			scope.getAlertPluginTemplate = function () {
-				var alertPluginInstance = EkstepRendererAPI.getPluginObjs("org.ekstep.alert")
-				var config = EkstepRendererAPI.getGlobalConfig()
-				if (!config.isCorePluginsPackaged) {
-					return alertPluginInstance._templatePath
-				} else {
-					return "org.ekstep.alert" // Template Identifier
-				}
+				var alertPluginInstance = EkstepRendererAPI.getPluginObjs("org.ekstep.alert");
+				return alertPluginInstance._templatePath;
 			}
 		}
 	}
