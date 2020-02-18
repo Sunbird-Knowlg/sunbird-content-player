@@ -132,6 +132,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         instance.addVideoListeners(videoPlayer, path, data);
         instance.videoPlayer = videoPlayer;
         instance.applyResolutionSwitcher();
+        instance.addinteractiveMarkers(data);
+        window.videoPlayerr = videoPlayer;
     },
     applyResolutionSwitcher: function (){
         var instance = this;
@@ -378,6 +380,60 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         EkstepRendererAPI.dispatchEvent('renderer:stagereload:show');
         EkstepRendererAPI.dispatchEvent("renderer:previous:show");
         EkstepRendererAPI.removeEventListener('renderer:launcher:clean', this.cleanUp, this);
+    },
+
+    addinteractiveMarkers: function (data) {
+    var instance = this;
+    data['markerList'] = [{ time: 3.0, questionData: {que: 'How are you?', options: ['Good', 'Fine', 'Awesome', 'Not Bad'], ans: '0'}},
+                          { time: 9.0, questionData: {que: 'Who are you?', options: ['Why Should I Tell', 'I Am ...', 'Who are You To Ask?', 'Why Do You Want?'], ans: '1'}}]
+    instance.videoPlayer.markers({
+    markerStyle: {
+       'width':'7px',
+       'border-radius': '30%',
+       'background-color': 'red'
+    },
+    markerTip:{
+       display: true,
+       text: function(marker) {
+          return "Break: "+ marker.text;
+       },
+       time: function(marker) {
+          return marker.time;
+       }
+    },
+    breakOverlay:{
+       display: true,
+       displayTime: 1,
+       style:{
+          'width':'0%',
+          'height': '0%',
+          'background-color': 'white',
+          'color': 'black',
+          'font-size': '17px'
+       },
+       text: function(marker) {
+          return ""
+       }
+    },
+    onMarkerClick: function(marker) {},
+    onMarkerReached: function(marker) {
+        instance.videoPlayer.pause();
+        instance.interactivePopup(marker);
+    },
+    markers: data.markerList ? data.markerList : []
+ });
+    },
+
+    interactivePopup: function (marker) {
+        var instance = this;
+        EventBus.addEventListener("event:playPausedVideo", function() {
+            instance.videoPlayer.play();
+        });
+        setTimeout(function () {
+            console.info('user switch plugin is doing initialize....');
+            EventBus.dispatch("event:openUserIntarctModal", marker);
+        }, 0);
+
     }
 });
 

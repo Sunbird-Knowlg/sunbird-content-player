@@ -13,6 +13,7 @@ app.controllerProvider.register('UserSwitchController', [
         $scope.groupLength = undefined;
         $scope.selectedUser = {};
         $scope.showUserSwitchModal = false;
+        $scope.showUserInteractModal = false;
         $scope.imageBasePath = globalConfig.assetbase;
 
         $scope.hideUserSwitchingModal = function() {
@@ -44,6 +45,12 @@ app.controllerProvider.register('UserSwitchController', [
             } else {
                 showToaster('info', "User switch is disabled");
             }
+        }
+
+        $scope.showUserInteractingModal = function () {
+            $rootScope.safeApply(function() {
+            $scope.showUserInteractModal = true;
+        });
         }
 
         $scope.checkUsersImage = function() {
@@ -188,6 +195,13 @@ app.controllerProvider.register('UserSwitchController', [
             $scope.hideUserSwitchingModal();
         }
 
+        $scope.closeUserInteractingModal = function () {
+            $rootScope.safeApply(function() {
+                $scope.showUserInteractModal = false;
+            });
+            EventBus.dispatch("event:playPausedVideo");
+        }
+
         $scope.initializeCtrl = function() {
             var globalConfig = EkstepRendererAPI.getGlobalConfig();
             $rootScope.showUser = globalConfig.overlay.showUser;
@@ -206,6 +220,13 @@ app.controllerProvider.register('UserSwitchController', [
                     };
                 }
                 $scope.showUserSwitchingModal();
+            });
+
+            EventBus.addEventListener("event:openUserIntarctModal", function(data) {
+                $scope.question = data.target.questionData.que;
+                $scope.options = data.target.questionData.options;
+                $scope.answer = data.target.questionData.ans;
+                $scope.showUserInteractingModal();
             });
 
             /**
@@ -287,6 +308,11 @@ app.controllerProvider.register('UserSwitchController', [
                 $scope.getUsersList();
                 $rootScope.safeApply();
             }
+        }
+
+        $scope.handleOptionClick = function(index) {
+            $scope.onClickIndex = index;
+            $scope.disableSubmitButton = false;
         }
     }
 ]);
