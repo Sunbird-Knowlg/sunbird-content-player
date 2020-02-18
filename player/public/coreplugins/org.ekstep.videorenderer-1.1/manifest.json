@@ -17,8 +17,7 @@
             {"type": "css", "src": "renderer/libs/videolibs/videojs-hls-quality-selector.css"},
             {"type": "css", "src": "renderer/libs/loader.css"},
             {"type": "js", "src": "renderer/libs/videojs-markers.js"},
-            {"type": "css", "src": "renderer/libs/videojs.markers.css"},
-            {"type": "css", "src": "renderer/libs/quml.css"}
+            {"type": "css", "src": "renderer/libs/videojs.markers.css"}
         ]
     },
     "dependencies": [
