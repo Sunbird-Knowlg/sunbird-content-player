@@ -479,7 +479,7 @@
                     <div data-simple-choice-interaction data-response-variable='responseValue' value=$index class='mcq-option' ng-class="{'mcq-options-select': onClickIndex === $index && !correctAnswer, 'mcq-correct-selection': onClickIndex === $index && correctAnswer}" ng-repeat="option in options" ng-click="handleOptionClick($index)"><p>{{option}}</p></div>
                 </div>
             </div>
-            <div ng-if="!(questionData.length === queIndex + 1)" class="next-icon" ng-click="nextQuestionClick()"></div>
+            <div class="next-icon" ng-click="(questionData.length === queIndex + 1) ? closeUserInteractingModal() : nextQuestionClick();"></div>
             </div>
         </div>
 
