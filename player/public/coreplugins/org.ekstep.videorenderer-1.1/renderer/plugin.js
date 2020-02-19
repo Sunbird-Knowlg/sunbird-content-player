@@ -384,6 +384,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
     addinteractiveMarkers: function (data) {
     var instance = this;
+    var markers = JSON.parse(data.markerList ? data.markerList : "[]");
     instance.videoPlayer.markers({
     markerStyle: {
        'width':'7px',
@@ -417,9 +418,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     onMarkerReached: function(marker) {
         instance.videoPlayer.pause();
         instance.interactivePopup(marker);
-        console.log("--> Marker reached", data.markerList, marker);
+        console.log("--> Marker reached", marker);
     },
-    markers: data.markerList ? data.markerList : []
+    markers: markers
  });
     },
 
