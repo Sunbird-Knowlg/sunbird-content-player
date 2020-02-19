@@ -322,6 +322,18 @@ app.controllerProvider.register('UserSwitchController', [
             }
         }
 
+        $scope.handleUserInteractingModal = function() {
+            EventBus.addEventListener("event:openUserIntarctModal", function(data) {
+                $scope.questionData = data.target.questionData;
+                $scope.question = $scope.questionData[0].que;
+                $scope.options = $scope.questionData[0].options;
+                $scope.answer = $scope.questionData[0].ans;
+                $scope.queIndex = 0;
+                $scope.showUserInteractingModal();
+                console.log("--> questionData", $scope.questionData, $scope.question, $scope.options);
+            });
+        }
+
         $scope.handleOptionClick = function(index) {
             $scope.onClickIndex = index;
             $scope.disableSubmitButton = false;
@@ -364,6 +376,8 @@ app.compileProvider.directive('userSwitcher', ['$rootScope', '$compile', functio
                     element.find("#groupSlider").mCustomScrollbar('destroy');
                     scope.initializeCtrl();
                 }
+                scope.handleUserInteractingModal();
+
             };
             scope.getUserSwitcherTemplate = function() {
                 var userSwitcherPluginInstance = EkstepRendererAPI.getPluginObjs("org.ekstep.userswitcher");
