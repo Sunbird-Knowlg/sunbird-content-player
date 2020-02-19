@@ -199,7 +199,16 @@ app.controllerProvider.register('UserSwitchController', [
             $rootScope.safeApply(function() {
                 $scope.showUserInteractModal = false;
             });
+            $scope.queIndex = 0;
             EventBus.dispatch("event:playPausedVideo");
+        }
+
+        $scope.nextQuestionClick = function () {
+           $scope.queIndex++;
+           $scope.onClickIndex = null;
+           $scope.question = $scope.questionData[$scope.queIndex].que;
+           $scope.options = $scope.questionData[$scope.queIndex].options;
+           $scope.answer = $scope.questionData[$scope.queIndex].ans;
         }
 
         $scope.initializeCtrl = function() {
@@ -223,10 +232,13 @@ app.controllerProvider.register('UserSwitchController', [
             });
 
             EventBus.addEventListener("event:openUserIntarctModal", function(data) {
-                $scope.question = data.target.questionData.que;
-                $scope.options = data.target.questionData.options;
-                $scope.answer = data.target.questionData.ans;
+                $scope.questionData = data.target.questionData;
+                $scope.question = $scope.questionData[0].que;
+                $scope.options = $scope.questionData[0].options;
+                $scope.answer = $scope.questionData[0].ans;
+                $scope.queIndex = 0;
                 $scope.showUserInteractingModal();
+                console.log("--> questionData", $scope.questionData, $scope.question, $scope.options);
             });
 
             /**
@@ -313,6 +325,8 @@ app.controllerProvider.register('UserSwitchController', [
         $scope.handleOptionClick = function(index) {
             $scope.onClickIndex = index;
             $scope.disableSubmitButton = false;
+            (index === Number($scope.answer)) ?
+            $scope.correctAnswer = true : $scope.correctAnswer = false
         }
     }
 ]);

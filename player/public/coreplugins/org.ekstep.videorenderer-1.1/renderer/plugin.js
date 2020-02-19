@@ -384,8 +384,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
     addinteractiveMarkers: function (data) {
     var instance = this;
-    data['markerList'] = [{ time: 3.0, questionData: {que: 'How are you?', options: ['Good', 'Fine', 'Awesome', 'Not Bad'], ans: '0'}},
-                          { time: 9.0, questionData: {que: 'Who are you?', options: ['Why Should I Tell', 'I Am ...', 'Who are You To Ask?', 'Why Do You Want?'], ans: '1'}}]
+    // data['markerList'] = [{ time: 3.0, questionData: [{que: 'Question 1?', options: ['Good', 'Fine', 'Awesome', 'Not Bad'], ans: '0'}, {que: 'Question 2?', options: ['Why Should I Tell', 'I Am ...', 'Who are You To Ask?', 'Why Do You Want?'], ans: '1'}, {que: 'Question 3?', options: ['Good', 'Fine', 'Awesome', 'Not Bad'], ans: '0'}]},
+    //                       { time: 9.0, questionData: [{que: 'Question 1?', options: ['Why Should I Tell', 'I Am ...', 'Who are You To Ask?', 'Why Do You Want?'], ans: '1'}, {que: 'Question 2?', options: ['Good', 'Fine', 'Awesome', 'Not Bad'], ans: '0'}]
+    //                     }]
     instance.videoPlayer.markers({
     markerStyle: {
        'width':'7px',
@@ -419,6 +420,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     onMarkerReached: function(marker) {
         instance.videoPlayer.pause();
         instance.interactivePopup(marker);
+        console.log("--> Marker reached", data.markerList, marker);
     },
     markers: data.markerList ? data.markerList : []
  });

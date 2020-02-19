@@ -101,6 +101,7 @@
 #questionset .mcq-split .mcq-options {
     flex-basis: 70%;
     padding-top: 16px;
+    position: relative;
 }
 #questionset .mcq-split .mcq-options p svg {
     display: inline-block;
@@ -279,8 +280,13 @@
 #questionset .mcq-horizontal .mcq-options .mcq-option.mcq-options-select, 
 #questionset .mcq-vertical .mcq-options .mcq-option.mcq-options-select, 
 #questionset .mcq-grid .mcq-options .mcq-option.mcq-options-select{
-    box-shadow: 0px 0px 10px 0 rgb(2, 123, 210);
+    box-shadow: 0px 0px 10px 0 rgb(210, 2, 40);
     background: #f5fff8;
+}
+
+.mcq-correct-selection{
+    box-shadow: 0px 0px 10px 0 rgb(2, 210, 47);
+    background: #f5fff8 !important;
 }
 
 #questionset figure{
@@ -311,7 +317,22 @@
     max-width: 100% !important;
 }
 
-
+.next-icon{
+    position: absolute;
+    top: 50%;
+    right: 30px;
+    height: 50px;
+    width: 50px;
+    background: #000;
+    color: #fff;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 50px;
+}
+.next-icon::before{
+    content: "\2192";
+    font-size: 30px;
+}
 :root {
     --fontXXL: 32px;
     --fontXL: 28px;
@@ -450,12 +471,15 @@
             </div>
             <div class='mcq-vertical cheveron-helper'>
                 <div class='mcq-title'>
-                    <p>{{question}}</p>
+                    <p>{{question}}</p> 
+                    
+                   
                 </div>
                 <div class='mcq-options'>
-                    <div data-simple-choice-interaction data-response-variable='responseValue' value=$index class='mcq-option' ng-class="{'mcq-options-select': onClickIndex === $index}" ng-repeat="option in options" ng-click="handleOptionClick($index)"><p>{{option}}</p></div>
+                    <div data-simple-choice-interaction data-response-variable='responseValue' value=$index class='mcq-option' ng-class="{'mcq-options-select': onClickIndex === $index && !correctAnswer, 'mcq-correct-selection': onClickIndex === $index && correctAnswer}" ng-repeat="option in options" ng-click="handleOptionClick($index)"><p>{{option}}</p></div>
                 </div>
             </div>
+            <div ng-if="!(questionData.length === queIndex + 1)" class="next-icon" ng-click="nextQuestionClick()"></div>
             </div>
         </div>
 
