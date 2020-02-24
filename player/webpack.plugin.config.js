@@ -135,7 +135,9 @@ module.exports = (env, argv) => {
 	console.info(`Plugins are packaging for ${env.channel} environment`)
 	return {
 		entry: getEntryFiles(),
-
+		node: {
+			fs: "empty"
+		},
 		output: {
 			filename: "[name]",
 			path: path.resolve(__dirname, OUTPUT_PATH),
