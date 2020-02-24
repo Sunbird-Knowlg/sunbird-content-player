@@ -255,12 +255,12 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     showPDF: function(pdf_url) {
         $("#pdf-loader").show(); // use rendere loader
-        PDFJS.disableWorker = true;
+        pdfjsLib.disableWorker = true;
         console.log("MANIFEST DATA", this.manifest)
 
         // use api to resolve the plugin resource
-        PDFJS.workerSrc = org.ekstep.pluginframework.pluginManager.resolvePluginResource(this.manifest.id, this.manifest.ver, "renderer/libs/pdf.worker.js");
-        PDFJS.getDocument({
+        pdfjsLib.GlobalWorkerOptions.workerSrc = org.ekstep.pluginframework.pluginManager.resolvePluginResource(this.manifest.id, this.manifest.ver, "renderer/libs/pdf.worker.js");
+        pdfjsLib.getDocument({
             url: pdf_url
         }).then(function(pdf_doc) {
             context.PDF_DOC = pdf_doc;
