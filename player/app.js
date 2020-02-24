@@ -38,10 +38,6 @@ app.use(express.bodyParser())
 app.use(express.methodOverride())
 app.use(express.cookieParser())
 
-app.use(express.session({
-	secret: "1234"
-}))
-
 app.use(app.router)
 app.locals({
 	contextPath: ""
