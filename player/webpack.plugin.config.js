@@ -183,13 +183,6 @@ module.exports = (env, argv) => {
 				}]
 			},
 			{
-				test: require.resolve(`${PLUGINS_BASE_PATH}org.ekstep.pdfrenderer-1.0/renderer/libs/pdf.js`),
-				use: [{
-					loader: "expose-loader",
-					options: "pdfjsLib"
-				}]
-			},
-			{
 				test: /\.(s*)css$/,
 				use: [
 					MiniCssExtractPlugin.loader,
@@ -242,7 +235,6 @@ module.exports = (env, argv) => {
 				toastr: path.resolve(`${PLUGINS_BASE_PATH}org.ekstep.toaster-1.0/renderer/libs/toastr.min.js`),
 				CryptoJS: path.resolve(`${PLUGINS_BASE_PATH}org.ekstep.telemetrysync-1.0/renderer/libs/md5.js`),
 				JSZip: path.resolve(`${PLUGINS_BASE_PATH}org.ekstep.epubrenderer-1.0/renderer/libs/jszip.min.js`),
-				pdfjsLib: path.resolve(`${PLUGINS_BASE_PATH}org.ekstep.pdfrenderer-1.0/renderer/libs/pdf.js`),
 				videojs: path.resolve(`${PLUGINS_BASE_PATH}org.ekstep.videorenderer-1.1/renderer/libs/videolibs/video.min.js`)
 			}),
 			new UglifyJsPlugin({
