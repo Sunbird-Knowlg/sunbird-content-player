@@ -218,7 +218,8 @@ org.ekstep.contentrenderer.pluginError = function (event, data) {
 		"type": "plugin",
 		"action": data.action,
 		"objectType": data.plugin,
-		"objectId": data.objectid
+		"objectId": data.objectid,
+		"plugin": {"id": data.plugin, "ver": data.version}
 	})
 }
 
