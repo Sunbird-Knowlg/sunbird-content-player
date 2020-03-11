@@ -184,6 +184,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         content.canvasId = dataObj.canvasId;
         EkstepRendererAPI.setRenderer(instance);
         Renderer.theme = new ThemePlugin(content);
+        qsFontPatch.setDefaultFontSize(content);
         instance.resizeGame(true);
         Renderer.theme.baseDir = globalConfigObj.basepath || dataObj.path;
         var manifest = content.manifest ? content.manifest : AssetManager.getManifest(content);

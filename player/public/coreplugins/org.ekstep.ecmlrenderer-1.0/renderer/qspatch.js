@@ -390,5 +390,66 @@ var qspatch = {
             'image': data.image ? data.image : undefined,
             'audio': data.audio ? data.audio : undefined,
         })
+    },
+}
+
+//Make default font size for question options
+var qsFontPatch = {
+  setDefaultFontSize: function(data){
+    if(data.stage['org.ekstep.questionset']){
+      try {
+        var questionSetData = data.stage['org.ekstep.questionset'];
+        var originalData = questionSetData;
+
+        _.each(questionSetData['org.ekstep.question'],function(item,key){
+            var questionData = JSON.parse(item.data.__cdata);
+            questionData.question.text = qsFontPatch.changeFontSize(questionData.question);
+            item.data.__cdata = JSON.stringify(questionData)
+            item = qsFontPatch.questionFontSizeChange(item);
+        });
+        // Renderer.theme = new ThemePlugin(questionSetData);
+      } catch (e) {
+          console.log(e);
+      } finally {
+
+      }
     }
+  },
+  questionFontSizeChange: function(item){
+    var questionItem = item;
+    var questionOptionsData = JSON.parse(item.data.__cdata);
+
+    switch (item.pluginId) {
+      case 'org.ekstep.questionunit.mcq':
+            questionOptionsData.question.text = qsFontPatch.changeFontSize(questionOptionsData.question);
+            questionOptionsData.options = qsFontPatch.optionsTextFontChange(questionOptionsData.options,item.type);
+            questionItem.data.__cdata = JSON.stringify(questionOptionsData);
+            break;
+      case 'org.ekstep.questionunit.mtf': questionOptionsData.question.text = qsFontPatch.changeFontSize(questionOptionsData.question);
+            questionOptionsData.option.optionsLHS = qsFontPatch.optionsTextFontChange(questionOptionsData.option.optionsLHS,item.type);
+            questionOptionsData.option.optionsRHS = qsFontPatch.optionsTextFontChange(questionOptionsData.option.optionsRHS,item.type);
+            questionItem.data.__cdata = JSON.stringify(questionOptionsData);
+            break;
+
+      default: break;
+
+    }
+    return questionItem;
+  },
+  optionsTextFontChange: function(options,type){
+    var optionsData = options;
+    if(type == 'mcq'){
+      _.each(options,function(option,key){
+        optionsData[key].text = qsFontPatch.changeFontSize(option);
+      });
+    }else if(type == 'mtf'){
+      _.each(options,function(option,key){
+        optionsData[key].text = '<p style="font-size:1.28em">' + optionsData[key].text + '</p>';
+      });
+    }
+    return optionsData;
+  },
+  changeFontSize: function(data){
+    return data.text.replace(/<p>/g, "<p style='font-size:1.28em;'>");
+  }
 }
