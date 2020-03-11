@@ -421,16 +421,20 @@ var qsFontPatch = {
 
     switch (item.pluginId) {
       case 'org.ekstep.questionunit.mcq':
-            questionOptionsData.question.text = qsFontPatch.changeFontSize(questionOptionsData.question);
+            // questionOptionsData.question.text = qsFontPatch.changeFontSize(questionOptionsData.question);
             questionOptionsData.options = qsFontPatch.optionsTextFontChange(questionOptionsData.options,item.type);
             questionItem.data.__cdata = JSON.stringify(questionOptionsData);
             break;
-      case 'org.ekstep.questionunit.mtf': questionOptionsData.question.text = qsFontPatch.changeFontSize(questionOptionsData.question);
+      case 'org.ekstep.questionunit.mtf':
+            //questionOptionsData.question.text = qsFontPatch.changeFontSize(questionOptionsData.question);
             questionOptionsData.option.optionsLHS = qsFontPatch.optionsTextFontChange(questionOptionsData.option.optionsLHS,item.type);
             questionOptionsData.option.optionsRHS = qsFontPatch.optionsTextFontChange(questionOptionsData.option.optionsRHS,item.type);
             questionItem.data.__cdata = JSON.stringify(questionOptionsData);
             break;
-
+    case 'org.ekstep.questionunit.sequence':
+          questionOptionsData.options = qsFontPatch.optionsTextFontChange(questionOptionsData.options,item.type);
+          questionItem.data.__cdata = JSON.stringify(questionOptionsData);
+          break;
       default: break;
 
     }
@@ -450,6 +454,17 @@ var qsFontPatch = {
     return optionsData;
   },
   changeFontSize: function(data){
-    return data.text.replace(/<p>/g, "<p style='font-size:1.28em;'>");
+      var index = data.text.indexOf("<p><span");
+      if(index == 0){
+          var element = $($.parseHTML(data.text));
+          var size = $(element)[0].children[0].style.fontSize;
+          if(parseFloat(size) < 1.285){
+            $(element)[0].children[0].style.fontSize = '1.285em';
+            data.text = $(element).prop('outerHTML');
+          }
+          return data.text;
+      }else if(index == -1){
+        return data.text.replace(/<p>/g, "<p style='font-size:1.285em;'>");
+      }
   }
 }
