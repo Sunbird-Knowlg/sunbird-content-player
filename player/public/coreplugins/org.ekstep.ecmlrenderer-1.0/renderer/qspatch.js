@@ -399,7 +399,6 @@ var qsFontPatch = {
     if(data.stage['org.ekstep.questionset']){
       try {
         var questionSetData = data.stage['org.ekstep.questionset'];
-        var originalData = questionSetData;
 
         _.each(questionSetData['org.ekstep.question'],function(item,key){
             var questionData = JSON.parse(item.data.__cdata);
@@ -410,8 +409,6 @@ var qsFontPatch = {
         // Renderer.theme = new ThemePlugin(questionSetData);
       } catch (e) {
           console.log(e);
-      } finally {
-
       }
     }
   },
@@ -421,20 +418,15 @@ var qsFontPatch = {
 
     switch (item.pluginId) {
       case 'org.ekstep.questionunit.mcq':
-            // questionOptionsData.question.text = qsFontPatch.changeFontSize(questionOptionsData.question);
+      case 'org.ekstep.questionunit.sequence':
             questionOptionsData.options = qsFontPatch.optionsTextFontChange(questionOptionsData.options,item.type);
             questionItem.data.__cdata = JSON.stringify(questionOptionsData);
             break;
       case 'org.ekstep.questionunit.mtf':
-            //questionOptionsData.question.text = qsFontPatch.changeFontSize(questionOptionsData.question);
             questionOptionsData.option.optionsLHS = qsFontPatch.optionsTextFontChange(questionOptionsData.option.optionsLHS,item.type);
             questionOptionsData.option.optionsRHS = qsFontPatch.optionsTextFontChange(questionOptionsData.option.optionsRHS,item.type);
             questionItem.data.__cdata = JSON.stringify(questionOptionsData);
             break;
-    case 'org.ekstep.questionunit.sequence':
-          questionOptionsData.options = qsFontPatch.optionsTextFontChange(questionOptionsData.options,item.type);
-          questionItem.data.__cdata = JSON.stringify(questionOptionsData);
-          break;
       default: break;
 
     }
