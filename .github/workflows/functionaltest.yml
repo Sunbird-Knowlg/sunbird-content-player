@@ -39,29 +39,29 @@ jobs:
   
     - name: Install test framework dependencies
       run: |
-        (cd player/public/test && yarn install)  
+        (cd player/public/test/functional_test && yarn install)  
 
     - name: Start functional test cases 
       run: |
-        (cd player/public/test && yarn test)
+        (cd player/public/test/functional_test && yarn test)
  
     - name: Visual regression artifact generation
       uses: actions/upload-artifact@v1
       with:
         name: Visual changes on UI
-        path: player/public/test/__tests__/__image_snapshots__
+        path: player/public/test/functional_test/__tests__/__image_snapshots__
 
     - name: Screenshots artifact generation
       uses: actions/upload-artifact@v1
       with:
         name: Screenshots
-        path: player/public/test/__tests__/screenshots
+        path: player/public/test/functional_test/__tests__/screenshots
 
     - name: Report artifact generation
       uses: actions/upload-artifact@v1
       with:
         name: Report HTML
-        path: player/public/test/testReport
+        path: player/public/test/functional_test/testReport
 
     - name: Player preview artifact generation
       uses: actions/upload-artifact@v1
