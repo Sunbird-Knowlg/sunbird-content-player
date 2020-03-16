@@ -979,6 +979,30 @@
             },
             "isAvailable": true,
             "path": "fixture-stories/the_moon_and_the_cap"
+        },
+        {
+            "identifier": "org.ekstep.questionset",
+            "mimeType": "application/vnd.ekstep.ecml-archive",
+            "contentData": {
+                "questionnaire": null,
+                "appIcon": "stories/pratham-camal/logo.png",
+                "subject": "literacy_v2",
+                "description": "Question-set",
+                "name": "Question Set",
+                "downloadUrl": "",
+                "checksum": null,
+                "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.questionset",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "fixture-stories/question"
         }],
         "ttl": 21
     }
