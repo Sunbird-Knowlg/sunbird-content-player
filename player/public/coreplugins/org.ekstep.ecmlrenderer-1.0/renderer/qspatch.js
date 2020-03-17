@@ -158,7 +158,7 @@ var qspatch = {
         // Function over-ride
         var super_QSTelemetryLogger_logAssessEnd = QSTelemetryLogger.logAssessEnd; //reference to original, if error thrown from patch code, original function will invoked as a fallback mechanism
         QSTelemetryLogger.logAssessEnd = function(result) {
-            try{ // if any error occurs, default logAssessEnd Event will be invoked
+            try{ // if any error occurs, default logAssessEnd Event will be invoked 
                 var pluginToPatch;
                 qsPlugins.every(function(plugin){
                     if(plugin.id == this._plugin._manifest.id){
@@ -177,7 +177,7 @@ var qspatch = {
                 TelemetryService.assessEnd(this._assessStart, data);
             }catch(err){
                 EkstepRendererAPI.logErrorEvent(err, { 'severity': 'error', 'type': 'plugin', 'action': 'play' });
-                super_QSTelemetryLogger_logAssessEnd(result);
+                super_QSTelemetryLogger_logAssessEnd(result);     
             }
         }
     },
