@@ -158,6 +158,7 @@ describe(
             await popupNextButton.click()
             await page.screenshot({path: '__tests__/screenshots/questionset_order_planet_popup_next.png'});
         })
+        
         it('Sentence creation test', async() => {
             const select0 = await page.waitForSelector('#w0')
             await select0.click()
