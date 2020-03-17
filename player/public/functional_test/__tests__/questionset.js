@@ -85,8 +85,12 @@ describe(
             const btnStylesInWeb = await page.$eval('#mcq-question-container > div.question-content-container > div > div.hiding-container > div > p', btnStylesInWeb => JSON.parse(JSON.stringify(getComputedStyle(btnStylesInWeb))));
             await page.emulate(devices['iPhone 4'])
             await page.reload({ waitUntil: ["networkidle0", "domcontentloaded"] });
+            await page.waitFor(1000)
+            await page.screenshot({path: '__tests__/screenshots/questionset_mobile_view.png'});
             const playQuestion = await page.waitForSelector('body > div:nth-child(7) > div > ion-pane > ion-content > div > div:nth-child(38)')
             await playQuestion.click()
+            await page.waitFor(3000)
+            await page.screenshot({path: '__tests__/screenshots/questionset_mobile_view_play_question.png'});
             await page.waitForSelector('#mcq-question-container > div.question-content-container > div > div.hiding-container > div > p')
             const btnStylesInMobile = await page.$eval('#mcq-question-container > div.question-content-container > div > div.hiding-container > div > p', btnStylesInMobile => JSON.parse(JSON.stringify(getComputedStyle(btnStylesInMobile))));
             // console.info("font size is" + btnStylesInWeb.fontsize)
@@ -158,7 +162,7 @@ describe(
             await popupNextButton.click()
             await page.screenshot({path: '__tests__/screenshots/questionset_order_planet_popup_next.png'});
         })
-        
+
         it('Sentence creation test', async() => {
             const select0 = await page.waitForSelector('#w0')
             await select0.click()
@@ -202,8 +206,7 @@ describe(
             document.querySelector('#commentText').value = 'test comment';
             });
             await page.screenshot({path: '__tests__/screenshots/questionset_rating_comment_rating.png'});
-
-            const submitButton = await page.waitForSelector('#gcFbPopup > div.gc-popup-new.gc-fc-popup > div.gc-popup-body-new > div')
+            const submitButton = await page.waitForSelector('#gcFbPopup > div.gc-popup-new.gc-fc-popup > div.gc-popup-body-new > div > div.gc-fd-footer > input')
             await submitButton.click()
             await page.screenshot({path: '__tests__/screenshots/questionset_rating_submit_rating.png'});
         })
