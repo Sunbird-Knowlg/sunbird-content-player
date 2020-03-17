@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "jest-html-reporter": "^2.8.0",
-    "jest-html-reporters": "^1.2.1"
+    "jest-html-reporters": "^1.2.1",
+    "jest-sonar-reporter": "^2.0.0"
   }
 }
