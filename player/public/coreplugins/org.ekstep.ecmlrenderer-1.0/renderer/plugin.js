@@ -184,7 +184,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         content.canvasId = dataObj.canvasId;
         EkstepRendererAPI.setRenderer(instance);
         Renderer.theme = new ThemePlugin(content);
-        qspatch.setDefaultFontSize(content);
         instance.resizeGame(true);
         Renderer.theme.baseDir = globalConfigObj.basepath || dataObj.path;
         var manifest = content.manifest ? content.manifest : AssetManager.getManifest(content);
@@ -201,6 +200,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             org.ekstep.contentrenderer.loadPlugins(pluginManifest.plugin, resource, function() {
                 qspatch.handleAssetUrl();
                 qspatch.telemetryPatch();
+                qspatch.setDefaultFontSize(content);
                 Renderer.theme.start(dataObj.path.replace('file:///', '') + "/assets/");
             });
         } catch (e) {

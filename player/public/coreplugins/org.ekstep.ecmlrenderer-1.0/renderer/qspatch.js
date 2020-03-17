@@ -400,7 +400,7 @@ var qspatch = {
               var questionData = JSON.parse(item.data.__cdata);
               questionData.question.text = qspatch.changeFontSize(questionData.question);
               item.data.__cdata = JSON.stringify(questionData);
-              item = qspatch.questionFontSizeChange(item);
+              item = qspatch.checkOptionsFontSize(item);
               questionSetData['org.ekstep.question'][key] = item;
           });
           // Renderer.theme = new ThemePlugin(questionSetData);
@@ -409,19 +409,19 @@ var qspatch = {
         }
       }
     },
-    questionFontSizeChange: function(item){
+    checkOptionsFontSize: function(item){
       var questionItem = item;
       var questionOptionsData = JSON.parse(item.data.__cdata);
 
       switch (item.pluginId) {
         case 'org.ekstep.questionunit.mcq':
         case 'org.ekstep.questionunit.sequence':
-              questionOptionsData.options = qspatch.optionsTextFontChange(questionOptionsData.options,item.type);
+              questionOptionsData.options = qspatch.changeOptionsFontSize(questionOptionsData.options,item.type);
               questionItem.data.__cdata = JSON.stringify(questionOptionsData);
               break;
         case 'org.ekstep.questionunit.mtf':
-              questionOptionsData.option.optionsLHS = qspatch.optionsTextFontChange(questionOptionsData.option.optionsLHS,item.type);
-              questionOptionsData.option.optionsRHS = qspatch.optionsTextFontChange(questionOptionsData.option.optionsRHS,item.type);
+              questionOptionsData.option.optionsLHS = qspatch.changeOptionsFontSize(questionOptionsData.option.optionsLHS,item.type);
+              questionOptionsData.option.optionsRHS = qspatch.changeOptionsFontSize(questionOptionsData.option.optionsRHS,item.type);
               questionItem.data.__cdata = JSON.stringify(questionOptionsData);
               break;
         default: break;
@@ -429,7 +429,7 @@ var qspatch = {
       }
       return questionItem;
     },
-    optionsTextFontChange: function(options,type){
+    changeOptionsFontSize: function(options,type){
       var optionsData = options;
       if(type == 'mcq'){
         _.each(options,function(option,key){
@@ -444,8 +444,7 @@ var qspatch = {
     },
     changeFontSize: function(data){
         var element = $($.parseHTML(data.text));
-        console.log("Jags",$(element)[0])
-        if($(element) && $(element)[0] && $(element)[0].children && $(element)[0].children[0] && $(element)[0].children[0].style && $(element)[0].children[0].style.fontSize){
+        if($(element)[0] && $(element)[0].children[0] && $(element)[0].children[0].style && $(element)[0].children[0].style.fontSize){
           var size = $(element)[0].children[0].style.fontSize;
           if(parseFloat(size) < 1.285){
             $(element)[0].children[0].style.fontSize = '1.285em';
