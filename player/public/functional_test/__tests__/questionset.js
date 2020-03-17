@@ -206,6 +206,7 @@ describe(
             await submitButton.click()
             await page.screenshot({path: '__tests__/screenshots/questionset_rating_submit_rating.png'});
         })
+
     },
     timeout
 )
