@@ -61,7 +61,6 @@ describe(
 
         it('PDF page count is proper', async() => {
             const element = await page.$("#pdf-total-pages");
-            console.info(element)
             const numberOfPagesInNavigation = await page.evaluate(element => element.textContent, element)
             
             let numberOfPagesInDOM = await page.evaluate(() => {
