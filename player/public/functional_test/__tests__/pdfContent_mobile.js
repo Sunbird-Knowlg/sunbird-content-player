@@ -72,7 +72,7 @@ describe(
         it('Player should load next page on pdf', async () => {
             const playContent = await page.waitForSelector('#overlay > next-navigation > div > a')
             await playContent.click()
-            await page.waitFor(1000)
+            await page.waitFor(2000)
             await page.screenshot({path: '__tests__/screenshots/pdfContent_mobile_OnNextClick.png'})
         })
         it('Player should load previous page on pdf', async() => {
@@ -102,7 +102,7 @@ describe(
         it('Player should open new tab to download pdf', async () => {
             const downloadContent = await page.waitForSelector('#download-btn')
             await downloadContent.click()
-            await page.waitFor(1000)
+            await page.waitFor(2000)
             await page.screenshot({path: '__tests__/screenshots/pdfContent_mobile_onDownloadClick.png'})
         })
         
