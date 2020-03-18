@@ -51,26 +51,61 @@ describe(
         // Custom eval test cases
 
         it('Player should be having PDF content', async () => {
-            const playContent = await page.$('body > div:nth-child(7) > div > ion-pane > ion-content > div > div:nth-child(7)');
+            const playContent = await page.$('body > div:nth-child(7) > div > ion-pane > ion-content > div > div:nth-child(7)')
             await playContent.click()
+            await page.waitFor(1000)
+            await page.screenshot({path: '__tests__/screenshots/pdfContent_pdfContent.png'})
         })
 
         it('PDF page count is proper', async() => {
             const element = await page.$("#pdf-total-pages");
-            const numberOfPagesInNavigation = await page.evaluate(element => element.textContent, element);
+            const numberOfPagesInNavigation = await page.evaluate(element => element.textContent, element)
             
             let numberOfPagesInDOM = await page.evaluate(() => {
-                let elements = document.getElementsByClassName('page');
+                let elements = document.getElementsByClassName('page')
                 return elements.length;
             });
-            expect(parseInt(numberOfPagesInNavigation)).toBe(numberOfPagesInDOM);
+            expect(parseInt(numberOfPagesInNavigation)).toBe(numberOfPagesInDOM)
             // expect(parseInt(numberOfPagesInNavigation)).toBe(100);
         })
 
         it('Player should load next page on pdf', async () => {
-            const playContent = await page.$('#overlay > next-navigation > div > a');
+            const playContent = await page.waitForSelector('#overlay > next-navigation > div > a')
             await playContent.click()
+            await page.waitFor(2000)
+            await page.screenshot({path: '__tests__/screenshots/pdfContent_mobile_OnNextClick.png'})
         })
+        it('Player should load previous page on pdf', async() => {
+            const previousContent = await page.waitForSelector('#overlay > previous-navigation > div > a')
+            await previousContent.click()
+            await page.waitFor(1000)
+            await page.screenshot({path: '__tests__/screenshots/pdfContent_mobile_onPreviousClick.png'})
+        })
+        
+        it('Go to next page by setting a page value', async () => {
+            await page.waitForSelector('#pdf-find-text')
+            await page.evaluate(() => {
+                document.querySelector('#pdf-find-text').value = 5;
+            });
+            await page.waitFor(1000)
+            await page.screenshot({path: '__tests__/screenshots/pdfContent_mobile_SetPageValue.png'})
+            await page.waitForSelector('#page-count-container > div.search-page-pdf-arrow-container')
+            await page.evaluate(() => {
+                document.querySelector('#page-count-container > div.search-page-pdf-arrow-container').style = 'display : block';
+            })
+            const goToPage = await page.waitForSelector('#page-count-container > div.search-page-pdf-arrow-container')
+            await goToPage.click()
+            await page.waitFor(1000)
+            await page.screenshot({path: '__tests__/screenshots/pdfContent_mobile_goToSetPageClick.png'})
+        })
+        
+        it('Player should open new tab to download pdf', async () => {
+            const downloadContent = await page.waitForSelector('#download-btn')
+            await downloadContent.click()
+            await page.waitFor(2000)
+            await page.screenshot({path: '__tests__/screenshots/pdfContent_mobile_onDownloadClick.png'})
+        })
+        
     },
     timeout
 )
