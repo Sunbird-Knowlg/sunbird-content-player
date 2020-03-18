@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>HTML Content</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src * data: filesystem:; style-src 'self' 'unsafe-inline';  script-src 'self' 'unsafe-inline' 'unsafe-eval'; font-src *;" >
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+</head>
+<body>
+
+  <h1 style="text-align: center;">Content player test</h1>
+  <div class="content-player">
+      <iframe id="previewContentIframe" title="player" src="preview/preview.html" style="width:100%;height:100vh;border:none;"></iframe>
+    </div>
+  <script type="text/javascript">
+    var previewContentIframe = document.getElementById('previewContentIframe');
+    window.onload = function() {
+        setTimeout(function() {
+          var metadata = {
+          "streamingUrl": "https://ekstep-public-prod.s3-ap-south-1.amazonaws.com/content/ecml/do_312473549722288128119665-latest",
+          "publish_type": "public",
+            "keywords": [
+              "Story"
+            ],
+            "subject": "English",
+            "channel": "in.ekstep",
+            "downloadUrl": "do_312473549722288128119665/1531308826198_do_312473549722288128119665.zip",
+            "language": [
+              "English"
+            ],
+            "mimeType": "application/vnd.ekstep.ecml-archive",
+            "source": "",
+            "variants": null,
+            "objectType": "Content",
+            "appIcon": "do_312473549722288128119665/0c5509c8c7cf945b1b23dacc66a05c0d_1522654872904.jpeg",
+            "gradeLevel": [
+              "Class 7"
+            ],
+            "appId": "ekstep_portal",
+            "copyType": "Enhance",
+            "collaborators": [
+              "5469"
+            ],
+            "contentEncoding": "gzip",
+            "artifactUrl": "do_312473549722288128119665/1531308826198_do_312473549722288128119665.zip",
+            "contentType": "Resource",
+            "lastUpdatedBy": "539",
+            "identifier": "do_312473549722288128119665",
+            "audience": [
+              "Learner"
+            ],
+            "visibility": "Default",
+            "consumerId": "62e15662-bb09-439f-86e2-d65bd84f3c23",
+            "mediaType": "content",
+            "osId": "org.ekstep.quiz.app",
+            "ageGroup": [
+              ">10"
+            ],
+            "lastPublishedBy": "539",
+            "languageCode": "en",
+            "tags": [
+              "Story"
+            ],
+            "prevState": "Review",
+            "lastPublishedOn": "2018-07-11T11:33:47.231+0000",
+            "domain": [
+              "literacy"
+            ],
+            "name": "The Squirrel",
+            "publisher": "",
+            "attributions": [
+              ""
+            ],
+            "status": "Live",
+            "template": "",
+            "totalQuestions": 5,
+            "code": "org.ekstep.literacy.story.16782.fork",
+            "publishError": null,
+            "origin": "do_31243457742290944024273",
+            "description": "Students Resources",
+            "idealScreenSize": "normal",
+            "posterImage": "do_312473549722288128119665/0c5509c8c7cf945b1b23dacc66a05c0d_1522654872904.jpeg",
+            "createdOn": "2018-04-02T06:21:52.584+0000",
+            "contentDisposition": "inline",
+            "lastUpdatedOn": "2018-07-11T11:33:12.141+0000",
+            "owner": "Aprajita Tomar",
+            "creator": "Aprajita Tomar",
+            "os": [
+              "All"
+            ],
+            "flagReasons": null,
+            "totalScore": 5,
+            "pkgVersion": 1,
+            "versionKey": "1531308792141",
+            "idealScreenDensity": "hdpi",
+            "framework": "NCF",
+            "lastSubmittedOn": "2018-05-18T01:40:15.750+0000",
+            "createdBy": "6116",
+            "compatibilityLevel": 2,
+            "board": "CBSE",
+            "resourceType": "Read"
+          }
+
+          var configuration = {
+            "context": {
+              "mode": "edit",
+              "contentId": "do_112694410769801216167",
+              "sid": "7W23qQKd_n4wT17sxVeLsG55t2FOZ6Bi",
+              "uid": "874ed8a5-782e-4f6c-8f36-e0288455901e",
+              "channel": "b00bc992ef25f1a9a8d63291e20efc8d",
+              "pdata": {
+                "id": "dev.sunbird.portal",
+                "ver": "1.14.0",
+                "pid": "sunbird-portal.contenteditor"
+              },
+              "app": [],
+              "dims": [],
+              "partner": []
+            },
+            "config": {
+              "repos": [
+                "/sunbird-plugins/renderer"
+              ],
+              "plugins": [
+                {
+                  "id": "org.sunbird.player.endpage",
+                  "ver": 1.1,
+                  "type": "plugin"
+                }
+              ],
+              "splash": {
+                "text": "",
+                "icon": "",
+                "bgImage": "assets/icons/splacebackground_1.png",
+                "webLink": ""
+              },
+              "overlay": {
+                "showUser": false
+              },
+              "showEndPage": false
+            },
+            "metadata": metadata,
+            "data": ""
+          }
+          previewContentIframe.contentWindow.initializePreview(configuration);
+      }, 1000);
+    };
+  </script>
+</body>
+</html>
