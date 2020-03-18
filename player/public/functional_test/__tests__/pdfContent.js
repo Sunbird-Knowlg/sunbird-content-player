@@ -25,7 +25,7 @@ describe(
                 page: page, 
                 dirName: __dirname,
                 scriptName: scriptName,
-                onlyFailures: true
+                onlyFailures: false
               };
               await jestscreenshot.init(options);  
         }, timeout)
