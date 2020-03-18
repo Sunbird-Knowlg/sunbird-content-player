@@ -60,7 +60,6 @@ describe(
             const playQuestion = await page.waitForSelector('body > div:nth-child(7) > div > ion-pane > ion-content > div > div:nth-child(3)')
             await playQuestion.click()
         })
-
     },
     timeout
 )
