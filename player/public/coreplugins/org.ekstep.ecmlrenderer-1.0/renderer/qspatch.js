@@ -443,16 +443,18 @@ var qspatch = {
       return optionsData;
     },
     changeFontSize: function(data){
-        var element = $($.parseHTML(data.text));
-        if($(element)[0] && $(element)[0].children[0] && $(element)[0].children[0].style && $(element)[0].children[0].style.fontSize){
+      var index = data.text.indexOf("<p><span");
+
+      if(index == 0){
+          var element = $($.parseHTML(data.text));
           var size = $(element)[0].children[0].style.fontSize;
-          if(parseFloat(size) < 1.285){
-            $(element)[0].children[0].style.fontSize = '1.285em';
+          if(parseFloat(size) < parseFloat(globalConfig.questionMinFontSize)){
+            $(element)[0].children[0].style.fontSize = globalConfig.questionMinFontSize;
             data.text = $(element).prop('outerHTML');
-            return data.text;
           }
-        }else{
-          return data.text.replace(/<p>/g, "<p style='font-size:1.285em;'>");
-        }
+          return data.text;
+      }else if(index == -1){
+        return data.text.replace(/<p>/g, "<p style='font-size:" + globalConfig.questionMinFontSize + ";'>");
+      }
     }
 }
