@@ -158,7 +158,7 @@ var qspatch = {
         // Function over-ride
         var super_QSTelemetryLogger_logAssessEnd = QSTelemetryLogger.logAssessEnd; //reference to original, if error thrown from patch code, original function will invoked as a fallback mechanism
         QSTelemetryLogger.logAssessEnd = function(result) {
-            try{ // if any error occurs, default logAssessEnd Event will be invoked 
+            try{ // if any error occurs, default logAssessEnd Event will be invoked
                 var pluginToPatch;
                 qsPlugins.every(function(plugin){
                     if(plugin.id == this._plugin._manifest.id){
@@ -177,7 +177,7 @@ var qspatch = {
                 TelemetryService.assessEnd(this._assessStart, data);
             }catch(err){
                 EkstepRendererAPI.logErrorEvent(err, { 'severity': 'error', 'type': 'plugin', 'action': 'play' });
-                super_QSTelemetryLogger_logAssessEnd(result);     
+                super_QSTelemetryLogger_logAssessEnd(result);
             }
         }
     },
@@ -437,7 +437,7 @@ var qspatch = {
         });
       }else if(type == 'mtf'){
         _.each(options,function(option,key){
-          optionsData[key].text = '<p style="font-size:1.28em">' + optionsData[key].text + '</p>';
+          optionsData[key].text = '<p style="' + globalConfig.questionMinFontSize + '">' + optionsData[key].text + '</p>';
         });
       }
       return optionsData;
@@ -448,7 +448,7 @@ var qspatch = {
       if(index == 0){
           var element = $($.parseHTML(data.text));
           var size = $(element)[0].children[0].style.fontSize;
-          if(parseFloat(size) < parseFloat(globalConfig.questionMinFontSize)){
+          if(parseFloat(size) <= parseFloat(globalConfig.questionMinFontSize)){
             $(element)[0].children[0].style.fontSize = globalConfig.questionMinFontSize;
             data.text = $(element).prop('outerHTML');
           }
