@@ -158,7 +158,7 @@ var qspatch = {
         // Function over-ride
         var super_QSTelemetryLogger_logAssessEnd = QSTelemetryLogger.logAssessEnd; //reference to original, if error thrown from patch code, original function will invoked as a fallback mechanism
         QSTelemetryLogger.logAssessEnd = function(result) {
-            try{ // if any error occurs, default logAssessEnd Event will be invoked 
+            try{ // if any error occurs, default logAssessEnd Event will be invoked
                 var pluginToPatch;
                 qsPlugins.every(function(plugin){
                     if(plugin.id == this._plugin._manifest.id){
@@ -177,7 +177,7 @@ var qspatch = {
                 TelemetryService.assessEnd(this._assessStart, data);
             }catch(err){
                 EkstepRendererAPI.logErrorEvent(err, { 'severity': 'error', 'type': 'plugin', 'action': 'play' });
-                super_QSTelemetryLogger_logAssessEnd(result);        
+                super_QSTelemetryLogger_logAssessEnd(result);
             }
         }
     },
@@ -390,5 +390,71 @@ var qspatch = {
             'image': data.image ? data.image : undefined,
             'audio': data.audio ? data.audio : undefined,
         })
+    },
+    //Make default font size for question options
+    setDefaultFontSize: function(data){
+      if(data.stage['org.ekstep.questionset']){
+        try {
+          var questionSetData = data.stage['org.ekstep.questionset'];
+          _.each(questionSetData['org.ekstep.question'],function(item,key){
+              var questionData = JSON.parse(item.data.__cdata);
+              questionData.question.text = qspatch.changeFontSize(questionData.question);
+              item.data.__cdata = JSON.stringify(questionData);
+              item = qspatch.checkOptionsFontSize(item);
+              questionSetData['org.ekstep.question'][key] = item;
+          });
+          // Renderer.theme = new ThemePlugin(questionSetData);
+        } catch (e) {
+            console.log(e);
+        }
+      }
+    },
+    checkOptionsFontSize: function(item){
+      var questionItem = item;
+      var questionOptionsData = JSON.parse(item.data.__cdata);
+
+      switch (item.pluginId) {
+        case 'org.ekstep.questionunit.mcq':
+        case 'org.ekstep.questionunit.sequence':
+              questionOptionsData.options = qspatch.changeOptionsFontSize(questionOptionsData.options,item.type);
+              questionItem.data.__cdata = JSON.stringify(questionOptionsData);
+              break;
+        case 'org.ekstep.questionunit.mtf':
+              questionOptionsData.option.optionsLHS = qspatch.changeOptionsFontSize(questionOptionsData.option.optionsLHS,item.type);
+              questionOptionsData.option.optionsRHS = qspatch.changeOptionsFontSize(questionOptionsData.option.optionsRHS,item.type);
+              questionItem.data.__cdata = JSON.stringify(questionOptionsData);
+              break;
+        default: break;
+
+      }
+      return questionItem;
+    },
+    changeOptionsFontSize: function(options,type){
+      var optionsData = options;
+      if(type == 'mcq'){
+        _.each(options,function(option,key){
+          optionsData[key].text = qspatch.changeFontSize(option);
+        });
+      }else if(type == 'mtf'){
+        _.each(options,function(option,key){
+          optionsData[key].text = '<p style="' + globalConfig.questionMinFontSize + '">' + optionsData[key].text + '</p>';
+        });
+      }
+      return optionsData;
+    },
+    changeFontSize: function(data){
+      var index = data.text.indexOf("<p><span");
+
+      if(index == 0){
+          var element = $($.parseHTML(data.text));
+          var size = $(element)[0].children[0].style.fontSize;
+          if(parseFloat(size) <= parseFloat(globalConfig.questionMinFontSize)){
+            $(element)[0].children[0].style.fontSize = globalConfig.questionMinFontSize;
+            data.text = $(element).prop('outerHTML');
+          }
+          return data.text;
+      }else if(index == -1){
+        return data.text.replace(/<p>/g, "<p style='font-size:" + globalConfig.questionMinFontSize + ";'>");
+      }
     }
 }

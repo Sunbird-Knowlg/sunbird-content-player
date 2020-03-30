@@ -200,6 +200,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             org.ekstep.contentrenderer.loadPlugins(pluginManifest.plugin, resource, function() {
                 qspatch.handleAssetUrl();
                 qspatch.telemetryPatch();
+                qspatch.setDefaultFontSize(content);
                 Renderer.theme.start(dataObj.path.replace('file:///', '') + "/assets/");
             });
         } catch (e) {
