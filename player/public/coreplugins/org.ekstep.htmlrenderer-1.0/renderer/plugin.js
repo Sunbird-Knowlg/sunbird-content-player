@@ -103,7 +103,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
            //     return;
            // }
 
-           var eventName = postMessageData.event.toString();
            window.postMessage(postMessageData.event.toString(), "*");
         } catch(e) {
            // Log telemetry error event
@@ -112,15 +111,36 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         
     },
     generateTelemetry: function(data) {
+        // TODO: we have to create new telemetry util to generate telemetry for HTML contents post message
        console.log('generate Telemetry', data);
+
+       // TODO: temporary solution. This has to refactor
+       //Log telemetry interact evnet
+        //Temp solution to update CDATA 
+        
        var assessStartEvent = TelemetryService.assess("html.ques.onboarding", undefined, "MEDIUM", {"maxscore":1}).start();
        var resvalues = [];
+       var cdata = []
        var feilds = Object.keys(data.data);
        for (var a = feilds.length, i = 0; i < a; i++) {
+           //creating resvalues
+           value = data.data[feilds[i]]
            var obj = {};
-           obj[i] = data.data[feilds[i]];
+           obj[i] = value;
            resvalues.push(obj);
+
+           //creating cdata object
+           var cdObj = {};
+           if(value) {
+               var keyStr = feilds[i]
+                cdObj.type = (typeof keyStr !== 'string') ? keyStr : keyStr.charAt(0).toUpperCase() + keyStr.slice(1);
+                cdObj.id = value;
+                cdata.push(cdObj);
+           }           
        }
+
+       EkstepRendererAPI.getTelemetryService().interact('CLICK', "", "", {stageid: 'onboarding'}, "", {context: { cdata: cdata}});
+
        var assessData = {
            pass: true,
            score: 1,
