@@ -107,10 +107,10 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     };
 
     $scope.handleEndpage = function() {
-        !_.isUndefined($scope.playerMetadata.contentType) ? $scope.checkTemplate($scope.playerMetadata.contentType) : '';
         if(!_.isUndefined($scope.playerMetadata.displayScore)) {
             $scope.displayScore = $scope.playerMetadata.displayScore;
         }
+        !_.isUndefined($scope.playerMetadata.contentType) ? $scope.checkTemplate($scope.playerMetadata.contentType) : '';
         $scope.setLicense();
         if (_(TelemetryService.instance).isUndefined()) {
             var otherData = GlobalContext.config.otherData;

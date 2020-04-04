@@ -9,6 +9,8 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     $scope.replayIcon;
     $scope.userScore = undefined;
     $scope.totalScore = undefined;
+    $scope.displayScore = undefined;
+
     /**
      * @property - {Object} which holds previous content of current content
      */     
@@ -75,6 +77,12 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     
     $scope.handleEndpage = function() {
         $scope.setLicense();
+        if(!_.isUndefined($scope.playerMetadata.displayScore)) {
+            $scope.displayScore = $scope.playerMetadata.displayScore;
+        } else {
+            $scope.displayScore = true;
+        }
+
         if (_(TelemetryService.instance).isUndefined()) {
             var otherData = GlobalContext.config.otherData;
             !_.isUndefined(otherData.cdata) ? correlationData.push(otherData.cdata) : correlationData.push({"id": CryptoJS.MD5(Math.random().toString()).toString(),"type": "ContentSession"});

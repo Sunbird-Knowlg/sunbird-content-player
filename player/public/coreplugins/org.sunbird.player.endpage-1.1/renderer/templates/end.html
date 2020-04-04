@@ -18,10 +18,13 @@
                             </div>
                         </div>
                         <div class="assessment-content assessment-score-content">
-                            <div class="assessment-content-title">Your score is {{userScore}}/{{totalScore}}</div>
+                            <div class="assessment-content-title" ng-if="displayScore">Your score is {{userScore}}/{{totalScore}}</div>
                             <div class="assessment-content-description">
-                                <div class="text-center">
+                                <div ng-if="displayScore" class="text-center">
                                     You can redo the assessment to improve your score.
+                                </div>
+                                <div ng-if="!displayScore" class="text-center">
+                                    Your responses have been recorded.
                                 </div>
                             </div>
                             <div class="assessment-action-buttons mt-24">
@@ -72,7 +75,7 @@
                         <div class="ps-score">
                             <div class="ps-score-content">
                                 <ul class="ps-score-list">
-                                    <li ng-if="displayScore && (userScore >= 0) && totalScore" class="ps-score-list__item">
+                                    <li ng-if="(userScore >= 0) && totalScore" class="ps-score-list__item">
                                         <div class="ps-score-item">
                                             <img ng-src="{{scoreIcon}}" class="ps-score-icon">
                                             <div class="ps-score-detail">
