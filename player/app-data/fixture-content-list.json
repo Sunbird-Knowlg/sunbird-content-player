@@ -12,6 +12,42 @@
     "responseCode": "OK",
     "result": {
         "content": [
+            {
+                "identifier": "org.ekstep.ques-set",
+                "mimeType": "application/vnd.ekstep.ecml-archive",
+                "contentData": {
+                    "hierarchyInfo": [
+                        {
+                          "contentType": "textbook",
+                          "identifier": "do_2125251490189148161635"
+                        },
+                        {
+                          "contentType": "textbookunit",
+                          "identifier": "do_2125251493823201281636"
+                        }
+                      ],
+                    "questionnaire": null,
+                    "appIcon": "fixture-stories/ques-set/logo.png",
+                    "subject": "literacy_v2",
+                    "description": "epub - Beyond Good and Evil",
+                    "name": "Cques-set",
+                    "owner": "Vinu Kumar V S",
+                    "downloadUrl": "",
+                    "displayScore": false,
+                    "checksum": null,
+                    "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+                    "concepts": [{
+                        "identifier": "LO1",
+                        "name": "Receptive Vocabulary",
+                        "objectType": "Concept"
+                    }],
+                    "identifier": "org.ekstep.ques-set",
+                    "grayScaleAppIcon": null,
+                    "pkgVersion": 1
+                },
+                "isAvailable": true,
+                "path": "fixture-stories/ques-set"
+            },
             {"identifier": "do_312719162116210688118940",
                 "mimeType": "video/mp4",
                 "contentData":
