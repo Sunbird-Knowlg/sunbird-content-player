@@ -31,6 +31,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }
         jQuery(this.manifest.id).remove();
         var iframe = document.createElement('iframe');
+        iframe.id = 'htmlContentPlayer';
         iframe.src = path;
         this.validateSrc(path, iframe);
         var instance = this;
@@ -48,7 +49,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
                 instance.configOverlay();
                 instance.addToGameArea(iframe);
-
             }
         });
     },
@@ -59,7 +59,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             EkstepRendererAPI.dispatchEvent('renderer:next:hide');
             EkstepRendererAPI.dispatchEvent('renderer:previous:hide');
         }, 100)
-
     },
 
     getAsseturl: function(content) {
@@ -69,6 +68,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         return path;
     },
     end: function() {
+        this.getLauncherDom().style.display = "none";
         this.currentIndex = 100;
         this.totalIndex = 100;
         this._super();
@@ -85,30 +85,35 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         EkstepRendererAPI.dispatchEvent('renderer:next:show')
         EkstepRendererAPI.dispatchEvent('renderer:previous:show')
     },
-    postMessageHandler: function(event, instance) {
-        try{
-           var postData = event.data;
-           console.log("CP postMessageHandler", postData);
-           var isJSON = true;
-           try {
-               JSON.parse(postData);
-           } catch (e) {
-               isJSON = false;
-           }
+    postMessageHandler: function (event, instance) {
+        try {
+            if (!event.data) return;
 
-           var postMessageData = isJSON ? JSON.parse(postData) : postData.event;
-           // if(isJSON && postMessage.event == 'telemetry'){
-               //to generate telemetry
-               instance.generateTelemetry(postMessageData);
-           //     return;
-           // }
+            var postData = event.data;
+            console.log("CP postMessageHandler", postData);
+            var isJSON = true;
+            try {
+                JSON.parse(postData);
+            } catch (e) {
+                isJSON = false;
+            }
 
-           window.postMessage(postMessageData.event.toString(), "*");
-        } catch(e) {
-           // Log telemetry error event
-           console.log("Post message failed", e);
+            var postMessageData = isJSON ? JSON.parse(postData) : postData;
+            if (isJSON && postMessage.data) {
+                //to generate telemetry
+                instance.generateTelemetry(postMessageData);
+            }
+
+            var postEventName = typeof postMessageData == 'string' ? postMessageData : postMessageData.event;
+
+            if (postEventName == 'renderer:question:submitscore') {
+                window.postMessage(postMessageData.event.toString(), "*");
+                instance.end();
+            }
+        } catch (e) {
+            // Log telemetry error event
+            console.log("Post message failed", e);
         }
-        
     },
     generateTelemetry: function(data) {
         // TODO: we have to create new telemetry util to generate telemetry for HTML contents post message
@@ -139,7 +144,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
            }           
        }
 
-       EkstepRendererAPI.getTelemetryService().interact('CLICK', "", "", {stageid: 'onboarding'}, "", {context: { cdata: cdata}});
+       EkstepRendererAPI.getTelemetryService().interact('CLICK', "", "", {stageId: 'onboarding', subtype: ''}, "", {context: { cdata: cdata}});
 
        var assessData = {
            pass: true,
