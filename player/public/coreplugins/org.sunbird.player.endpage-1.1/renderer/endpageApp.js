@@ -10,7 +10,6 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     $scope.userScore = undefined;
     $scope.totalScore = undefined;
     $scope.templateToRender = undefined;
-    $scope.displayScore = true;
 
     /**
      * @property - {Object} which holds previous content of current content
@@ -108,9 +107,6 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
 
     $scope.handleEndpage = function() {
         !_.isUndefined($scope.playerMetadata.contentType) ? $scope.checkTemplate($scope.playerMetadata.contentType) : '';
-        if(!_.isUndefined($scope.playerMetadata.displayScore)) {
-            $scope.displayScore = $scope.playerMetadata.displayScore;
-        }
         $scope.setLicense();
         if (_(TelemetryService.instance).isUndefined()) {
             var otherData = GlobalContext.config.otherData;
