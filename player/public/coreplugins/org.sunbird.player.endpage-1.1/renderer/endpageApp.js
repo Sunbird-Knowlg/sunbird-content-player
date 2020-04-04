@@ -10,6 +10,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     $scope.userScore = undefined;
     $scope.totalScore = undefined;
     $scope.templateToRender = undefined;
+    $scope.displayScore = true;
 
     /**
      * @property - {Object} which holds previous content of current content
@@ -50,21 +51,22 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
 
     // Job is to decide which template is assigned in config as part of endpage based on contenttype
     $scope.checkTemplate = function(contentType) {
+        $scope.templateToRender = "assessment"
             /* istanbul ignore else */
-            if (!_.isUndefined(globalConfig.config.endPage)) { // check if endpage Manifest/config exist
-                var endpageManifest = globalConfig.config.endPage;
-                var endpageObj = [];
-                if (!Array.isArray(endpageManifest)) { // check if it a proper Array of Obj, if not convert
-                    endpageObj.push(endpageManifest)
-                    endpageManifest = endpageObj
-                }
-                _.each(endpageManifest, function(value, key) { // search content type in object and get template
-                    /* istanbul ignore else */
-                    if (_.contains(value.contentType, contentType)) {
-                        $scope.templateToRender = (value.template).toLowerCase();
-                    }
-                })
-            }
+            // if (!_.isUndefined(globalConfig.config.endPage)) { // check if endpage Manifest/config exist
+            //     var endpageManifest = globalConfig.config.endPage;
+            //     var endpageObj = [];
+            //     if (!Array.isArray(endpageManifest)) { // check if it a proper Array of Obj, if not convert
+            //         endpageObj.push(endpageManifest)
+            //         endpageManifest = endpageObj
+            //     }
+            //     _.each(endpageManifest, function(value, key) { // search content type in object and get template
+            //         /* istanbul ignore else */
+            //         if (_.contains(value.contentType, contentType)) {
+            //             $scope.templateToRender = (value.template).toLowerCase();
+            //         }
+            //     })
+            // }
     }
    
     $scope.replayContent = function() {
@@ -106,6 +108,9 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     };
 
     $scope.handleEndpage = function() {
+        if(!_.isUndefined($scope.playerMetadata.displayScore)) {
+            $scope.displayScore = $scope.playerMetadata.displayScore;
+        }
         !_.isUndefined($scope.playerMetadata.contentType) ? $scope.checkTemplate($scope.playerMetadata.contentType) : '';
         $scope.setLicense();
         if (_(TelemetryService.instance).isUndefined()) {
