@@ -458,6 +458,7 @@ ion-popover-view.fit ion-content {
 
 .nav-disable {
     opacity: 0.4;
+    pointer-events: none;
 }
 
 .overlay-html>assess {
