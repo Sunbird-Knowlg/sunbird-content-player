@@ -110,6 +110,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
         if(!_.isUndefined($scope.playerMetadata.displayScore)) {
             $scope.displayScore = $scope.playerMetadata.displayScore;
         }
+        $scope.scoreDisplayConfig = $scope.playerMetadata.scoreDisplayConfig;
         !_.isUndefined($scope.playerMetadata.contentType) ? $scope.checkTemplate($scope.playerMetadata.contentType) : '';
         $scope.setLicense();
         if (_(TelemetryService.instance).isUndefined()) {
