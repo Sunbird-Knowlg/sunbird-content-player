@@ -404,8 +404,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
       },
 
     nextNavigation: function() {
-        
-         if (this.sleepMode) return;
+        if (this.sleepMode) return;
+        var pageNumber = document.getElementById('pdf-find-text').value;
+        context.stageId.push(pageNumber);
         // context.logInteractEvent("TOUCH", "next", null, {
         //     stageId: context.CURRENT_PAGE.toString()
         // });
@@ -417,7 +418,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }
     },
     previousNavigation: function() {
-         if (this.sleepMode) return;
+        if (this.sleepMode) return;
+        var pageNumber = document.getElementById('pdf-find-text').value;
+        context.stageId.push(pageNumber);
         // context.logInteractEvent("TOUCH", "previous", null, {
         //     stageId: context.CURRENT_PAGE.toString()
         // });
