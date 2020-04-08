@@ -344,8 +344,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         // listening to scroll event for pdf
        
         document.getElementById(this.manifest.id).onscroll = function () {
+                var pageNumber = document.getElementById('pdf-find-text').value;
+                context.stageId.push(context.pdfViewer.currentPageNumber.toString());
                $("#pdf-find-text").val(context.pdfViewer.currentPageNumber);
-               context.stageId.push(context.pdfViewer.currentPageNumber.toString());
                   if(pageNumber>context.pdfViewer.currentPageNumber){
                     $("#pLoader").css("display","block");
                     context.logInteractEvent("TOUCH", "previous", "TOUCH", {
