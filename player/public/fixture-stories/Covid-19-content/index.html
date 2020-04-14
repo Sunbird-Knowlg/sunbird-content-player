@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>JavaScript form validation - checking email</title>
+    <style>
+        /* @import "assets/fonts/noto/fonts.css"; */
+
+
+        /* cyrillic */
+        @font-face {
+            font-family: 'Noto Sans';
+            font-style: normal;
+            font-weight: 400;
+            src: local('Noto Sans'), local('NotoSans'), url(./assets/fonts/cyrillic.woff2) format('woff2');
+            unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background: #fff;
+            color: #333;
+            font-size: 1rem;
+            font-family: "Noto Sans", -apple-system, BlinkMacSystemFont,
+                "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue",
+                sans-serif;
+        }
+
+        *,
+        ::before,
+        ::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            padding: 0 11%;
+        }
+
+        .form-section {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .ncc-form-container {
+            border: 1px solid #f2f2f2;
+            border-radius: 4px;
+            padding: 0% 5%;
+            box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06), 0 22.3px 17.9px rgba(0, 0, 0, 0.072);
+            box-sizing: border-box;
+        }
+
+        .sb-form-title {
+            margin: 2% 0%;
+        }
+
+        .sb-field-group {
+            margin-bottom: 0.4em;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            font-size: 0.875rem;
+            /* justify-content: center; */
+        }
+
+        .sb-field-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .sb-field-group .sb-field {
+            width: 50%;
+            padding-left: 8px;
+        }
+
+        .sb-label {
+            width: 40%;
+        }
+
+        .sb-form-control {
+            padding: 2% 4%;
+            border-radius: 4px;
+            width: 100%;
+            border: 1px solid #80a7ce;
+            outline: none;
+        }
+
+        .sb-form-control:focus {
+            border: 1px solid #024f9d;
+        }
+
+        .radio-btn-group {
+            display: flex;
+            align-items: center;
+            padding: 1%;
+        }
+
+        .radio-btn-group .sb-radio-btn {
+            display: inline-block;
+        }
+
+        .sb-radio-btn {
+            position: relative;
+            display: block;
+            backface-visibility: hidden;
+            outline: 0;
+            font-style: normal;
+        }
+
+        .sb-radio-btn input[type=radio] {
+            outline: 0;
+            opacity: 0;
+            cursor: pointer;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 3;
+            width: 14px;
+            height: 14px;
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sb-radio-btn label {
+            cursor: pointer;
+            position: relative;
+            display: block;
+            padding-left: 1.5rem;
+            outline: 0;
+            font-size: .8571rem;
+            font-weight: 400;
+            margin-right: .5rem;
+        }
+
+        .sb-radio-btn label::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 14px;
+            height: 14px;
+            background: var(--white);
+            transition: border .1s ease, opacity .1s ease, transform .1s ease, box-shadow .1s ease;
+            border: .0625rem solid #024f9d;
+            border-radius: 50%;
+        }
+
+        .sb-radio-btn label::after {
+            position: absolute;
+            left: 0;
+            top: 0;
+            border-radius: 50%;
+            height: 14px;
+            width: 14px;
+            opacity: 0;
+        }
+
+        .sb-radio-btn input:checked~label::after {
+            content: "";
+            background-color: #024f9d;
+            opacity: 1;
+        }
+
+        .sb-btn-group {
+            padding: 2% 0;
+            text-align: center;
+        }
+
+        .sb-btn {
+            white-space: nowrap;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            outline: 0;
+            display: inline-block;
+            border: .0625rem solid;
+            color: white;
+            cursor: pointer;
+            min-width: 4rem;
+            border-radius: .125rem;
+            position: relative;
+            line-height: inherit;
+            text-transform: capitalize;
+            text-decoration: none;
+            height: auto;
+            padding: .5rem 1rem;
+            font-size: 14px;
+            margin-right: 16px;
+        }
+
+        .sb-btn:last-child {
+            margin-right: 0;
+        }
+
+        .sb-btn.sb-btn-primary {
+            background-color: #254f9d;
+            border-color: #254f9d;
+            color: white
+        }
+
+        .sb-btn.sb-btn-primary:hover {
+            background-color: #002e50;
+            border: .0625rem solid transparent;
+            color: white;
+        }
+
+        .sb-btn.sb-btn-outline-primary {
+            background-color: white;
+            border-color: #254f9d;
+            color: #254f9d
+        }
+
+        .sb-btn.sb-btn.sb-btn-outline-primary:hover {
+            color: #002e50;
+            background-color: #edf4f9;
+        }
+
+        .sb-sucess-msg {
+            display: none;
+        }
+
+        /* abbr[title] {
+            text-decoration: none;
+            color: red;
+        } */
+
+        /* input,
+        textarea {
+            border: 1px solid #ccc;
+            padding: 3px 5px;
+            border-radius: 4px;
+        } */
+
+        /* input[aria-invalid="true"],
+        textarea[aria-invalid="true"] {
+            border: 1px solid #f00;
+            box-shadow: 0 0 4px 0 #f00;
+        } */
+
+        /* form p label {
+            display: inline-block;
+            width: 5em;
+        }
+
+        form p label abbr {
+            border: none;
+            font-weight: bold;
+            color: #f00;
+        } */
+    </style>
+</head>
+
+<body>
+    <section class="form-section">
+        <div class="ncc-form-container">
+            <form id="myform" action="#" onsubmit="return false">
+
+                <header>
+                    <h4 class="sb-form-title">All volunteers from NCC taking this course are requested to complete the
+                        below form.</h4>
+                </header>
+
+                <div class="sb-field-group">
+                    <label for="name" class="sb-label">Your Name</label>
+                    <div class="sb-field">
+                        <input name="name" class="sb-form-control" id="name" value="" aria-required="true"
+                            required="required" title="Your name (no special characters, diacritics are okay)"
+                            type="text" spellcheck="false" maxlength="50" />
+                    </div>
+                </div>
+
+                <div class="sb-field-group">
+                    <label for="department" class="sb-label">Choose your department</label>
+                    <div class="sb-field radio-btn-group">
+                        <div class="sb-radio-btn">
+                            <input name="department" id="ncc" value="NCC" aria-required="true"
+                                title="Your name (no special characters, diacritics are okay)" type="radio"
+                                spellcheck="false" />
+                            <label for="ncc">NCC</label>
+                        </div>
+                        <div class="sb-radio-btn">
+                            <input name="department" id="others" value="Others" aria-required="true"
+                                title="Your name (no special characters, diacritics are okay)" type="radio"
+                                spellcheck="false" />
+                            <label for="others">Others</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sb-field-group">
+                    <label for="battalionId" class="sb-label">Battalion ID</label>
+                    <div class="sb-field">
+                        <input name="battalionId" class="sb-form-control" id="battalionId" value="" aria-required="true"
+                            title="Your name (no special characters, diacritics are okay)" type="text"
+                            spellcheck="false" maxlength="50" />
+                    </div>
+                </div>
+
+                <div class="sb-field-group">
+                    <label for="battalionName" class="sb-label">Battalion Name</label>
+                    <div class="sb-field">
+                        <input name="battalionName" class="sb-form-control" id="battalionName" value=""
+                            aria-required="true" maxlength="50"
+                            title="Your name (no special characters, diacritics are okay)" type="text"
+                            spellcheck="false" maxlength="50" />
+                    </div>
+                </div>
+
+                <div class="sb-field-group">
+                    <label for="divisionName" class="sb-label">Division Name</label>
+                    <div class="sb-field">
+                        <input name="divisionName" class="sb-form-control" id="divisionName" value=""
+                            aria-required="true" title="Your name (no special characters, diacritics are okay)"
+                            type="text" spellcheck="false" maxlength="50" />
+                    </div>
+                </div>
+
+                <div class="sb-field-group">
+                    <label for="groupName" class="sb-label">Group Name</label>
+                    <div class="sb-field">
+                        <input name="groupName" class="sb-form-control" id="groupName" value="" aria-required="true"
+                            title="Your name (no special characters, diacritics are okay)" type="text"
+                            spellcheck="false" maxlength="50" />
+                    </div>
+                </div>
+
+                <!-- <div class="sb-field-group">
+                <label for="email" class="sb-label">Email <abbr title="Required">*</abbr></label>
+                <div class="sb-field">
+                    <input name="email" class="sb-form-control" id="email" value="" required="required" aria-required="true"
+                        pattern="^(([-\w\d]+)(\.[-\w\d]+)*@([-\w\d]+)(\.[-\w\d]+)*(\.([a-zA-Z]{2,5}|[\d]{1,3})){1,2})$"
+                        title="Your email address" type="email" spellcheck="false" size="30" />
+                </div>
+            </div>
+
+            <div class="sb-field-group">
+                <label for="mobile" class="sb-label">Mobile <abbr title="Required">*</abbr></label>
+                <div class="sb-field">
+                    <input name="mobile" class="sb-form-control" aria-required="true" id="mobile" required="required" value=""
+                        pattern="^[0][1-9]\d{9}$|^[1-9]\d{9}$" title="Your phone number" type="tel" spellcheck="false"
+                        size="10" />
+                </div>
+            </div> -->
+
+                <div class="sb-btn-group">
+                    <button name="skip" type="submit" class="sb-btn sb-btn-outline-primary"
+                        onclick="showSuccessMessage()">Skip</button>
+                    <button name="save" type="submit" class="sb-btn sb-btn-primary" onclick="validateForm()">
+                        Submit</button>
+                </div>
+            </form>
+
+            <div id="successMsg" class="sb-sucess-msg">
+                <h4>Your response has been recorded.</h4>
+            </div>
+        </div>
+    </section>
+
+
+    <script>
+        var invalid = true;
+
+        //add event construct for modern browsers or IE
+        //which fires the callback with a pre-converted target reference
+        function addEvent(node, type, callback) {
+            if (node.addEventListener) {
+                node.addEventListener(
+                    type,
+                    function (e) {
+                        callback(e, e.target);
+                    },
+                    false
+                );
+            } else if (node.attachEvent) {
+                node.attachEvent("on" + type, function (e) {
+                    callback(e, e.srcElement);
+                });
+            }
+        };
+
+        //identify whether a field should be validated
+        //ie. true if the field is neither readonly nor disabled,
+        //and has either "pattern", "required" or "aria-invalid"
+        function shouldBeValidated(field) {
+            return (
+                !(field.getAttribute("readonly") || field.readonly) &&
+                !(field.getAttribute("disabled") || field.disabled) &&
+                (field.getAttribute("pattern") || field.getAttribute("required"))
+            );
+        };
+
+        //field testing and validation function
+        function instantValidation(field) {
+            //if the field should be validated
+            if (shouldBeValidated(field)) {
+                //the field is invalid if:
+                //it's required but the value is empty
+                //it has a pattern but the (non-empty) value doesn't pass
+                invalid =
+                    (field.getAttribute("required") && !field.value) ||
+                    (field.getAttribute("pattern") &&
+                        field.value &&
+                        !new RegExp(field.getAttribute("pattern")).test(field.value));
+
+                //add or remove the attribute is indicated by
+                //the invalid flag and the current attribute state
+                if (!invalid && field.getAttribute("aria-invalid")) {
+                    field.removeAttribute("aria-invalid");
+                } else if (invalid && !field.getAttribute("aria-invalid")) {
+                    field.setAttribute("aria-invalid", "true");
+                }
+            }
+
+            //now bind a delegated change event
+            //== THIS FAILS IN INTERNET EXPLORER <= 8 ==//
+            //addEvent(document, 'change', function(e, target)
+            //{
+            //	instantValidation(target);
+            //});
+
+            //now bind a change event to each applicable for field
+            var fields = [
+                document.getElementsByTagName("input"),
+                document.getElementsByTagName("textarea")
+            ];
+            for (var a = fields.length, i = 0; i < a; i++) {
+                for (var b = fields[i].length, j = 0; j < b; j++) {
+                    addEvent(fields[i][j], "change", function (e, target) {
+                        instantValidation(target);
+                    });
+                }
+            }
+        };
+
+        function validateForm() {
+
+            var fields = [
+                document.getElementsByTagName("input"),
+                document.getElementsByTagName("textarea")
+            ];
+
+            var data = {};
+            var cdata = []
+            for (var a = fields.length, i = 0; i < a; i++) {
+                for (var b = fields[i].length, j = 0; j < b; j++) {
+                    var target = fields[i][j];
+                    instantValidation(target);
+                    data[target.name] = target.value;
+                    cdata.push({
+                        "id": target.value.toString(),
+                        "type": target.name
+                    })
+                }
+            }
+            if (!invalid) {
+                // window.postMessage(JSON.stringify({event: 'telemetry', type: "assessmentStart", data: {"qid":"html.ques.onboarding", subj:undefined, "qlevel":"MEDIUM", "data":{"maxscore":1}}}), "*",);                
+                // window.postMessage(JSON.stringify({event: 'telemetry', type: "assess", cdata: cdata, data: {"pass": false,"score": 1,"resvalues": [],"mmc": [],"qindex": 1,"mc": [],"qtitle": "HTML Onboarding","qdesc": ""}}), "*",);
+                window.postMessage(JSON.stringify({
+                    event: 'renderer:question:submitscore',
+                    data: data,
+                    cdata: cdata
+                }), "*", );
+                // showSuccessMessage();
+            } else {
+                console.log('invalid form');
+            }
+        };
+
+        function showSuccessMessage() {
+            // After form subbmission/Skip show success message
+            window.postMessage(JSON.stringify({
+                    event: 'renderer:question:submitscore'
+                }), "*", );
+            // document.getElementById("myform").style.display = "none";
+            // document.getElementById("successMsg").style.display = "block";
+        };
+    </script>
+</body>
+
+</html>
