@@ -345,9 +345,10 @@ org.ekstep.contentrenderer.baseLauncher.extend({
        
         document.getElementById(this.manifest.id).onscroll = function () {
                 var pageNumber = document.getElementById('pdf-find-text').value;
-                context.stageId.push(pageNumber);
+                if(!context.stageId.includes(context.pdfViewer.currentPageNumber.toString())){
+                    context.stageId.push(context.pdfViewer.currentPageNumber.toString());
+                }
                $("#pdf-find-text").val(context.pdfViewer.currentPageNumber);
-
                   if(pageNumber>context.pdfViewer.currentPageNumber){
                     $("#pLoader").css("display","block");
                     context.logInteractEvent("TOUCH", "previous", "TOUCH", {
@@ -404,8 +405,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
       },
 
     nextNavigation: function() {
-        
-         if (this.sleepMode) return;
+        if (this.sleepMode) return;
         // context.logInteractEvent("TOUCH", "next", null, {
         //     stageId: context.CURRENT_PAGE.toString()
         // });
@@ -417,7 +417,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }
     },
     previousNavigation: function() {
-         if (this.sleepMode) return;
+        if (this.sleepMode) return;
         // context.logInteractEvent("TOUCH", "previous", null, {
         //     stageId: context.CURRENT_PAGE.toString()
         // });

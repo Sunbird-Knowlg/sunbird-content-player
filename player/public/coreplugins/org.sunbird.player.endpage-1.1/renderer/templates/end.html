@@ -18,10 +18,13 @@
                             </div>
                         </div>
                         <div class="assessment-content assessment-score-content">
-                            <div class="assessment-content-title">Your score is {{userScore}}/{{totalScore}}</div>
+                            <div class="assessment-content-title" ng-if="displayScore">Your score is {{userScore}}/{{totalScore}}</div>
                             <div class="assessment-content-description">
-                                <div class="text-center">
+                                <div ng-if="displayScore" class="text-center">
                                     You can redo the assessment to improve your score.
+                                </div>
+                                <div ng-if="!displayScore" class="text-center">
+                                    Your responses have been recorded.
                                 </div>
                             </div>
                             <div class="assessment-action-buttons mt-24">
@@ -70,9 +73,45 @@
                             </div>
                         </div>
                         <div class="ps-score">
-                            <div class="ps-score-content">
-                                <ul class="ps-score-list">
-                                    <li ng-if="userScore >= 0 && totalScore" class="ps-score-list__item">
+                            <div class="ps-score-content" ng-switch="scoreDisplayConfig">
+                                <ul ng-switch-when="ScoreObtained" class="ps-score-list">
+                                    <li ng-if="(userScore >= 0) && totalScore" class="ps-score-list__item">
+                                        <div class="ps-score-item">
+                                            <img ng-src="{{scoreIcon}}" class="ps-score-icon">
+                                            <div class="ps-score-detail">
+                                                <h2 class="ps-score-heading">SCORE</h2>
+                                                <ul>
+                                                    <li class="ps-score-data endpage-score ps-score-data-padding-top">{{userScore}}</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="ps-vertical-line">
+                                        <div class="vertical-line"></div>
+                                    </li>
+                                    <li class="ps-score-list__item">
+                                        <div class="ps-score-item">
+                                            <img ng-src="{{clockIcon}}" class="ps-score-icon">
+                                            <div class="ps-score-detail">
+                                                <h2 class="ps-score-heading">TIME</h2>
+                                                <p class="ps-score-data">{{totalTimeSpent}}</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <ul ng-switch-when="No" class="ps-score-list">
+                                    <li class="ps-score-list__item">
+                                        <div class="ps-score-item">
+                                            <img ng-src="{{clockIcon}}" class="ps-score-icon">
+                                            <div class="ps-score-detail">
+                                                <h2 class="ps-score-heading">TIME</h2>
+                                                <p class="ps-score-data">{{totalTimeSpent}}</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <ul ng-switch-default class="ps-score-list">
+                                    <li ng-if="(userScore >= 0) && totalScore" class="ps-score-list__item">
                                         <div class="ps-score-item">
                                             <img ng-src="{{scoreIcon}}" class="ps-score-icon">
                                             <div class="ps-score-detail">
