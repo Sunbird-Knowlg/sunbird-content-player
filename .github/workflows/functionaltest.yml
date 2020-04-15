@@ -6,7 +6,7 @@ name: Sunbird-Content-Player-Functional-Test
 on:
     push:
       branches:
-      - release-2.10.0
+      - SB-17673
     pull_request:
       branches:
       - release-2.10.0
