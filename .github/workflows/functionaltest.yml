@@ -28,9 +28,9 @@ jobs:
       run: |
         (cd player && npm install && npm install -g forever)
 
-    # - name: Build player preview
-    #   run: |
-    #     (cd player && npm run package-coreplugins -- --env.channel=sunbird && npm run build-preview sunbird)
+    - name: Build player preview
+      run: |
+        (cd player && npm run package-coreplugins -- --env.channel=sunbird && npm run build-preview sunbird)
 
     - name: Start player with fixture stories 
       run: |
