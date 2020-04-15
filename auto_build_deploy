@@ -1,4 +1,4 @@
-
+@Library('deploy-conf') _ 
 node() {
     try {
         String ANSI_GREEN = "\u001B[32m"
@@ -9,24 +9,18 @@ node() {
 
         ansiColor('xterm') {
             stage('Checkout') {
-                cleanWs()
-                if (params.github_release_tag == "") {
-                    checkout scm
-                    commit_hash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
-                    branch_name = sh(script: 'git name-rev --name-only HEAD | rev | cut -d "/" -f1| rev', returnStdout: true).trim()
-                    artifact_version = branch_name + "_" + commit_hash
-                    println(ANSI_BOLD + ANSI_YELLOW + "github_release_tag not specified, using the latest commit hash: " + commit_hash + ANSI_NORMAL)
-                } else {
-                    def scmVars = checkout scm
-                    checkout scm: [$class: 'GitSCM', branches: [[name: "refs/tags/${params.github_release_tag}"]], userRemoteConfigs: [[url: scmVars.GIT_URL]]]
-                    artifact_version = params.github_release_tag
-                    commit_hash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
-                    branch_name = params.github_release_tag.split('_')[0]
-                    println(ANSI_BOLD + ANSI_YELLOW + "github_release_tag specified, building from github_release_tag: " + params.github_release_tag + ANSI_NORMAL)
-                }
+               tag_name = env.JOB_NAME.split("/")[-1]
+               pre_checks()
+               cleanWs()
+               def scmVars = checkout scm
+               checkout scm: [$class: 'GitSCM', branches: [[name: "refs/tags/$tag_name"]], userRemoteConfigs: [[url: scmVars.GIT_URL]]]
+               commit_hash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
+               artifact_version = tag_name
+               branch_name = tag_name.split('_')[0].split('\\.')[0] + "." + tag_name.split('_')[0].split('\\.')[1]
+            }  
                 echo "artifact_version: " + artifact_version
 
-                stage('Build') {
+        //        stage Build
                     sh """
                         export player_version_number=${branch_name}
                         export build_number=${commit_hash}
@@ -39,8 +33,8 @@ node() {
                         #grunt renderer-test
                         #grunt build-jsdoc
                     """
-                }
-                stage('ArchiveArtifacts') {
+                
+      //          stage ArchiveArtifacts
                     sh """
                         mkdir CR_Preview_Artifacts
                         cp player/preview.zip CR_Preview_Artifacts
@@ -51,12 +45,17 @@ node() {
                     sh """echo {\\"artifact_name\\" : \\"CR_Preview_Artifacts.zip\\", \\"artifact_version\\" : \\"${artifact_version}\\", \\"node_name\\" : \\"${env.NODE_NAME}\\"} > metadata.json"""
                     archiveArtifacts artifacts: 'metadata.json', onlyIfSuccessful: true
                     currentBuild.description = "${artifact_version}"
-                }
-            }
+                
         }
+        currentBuild.result = "SUCCESS"    
+        slack_notify(currentBuild.result, tag_name)
+        email_notify()  
+        auto_build_deploy()
     }
     catch (err) {
         currentBuild.result = "FAILURE"
+        slack_notify(currentBuild.result, tag_name)
+        email_notify()
         throw err
     }
 
