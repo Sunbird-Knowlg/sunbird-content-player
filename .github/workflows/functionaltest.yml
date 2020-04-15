@@ -6,10 +6,10 @@ name: Sunbird-Content-Player-Functional-Test
 on:
     push:
       branches:
-      - release-2.9.0
+      - release-2.10.0
     pull_request:
       branches:
-      - release-2.9.0
+      - release-2.10.0
 jobs:
   build:
     runs-on: macOS-latest
