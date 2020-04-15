@@ -9,6 +9,8 @@ node() {
 
         ansiColor('xterm') {
             stage('Checkout') {
+               tag_name = env.JOB_NAME.split("/")[-1]
+               pre_checks()
                cleanWs()
                def scmVars = checkout scm
                checkout scm: [$class: 'GitSCM', branches: [[name: "refs/tags/$tag_name"]], userRemoteConfigs: [[url: scmVars.GIT_URL]]]
