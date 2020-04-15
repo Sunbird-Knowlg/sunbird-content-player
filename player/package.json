@@ -8,7 +8,7 @@
         "audiosprite": "*",
         "download": "4.4.3",
         "ejs": "*",
-        "express": ">=3.11.0",
+        "express": "^3.11.0",
         "fingerprintjs2": "^2.0.6",
         "grunt-contrib-concat": "^1.0.1",
         "jsonfile": "*",
