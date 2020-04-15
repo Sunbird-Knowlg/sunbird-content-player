@@ -99,7 +99,10 @@
     },
     "watch": {
         "build-preview-windows": {
-            "patterns": [ "src","test"],
+            "patterns": [
+                "src",
+                "test"
+            ],
             "extensions": "js,jsx",
             "quiet": true,
             "legacyWatch": true,
@@ -146,6 +149,3 @@
     },
     "homepage": "https://github.com/project-sunbird/sunbird-content-player#readme"
 }
-
-
-

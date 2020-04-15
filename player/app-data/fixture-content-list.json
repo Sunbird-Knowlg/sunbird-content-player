@@ -1050,6 +1050,32 @@
             },
             "isAvailable": true,
             "path": "fixture-stories/the_moon_and_the_cap"
+        },
+        {
+            "identifier": "org.ekstep.questionset",
+            "mimeType": "application/vnd.ekstep.ecml-archive",
+            "contentData": {
+                "questionnaire": null,
+                "appIcon": "",
+                "subject": "literacy_v2",
+                "description": "assessmentTestCases",
+                "name": "assessmentTestCases",
+                "downloadUrl": "",
+                "checksum": null,
+                "loadingMessage": "AssessmentTestCases content for plugin unit test case",
+                "concepts": [{
+                    "identifier": "",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.questionset",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            
+            
+            "isAvailable": true,
+            "path": "fixture-stories/assessmentTestCases"
         }],
         "ttl": 21
     }
