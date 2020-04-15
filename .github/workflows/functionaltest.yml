@@ -45,17 +45,17 @@ jobs:
       run: |
         (cd player/public/test/functional_test && yarn test)
  
-    - name: Visual regression artifact generation
-      uses: actions/upload-artifact@v1
-      with:
-        name: Visual changes on UI
-        path: player/public/test/functional_test/__tests__/__image_snapshots__
+    # - name: Visual regression artifact generation
+    #   uses: actions/upload-artifact@v1
+    #   with:
+    #     name: Visual changes on UI
+    #     path: player/public/test/functional_test/__tests__/__image_snapshots__
 
-    - name: Screenshots artifact generation
-      uses: actions/upload-artifact@v1
-      with:
-        name: Screenshots
-        path: player/public/test/functional_test/__tests__/screenshots
+    # - name: Screenshots artifact generation
+    #   uses: actions/upload-artifact@v1
+    #   with:
+    #     name: Screenshots
+    #     path: player/public/test/functional_test/__tests__/screenshots
 
     - name: Report artifact generation
       uses: actions/upload-artifact@v1
