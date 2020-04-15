@@ -1,4 +1,4 @@
-
+@Library('deploy-conf') _ 
 node() {
     try {
         String ANSI_GREEN = "\u001B[32m"
@@ -18,7 +18,7 @@ node() {
             }  
                 echo "artifact_version: " + artifact_version
 
-                stage('Build') {
+        //        stage Build
                     sh """
                         export player_version_number=${branch_name}
                         export build_number=${commit_hash}
@@ -31,8 +31,8 @@ node() {
                         #grunt renderer-test
                         #grunt build-jsdoc
                     """
-                }
-                stage('ArchiveArtifacts') {
+                
+      //          stage ArchiveArtifacts
                     sh """
                         mkdir CR_Preview_Artifacts
                         cp player/preview.zip CR_Preview_Artifacts
@@ -43,7 +43,7 @@ node() {
                     sh """echo {\\"artifact_name\\" : \\"CR_Preview_Artifacts.zip\\", \\"artifact_version\\" : \\"${artifact_version}\\", \\"node_name\\" : \\"${env.NODE_NAME}\\"} > metadata.json"""
                     archiveArtifacts artifacts: 'metadata.json', onlyIfSuccessful: true
                     currentBuild.description = "${artifact_version}"
-                }
+                
         }
         currentBuild.result = "SUCCESS"    
         slack_notify(currentBuild.result, tag_name)
