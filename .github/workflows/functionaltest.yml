@@ -1,0 +1,74 @@
+# Github action configuration runs functional test cases and generate artifact's 
+# Author: Rahul Shukla <rahul.shukla@ilimi.in>
+
+
+name: Sunbird-Content-Player-Functional-Test
+on:
+    push:
+      branches:
+      - SB-17673
+    pull_request:
+      branches:
+      - release-2.10.0
+jobs:
+  build:
+    runs-on: macOS-latest
+    strategy:
+      matrix:
+        node-version: [10.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    
+    - name: Install player dependencies 
+      run: |
+        (cd player && npm install && npm install -g forever)
+
+    - name: Build player preview
+      run: |
+        (cd player && npm run package-coreplugins -- --env.channel=sunbird && npm run build-preview sunbird)
+
+    - name: Start player with fixture stories 
+      run: |
+        (cd player && forever start app.js)
+    
+  
+    - name: Install test framework dependencies
+      run: |
+        (cd player/public/test/functional_test && yarn install)  
+
+    - name: Start functional test cases 
+      run: |
+        (cd player/public/test/functional_test && yarn test)
+ 
+    # - name: Visual regression artifact generation
+    #   uses: actions/upload-artifact@v1
+    #   with:
+    #     name: Visual changes on UI
+    #     path: player/public/test/functional_test/__tests__/__image_snapshots__
+
+    # - name: Screenshots artifact generation
+    #   uses: actions/upload-artifact@v1
+    #   with:
+    #     name: Screenshots
+    #     path: player/public/test/functional_test/__tests__/screenshots
+
+    - name: Report artifact generation
+      uses: actions/upload-artifact@v1
+      with:
+        name: Report HTML
+        path: player/public/test/functional_test/testReport
+
+    - name: Player preview artifact generation
+      uses: actions/upload-artifact@v1
+      with:
+        name: Generated Player preview
+        path: player/www
+
+      env:
+        CI: true
+        
