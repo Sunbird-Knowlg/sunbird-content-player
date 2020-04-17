@@ -3,13 +3,9 @@
 
 
 name: Sunbird-Content-Player-Functional-Test
-on:
-    push:
-      branches:
-      - SB-17673
-    pull_request:
-      branches:
-      - release-2.10.0
+
+# Trigger the workflow on push or pull request
+on: [push, pull_request]
 jobs:
   build:
     runs-on: macOS-latest
