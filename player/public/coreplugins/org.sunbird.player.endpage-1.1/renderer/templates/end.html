@@ -165,7 +165,11 @@
                                     <p class="ps-action-text">{{currentUser.name || currentUser.handle}}</p>
                                 </div>
                             </li>
-                            <li class="ps-action-list__item" ng-disabled="!isCordova" ng-click="openGenie()">
+                            <li ng-if="!isCordova" class="ps-action-list__item">
+                                <a class="ps-btn ps-btn--black"><img ng-src="{{genieIcon}}" class="ps-exit-icon"></a>
+                                <p class="ps-action-text">Exit</p>
+                            </li>
+                            <li ng-if="isCordova" class="ps-action-list__item" ng-click="openGenie()">
                                 <a href="javascript:void(0);" class="ps-btn ps-btn--black"><img ng-src="{{genieIcon}}" class="ps-exit-icon"></a>
                                 <p class="ps-action-text">Exit</p>
                             </li>
