@@ -144,9 +144,10 @@ TelemetryV3Manager = Class.extend({
             }else{
                 v3questionItem.desc = "";
             }
+            data.res = data.res.toString().length > 0 ? data.res : [];
             var v3questionData = {
                 item: v3questionItem,
-                index: data.qindex || data.index || 0,
+                index: Number(data.qindex) || Number(data.index) || 0,
                 pass: data.pass ? 'Yes' : 'No',
                 score: data.score || (data.pass == 'Yes' ? 1 : 0),
                 resvalues: data.res || data.resvalues || [],
