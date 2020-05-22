@@ -144,7 +144,7 @@ TelemetryV3Manager = Class.extend({
             }else{
                 v3questionItem.desc = "";
             }
-            data.res = data.res.toString().length > 0 ? data.res : [];
+            data.res = data.res.filter(Boolean) //  An array with all falsey values removed. The values false, null, 0, "", undefined, and NaN are falsey.
             var v3questionData = {
                 item: v3questionItem,
                 index: Number(data.qindex) || Number(data.index) || 0,
