@@ -144,9 +144,10 @@ TelemetryV3Manager = Class.extend({
             }else{
                 v3questionItem.desc = "";
             }
+            data.res = data.res.filter(Boolean) //  An array with all falsey values removed. The values false, null, 0, "", undefined, and NaN are falsey.
             var v3questionData = {
                 item: v3questionItem,
-                index: data.qindex || data.index || 0,
+                index: Number(data.qindex) || Number(data.index) || 0,
                 pass: data.pass ? 'Yes' : 'No',
                 score: data.score || (data.pass == 'Yes' ? 1 : 0),
                 resvalues: data.res || data.resvalues || [],
@@ -241,9 +242,9 @@ TelemetryV3Manager = Class.extend({
     xapi: function(data) {
         var xdata = {
             type: data.type || "",
-            data: data
+            data: JSON.stringify(data.data)
         }
-        EkTelemetry.exdata(data);
+        EkTelemetry.exdata(xdata);
     },
     hasRequiredData: function(data, mandatoryFields) {
         var isValid = true;
