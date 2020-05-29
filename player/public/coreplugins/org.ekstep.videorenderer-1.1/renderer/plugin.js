@@ -12,6 +12,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         unsupportedVideo: "Video URL not accessible"
     },
     currentTime: 1,
+    bufferToAchieveProgress:10, //  percentage
     videoPlayer: undefined,
     stageId: undefined,
     heartBeatData: {},
@@ -58,7 +59,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         video.id = "videoElement";
         video.autoplay = true;
         video.className = 'vjs-default-skin';
-		document.body.appendChild(video);
+        document.body.appendChild(video);
 
         EkstepRendererAPI.dispatchEvent("renderer:content:start");
 
@@ -357,6 +358,41 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         totalDuration = (this.currentTime < totalDuration) ? Math.floor(totalDuration) : Math.ceil(totalDuration);
         var progress = this.progres(this.currentTime, totalDuration);
         return progress === 0 ? 1 : progress;  // setting default value of progress=1 when video opened
+    },
+
+    getTotalDuration: function () {
+        var totalDuration = 0;
+        if (this.videoPlayer){
+            if (_.isFunction(this.videoPlayer.duration)) {
+                totalDuration = this.videoPlayer.duration();
+            } else {
+                totalDuration = this.videoPlayer.duration;
+            }
+        }
+        return totalDuration = (this.currentTime < totalDuration) ? Math.floor(totalDuration) : Math.ceil(totalDuration);
+    },
+
+    setExpectedLengthCovergae: function () {
+        var totalDuration = this.getTotalDuration()
+        return Number(totalDuration) - ((Number(this.bufferToAchieveProgress) / 100) * Number(totalDuration));
+    },
+
+    contentPlaySummary: function () {
+        var playSummary =  [
+            {
+              "totallength": this.getTotalDuration()
+            },
+            {
+              "visitedlength": this.videoPlayer.currentTime()
+            },
+            {
+              "visitedcontentend": (this.videoPlayer.currentTime() >= this.setExpectedLengthCovergae()) ? true : false
+            },
+            {
+              "totalseekedlength": (this.videoPlayer.currentTime() - this.currentTime)
+            }
+        ]
+        return playSummary;
     },
     onOverlayAudioMute: function () {
         if (!this.videoPlayer) return false

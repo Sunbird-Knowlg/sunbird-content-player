@@ -14,6 +14,7 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
 	enableHeartBeatEvent: false,
 	heartBeatData: {},
 	sleepMode: true,
+	isEndPageSeen: false,
 
 	/**
      * init of the launcher with the given data.
@@ -64,6 +65,7 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
      */
 	end: function () {
 		if (this.sleepMode) return
+		this.isEndPageSeen = true	
 		this.heartBeatEvent(false)
 		this.endTelemetry()
 		EkstepRendererAPI.dispatchEvent("renderer:endpage:show")
@@ -128,8 +130,12 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
 		if (this.sleepMode) return
 		if (TelemetryService.instance && TelemetryService.instance.telemetryStartActive()) {
 			var telemetryEndData = {}
+			var endpageSeen = [{ "endpageseen" : this.isEndPageSeen }]
+			var contentProgress = [{ "progress" : this.contentProgress() }]
+			var contentSummary = (_.isFunction(this.contentPlaySummary)) ? this.contentPlaySummary() : ''
 			telemetryEndData.stageid = getCurrentStageId()
 			telemetryEndData.progress = this.contentProgress()
+			telemetryEndData.summary = _.union(contentProgress,contentSummary,endpageSeen)
 			console.info("telemetryEndData", telemetryEndData)
 			TelemetryService.end(telemetryEndData)
 		} else {
