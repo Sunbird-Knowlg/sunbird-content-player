@@ -211,6 +211,29 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var currentStageIndex = _.size(_.uniq(this.stageId)) || 1;
         return this.progres(currentStageIndex + 1, totalStages);
     },
+    contentPlaySummary: function () {
+        var playSummary =  [
+            {
+              "totallength":  parseInt(this.totalPages)
+            },
+            {
+              "visitedlength": parseInt(_.max(this.stageId))
+            },
+            {
+              "visitedcontentend": (this.totalPages == Math.max.apply(Math, this.stageId)) ? true : false
+            },
+            {
+              "totalseekedlength": parseInt(this.totalPages) - _.size(_.uniq(this.stageId))
+            }
+        ]
+        return playSummary;
+    },
+
+    // use this methos to send additional content statistics
+    additionalContentSummary: function () {
+        return
+    },
+    
     cleanUp: function() {
         if (this.sleepMode) return; 
         this.sleepMode = true;

@@ -482,6 +482,29 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var currentStageIndex = _.size(_.uniq(this.stageId)) || 1;
         return this.progres(currentStageIndex, totalStages);
     },
+    contentPlaySummary: function () {
+        var playSummary =  [
+            {
+              "totallength":  parseInt(this.TOTAL_PAGES)
+            },
+            {
+              "visitedlength": parseInt(_.max(this.stageId))
+            },
+            {
+              "visitedcontentend": (this.TOTAL_PAGES == Math.max.apply(Math, this.stageId)) ? true : false
+            },
+            {
+              "totalseekedlength": parseInt(this.TOTAL_PAGES) - _.size(_.uniq(this.stageId))
+            }
+        ]
+        return playSummary;
+    },
+
+    // use this methos to send additional content statistics
+    additionalContentSummary: function () {
+        return
+    },
+
     logInteractEvent: function(type, id, extype, eks, eid){
         window.PLAYER_STAGE_START_TIME = Date.now()/1000;
         EkstepRendererAPI.getTelemetryService().interact(type, id, extype, eks,eid);
