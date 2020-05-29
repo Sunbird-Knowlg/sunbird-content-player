@@ -108,8 +108,16 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
 		console.warn("Child Launcher should calculate")
 	},
 
+	/**
+	 *  generic Summary event
+	 */
+	
 	contentPlaySummary : function () {
 		return [{"totallength":""},{"visitedlength":""},{"visitedcontentend":""},{"totalseekedlength": ""}]
+	},
+	
+	additionalContentSummary: function () {
+		console.warn("content launcher should implement this for additional content statistics ")
 	},
 
 	/**

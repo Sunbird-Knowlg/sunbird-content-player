@@ -228,6 +228,12 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         ]
         return playSummary;
     },
+
+    // use this methos to send additional content statistics
+    additionalContentSummary: function () {
+        return
+    },
+    
     cleanUp: function() {
         if (this.sleepMode) return; 
         this.sleepMode = true;

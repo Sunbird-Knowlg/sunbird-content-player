@@ -499,6 +499,12 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         ]
         return playSummary;
     },
+
+    // use this methos to send additional content statistics
+    additionalContentSummary: function () {
+        return
+    },
+
     logInteractEvent: function(type, id, extype, eks, eid){
         window.PLAYER_STAGE_START_TIME = Date.now()/1000;
         EkstepRendererAPI.getTelemetryService().interact(type, id, extype, eks,eid);
