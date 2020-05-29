@@ -101,6 +101,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }, 100);
     },
     play: function (eventData) {
+        this.totalDuration = eventData.duration;
         this.playerInfo  = eventData.info;
         if (eventData.time == 0) {
             EkstepRendererAPI.getTelemetryService().navigate('youtubestage', 'youtubestage', {
