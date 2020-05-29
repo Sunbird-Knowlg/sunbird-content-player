@@ -108,6 +108,10 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
 		console.warn("Child Launcher should calculate")
 	},
 
+	contentPlaySummary : function () {
+		return [{"totallength":""},{"visitedlength":""},{"visitedcontentend":""},{"totalseekedlength": ""}]
+	},
+
 	/**
      * Generation of the OE_START Telemetry event.
      */
@@ -132,10 +136,9 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
 			var telemetryEndData = {}
 			var endpageSeen = [{ "endpageseen" : this.isEndPageSeen }]
 			var contentProgress = [{ "progress" : this.contentProgress() }]
-			var contentSummary = (_.isFunction(this.contentPlaySummary)) ? this.contentPlaySummary() : ''
 			telemetryEndData.stageid = getCurrentStageId()
 			telemetryEndData.progress = this.contentProgress()
-			telemetryEndData.summary = _.union(contentProgress,contentSummary,endpageSeen)
+			telemetryEndData.summary = _.union(contentProgress,this.contentPlaySummary(),endpageSeen)
 			console.info("telemetryEndData", telemetryEndData)
 			TelemetryService.end(telemetryEndData)
 		} else {
