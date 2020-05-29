@@ -8,7 +8,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     totalDuration: 0,
     videoPlayer: undefined,
     stageId: undefined,
+    bufferToAchieveProgress:10, //  percentage
     heartBeatData: {},
+    playerInfo:undefined,
     enableHeartBeatEvent: false,
     _constants: {
         mimeType: ["video/x-youtube"],
@@ -99,7 +101,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }, 100);
     },
     play: function (eventData) {
-        this.totalDuration = eventData.duration;
+        this.playerInfo  = eventData.info;
         if (eventData.time == 0) {
             EkstepRendererAPI.getTelemetryService().navigate('youtubestage', 'youtubestage', {
                 "duration": (Date.now() / 1000) - window.PLAYER_STAGE_START_TIME
@@ -117,6 +119,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         })
     },
     pause: function (eventData) {
+        this.playerInfo  = eventData.info;        
         var instance = this;
         instance.heartBeatEvent(false);
         instance.progressTimer(false);
@@ -128,7 +131,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             }]
         })
     },
-    ended: function () {
+    ended: function (eventData) {
+        this.playerInfo  = eventData.info;
         var instance = this;
         instance.progressTimer(false);
         instance.logTelemetry('END', {
@@ -138,6 +142,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         EkstepRendererAPI.dispatchEvent('renderer:content:end');
     },
     seeked: function (eventData) {
+        this.playerInfo  = eventData.info;
         var instance = this;
         instance.logTelemetry('TOUCH', {
             stageId: 'youtubestage',
@@ -183,6 +188,29 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     contentProgress: function () {
         var progress = this.progres(this.currentTime, this.totalDuration);
         return progress === 0 ? 1 : progress;  // setting default value of progress=1 when video opened
+    },
+    setExpectedLengthCovergae: function (videoLength) {
+        return Number(videoLength) - ((Number(this.bufferToAchieveProgress) / 100) * Number(videoLength));
+    },
+    contentPlaySummary: function () {
+        var videoLength = this.playerInfo.duration
+        var videoCurrentRefTime = this.playerInfo.mediaReferenceTime
+        var currentVisitedLength = (Date.now() / 1000) - window.PLAYER_STAGE_START_TIME
+        var playSummary =  [
+            {
+              "totallength": videoLength
+            },
+            {
+              "visitedlength": videoCurrentRefTime
+            },
+            {
+              "visitedcontentend": (videoCurrentRefTime >= this.setExpectedLengthCovergae(videoLength)) ? true : false
+            },
+            {
+              "totalseekedlength": Math.max(0,(videoCurrentRefTime - currentVisitedLength)) // when no seek value is in negetive
+            }
+        ]
+        return playSummary;
     },
     onOverlayAudioMute: function () {
 
