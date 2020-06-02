@@ -24,9 +24,9 @@ jobs:
       run: |
         (cd player && npm install && npm install -g forever)
 
-    - name: Build player preview
-      run: |
-        (cd player && npm run package-coreplugins -- --env.channel=sunbird && npm run build-preview sunbird)
+    # - name: Build player preview
+    #   run: |
+    #     (cd player && npm run package-coreplugins -- --env.channel=sunbird && npm run build-preview sunbird)
 
     - name: Start player with fixture stories 
       run: |
@@ -59,11 +59,11 @@ jobs:
         name: Report HTML
         path: player/public/test/functional_test/testReport
 
-    - name: Player preview artifact generation
-      uses: actions/upload-artifact@v1
-      with:
-        name: Generated Player preview
-        path: player/www
+    # - name: Player preview artifact generation
+    #   uses: actions/upload-artifact@v1
+    #   with:
+    #     name: Generated Player preview
+    #     path: player/www
 
       env:
         CI: true
