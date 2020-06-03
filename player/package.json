@@ -3,7 +3,7 @@
     "version": "3.0.0",
     "description": "Which renders the contents in both web and devices",
     "dependencies": {
-        "@project-sunbird/telemetry-sdk": "^0.0.14",
+        "@project-sunbird/telemetry-sdk": "0.1.1",
         "ajv": "^6.9.2",
         "audiosprite": "*",
         "download": "8.0.0",
