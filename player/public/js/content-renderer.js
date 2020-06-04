@@ -149,6 +149,7 @@ org.ekstep.contentrenderer.initializePreview = function (configuration) {
 		// If renderer is running just call function to load aluncher
 		var contentObj = configuration.metadata || globalConfig.defaultMetadata
 		if (configuration.data) contentObj.body = configuration.data
+		globalConfig.basepath = (contentObj && contentObj.streamingUrl) ? (contentObj.streamingUrl) : (globalConfig.basepath || contentObj.baseDir)
 		EkstepRendererAPI.renderContent(contentObj)
 	} else {
 		// If renderer is not running launch the framework from start

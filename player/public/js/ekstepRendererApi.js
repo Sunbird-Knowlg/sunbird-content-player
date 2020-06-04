@@ -1056,6 +1056,9 @@ window.EkstepRendererAPI = {
 			}
 			EkstepRendererAPI.hideEndPage()
 			content = contentObj
+			if (content.mimeType === "application/vnd.ekstep.ecml-archive") {
+				EkstepRendererAPI.dispatchEvent("renderer:player:canvaschange")
+			}
 			EkstepRendererAPI.dispatchEvent("renderer:launcher:load", undefined, contentObj)
 		} else {
 			console.warn("Invalid Content")
