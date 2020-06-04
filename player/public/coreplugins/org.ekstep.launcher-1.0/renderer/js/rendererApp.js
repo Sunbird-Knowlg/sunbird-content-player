@@ -18,6 +18,7 @@ app.controllerProvider.register('ContentCtrl', ['$scope', '$rootScope', '$state'
                 $scope.renderContent();
             }
         }else {
+            $rootScope.content = content;
             $scope.renderContent();
         }
     };
@@ -75,10 +76,6 @@ app.controllerProvider.register('ContentCtrl', ['$scope', '$rootScope', '$state'
     };
 
     EkstepRendererAPI.addEventListener("renderer:player:init", $scope.initializePlayer);
-    // EkstepRendererAPI.addEventListener("renderer:player:canvaschange", function(){
-    //     $scope.canvas = true;
-    //     $scope.safeApply();
-    // });
 
     /**
      * renderer:player:hide event to hide the player.
