@@ -17,9 +17,6 @@ app.controllerProvider.register('ContentCtrl', ['$scope', '$rootScope', '$state'
             } else {
                 $scope.renderContent();
             }
-        }else {
-            $rootScope.content = content;
-            $scope.renderContent();
         }
     };
 
