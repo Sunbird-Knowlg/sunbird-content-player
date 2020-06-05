@@ -1056,7 +1056,7 @@ window.EkstepRendererAPI = {
 			}
 			EkstepRendererAPI.hideEndPage()
 			content = contentObj
-			EkstepRendererAPI.dispatchEvent("renderer:launcher:load", undefined, contentObj)
+			EkstepRendererAPI.dispatchEvent("renderer:player:init")
 		} else {
 			console.warn("Invalid Content")
 		}
