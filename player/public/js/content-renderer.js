@@ -208,7 +208,7 @@ org.ekstep.contentrenderer.initPlugins = function (host, repoRelativePath) {
 }
 
 /**
- * Added the plguin error event if any of the plugin is failed then
+ * Added the plguin error event if any of the plugin is failed then.
  * dispatching oE_ERROR event with data
  * @event plugin:error whihc is being dispatching from the plugin framework
  * @param  {obj} data  [data which is need to be log in the OE_ERROR Telemetry event]
