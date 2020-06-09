@@ -11,6 +11,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     $scope.totalScore = undefined;
     $scope.templateToRender = undefined;
     $scope.displayScore = true;
+    $scope.currentPlayer = undefined;
 
     /**
      * @property - {Object} which holds previous content of current content
@@ -29,6 +30,8 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
         $scope.licenseAttribute = $scope.playerMetadata.license || 'Licensed under CC By 4.0 license'
     };
 
+    $scope.currentPlayer = (_.has(globalConfig.context, "userData")) ? globalConfig.context.userData.firstName : $scope.currentPlayer
+    
     $scope.getTotalScore = function(id) {
         var totalScore = 0, maxScore = 0;
         var teleEvents = org.ekstep.service.content.getTelemetryEvents();
