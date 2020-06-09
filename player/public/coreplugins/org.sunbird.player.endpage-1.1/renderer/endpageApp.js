@@ -30,7 +30,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
         $scope.licenseAttribute = $scope.playerMetadata.license || 'Licensed under CC By 4.0 license'
     };
     if(!$scope.isCordova){
-        if(_.isUndefined(globalConfig.context.userData)){
+        if(!_.isUndefined(globalConfig.context.userData)){
             $scope.currentPlayer = globalConfig.context.userData.firstName;
         }
     }
