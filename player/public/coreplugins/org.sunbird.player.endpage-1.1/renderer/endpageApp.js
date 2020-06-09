@@ -11,6 +11,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     $scope.totalScore = undefined;
     $scope.templateToRender = undefined;
     $scope.displayScore = true;
+    $scope.currentPlayer = undefined;
 
     /**
      * @property - {Object} which holds previous content of current content
@@ -28,7 +29,11 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     $scope.setLicense = function(){
         $scope.licenseAttribute = $scope.playerMetadata.license || 'Licensed under CC By 4.0 license'
     };
-
+    if(!$scope.isCordova){
+        if(globalConfig.context.userData){
+            $scope.currentPlayer = globalConfig.context.userData.firstName;
+        }
+    }
     $scope.getTotalScore = function(id) {
         var totalScore = 0, maxScore = 0;
         var teleEvents = org.ekstep.service.content.getTelemetryEvents();
