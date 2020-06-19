@@ -194,6 +194,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         return Number(videoLength) - ((Number(this.bufferToAchieveProgress) / 100) * Number(videoLength));
     },
     contentPlaySummary: function () {
+        this.playerInfo = window.youtubePlayerInstance.playerInfo
         var videoLength = this.playerInfo.duration
         var videoCurrentRefTime = this.playerInfo.mediaReferenceTime
         var currentVisitedLength = (Date.now() / 1000) - window.PLAYER_STAGE_START_TIME
