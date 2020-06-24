@@ -207,17 +207,17 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     getStatus: function (flag) {
         var instance = this
-		if (flag) {
+        if (flag) {
             instance._getStatusTime = setInterval(function () {
                 var iframes = window.document.getElementsByTagName("iframe")
                 if (iframes.length > 0) {
                     iframes[0].contentWindow.postMessage("status.youtube", "*")
                 }
-			}, 10000)
-		} else
-		if (!flag) {
-			clearInterval(instance._getStatusTime)
-		}
+            }, 10000)
+        } else
+        if (!flag) {
+            clearInterval(instance._getStatusTime)
+        }
     },
     contentPlaySummary: function () {
         var videoLength = this.playerInfo.duration
