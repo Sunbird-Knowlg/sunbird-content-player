@@ -208,7 +208,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     getStatus: function (flag) {
         var instance = this
 		if (flag) {
-			instance._getStatusTime = setInterval(function () {
+            instance._getStatusTime = setInterval(function () {
                 var iframes = window.document.getElementsByTagName("iframe")
                 if (iframes.length > 0) {
                     iframes[0].contentWindow.postMessage("status.youtube", "*")
