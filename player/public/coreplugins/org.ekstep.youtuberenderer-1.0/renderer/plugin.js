@@ -1,5 +1,6 @@
 org.ekstep.contentrenderer.baseLauncher.extend({
     _time: undefined,
+    _getStatusTime: undefined,
     messages: {
         noInternetConnection: "Internet not available. Please connect and try again.",
         unsupportedVideo: "Video URL not accessible"
@@ -72,6 +73,10 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                         break;
                     case 'qualityChange':
                         instance.onQualityChange(eventData.resolutionVal);
+                        break;
+                    case 'status':
+                        instance.updatePlayerInfo(eventData);
+                        break;
                 }
             }
         });
@@ -86,6 +91,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     logTelemetry: function (type, eksData, eid, options) {
         EkstepRendererAPI.getTelemetryService().interact(type || 'TOUCH', "", "", eksData, eid, options);
+    },
+    updatePlayerInfo: function (eventData) {
+        this.playerInfo  = eventData.info;
     },
     replay: function () {
         if (this.sleepMode) return;
@@ -110,6 +118,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }
         var instance = this;
         instance.heartBeatEvent(true);
+        instance.getStatus(true);
+        instance.startTime = Date.now()/1000;
         instance.progressTimer(true);
         instance.logTelemetry('TOUCH', {
             stageId: 'youtubestage',
@@ -123,6 +133,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         this.playerInfo  = eventData.info;        
         var instance = this;
         instance.heartBeatEvent(false);
+        instance.getStatus(false)
         instance.progressTimer(false);
         instance.logTelemetry('TOUCH', {
             stageId: 'youtubestage',
@@ -136,6 +147,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         this.playerInfo  = eventData.info;
         var instance = this;
         instance.progressTimer(false);
+        instance.getStatus(false)
         instance.logTelemetry('END', {
             stageId: 'youtubestage',
             subtype: "STOP"
@@ -193,11 +205,24 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     setExpectedLengthCovergae: function (videoLength) {
         return Number(videoLength) - ((Number(this.bufferToAchieveProgress) / 100) * Number(videoLength));
     },
+    getStatus: function (flag) {
+        var instance = this
+        if (flag) {
+            instance._getStatusTime = setInterval(function () {
+                var iframes = window.document.getElementsByTagName("iframe")
+                if (iframes.length > 0) {
+                    iframes[0].contentWindow.postMessage("status.youtube", "*")
+                }
+            }, 10000)
+        } else
+        if (!flag) {
+            clearInterval(instance._getStatusTime)
+        }
+    },
     contentPlaySummary: function () {
-        this.playerInfo = window.youtubePlayerInstance.playerInfo
         var videoLength = this.playerInfo.duration
         var videoCurrentRefTime = this.playerInfo.mediaReferenceTime
-        var currentVisitedLength = (Date.now() / 1000) - window.PLAYER_STAGE_START_TIME
+        var currentVisitedLength = (Date.now() / 1000) - instance.startTime
         var playSummary =  [
             {
               "totallength": videoLength
