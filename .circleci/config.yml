@@ -16,9 +16,9 @@ jobs:
         #      - run: grunt build-jsdoc
 
           #
-      - run:
-          name: running test cases
-          command: npm run test-player
+      # - run:
+      #     name: running test cases
+      #     command: npm run test-player
 
       - run:
           name: Install NVM
