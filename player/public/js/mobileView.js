@@ -58,6 +58,7 @@ var mobileView = {
 					var stageData = Renderer.theme._currentScene._data
 					if (stageData && stageData["org.ekstep.video"] && stageData["org.ekstep.video"].videoPlayer && (event.data === "pause.youtube")) {
 						stageData["org.ekstep.video"].videoPlayer.pause()
+						EkstepRendererAPI.dispatchEvent("renderer:content:stopAudioOnTimerEnd")
 					}
 				}
 			}
