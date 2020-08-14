@@ -14,7 +14,7 @@ Plugin.extend({
                     scope.enableGenie = typeof cordova !== "undefined"
                     if (scope.enableGenie) {
                         scope.goToGenie = function() {
-                            EkstepRendererAPI.hideEndPage()
+                            EkstepRendererAPI.dispatchEvent("renderer:telemetry:end");
                             var stageId = !_.isUndefined(Renderer) ? Renderer.theme._currentStage : " "
                             TelemetryService.interact("TOUCH", "gc_genie", "TOUCH", { stageId: stageId })
                             exitApp()
