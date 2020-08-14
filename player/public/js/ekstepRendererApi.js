@@ -901,6 +901,9 @@ window.EkstepRendererAPI = {
 					if (typeof (data.stacktrace) === "string") {
 						data.stacktrace = data.stacktrace.substring(0, 500)
 					}
+					else if (typeof data.stacktrace === 'object' && _.has(data.stacktrace, 'message')) {
+						data.stacktrace = data.stacktrace.message;
+					}
 				}
 				setTimeout(function () {
 					EkstepRendererAPI.getTelemetryService().error(data)
