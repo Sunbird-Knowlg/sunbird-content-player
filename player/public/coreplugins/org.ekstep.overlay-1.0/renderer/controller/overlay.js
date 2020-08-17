@@ -239,7 +239,7 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
 app.compileProvider.directive('mute', function($rootScope) {
     return {
         restrict: 'E',
-        template: '<div ng-click="toggleMute()"><img ng-src="{{muteImg}}"/><span>Sound {{AppLables.mute}} </span></div>',
+        template: '<div ng-click="toggleMute()"><img ng-src="{{muteImg}}"/><span> Turn {{AppLables.mute}} sound </span></div>',
         link: function(scope, url) {
 
             /**
@@ -251,7 +251,7 @@ app.compileProvider.directive('mute', function($rootScope) {
 
             EkstepRendererAPI.addEventListener('renderer:overlay:unmute', function() {
                 scope.muteImg = scope.imageBasePath + "audio_icon.png";
-                AppLables.mute = "on";
+                AppLables.mute = "off";
                 AudioManager.unmute();
             });
 
@@ -264,7 +264,7 @@ app.compileProvider.directive('mute', function($rootScope) {
             EkstepRendererAPI.addEventListener('renderer:overlay:mute', function() {
                     AudioManager.mute();
                     scope.muteImg = scope.imageBasePath + "audio_mute_icon.png";
-                    AppLables.mute = "off";
+                    AppLables.mute = "on";
             });
             EkstepRendererAPI.dispatchEvent('renderer:overlay:unmute');
             scope.toggleMute = function() {
