@@ -80,6 +80,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 }
             }
         });
+         // Navigation template to load
+         var obj = {"tempName": ""};
+         EkstepRendererAPI.dispatchEvent("renderer:navigation:load", obj);
         
     },
     pauseYoutube: function () {
@@ -220,7 +223,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }
     },
     contentPlaySummary: function () {
-        var videoLength = this.playerInfo.duration
+        var videoLength = this.playerInfo.duration || {}
         var videoCurrentRefTime = this.playerInfo.mediaReferenceTime
         var currentVisitedLength = (Date.now() / 1000) - instance.startTime
         var playSummary =  [
