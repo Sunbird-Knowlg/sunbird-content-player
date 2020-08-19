@@ -12,6 +12,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     $scope.templateToRender = undefined;
     $scope.displayScore = true;
     $scope.currentPlayer = undefined;
+    $scope.currentPlayerFirstChar = undefined; 
 
     /**
      * @property - {Object} which holds previous content of current content
@@ -30,8 +31,16 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
         $scope.licenseAttribute = $scope.playerMetadata.license || 'Licensed under CC By 4.0 license'
     };
 
-    $scope.currentPlayer = (_.has(globalConfig.context, "userData")) ? globalConfig.context.userData.firstName : $scope.currentPlayer
-    
+    $scope.setCurrentUser = function() {
+        if($scope.isCordova) { 
+            $scope.currentPlayer = (_.has($scope.currentUser,"handle"))? $scope.currentUser.handle : $scope.currentUser.name;
+        }
+        else {
+            $scope.currentPlayer = (_.has(globalConfig.context, "userData")) ? globalConfig.context.userData.firstName : $scope.currentUser.handle;
+        }
+        $scope.currentPlayerFirstChar = $scope.currentPlayer.charAt(0).toUpperCase().slice(0);
+    }
+
     $scope.getTotalScore = function(id) {
         var totalScore = 0, maxScore = 0;
         var teleEvents = org.ekstep.service.content.getTelemetryEvents();
@@ -131,6 +140,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
             $rootScope.$apply();
         }, 1000);
         EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
+        $scope.setCurrentUser();
         $scope.setTotalTimeSpent();
         $scope.getTotalScore($rootScope.content.identifier);
         $scope.getRelevantContent($rootScope.content.identifier);
