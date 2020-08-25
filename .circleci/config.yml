@@ -16,16 +16,25 @@ jobs:
         #      - run: grunt build-jsdoc
 
           #
-          #      - run:
-          #          name: running test cases
-          #          command: npm run test-player
+      # - run:
+      #     name: running test cases
+      #     command: npm run test-player
+
+      - run:
+          name: Install NVM
+          command: 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh|bash'
+    
+      - run:
+          name: alter node version
+          command: 'source ~/.nvm/nvm.sh && nvm install 8 && nvm use 8 && nvm alias default 8 && node -v'
+
       - run: 
           name: Install sonar scanner
-          command: 'sudo npm install -g sonarqube-scanner'
+          command: 'source ~/.nvm/nvm.sh && sudo npm install -g sonarqube-scanner'
           
       - run: 
           name: Sonar scanner
-          command: |
+          command: source ~/.nvm/nvm.sh |
             sonar-scanner -Dsonar.projectKey=project-sunbird_sunbird-content-player -Dsonar.organization=project-sunbird -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.language=js
       
       - run:
