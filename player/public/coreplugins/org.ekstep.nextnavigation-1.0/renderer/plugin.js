@@ -20,7 +20,9 @@ Plugin.extend({
 						var tempUrl = "";
 						switch (event.target.tempName) {
 							case "navigationTop": tempUrl = navigationTop; break;
-							default: tempUrl = defaultTempate; break;
+							default: tempUrl = defaultTempate;
+									jQuery('custom-next-navigation').show();
+									break;
 						}
 						var template = '<div ng-include="\'' + tempUrl + '\'"></div>';
 						// var tempUrl = (event.target.tempName === "navigationTop") ? scope.navigationTop : scope.defaultTempate;
