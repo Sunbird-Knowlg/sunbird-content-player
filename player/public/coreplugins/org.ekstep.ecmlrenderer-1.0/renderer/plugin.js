@@ -110,6 +110,11 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var obj = {"tempName": ""};
         EkstepRendererAPI.dispatchEvent("renderer:navigation:load", obj);
 
+        setTimeout(function() {
+            jQuery('custom-previous-navigation').show();
+            jQuery('custom-next-navigation').show();
+        }, 100);
+
         Renderer.theme.updateCanvas(newWidth, newHeight);
         if (!disableDraw) Renderer.theme.reRender();
     },

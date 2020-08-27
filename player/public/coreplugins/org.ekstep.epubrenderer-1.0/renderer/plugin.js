@@ -95,12 +95,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             height: document.getElementById('gameArea').offsetHeight,
             spreads: false
         };
-        setTimeout(function() {
-            jQuery('previous-navigation').show();
-            jQuery('next-navigation').show();
-            jQuery('custom-previous-navigation').hide();
-            jQuery('custom-next-navigation').hide();
-        }, 100);
         this.book = ePub(epubPath, epubOptions);
         this.book.setStyle("padding-right", "1px");
         this.book.setStyle("padding-left", "1px");
