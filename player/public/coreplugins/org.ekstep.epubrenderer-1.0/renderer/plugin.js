@@ -87,8 +87,10 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 instance.renderEpub(epubPath);
             }
         });
-        jQuery('custom-previous-navigation').hide();
-        jQuery('custom-next-navigation').hide();
+        setTimeout(function() {
+            jQuery('custom-previous-navigation').hide();
+            jQuery('custom-next-navigation').hide();
+        }, 100);
     },
     renderEpub: function (epubPath) {
         jQuery('#gameArea').css({left: '10%', top: '0px', width: "80%", height: "90%", margin: "5% 0 0 0"});
