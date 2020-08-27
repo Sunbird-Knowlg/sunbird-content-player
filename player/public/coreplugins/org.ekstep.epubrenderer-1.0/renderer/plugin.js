@@ -87,10 +87,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 instance.renderEpub(epubPath);
             }
         });
-        setTimeout(function() {
-            jQuery('custom-previous-navigation').hide();
-            jQuery('custom-next-navigation').hide();
-        }, 100);
     },
     renderEpub: function (epubPath) {
         jQuery('#gameArea').css({left: '10%', top: '0px', width: "80%", height: "90%", margin: "5% 0 0 0"});
@@ -99,6 +95,12 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             height: document.getElementById('gameArea').offsetHeight,
             spreads: false
         };
+        setTimeout(function() {
+            jQuery('previous-navigation').show();
+            jQuery('next-navigation').show();
+            jQuery('custom-previous-navigation').hide();
+            jQuery('custom-next-navigation').hide();
+        }, 100);
         this.book = ePub(epubPath, epubOptions);
         this.book.setStyle("padding-right", "1px");
         this.book.setStyle("padding-left", "1px");
