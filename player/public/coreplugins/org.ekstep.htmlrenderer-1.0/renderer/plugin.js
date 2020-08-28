@@ -36,6 +36,10 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var instance = this;
         var obj = {"tempName": "navigationTop"};
         EkstepRendererAPI.dispatchEvent("renderer:navigation:load", obj);
+        setTimeout(function() {
+            jQuery('custom-previous-navigation').hide();
+            jQuery('custom-next-navigation').hide();
+        }, 100);
     },
     validateSrc: function(path, iframe) {
         var instance = this;
