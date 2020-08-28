@@ -20,7 +20,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }
     },
     initLauncher: function () {
-        console.log("in epub renderer init")
         var instance = this;
         EkstepRendererAPI.addEventListener(this._constants.events.launchEvent, this.start, this);
         EkstepRendererAPI.dispatchEvent('renderer:stagereload:hide');
@@ -31,7 +30,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 jQuery('custom-previous-navigation').show();
                 jQuery('custom-next-navigation').show();
             }, 100);
-            console.log("in epub renderer next click")
             if (instance.lastPage) {
                 EkstepRendererAPI.dispatchEvent('renderer:content:end');
                 instance.removeProgressElements();
@@ -47,7 +45,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 jQuery('custom-previous-navigation').show();
                 jQuery('custom-next-navigation').show();
             }, 100);
-            console.log("in epub renderer previous click")
             if(instance.currentPage === 2) {
                 // This is needed because some ePubs do not go back to the cover page on `book.prevPage()`
                 instance.book.gotoPage(1);
