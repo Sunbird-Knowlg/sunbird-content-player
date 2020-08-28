@@ -245,10 +245,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         if (this.sleepMode) return;
         this.sleepMode = true;
         console.log("in ecml cleanup")
-        var events = ["overlayPrevious", "renderer:previous:hide", "renderer:previous:show", "renderer:previous:disable", "renderer:previous:enable"];
-        _.each(events, function(p) {
-            EkstepRendererAPI.removeEventListener(p);
-        }); 
         EkstepRendererAPI.removeEventListener('renderer:launcher:clean', this.cleanUp, this);
         if (this.running) {
             this.running = false;

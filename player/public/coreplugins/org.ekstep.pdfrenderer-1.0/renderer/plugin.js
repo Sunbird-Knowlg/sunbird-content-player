@@ -68,6 +68,12 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         $('#pdf-buttons').css({
             display: 'none'
         });
+        setTimeout(function() {
+            jQuery('previous-navigation').show();
+            jQuery('next-navigation').show();
+            jQuery('custom-previous-navigation').hide();
+            jQuery('custom-next-navigation').hide();
+        }, 100);
     },
     start: function() {
         this._super();
