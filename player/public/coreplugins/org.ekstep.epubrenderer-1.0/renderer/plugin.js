@@ -26,6 +26,10 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         EkstepRendererAPI.addEventListener('nextClick', function () {
             if (this.sleepMode) return;
             EkstepRendererAPI.dispatchEvent('sceneEnter',instance);
+            setTimeout(function() {
+                jQuery('custom-previous-navigation').show();
+                jQuery('custom-next-navigation').show();
+            }, 100);
             if (instance.lastPage) {
                 EkstepRendererAPI.dispatchEvent('renderer:content:end');
                 instance.removeProgressElements();
@@ -33,10 +37,14 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 instance.book.nextPage();
             }
         }, this);
-
+        
         EkstepRendererAPI.addEventListener('previousClick', function () {
             if (this.sleepMode) return;
             EkstepRendererAPI.dispatchEvent('sceneEnter',instance);
+            setTimeout(function() {
+                jQuery('custom-previous-navigation').show();
+                jQuery('custom-next-navigation').show();
+            }, 100);
             if(instance.currentPage === 2) {
                 // This is needed because some ePubs do not go back to the cover page on `book.prevPage()`
                 instance.book.gotoPage(1);
@@ -84,6 +92,10 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
                 var obj = {"tempName": ""};
                 EkstepRendererAPI.dispatchEvent("renderer:navigation:load", obj);
+                setTimeout(function() {
+                    jQuery('custom-previous-navigation').show();
+                    jQuery('custom-next-navigation').show();
+                }, 100);
                 instance.renderEpub(epubPath);
             }
         });
