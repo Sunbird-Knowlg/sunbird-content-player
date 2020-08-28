@@ -110,11 +110,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var obj = {"tempName": ""};
         EkstepRendererAPI.dispatchEvent("renderer:navigation:load", obj);
 
-        setTimeout(function() {
-            jQuery('custom-previous-navigation').show();
-            jQuery('custom-next-navigation').show();
-        }, 100);
-
         Renderer.theme.updateCanvas(newWidth, newHeight);
         if (!disableDraw) Renderer.theme.reRender();
     },
@@ -249,6 +244,11 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     cleanUp: function() {
         if (this.sleepMode) return;
         this.sleepMode = true;
+        console.log("in ecml cleanup")
+        var events = ["overlayPrevious", "renderer:previous:hide", "renderer:previous:show", "renderer:previous:disable", "renderer:previous:enable"];
+        _.each(events, function(p) {
+            EkstepRendererAPI.removeEventListener(p);
+        }); 
         EkstepRendererAPI.removeEventListener('renderer:launcher:clean', this.cleanUp, this);
         if (this.running) {
             this.running = false;
