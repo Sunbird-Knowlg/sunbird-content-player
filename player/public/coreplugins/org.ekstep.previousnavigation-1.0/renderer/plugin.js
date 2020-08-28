@@ -19,11 +19,7 @@ Plugin.extend({
                     scope.changeNavigation = function (event) {
 						var tempUrl = "";
 						switch (event.target.tempName) {
-                            case "navigationTop": tempUrl = navigationTop;
-                                    setTimeout(function() {
-                                        jQuery('custom-previous-navigation').hide();
-                                    }, 100);
-                                    break;
+                            case "navigationTop": tempUrl = navigationTop; break;
                             default: tempUrl = defaultTempate;
                                     setTimeout(function() {
                                         jQuery('custom-previous-navigation').show();
