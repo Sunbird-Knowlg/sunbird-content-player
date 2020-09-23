@@ -208,12 +208,14 @@ function addWindowUnloadEvent () {
 		var y = e.pageY || e.clientY
 		if (!y) {
 			EkstepRendererAPI.getTelemetryService().interrupt("OTHER", EkstepRendererAPI.getCurrentStageId())
+			window.postMessage("player.telemetry.interrupt", telemetry_web.tList)
 			EkstepRendererAPI.dispatchEvent("renderer:content:close")
 		}
 	}
 	if (EkstepRendererAPI.getGlobalConfig().context.mode === "edit") {
 		parent.document.getElementsByTagName("iframe")[0].contentWindow.onunload = function () {
 			EkstepRendererAPI.getTelemetryService().interrupt("OTHER", EkstepRendererAPI.getCurrentStageId())
+			parent.document.getElementsByTagName("iframe")[0].contentWindow.postMessage("player.telemetry.interrupt", telemetry_web.tList)
 			EkstepRendererAPI.dispatchEvent("renderer:content:close")
 		}
 	}
