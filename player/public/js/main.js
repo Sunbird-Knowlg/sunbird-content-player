@@ -214,15 +214,15 @@ function addWindowUnloadEvent () {
 		var y = e.pageY || e.clientY
 		if (!y) {
 			EkstepRendererAPI.getTelemetryService().interrupt("OTHER", EkstepRendererAPI.getCurrentStageId())
-			parent.postMessage({"player.telemetry.interrupt": telemetry_web.tList}, origin)
 			EkstepRendererAPI.dispatchEvent("renderer:content:close")
+			parent.postMessage({"player.telemetry.interrupt": telemetry_web.tList}, origin)
 		}
 	}
 	if (EkstepRendererAPI.getGlobalConfig().context.mode === "edit") {
 		parent.document.getElementsByTagName("iframe")[0].contentWindow.onunload = function () {
 			EkstepRendererAPI.getTelemetryService().interrupt("OTHER", EkstepRendererAPI.getCurrentStageId())
-			parent.postMessage({"player.telemetry.interrupt": telemetry_web.tList}, origin)
 			EkstepRendererAPI.dispatchEvent("renderer:content:close")
+			parent.postMessage({"player.telemetry.interrupt": telemetry_web.tList}, origin)
 		}
 	}
 }
