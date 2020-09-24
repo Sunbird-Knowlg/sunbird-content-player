@@ -202,20 +202,26 @@ function showToaster (toastType, message, customOptions) {
 }
 
 function addWindowUnloadEvent () {
+	var origin = ""
+	if (!window.location.origin) {
+		origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ":" + window.location.port : "")
+	} else {
+		origin = window.location.origin
+	}
 	// Use Iframe unload event
 	window.onunload = function (e) { // onbeforeunload is not dispatched when navigating to other page
 		e = e || window.event
 		var y = e.pageY || e.clientY
 		if (!y) {
 			EkstepRendererAPI.getTelemetryService().interrupt("OTHER", EkstepRendererAPI.getCurrentStageId())
-			window.postMessage("player.telemetry.interrupt", telemetry_web.tList)
+			window.postMessage({"player.telemetry.interrupt": telemetry_web.tList}, origin)
 			EkstepRendererAPI.dispatchEvent("renderer:content:close")
 		}
 	}
 	if (EkstepRendererAPI.getGlobalConfig().context.mode === "edit") {
 		parent.document.getElementsByTagName("iframe")[0].contentWindow.onunload = function () {
 			EkstepRendererAPI.getTelemetryService().interrupt("OTHER", EkstepRendererAPI.getCurrentStageId())
-			parent.document.getElementsByTagName("iframe")[0].contentWindow.postMessage("player.telemetry.interrupt", telemetry_web.tList)
+			window.postMessage({"player.telemetry.interrupt": telemetry_web.tList}, origin)
 			EkstepRendererAPI.dispatchEvent("renderer:content:close")
 		}
 	}
