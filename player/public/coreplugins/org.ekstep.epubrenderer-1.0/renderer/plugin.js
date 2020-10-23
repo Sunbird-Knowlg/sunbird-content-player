@@ -109,20 +109,20 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     // Get the total number of actual pages to render
     // remove page from pagination if in <spine> <itemref> property is linear=no
     getTotalPages: function () {
+        var instance = this
+        var data = instance.book.locations.spine
+        var array = []
         try {
-            var instance = this
-            var data = instance.book.locations.spine
-            var array = []
              for (index = 0; index < data.length; index++) {
                 if (_.has(data[index], 'linear') && (data[index].linear).toLowerCase() != "no") {
                     array[index] = data[index]
                 }
             }
+            return array.length;
         } catch(e) {
             console.log("error while iterating spine of epub" + e);
-        } finally {
-            return array.length;
-        }
+            return data.length;
+        } 
     },
 
     addEventHandlers: function () {
