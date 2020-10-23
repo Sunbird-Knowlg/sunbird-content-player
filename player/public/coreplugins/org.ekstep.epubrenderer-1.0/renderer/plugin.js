@@ -4,7 +4,6 @@
  * @extends baseLauncher
  * @author Manoj Chandrashekar <manoj.chandrashekar@tarento.com>
  */
-
 org.ekstep.contentrenderer.baseLauncher.extend({
     book: undefined,
     _start: undefined,
@@ -33,7 +32,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 instance.book.nextPage();
             }
         }, this);
-
         EkstepRendererAPI.addEventListener('previousClick', function () {
             if (this.sleepMode) return;
             EkstepRendererAPI.dispatchEvent('sceneEnter',instance);
@@ -46,7 +44,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             }
             instance.lastPage = false;
         }, this);
-
         EkstepRendererAPI.addEventListener('actionContentClose', function () {
             if (this.sleepMode) return;
             instance.logTelemetryInteract(instance.currentPage.toString());
@@ -73,7 +70,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         } else {
             epubPath = data.artifactUrl;
         }
-
         org.ekstep.pluginframework.resourceManager.loadResource(epubPath, 'TEXT', function (err, data) {
             if (err) {
                 err.message = 'Unable to open the content.'
@@ -81,7 +77,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             } else {
                 EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
                 EkstepRendererAPI.dispatchEvent('renderer:overlay:show');
-
                 var obj = {"tempName": ""};
                 EkstepRendererAPI.dispatchEvent("renderer:navigation:load", obj);
                 instance.renderEpub(epubPath);
@@ -105,20 +100,35 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         this.addEventHandlers();
         this.initProgressElements();
     },
+
+    // Get the total number of actual pages to render
+    // remove page from pagination if in <spine> <itemref> property is linear=no
+    getTotalPages: function() {
+        var instance = this
+        var data = instance.book.locations.spine
+        var array = []
+        for (index = 0; index < data.length; index++) {
+          if (data[index].hasOwnProperty('linear') && data[index].linear != "no") {
+            array[index] = data[index]
+          }
+        }
+        return array.length;
+    },
+
     addEventHandlers: function () {
         var instance = this;
         instance.book.generatePagination().then(function (data) {
             instance._start = data[0].cfi;
-            instance.totalPages = data.length;
+            instance.totalPages = instance.getTotalPages();
+            if(instance.totalPages <= 1) instance.lastPage = true; // if all pages are non linear or only one page is linear
             instance.updateProgressElements();
         });
-
         instance.book.on('book:pageChanged', function (data) {
             instance.logTelemetryInteract(instance.currentPage.toString());
             instance.logTelemetryNavigate(instance.currentPage.toString(), data.anchorPage.toString());
             instance.currentPage = data.anchorPage;
             instance.updateProgressElements();
-            if (instance.book.pagination.lastPage === data.anchorPage || instance.book.pagination.lastPage === data.pageRange[1]) {
+            if (instance.book.pagination.lastPage === data.anchorPage  || instance.book.pagination.lastPage === data.pageRange[1] || instance.totalPages === data.anchorPage ) {
                 instance.lastPage = true;
             }
         });
@@ -150,7 +160,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         };
         TelemetryService.interact(oeInteractData.type, oeInteractData.id, oeInteractData.extype, oeInteractData.eks);
     },
-    logTelemetryNavigate: function (fromPage, toPage) {
+    logTelemetryNavigate: function (fromPage, toPage) { 
         TelemetryService.navigate(fromPage, toPage);
     },
     initProgressElements: function () {
@@ -167,7 +177,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             'text-align': 'center'
         });
         jQuery('#gameArea').parent().append($pageDiv);
-
         // Add progress bar
         var $progressDiv = jQuery('<div>', {id: 'progress-container'}).css({
             width: '100%',
@@ -228,12 +237,10 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         ]
         return playSummary;
     },
-
     // use this methos to send additional content statistics
     additionalContentSummary: function () {
         return
     },
-    
     cleanUp: function() {
         if (this.sleepMode) return; 
         this.sleepMode = true;
