@@ -4,6 +4,7 @@
  * @extends baseLauncher
  * @author Manoj Chandrashekar <manoj.chandrashekar@tarento.com>
  */
+
 org.ekstep.contentrenderer.baseLauncher.extend({
     book: undefined,
     _start: undefined,
@@ -32,6 +33,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 instance.book.nextPage();
             }
         }, this);
+
         EkstepRendererAPI.addEventListener('previousClick', function () {
             if (this.sleepMode) return;
             EkstepRendererAPI.dispatchEvent('sceneEnter',instance);
@@ -44,6 +46,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             }
             instance.lastPage = false;
         }, this);
+
         EkstepRendererAPI.addEventListener('actionContentClose', function () {
             if (this.sleepMode) return;
             instance.logTelemetryInteract(instance.currentPage.toString());
@@ -70,6 +73,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         } else {
             epubPath = data.artifactUrl;
         }
+
         org.ekstep.pluginframework.resourceManager.loadResource(epubPath, 'TEXT', function (err, data) {
             if (err) {
                 err.message = 'Unable to open the content.'
@@ -77,6 +81,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             } else {
                 EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
                 EkstepRendererAPI.dispatchEvent('renderer:overlay:show');
+
                 var obj = {"tempName": ""};
                 EkstepRendererAPI.dispatchEvent("renderer:navigation:load", obj);
                 instance.renderEpub(epubPath);
@@ -103,16 +108,21 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
     // Get the total number of actual pages to render
     // remove page from pagination if in <spine> <itemref> property is linear=no
-    getTotalPages: function() {
-        var instance = this
-        var data = instance.book.locations.spine
-        var array = []
-        for (index = 0; index < data.length; index++) {
-          if (data[index].hasOwnProperty('linear') && data[index].linear != "no") {
-            array[index] = data[index]
-          }
+    getTotalPages: function () {
+        try {
+            var instance = this
+            var data = instance.book.locations.spine
+            var array = []
+             for (index = 0; index < data.length; index++) {
+                if (_.has(data[index], 'linear') && (data[index].linear).toLowerCase() != "no") {
+                    array[index] = data[index]
+                }
+            }
+        } catch(e) {
+            console.log("error while iterating spine of epub" + e);
+        } finally {
+            return array.length;
         }
-        return array.length;
     },
 
     addEventHandlers: function () {
@@ -123,6 +133,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             if(instance.totalPages <= 1) instance.lastPage = true; // if all pages are non linear or only one page is linear
             instance.updateProgressElements();
         });
+
         instance.book.on('book:pageChanged', function (data) {
             instance.logTelemetryInteract(instance.currentPage.toString());
             instance.logTelemetryNavigate(instance.currentPage.toString(), data.anchorPage.toString());
@@ -160,7 +171,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         };
         TelemetryService.interact(oeInteractData.type, oeInteractData.id, oeInteractData.extype, oeInteractData.eks);
     },
-    logTelemetryNavigate: function (fromPage, toPage) { 
+    logTelemetryNavigate: function (fromPage, toPage) {
         TelemetryService.navigate(fromPage, toPage);
     },
     initProgressElements: function () {
