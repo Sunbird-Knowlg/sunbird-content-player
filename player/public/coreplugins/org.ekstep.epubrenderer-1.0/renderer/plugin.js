@@ -113,7 +113,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var data = instance.book.locations.spine
         var array = []
         try {
-             for (index = 0; index < data.length; index++) {
+             for (var index = 0; index < data.length; index++) {
                 if (_.has(data[index], 'linear') && (data[index].linear).toLowerCase() != "no") {
                     array[index] = data[index]
                 }
