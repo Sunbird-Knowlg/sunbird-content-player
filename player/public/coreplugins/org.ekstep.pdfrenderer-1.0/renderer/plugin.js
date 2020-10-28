@@ -456,7 +456,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 // If error re-show the upload button
                 $("#pdf-loader").css("display","none");
                 $("#upload-button").show();
-                error.message = "Missing PDF"
+                error.message = "Missing PDF";
+                error.logFullError = true;
                 context.throwError(error);
             });
         }
