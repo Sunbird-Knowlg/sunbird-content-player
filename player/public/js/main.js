@@ -347,6 +347,9 @@ function setTelemetryEventFields (globalConfig) {
 	otherData.etags = etags
 	otherData.object = globalConfig.object
 	otherData.env = globalConfig.env ? globalConfig.env : getPreviewMode()
+	if (globalConfig.otherData && globalConfig.otherData.cdata) {
+		otherData.cdata = globalConfig.otherData.cdata
+	}
 	delete otherData.dims
 	delete otherData.app
 	delete otherData.partner
