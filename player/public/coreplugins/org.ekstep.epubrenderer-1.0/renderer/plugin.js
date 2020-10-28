@@ -4,7 +4,6 @@
  * @extends baseLauncher
  * @author Manoj Chandrashekar <manoj.chandrashekar@tarento.com>
  */
-
  org.ekstep.contentrenderer.baseLauncher.extend({
     book: undefined,
     _start: undefined,
@@ -192,7 +191,6 @@
             'text-align': 'center'
         });
         jQuery('#gameArea').parent().append($pageDiv);
-
         // Add progress bar
         var $progressDiv = jQuery('<div>', {id: 'progress-container'}).css({
             width: '100%',
@@ -254,12 +252,10 @@
         ]
         return playSummary;
     },
-
     // use this methos to send additional content statistics
     additionalContentSummary: function () {
         return
     },
-    
     cleanUp: function() {
         if (this.sleepMode) return; 
         this.sleepMode = true;

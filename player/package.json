@@ -1,6 +1,6 @@
 {
     "name": "@project-sunbird/content-player",
-    "version": "3.1.0",
+    "version": "3.3.0",
     "description": "Which renders the contents in both web and devices",
     "dependencies": {
         "@project-sunbird/telemetry-sdk": "^0.0.14",
@@ -64,7 +64,7 @@
         "karma-ng-html2js-preprocessor": "^1.0.0",
         "karma-phantomjs-launcher": "^1.0.0",
         "karma-verbose-reporter": "0.0.3",
-        "mini-css-extract-plugin": "*",
+        "mini-css-extract-plugin": "0.11.2",
         "ng-annotate-webpack-plugin": "^0.3.0",
         "ngmin-webpack-plugin": "^0.1.3",
         "optimize-css-assets-webpack-plugin": "^4.0.3",
