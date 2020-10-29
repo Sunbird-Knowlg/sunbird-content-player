@@ -13,8 +13,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     DEFAULT_SCALE_DELTA : 1.1,
     MIN_SCALE: 0.25,
     MAX_SCALE: 10.0,
-
-
+    messages: {
+        noInternetConnection: "Internet not available. Please connect and try again."
+    },
     context: undefined,
     stageId: [],
     heartBeatData: {},
@@ -433,8 +434,16 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }
     },
     showPDF: function(pdf_url) {
+        var instance = this;
+        if (!navigator.onLine) {
+            EkstepRendererAPI.logErrorEvent('No internet', {
+                'type': 'content',
+                'action': 'play',
+                'severity': 'error'
+            });
+            instance.throwError({ message: instance.messages.noInternetConnection });
+        }
         try {
-            var instance = this;
             $("#pdf-loader").css("display","block"); // use rendere loader
             console.log("MANIFEST DATA", this.manifest)
             console.log("pdfjsLib lib", pdfjsLib)
