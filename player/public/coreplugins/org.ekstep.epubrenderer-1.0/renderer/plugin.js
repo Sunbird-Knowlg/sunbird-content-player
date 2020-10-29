@@ -117,11 +117,32 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         this.addEventHandlers();
         this.initProgressElements();
     },
+
+    // Get the total number of actual pages to render
+    // remove page from pagination if in <spine> <itemref> property is linear=no
+    getTotalPages: function () {
+        var instance = this
+        var data = instance.book.locations.spine
+        var array = []
+        try {
+             for (var index = 0; index < data.length; index++) {
+                if (_.has(data[index], 'linear') && (data[index].linear).toLowerCase() != "no") {
+                    array[index] = data[index]
+                }
+            }
+            return array.length;
+        } catch(e) {
+            console.log("error while iterating spine of epub" + e);
+            return data.length;
+        } 
+    },
+
     addEventHandlers: function () {
         var instance = this;
         instance.book.generatePagination().then(function (data) {
             instance._start = data[0].cfi;
-            instance.totalPages = data.length;
+            instance.totalPages = instance.getTotalPages();
+            if(instance.totalPages <= 1) instance.lastPage = true; // if all pages are non linear or only one page is linear
             instance.updateProgressElements();
         });
 
@@ -130,7 +151,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             instance.logTelemetryNavigate(instance.currentPage.toString(), data.anchorPage.toString());
             instance.currentPage = data.anchorPage;
             instance.updateProgressElements();
-            if (instance.book.pagination.lastPage === data.anchorPage || instance.book.pagination.lastPage === data.pageRange[1]) {
+            if (instance.book.pagination.lastPage === data.anchorPage  || instance.book.pagination.lastPage === data.pageRange[1] || instance.totalPages === data.anchorPage ) {
                 instance.lastPage = true;
             }
         });
@@ -179,7 +200,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             'text-align': 'center'
         });
         jQuery('#gameArea').parent().append($pageDiv);
-
         // Add progress bar
         var $progressDiv = jQuery('<div>', {id: 'progress-container'}).css({
             width: '100%',
@@ -240,12 +260,10 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         ]
         return playSummary;
     },
-
     // use this methos to send additional content statistics
     additionalContentSummary: function () {
         return
     },
-    
     cleanUp: function() {
         if (this.sleepMode) return; 
         this.sleepMode = true;
