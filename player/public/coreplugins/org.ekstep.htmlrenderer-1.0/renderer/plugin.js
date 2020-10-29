@@ -34,6 +34,12 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         iframe.src = path;
         this.validateSrc(path, iframe);
         var instance = this;
+        var obj = {"tempName": ""};
+        EkstepRendererAPI.dispatchEvent("renderer:navigation:load", obj);
+        setTimeout(function() {
+            jQuery('custom-previous-navigation').hide();
+            jQuery('custom-next-navigation').hide();
+        }, 100);
     },
     validateSrc: function(path, iframe) {
         var instance = this;

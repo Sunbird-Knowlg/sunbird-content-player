@@ -202,6 +202,12 @@ function showToaster (toastType, message, customOptions) {
 }
 
 function addWindowUnloadEvent () {
+	var origin = ""
+	if (!window.location.origin) {
+		origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ":" + window.location.port : "")
+	} else {
+		origin = window.location.origin
+	}
 	// Use Iframe unload event
 	window.onunload = function (e) { // onbeforeunload is not dispatched when navigating to other page
 		e = e || window.event
@@ -209,12 +215,14 @@ function addWindowUnloadEvent () {
 		if (!y) {
 			EkstepRendererAPI.getTelemetryService().interrupt("OTHER", EkstepRendererAPI.getCurrentStageId())
 			EkstepRendererAPI.dispatchEvent("renderer:content:close")
+			parent.postMessage({"player.telemetry.interrupt": telemetry_web.tList}, origin)
 		}
 	}
 	if (EkstepRendererAPI.getGlobalConfig().context.mode === "edit") {
 		parent.document.getElementsByTagName("iframe")[0].contentWindow.onunload = function () {
 			EkstepRendererAPI.getTelemetryService().interrupt("OTHER", EkstepRendererAPI.getCurrentStageId())
 			EkstepRendererAPI.dispatchEvent("renderer:content:close")
+			parent.postMessage({"player.telemetry.interrupt": telemetry_web.tList}, origin)
 		}
 	}
 }
@@ -339,6 +347,9 @@ function setTelemetryEventFields (globalConfig) {
 	otherData.etags = etags
 	otherData.object = globalConfig.object
 	otherData.env = globalConfig.env ? globalConfig.env : getPreviewMode()
+	if (globalConfig.otherData && globalConfig.otherData.cdata) {
+		otherData.cdata = globalConfig.otherData.cdata
+	}
 	delete otherData.dims
 	delete otherData.app
 	delete otherData.partner
