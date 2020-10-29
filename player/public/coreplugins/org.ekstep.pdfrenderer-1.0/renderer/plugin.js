@@ -16,6 +16,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     messages: {
         noInternetConnection: "Internet not available. Please connect and try again."
     },
+    optionalData: {},
     context: undefined,
     stageId: [],
     heartBeatData: {},
@@ -89,10 +90,13 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             if(!regex.test(globalConfigObj.basepath)){
                 var prefix_url = globalConfigObj.basepath || '';
                 path = prefix_url + "/" + data.artifactUrl + "?" + new Date().getSeconds();
+                context.optionalData = { "artifactUrl": path };
             }else
                 path = data.streamingUrl;
+                context.optionalData = { "streamingUrl": path };
         } else {
             path = data.artifactUrl + "?" + new Date().getSeconds();
+            context.optionalData = { "artifactUrl": path };
         }
         
         var div = document.createElement('div');
@@ -436,11 +440,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     showPDF: function(pdf_url) {
         var instance = this;
         if (!navigator.onLine) {
-            EkstepRendererAPI.logErrorEvent('No internet', {
-                'type': 'content',
-                'action': 'play',
-                'severity': 'error'
-            });
             instance.throwError({ message: instance.messages.noInternetConnection });
         }
         try {
@@ -465,8 +464,13 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 // If error re-show the upload button
                 $("#pdf-loader").css("display","none");
                 $("#upload-button").show();
-                error.message = "Missing PDF";
+                if (!error.message) {
+                    error.message = (navigator.onLine) ? "Missing PDF" : "No internet - Missing PDF";
+                }else{
+                    error.message = (navigator.onLine) ? error.message : "No internet - " + error.message;
+                }
                 error.logFullError = true;
+                error.message = error.message + "options: " + JSON.stringify(context.optionalData);
                 context.throwError(error);
             });
         }
