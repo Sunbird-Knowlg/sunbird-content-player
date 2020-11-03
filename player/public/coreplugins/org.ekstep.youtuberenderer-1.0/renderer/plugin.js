@@ -83,6 +83,10 @@ org.ekstep.contentrenderer.baseLauncher.extend({
          // Navigation template to load
          var obj = {"tempName": ""};
          EkstepRendererAPI.dispatchEvent("renderer:navigation:load", obj);
+         setTimeout(function() {
+            jQuery('custom-previous-navigation').hide();
+            jQuery('custom-next-navigation').hide();
+        }, 100);
         
     },
     pauseYoutube: function () {

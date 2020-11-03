@@ -13,8 +13,10 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     DEFAULT_SCALE_DELTA : 1.1,
     MIN_SCALE: 0.25,
     MAX_SCALE: 10.0,
-
-
+    messages: {
+        noInternetConnection: "Internet not available. Please connect and try again."
+    },
+    optionalData: {},
     context: undefined,
     stageId: [],
     heartBeatData: {},
@@ -68,6 +70,12 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         $('#pdf-buttons').css({
             display: 'none'
         });
+        setTimeout(function() {
+            jQuery('previous-navigation').show();
+            jQuery('next-navigation').show();
+            jQuery('custom-previous-navigation').hide();
+            jQuery('custom-next-navigation').hide();
+        }, 100);
     },
     start: function() {
         this._super();
@@ -82,10 +90,13 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             if(!regex.test(globalConfigObj.basepath)){
                 var prefix_url = globalConfigObj.basepath || '';
                 path = prefix_url + "/" + data.artifactUrl + "?" + new Date().getSeconds();
+                context.optionalData = { "artifactUrl": path };
             }else
                 path = data.streamingUrl;
+                context.optionalData = { "streamingUrl": path };
         } else {
             path = data.artifactUrl + "?" + new Date().getSeconds();
+            context.optionalData = { "artifactUrl": path };
         }
         
         var div = document.createElement('div');
@@ -427,8 +438,11 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }
     },
     showPDF: function(pdf_url) {
+        var instance = this;
+        if (!navigator.onLine) {
+            instance.throwError({ message: instance.messages.noInternetConnection });
+        }
         try {
-            var instance = this;
             $("#pdf-loader").css("display","block"); // use rendere loader
             console.log("MANIFEST DATA", this.manifest)
             console.log("pdfjsLib lib", pdfjsLib)
@@ -450,7 +464,13 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 // If error re-show the upload button
                 $("#pdf-loader").css("display","none");
                 $("#upload-button").show();
-                error.message = "Missing PDF"
+                if (!error.message) {
+                    error.message = (navigator.onLine) ? "Missing PDF" : "No internet - Missing PDF";
+                }else{
+                    error.message = (navigator.onLine) ? error.message : "No internet - " + error.message;
+                }
+                error.logFullError = true;
+                error.message = error.message + "options: " + JSON.stringify(context.optionalData);
                 context.throwError(error);
             });
         }
