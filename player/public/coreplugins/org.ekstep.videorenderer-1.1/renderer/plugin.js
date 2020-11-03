@@ -66,8 +66,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 'action': 'play',
                 'severity': 'error'
             });
-            data.streamingUrl = null;
-            path = data.artifactUrl;
+            data.streamingUrl = false;
+            path = prefix_url ? prefix_url + "/" + data.artifactUrl : data.artifactUrl;
         }
         this.createVideo(path, data);
         this.configOverlay();
