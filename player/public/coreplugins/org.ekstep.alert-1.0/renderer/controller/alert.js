@@ -13,9 +13,12 @@ app.compileProvider.directive("alert", ["$rootScope", "$compile", function ($roo
 			scope.title = ""
 			scope.text = ""
 			scope.type = null
+			scope.isReload = false
+			scope.reload = null
 			scope.showCancelButton = true
 			scope.detailBtnText = "Details"
 			scope.okBtnText = "Exit"
+			scope.reloadBtnText = "Retry"
 			scope.copyAnswer = "Copy"
 			scope.showDetailsPopUp = false
 			scope.rendererVersion = EkstepRendererAPI.getGlobalConfig().canvasVersion
@@ -41,12 +44,22 @@ app.compileProvider.directive("alert", ["$rootScope", "$compile", function ($roo
 			scope.showAlert = function (event, data) {
 				scope.text = data.text
 				scope.details = data.data
+				if (data.isReload && data.reload){
+					scope.isReload = data.isReload || false;
+					scope.reload = data.reload
+				}
 				scope.showPopup = true
 				scope.safeApply()
 			}
-			scope.hidePopup = function () {
+			scope.hidePopup = function (reload) {
 				scope.showPopup = false
-				if (typeof cordova !== "undefined") exitApp()
+				if (!reload){
+					if (typeof cordova !== "undefined") exitApp()
+				}else {
+					scope.reload();
+				}
+				scope.isReload = false
+				scope.reload = null
 				scope.safeApply()
 			}
 			scope.showDetails = function () {

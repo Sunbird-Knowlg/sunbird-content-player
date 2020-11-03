@@ -309,7 +309,8 @@
                             <button ng-show="showDetailsPopUp" id="copyButton" ng-click="getUrlLink();">{{copyAnswer}}</button>
                         </div>
                         <div class="col">
-                            <button ng-click="hidePopup();">{{okBtnText}}</button>
+                            <button ng-if="!isReload" ng-click="hidePopup();">{{okBtnText}}</button>
+                            <button ng-if="isReload" ng-click="hidePopup(true);">{{reloadBtnText}}</button>
                         </div>
                     </div>
                     <div id="popup-details-container" ng-if="showDetailsPopUp">

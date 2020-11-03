@@ -17,6 +17,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     stageId: undefined,
     heartBeatData: {},
     enableHeartBeatEvent: false,
+    isReload:false,
     _constants: {
         mimeType: ["video/mp4", "video/webm"],
         events: {
@@ -288,16 +289,35 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             instance.seeked("videostage", Math.floor(instance.videoPlayer.currentTime()) * 1000);
         });
 
-        if (data.streamingUrl) {
-            videoPlayer.on("error", function (e) {
+        videoPlayer.on("error", function (e) {
+            if (!instance.isReload) {
+                EventBus.dispatch("renderer:alert:show", undefined, {
+                    title: "Error",
+                    text: data.streamingUrl ? instance.messages.unsupportedVideo : "Unsupported Video",
+                    type: "error",
+                    data: "Video URL: " + path,
+                    isReload: true,
+                    reload: function(){
+                        instance.logTelemetry("TOUCH", "Retry", "TOUCH", {
+                            stageId: "videostage",
+                            subtype: ''
+                        });
+                        instance.reload = true;
+                        instance.cleanUp();
+                        delete content["streamingUrl"];
+                        instance.createVideo(data.artifactUrl, content);
+                    }
+                });
+            }else {
                 EventBus.dispatch("renderer:alert:show", undefined, {
                     title: "Error",
                     text: instance.messages.unsupportedVideo,
                     type: "error",
                     data: "Video URL: " + path
                 });
-            });
-        }
+                instance.postError(error);
+            }
+        });
     },
     addYOUTUBEListeners: function (videoPlayer) {
         var instance = this;
@@ -414,6 +434,16 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         EkstepRendererAPI.dispatchEvent('renderer:stagereload:show');
         EkstepRendererAPI.dispatchEvent("renderer:previous:show");
         EkstepRendererAPI.removeEventListener('renderer:launcher:clean', this.cleanUp, this);
+    },
+    postError: function(error){
+        var origin = ""
+        if (!window.location.origin) {
+            origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ":" + window.location.port : "")
+        } else {
+            origin = window.location.origin
+        }
+
+        parent.postMessage({"player.video-renderer.error": error}, origin)
     }
 });
 
