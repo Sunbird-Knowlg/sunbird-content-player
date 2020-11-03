@@ -17,6 +17,8 @@ app.compileProvider.directive("alert", ["$rootScope", "$compile", function ($roo
 			scope.detailBtnText = "Details"
 			scope.okBtnText = "Exit"
 			scope.copyAnswer = "Copy"
+			scope.callback = function (){
+			}
 			scope.showDetailsPopUp = false
 			scope.rendererVersion = EkstepRendererAPI.getGlobalConfig().canvasVersion
 			scope.detailsIcon = downIcon
@@ -42,9 +44,12 @@ app.compileProvider.directive("alert", ["$rootScope", "$compile", function ($roo
 				scope.text = data.text
 				scope.details = data.data
 				scope.showPopup = true
+				scope.okBtnText = data.okBtnText ? data.okBtnText : scope.okBtnText;
+				scope.callback = data.callback ? data.callback : scope.callback;
 				scope.safeApply()
 			}
 			scope.hidePopup = function () {
+				scope.callback();
 				scope.showPopup = false
 				if (typeof cordova !== "undefined") exitApp()
 				scope.safeApply()

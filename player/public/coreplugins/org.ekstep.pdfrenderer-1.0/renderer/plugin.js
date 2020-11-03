@@ -471,6 +471,17 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 }
                 error.logFullError = true;
                 error.message = error.message + "options: " + JSON.stringify(context.optionalData);
+                EventBus.dispatch("renderer:alert:show", undefined, {
+                    title: "Error",
+                    text: "Missing PDF",
+                    type: "error",
+                    data: error,
+                    okBtnText: "Open",
+                    callback : function(){
+                        instance.postError(error);
+                        window.open(content.artifactUrl, "_blank")
+                    }
+                  });
                 context.throwError(error);
             });
         }
@@ -533,6 +544,16 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         EkstepRendererAPI.getTelemetryService().navigate(stageId, stageTo, {
             "duration": (Date.now()/1000) - window.PLAYER_STAGE_START_TIME
         });
+    },
+    postError: function(error){
+        var origin = ""
+        if (!window.location.origin) {
+            origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ":" + window.location.port : "")
+        } else {
+            origin = window.location.origin
+        }
+
+        parent.postMessage({"player.video-renderer.error": error}, origin)
     }
 });
 
