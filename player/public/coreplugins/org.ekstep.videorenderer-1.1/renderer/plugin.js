@@ -29,9 +29,10 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         EkstepRendererAPI.addEventListener("renderer:overlay:unmute", this.onOverlayAudioUnmute, this);
     },
     validateUrlPath : function(path) {
-        jQuery.ajax({
+        return jQuery.ajax({
             url : path,
             type: "GET",
+            async: false,
             success: function()
             {
                 return true;
@@ -40,7 +41,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             {
                return jqXHR
             }
-        });
+        }).responseText;
     },
     start: function () {
         this._super();
@@ -59,11 +60,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             path = data.artifactUrl;
         }
         if(this.validateUrlPath(path)) {
-            instance.logTelemetry('TOUCH', {
-                stageId: 'videostage',
-                subtype: "STREAM_SUPPORTED",
-                values: ''
-            });
         } else {
             EkstepRendererAPI.logErrorEvent('Streaming Url Not Supported', {
                 'type': 'content',
