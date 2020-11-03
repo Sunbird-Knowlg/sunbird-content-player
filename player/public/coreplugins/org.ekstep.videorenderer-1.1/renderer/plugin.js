@@ -28,6 +28,21 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         EkstepRendererAPI.addEventListener("renderer:overlay:mute", this.onOverlayAudioMute, this);
         EkstepRendererAPI.addEventListener("renderer:overlay:unmute", this.onOverlayAudioUnmute, this);
     },
+    validateUrlPath : function(path) {
+        return jQuery.ajax({
+            url : path,
+            type: "GET",
+            async: false,
+            success: function()
+            {
+                return true;
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+               return jqXHR
+            }
+        }).responseText;
+    },
     start: function () {
         this._super();
         var data = _.clone(content);
@@ -44,8 +59,29 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         } else {
             path = data.artifactUrl;
         }
+        path = this.checkForValidStreamingUrl(path,data);
         this.createVideo(path, data);
         this.configOverlay();
+    },
+    checkForValidStreamingUrl(path,data) {
+        if(this.validateUrlPath(path)) {
+        } else {
+            EkstepRendererAPI.logErrorEvent('Streaming Url Not Supported', {
+                'type': 'content',
+                'action': 'play',
+                'severity': 'error'
+            });
+            var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
+            var prefix_url = globalConfigObj.basepath || '';
+            data.streamingUrl = false;
+            var regex = new RegExp("^(http|https)://", "i");
+            if ((window.cordova || !isbrowserpreview) && !regex.test(globalConfigObj.basepath)) {
+                path = prefix_url ? prefix_url + "/" + data.artifactUrl : data.artifactUrl;
+            } else {
+                path = data.artifactUrl;
+            }
+        }
+        return path;
     },
     createVideo: function (path, data) {
         // User has to long press to play/pause or mute/unmute the video in mobile view.
