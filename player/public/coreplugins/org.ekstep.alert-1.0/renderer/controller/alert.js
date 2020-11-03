@@ -17,8 +17,7 @@ app.compileProvider.directive("alert", ["$rootScope", "$compile", function ($roo
 			scope.detailBtnText = "Details"
 			scope.okBtnText = "Exit"
 			scope.copyAnswer = "Copy"
-			scope.callback = function (){
-			}
+			scope.callback = function (){}
 			scope.showDetailsPopUp = false
 			scope.rendererVersion = EkstepRendererAPI.getGlobalConfig().canvasVersion
 			scope.detailsIcon = downIcon
