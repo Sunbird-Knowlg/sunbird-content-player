@@ -66,6 +66,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 'action': 'play',
                 'severity': 'error'
             });
+            var prefix_url = globalConfigObj.basepath || '';
             data.streamingUrl = false;
             path = prefix_url ? prefix_url + "/" + data.artifactUrl : data.artifactUrl;
         }
