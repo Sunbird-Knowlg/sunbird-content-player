@@ -552,7 +552,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             origin = window.location.origin
         }
 
-        parent.postMessage({"player.video-renderer.error": error}, origin)
+        parent.postMessage({"player.pdf-renderer.error": error}, origin)
     }
 });
 
