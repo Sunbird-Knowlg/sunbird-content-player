@@ -28,6 +28,20 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         EkstepRendererAPI.addEventListener("renderer:overlay:mute", this.onOverlayAudioMute, this);
         EkstepRendererAPI.addEventListener("renderer:overlay:unmute", this.onOverlayAudioUnmute, this);
     },
+    validateUrlPath : function(path) {
+        jQuery.ajax({
+            url : path,
+            type: "GET",
+            success: function()
+            {
+                return true;
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+               return jqXHR
+            }
+        });
+    },
     start: function () {
         this._super();
         var data = _.clone(content);
@@ -42,6 +56,21 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             } else
                 path = data.streamingUrl;
         } else {
+            path = data.artifactUrl;
+        }
+        if(this.validateUrlPath(path)) {
+            instance.logTelemetry('TOUCH', {
+                stageId: 'videostage',
+                subtype: "STREAM_SUPPORTED",
+                values: ''
+            });
+        } else {
+            EkstepRendererAPI.logErrorEvent('Streaming Url Not Supported', {
+                'type': 'content',
+                'action': 'play',
+                'severity': 'error'
+            });
+            data.streamingUrl = null;
             path = data.artifactUrl;
         }
         this.createVideo(path, data);
