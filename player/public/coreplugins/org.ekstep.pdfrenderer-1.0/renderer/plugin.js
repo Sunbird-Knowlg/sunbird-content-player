@@ -479,7 +479,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                     okBtnText: "Open",
                     callback : function(){
                         instance.postError(error);
-                        window.open(pdf_url, "_blank")
                     }
                   });
                 context.throwError(error);
