@@ -176,6 +176,13 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         pdfDownloadContainer.id = "pdf-download-container";
         pdfDownloadContainer.className = "download-pdf-image";
 
+        /**pdf error popup to download pdf */
+        var pdfErrorPopup = document.createElement("div");
+        var pdfErrorMessage = document.createElement("p");
+        pdfErrorPopup.id = "pdf-error-popup";
+        pdfErrorMessage.textContent = "Your internet connection is unstable. Please download the PDF to play the content.";
+        pdfErrorPopup.appendChild(pdfErrorMessage);
+
         var pdfTitleContainer = document.createElement("div");
         pdfTitleContainer.textContent = content.name;
         pdfTitleContainer.className = "pdf-name";
@@ -186,9 +193,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
         if (!window.cordova){
             pdfMetaData.appendChild(pdfDownloadContainer);
-            this.addDownloadButton(path, pdfDownloadContainer);
+            this.addDownloadButton(path, pdfDownloadContainer, true);
         }
-
 
         var pageCountContainer = document.createElement("div");
         pageCountContainer.id = "page-count-container";
@@ -269,8 +275,10 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         pdfBodyContainer.appendChild(pdfLoader);
         pdfBodyContainer.appendChild(pdfContents);
         //pdfBodyContainer.appendChild(sbPdfBody);
+        pdfBodyContainer.appendChild(pdfErrorPopup);
 
         canvasContainer.appendChild(pdfMainContainer);
+
         canvasContainer.appendChild(pdfBodyContainer);
 
         document.getElementById(this.manifest.id).style.overflow = "auto";
@@ -378,15 +386,22 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             
         }
     },
-    addDownloadButton: function(path, pdfSearchContainer){
+    addDownloadButton: function(path, pdfSearchContainer, showIcon, callback){
         if(!path.length) return false;
         var instance = this;
-        var downloadBtn = document.createElement("img");
-        downloadBtn.id = "download-btn";
-        downloadBtn.src = "assets/icons/down-arrow.png";
-        downloadBtn.className = "pdf-download-btn";
+        if (showIcon){
+            var downloadBtn = document.createElement("img");
+            downloadBtn.id = "download-btn";
+            downloadBtn.src = "assets/icons/down-arrow.png";
+            downloadBtn.className = "pdf-download-btn";
+        }else {
+            var downloadBtn = document.createElement("BUTTON");
+            downloadBtn.textContent = "Download PDF";
+            downloadBtn.className = "sb-btn sb-btn-normal sb-btn-primary";
+        }
         downloadBtn.onclick = function(){
-            window.open(path, '_blank');
+            callback && callback();
+            if (!window.cordova) window.open(path, '_blank');
             context.logInteractEvent("TOUCH", "Download", "TOUCH", {
                 stageId: context.CURRENT_PAGE.toString(),
                 subtype: ''
@@ -443,6 +458,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             instance.throwError({ message: instance.messages.noInternetConnection });
         }
         try {
+            $("#pdf-error-popup").css("display","none");
             $("#pdf-loader").css("display","block"); // use rendere loader
             console.log("MANIFEST DATA", this.manifest)
             console.log("pdfjsLib lib", pdfjsLib)
@@ -471,17 +487,16 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 }
                 error.logFullError = true;
                 error.message = error.message + "options: " + JSON.stringify(context.optionalData);
-                EventBus.dispatch("renderer:alert:show", undefined, {
-                    title: "Error",
-                    text: "Missing PDF",
-                    type: "error",
-                    data: error,
-                    okBtnText: "Open",
-                    callback : function(){
-                        instance.postError(error);
-                    }
-                  });
-                context.throwError(error);
+                $("#pdf-error-popup").css("display","flex");
+                var pdfErrorPopup = $("#pdf-error-popup")[0];
+                instance.addDownloadButton(pdf_url, pdfErrorPopup, false, function(){
+                    instance.postError(error);
+                });
+                EkstepRendererAPI.logErrorEvent(error, {
+                    'type': 'content',
+                    'action': 'play',
+                    'severity': 'error'
+                });
             });
         }
         catch (e){
