@@ -194,7 +194,6 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
                     trackable: 'Yes'
                 }
             }));
-            window.cordova && $scope.openGenie();
             return;
         }else{
             $rootScope.content = window.content = content = contentMetadata;
