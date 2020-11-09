@@ -202,7 +202,6 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
             $rootScope.content = window.content = content = contentMetadata;
         }
         
-        
         if(content.mimeType === "video/x-youtube"){
             contentToPlay.content.isAvailableLocally = false;
         }
