@@ -184,10 +184,19 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
 
         var contentToPlay = (contentType === 'previous') ? $scope.previousContent[contentId] : $scope.nextContent[contentId];
         var contentMetadata = {};
-        if(contentToPlay){
-            contentMetadata = contentToPlay.content.contentData;
-            _.extend(contentMetadata,  _.pick(contentToPlay.content, "hierarchyInfo", "isAvailableLocally", "basePath", "rollup"));
-            contentMetadata.basepath = contentMetadata.basePath;
+        if (contentToPlay.content && contentToPlay.content.trackableParentInfo){
+            var trackableParentInfo = contentToPlay.content.trackableParentInfo;
+            window.postMessage(JSON.stringify({
+                event: 'renderer:navigate',
+                data: {
+                    identifier: trackableParentInfo.identifier,
+                    hierarchyInfo: trackableParentInfo.hierarchyInfo,
+                    trackable: 'Yes'
+                }
+            }));
+            window.cordova && $scope.openGenie();
+            return;
+        }else{
             $rootScope.content = window.content = content = contentMetadata;
         }
         
