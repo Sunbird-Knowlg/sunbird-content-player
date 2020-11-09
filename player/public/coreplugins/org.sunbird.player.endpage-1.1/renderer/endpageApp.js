@@ -195,14 +195,13 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
                 }
             }));
             return;
-        }
-        
-        if(contentToPlay.content) {
+        }else if (contentToPlay.content){
             contentMetadata = contentToPlay.content.contentData;
             _.extend(contentMetadata,  _.pick(contentToPlay.content, "hierarchyInfo", "isAvailableLocally", "basePath", "rollup"));
             contentMetadata.basepath = contentMetadata.basePath;
             $rootScope.content = window.content = content = contentMetadata;
         }
+        
         
         if(content.mimeType === "video/x-youtube"){
             contentToPlay.content.isAvailableLocally = false;
