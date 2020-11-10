@@ -490,6 +490,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 $("#pdf-error-popup").css("display","flex");
                 var pdfErrorPopup = $("#pdf-error-popup")[0];
                 instance.addDownloadButton(pdf_url, pdfErrorPopup, false, function(){
+                    error.pdfUrl = pdf_url;
                     instance.postError(error);
                 });
                 EkstepRendererAPI.logErrorEvent(error, {
@@ -567,7 +568,11 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             origin = window.location.origin
         }
 
-        parent.postMessage({"player.pdf-renderer.error": error}, origin)
+        if (window.cordova){
+            window.postMessage({"player.pdf-renderer.error": error}, origin)
+        }else{
+            parent.postMessage({"player.pdf-renderer.error": error}, origin)
+        }
     }
 });
 
