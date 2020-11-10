@@ -195,7 +195,10 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
                 }
             }));
             return;
-        }else{
+        }else if (contentToPlay.content){
+            contentMetadata = contentToPlay.content.contentData;
+            _.extend(contentMetadata,  _.pick(contentToPlay.content, "hierarchyInfo", "isAvailableLocally", "basePath", "rollup"));
+            contentMetadata.basepath = contentMetadata.basePath;
             $rootScope.content = window.content = content = contentMetadata;
         }
         
