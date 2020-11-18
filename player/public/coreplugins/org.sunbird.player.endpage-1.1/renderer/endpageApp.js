@@ -185,7 +185,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
         var contentToPlay = (contentType === 'previous') ? $scope.previousContent[contentId] : $scope.nextContent[contentId];
         var contentMetadata = {};
 
-        if(window.cordova && contentToPlay.content && !contentToPlay.content.isCompatible){
+        if (window.cordova && contentToPlay.content && !contentToPlay.content.isCompatible) {
             window.postMessage({
                 event: 'renderer:contentNotComaptible',
                 data: {
