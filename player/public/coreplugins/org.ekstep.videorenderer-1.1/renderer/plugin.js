@@ -44,6 +44,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }).responseText;
     },
     start: function () {
+        let skipValidation = false;
         this._super();
         var data = _.clone(content);
         this.heartBeatData.stageId = content.mimeType === 'video/x-youtube' ? 'youtubestage' : 'videostage';
@@ -54,31 +55,35 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 var prefix_url = globalConfigObj.basepath || '';
                 path = prefix_url ? prefix_url + "/" + data.artifactUrl : data.artifactUrl;
                 data.streamingUrl = false;
+                skipValidation = true;
             } else
                 path = data.streamingUrl;
         } else {
+            skipValidation = true;
             path = data.artifactUrl;
         }
-        path = this.checkForValidStreamingUrl(path,data);
+        path = this.checkForValidStreamingUrl(path,data,skipValidation);
         this.createVideo(path, data);
         this.configOverlay();
     },
-    checkForValidStreamingUrl(path,data) {
-        if(this.validateUrlPath(path)) {
-        } else {
-            EkstepRendererAPI.logErrorEvent('Streaming Url Not Supported', {
-                'type': 'content',
-                'action': 'play',
-                'severity': 'error'
-            });
-            var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
-            var prefix_url = globalConfigObj.basepath || '';
-            data.streamingUrl = false;
-            var regex = new RegExp("^(http|https)://", "i");
-            if ((window.cordova || !isbrowserpreview) && !regex.test(globalConfigObj.basepath)) {
-                path = prefix_url ? prefix_url + "/" + data.artifactUrl : data.artifactUrl;
+    checkForValidStreamingUrl(path,data,skipValidation) {
+        if(!skipValidation) {
+            if(this.validateUrlPath(path)) {
             } else {
-                path = data.artifactUrl;
+                EkstepRendererAPI.logErrorEvent('Streaming Url Not Supported', {
+                    'type': 'content',
+                    'action': 'play',
+                    'severity': 'error'
+                });
+                var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
+                var prefix_url = globalConfigObj.basepath || '';
+                data.streamingUrl = false;
+                var regex = new RegExp("^(http|https)://", "i");
+                if ((window.cordova || !isbrowserpreview) && !regex.test(globalConfigObj.basepath)) {
+                    path = prefix_url ? prefix_url + "/" + data.artifactUrl : data.artifactUrl;
+                } else {
+                    path = data.artifactUrl;
+                }
             }
         }
         return path;
