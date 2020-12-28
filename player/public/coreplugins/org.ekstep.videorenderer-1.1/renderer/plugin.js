@@ -49,7 +49,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var data = _.clone(content);
         this.heartBeatData.stageId = content.mimeType === 'video/x-youtube' ? 'youtubestage' : 'videostage';
         var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
-        if(content.mimeType == 'audio/mp3') {
+        if(content.mimeType === "audio/mp3") {
             skipValidation = true;
             data.streamingUrl = false;
             var regex = new RegExp("^(http|https)://", "i");
