@@ -50,6 +50,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         this.heartBeatData.stageId = content.mimeType === 'video/x-youtube' ? 'youtubestage' : 'videostage';
         var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
         if(content.mimeType == 'audio/mp3') {
+            skipValidation = true;
+            data.streamingUrl = false;
             var regex = new RegExp("^(http|https)://", "i");
             if (!regex.test(globalConfigObj.basepath)) {
                 var prefix_url = globalConfigObj.basepath || '';
@@ -57,8 +59,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             } else {
                 path = data.artifactUrl;
             }
-            skipValidation = true;
-            data.streamingUrl = false;
         } else if (window.cordova || !isbrowserpreview) {
             var regex = new RegExp("^(http|https)://", "i");
             if (!regex.test(globalConfigObj.basepath)) {
