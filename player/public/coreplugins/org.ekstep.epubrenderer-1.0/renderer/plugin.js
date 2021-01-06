@@ -34,7 +34,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 EkstepRendererAPI.dispatchEvent('renderer:content:end');
                 instance.removeProgressElements();
             } else {
-                instance.book.nextPage();
+                instance.rendition.next();
             }
         }, this);
         
@@ -47,10 +47,10 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             }, 100);
             if(instance.currentPage === 2) {
                 // This is needed because some ePubs do not go back to the cover page on `book.prevPage()`
-                instance.book.gotoPage(1);
+                instance.rendition.gotoPage(1);
                 instance.logTelemetryNavigate("2", "1");
             } else {
-                instance.book.prevPage();
+                instance.rendition.prev();
             }
             instance.lastPage = false;
         }, this);
@@ -107,15 +107,29 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             height: document.getElementById('gameArea').offsetHeight,
             spreads: false
         };
-        this.book = ePub(epubPath, epubOptions);
-        this.book.setStyle("padding-right", "1px");
+        var epubOptionsToDisplay = {  spread: false,flow: "scrolled-doc", width: document.getElementById('gameArea').offsetWidth, height: document.getElementById('gameArea').offsetHeight }
+        this.book = ePub(epubPath);
+        /*this.book.setStyle("padding-right", "1px");
         this.book.setStyle("padding-left", "1px");
         this.book.setStyle("height", "100%");
-        this.book.setStyle("overflow", "auto");
-        this.book.forceSingle(true);
-        this.book.renderTo(this.manifest.id);
-        this.addEventHandlers();
-        this.initProgressElements();
+        this.book.setStyle("overflow", "auto");*/
+        //this.book.forceSingle(true);
+        //this.book.renderTo(this.manifest.id);
+        this.rendition = this.book.renderTo(this.manifest.id,epubOptionsToDisplay);
+        //this.rendition.forceSingle(true)
+        var displayed = this.rendition.display();
+        var instance = this;
+        displayed.then(function() {
+            console.log("aHello");
+            instance.addEventHandlers();
+            instance.initProgressElements();
+            let currentLocation = instance.rendition.currentLocation();
+            instance._start = currentLocation.start.cfi;
+            instance.totalPages = instance.book.spine.length;
+            if(instance.totalPages <= 1) instance.lastPage = true; // if all pages are non linear or only one page is linear
+                instance.updateProgressElements();
+        });
+       
     },
 
     // Get the total number of actual pages to render
@@ -139,19 +153,19 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
     addEventHandlers: function () {
         var instance = this;
-        instance.book.generatePagination().then(function (data) {
-            instance._start = data[0].cfi;
-            instance.totalPages = instance.getTotalPages();
-            if(instance.totalPages <= 1) instance.lastPage = true; // if all pages are non linear or only one page is linear
+        instance.rendition.on("relocated",function(location) {
+            let currentLocation = instance.rendition.currentLocation();
+        //instance.book.on('book:pageChanged', function (data) {
+            instance.logTelemetryInteract(location.start);
+            instance.logTelemetryNavigate(location.start, location.end);
+            if(location.atStart == true) {
+                instance.currentPage = 1;
+            } else {
+                instance.currentPage = location.start.index;
+            }
+            
             instance.updateProgressElements();
-        });
-
-        instance.book.on('book:pageChanged', function (data) {
-            instance.logTelemetryInteract(instance.currentPage.toString());
-            instance.logTelemetryNavigate(instance.currentPage.toString(), data.anchorPage.toString());
-            instance.currentPage = data.anchorPage;
-            instance.updateProgressElements();
-            if (instance.book.pagination.lastPage === data.anchorPage  || instance.book.pagination.lastPage === data.pageRange[1] || instance.totalPages === data.anchorPage ) {
+            if (currentLocation.atEnd == true ) {
                 instance.lastPage = true;
             }
         });
