@@ -10,11 +10,11 @@
         "dependencies": [
             {
                 "type": "js",
-                "src": "renderer/libs/epub.min.js"
+                "src": "renderer/libs/jszip.min.js"
             },
             {
                 "type": "js",
-                "src": "renderer/libs/jszip.min.js"
+                "src": "renderer/libs/epub.min.js"
             }
         ]
     },
