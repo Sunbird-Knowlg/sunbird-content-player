@@ -109,14 +109,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         };
         var epubOptionsToDisplay = {  spread: false,flow: "scrolled-doc", width: document.getElementById('gameArea').offsetWidth, height: document.getElementById('gameArea').offsetHeight }
         this.book = ePub(epubPath);
-        /*this.book.setStyle("padding-right", "1px");
-        this.book.setStyle("padding-left", "1px");
-        this.book.setStyle("height", "100%");
-        this.book.setStyle("overflow", "auto");*/
-        //this.book.forceSingle(true);
-        //this.book.renderTo(this.manifest.id);
         this.rendition = this.book.renderTo(this.manifest.id,epubOptionsToDisplay);
-        //this.rendition.forceSingle(true)
         var displayed = this.rendition.display();
         var instance = this;
         displayed.then(function() {
@@ -158,14 +151,10 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         //instance.book.on('book:pageChanged', function (data) {
             instance.logTelemetryInteract(location.start);
             instance.logTelemetryNavigate(location.start, location.end);
-            if(location.atStart == true) {
-                instance.currentPage = 1;
-            } else {
-                instance.currentPage = location.start.index;
-            }
+            instance.currentPage = location.end.index+1;
             
             instance.updateProgressElements();
-            if (currentLocation.atEnd == true ) {
+            if (currentLocation.atEnd == true || instance.currentPage == instance.totalPages) {
                 instance.lastPage = true;
             }
         });
