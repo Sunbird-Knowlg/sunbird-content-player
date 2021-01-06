@@ -45,13 +45,13 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 jQuery('custom-previous-navigation').show();
                 jQuery('custom-next-navigation').show();
             }, 100);
-            if(instance.currentPage === 2) {
+            /*if(instance.currentPage === 2) {
                 // This is needed because some ePubs do not go back to the cover page on `book.prevPage()`
-                instance.rendition.gotoPage(1);
+                instance.rendition.display(1);
                 instance.logTelemetryNavigate("2", "1");
-            } else {
+            } else {*/
                 instance.rendition.prev();
-            }
+            //}
             instance.lastPage = false;
         }, this);
 
@@ -156,6 +156,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             instance.updateProgressElements();
             if (currentLocation.atEnd == true || instance.currentPage == instance.totalPages) {
                 instance.lastPage = true;
+            } else {
+                instance.lastPage = false;
             }
         });
     },
