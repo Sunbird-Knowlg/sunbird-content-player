@@ -1081,8 +1081,8 @@ window.EkstepRendererAPI = {
 	raiseInternetConnectivityError: function () {
 		window.addEventListener('offline', (e) => {
 			this.logErrorEvent({
-				"status": "CPV1_INT_CONNET_01",
-				"stack": "CPV1_INT_CONNET_01: content load to failed , No Internet Available"
+				"status": "CPV1_INT_CONNECT_01",
+				"stack": "CPV1_INT_CONNECT_01: content load to failed , No Internet Available"
 			}, {
 				'type': 'content failed to load , no internet available'
 			});
