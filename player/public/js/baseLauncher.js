@@ -37,7 +37,6 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
 	},
 
 	initLauncher: function () {
-		// EkstepRendererAPI.raiseInternetConnectivityError();
 		console.info("Base launcher should constuct.")
 	},
 
