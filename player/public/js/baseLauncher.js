@@ -23,6 +23,7 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
      */
 	init: function (manifest) {
 		try {
+			EkstepRendererAPI.raiseInternetConnectivityError();
 			EkstepRendererAPI.addEventListener("renderer:telemetry:end", this.endTelemetry, this)
 			EkstepRendererAPI.addEventListener("renderer:content:end", this.end, this)
 			EkstepRendererAPI.addEventListener("renderer:content:replay", this.replay, this)
