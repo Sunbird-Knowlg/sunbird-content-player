@@ -129,7 +129,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     _loadVideo: function (path, data) {
         var instance = this;
-        EkstepRendererAPI.raiseInternetConnectivityError();
         if (data.streamingUrl && !navigator.onLine) {
             instance.throwError({ message: instance.messages.noInternetConnection });
             if (typeof cordova !== "undefined") exitApp();

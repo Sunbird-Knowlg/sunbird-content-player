@@ -1078,14 +1078,23 @@ window.EkstepRendererAPI = {
 	isStreamingContent: function () {
 		return org.ekstep.contentrenderer.isStreamingContent()
 	},
+	isOfflineEventListner: false,
 	raiseInternetConnectivityError: function () {
-		window.addEventListener('offline', (e) => {
-			this.logErrorEvent({
-				"status": "CPV1_INT_CONNECT_01",
-				"stack": "CPV1_INT_CONNECT_01: content load to failed , No Internet Available"
-			}, {
-				'type': 'content failed to load , no internet available'
+			window.addEventListener('offline', (e) => {
+				if (!this.isOfflineEventListner) {					
+					this.logErrorEvent({
+						"status": "CPV1_INT_CONNECT_01",
+						"stack": "CPV1_INT_CONNECT_01: content load to failed , No Internet Available"
+					}, {
+						'type': 'content failed to load , no internet available'
+					});
+				}
+				this.isOfflineEventListner = true;
 			});
-		});
+
+			window.addEventListener('online', (e) => {
+				this.isOfflineEventListner = false;
+			});
+		
 	}
 }
