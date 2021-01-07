@@ -102,17 +102,13 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     renderEpub: function (epubPath) {
         jQuery('#gameArea').css({left: '10%', top: '0px', width: "80%", height: "90%", margin: "5% 0 0 0"});
-        var epubOptions = {
-            width: document.getElementById('gameArea').offsetWidth,
-            height: document.getElementById('gameArea').offsetHeight,
-            spreads: false
-        };
         var epubOptionsToDisplay = {  spread: false,flow: "scrolled-doc", width: document.getElementById('gameArea').offsetWidth, height: document.getElementById('gameArea').offsetHeight }
         this.book = ePub(epubPath);
         this.rendition = this.book.renderTo(this.manifest.id,epubOptionsToDisplay);
         var displayed = this.rendition.display();
         var instance = this;
         displayed.then(function() {
+            instance.rendition.moveTo(3);
             console.log("aHello");
             instance.addEventHandlers();
             instance.initProgressElements();
@@ -120,7 +116,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             instance._start = currentLocation.start.cfi;
             instance.totalPages = instance.book.spine.length;
             if(instance.totalPages <= 1) instance.lastPage = true; // if all pages are non linear or only one page is linear
-                instance.updateProgressElements();
+            instance.updateProgressElements();
         });
        
     },
