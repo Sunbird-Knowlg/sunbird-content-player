@@ -131,11 +131,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var instance = this;
         EkstepRendererAPI.raiseInternetConnectivityError();
         if (data.streamingUrl && !navigator.onLine) {
-            EkstepRendererAPI.logErrorEvent('No internet', {
-                'type': 'content',
-                'action': 'play',
-                'severity': 'error'
-            });
             instance.throwError({ message: instance.messages.noInternetConnection });
             if (typeof cordova !== "undefined") exitApp();
             return false;
