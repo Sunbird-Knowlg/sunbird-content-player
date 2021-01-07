@@ -129,6 +129,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     _loadVideo: function (path, data) {
         var instance = this;
+        EkstepRendererAPI.raiseInternetConnectivityError();
         if (data.streamingUrl && !navigator.onLine) {
             EkstepRendererAPI.logErrorEvent('No internet', {
                 'type': 'content',

@@ -1077,5 +1077,15 @@ window.EkstepRendererAPI = {
      */
 	isStreamingContent: function () {
 		return org.ekstep.contentrenderer.isStreamingContent()
+	},
+	raiseInternetConnectivityError: function () {
+		window.addEventListener('offline', (e) => {
+			this.logErrorEvent({
+				"status": "CPV1_INT_CONNET_01",
+				"stack": "CPV1_INT_CONNET_01: content load to failed , No Internet Available"
+			}, {
+				'type': 'content failed to load , no internet available'
+			});
+		});
 	}
 }
