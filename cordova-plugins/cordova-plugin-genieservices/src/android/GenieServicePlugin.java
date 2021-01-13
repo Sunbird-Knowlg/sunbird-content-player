@@ -109,6 +109,9 @@ public class GenieServicePlugin extends CordovaPlugin {
         } else if(action.equals("getRelevantContent")) {
             String request = args.getString(0);
             contentService.getRelevantContent(request, new GenieServicesResponse(callbackContext));
+        } else if(action.equals("checkMaxLimit")) {
+            String request = args.getString(0);
+            contentService.checkMaxLimit(request, new GenieServicesResponse(callbackContext));
         } else if(action.equals("getRelatedContent")) {
             JSONObject contentExtras = null;
             if(!args.getString(0).equals("null")) {
