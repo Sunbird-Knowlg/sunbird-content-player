@@ -55,6 +55,11 @@ genieservice.prototype.getRelevantContent = function(req) {
     return this.handleAction("getRelevantContent", [req]);
 }
 
+// get max litmit content of particular content
+genieservice.prototype.checkMaxLimit = function(req) {
+    return this.handleAction("checkMaxLimit", [req]);
+}
+
 genieservice.prototype.getLearnerAssessment = function(uid, id, contentExtras) {
     return this.handleAction("getLearnerAssessment", [uid, id, contentExtras]);
 }
