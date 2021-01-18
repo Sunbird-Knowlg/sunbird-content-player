@@ -109,7 +109,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         video.style.position = 'absolute';
         video.id = "videoElement";
         video.autoplay = true;
-        video.className = 'vjs-default-skin';
+        video.className = 'vjs-default-skin vjs-big-play-centered';
         document.body.appendChild(video);
 
         EkstepRendererAPI.dispatchEvent("renderer:content:start");
