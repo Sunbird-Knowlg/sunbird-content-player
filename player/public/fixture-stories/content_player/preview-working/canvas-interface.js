@@ -10,6 +10,10 @@ if (!window.genieservice) {
     return window.parent.handleAction('getAllUserProfile', [profileRequest]);
   };
 
+  var checkMaxLimit = function checkMaxLimit(request) {
+    return window.parent.handleAction('checkMaxLimit', [request]);
+  };
+
   var setUser = function setUser(userId) {
     return window.parent.handleAction('setUser', [userId]);
   };
@@ -60,6 +64,7 @@ if (!window.genieservice) {
     return {
       getCurrentUser: getCurrentUser,
       getAllUserProfile: getAllUserProfile,
+      checkMaxLimit: checkMaxLimit,
       setUser: setUser,
       getContent: getContent,
       getRelevantContent: getRelevantContent,

@@ -264,6 +264,23 @@ org.ekstep.service.content = new (org.ekstep.service.mainService.extend({
 				})
 		})
 	},
+	checkMaxLimit: function (request) {
+		return new Promise(function (resolve, reject) {
+			org.ekstep.service.renderer.checkMaxLimit(request)
+				.then(function (contents) {
+					if (contents) {
+						resolve(contents)
+					} else {
+						// eslint-disable-next-line
+                        reject("Contents is not available.")
+					}
+				})
+				.catch(function (err) {
+					console.error(AppErrors.contetnPathFetch, err)
+					reject(err)
+				})
+		})
+	},
 	cacheTelemetryEvents: function (event) {
 		if (event.eid.toLowerCase() === this.constant.ASSESS.toLowerCase()) {
 			var eventObj = _.clone(event)

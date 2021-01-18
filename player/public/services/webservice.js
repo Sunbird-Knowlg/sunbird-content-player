@@ -53,6 +53,12 @@ org.ekstep.service.web = new (org.ekstep.service.mainService.extend({
 		})
 	},
 
+	checkMaxLimit: function () {
+		return new Promise(function (resolve, reject) {
+			resolve(false)
+		})
+	},
+
 	setUser: function (uid) {
 		return new Promise(function (resolve, reject) {
 			resolve(true)
