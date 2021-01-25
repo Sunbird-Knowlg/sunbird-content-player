@@ -268,12 +268,7 @@ org.ekstep.service.content = new (org.ekstep.service.mainService.extend({
 		return new Promise(function (resolve, reject) {
 			org.ekstep.service.renderer.checkMaxLimit(request)
 				.then(function (contents) {
-					if (contents) {
-						resolve(contents)
-					} else {
-						// eslint-disable-next-line
-                        reject("Contents is not available.")
-					}
+					resolve(contents)
 				})
 				.catch(function (err) {
 					console.error(AppErrors.contetnPathFetch, err)
