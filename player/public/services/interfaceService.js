@@ -267,8 +267,8 @@ org.ekstep.service.content = new (org.ekstep.service.mainService.extend({
 	checkMaxLimit: function (request) {
 		return new Promise(function (resolve, reject) {
 			org.ekstep.service.renderer.checkMaxLimit(request)
-				.then(function (data) {
-					resolve(data)
+				.then(function (contents) {
+					resolve(contents)
 				})
 				.catch(function (err) {
 					console.error(AppErrors.contetnPathFetch, err)
