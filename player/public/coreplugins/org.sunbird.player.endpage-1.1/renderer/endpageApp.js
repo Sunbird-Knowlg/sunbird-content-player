@@ -193,6 +193,14 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
                 })
                 return;
             }
+            if (window.cordova && contentToPlay.content && !contentToPlay.content.isCompatible) {
+                window.postMessage({
+                    event: 'renderer:contentNotComaptible',
+                    data: {
+                    }
+                });
+                return;
+            }
             if (contentToPlay.content && contentToPlay.content.trackableParentInfo){
                 var trackableParentInfo = contentToPlay.content.trackableParentInfo;
                 window.postMessage(JSON.stringify({
