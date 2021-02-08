@@ -230,7 +230,21 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
          * @fires renderer:content:replay
          * @memberof EkstepRendererEvents
          */
-        EkstepRendererAPI.dispatchEvent('renderer:content:replay');
+        if (content.primaryCategory && content.primaryCategory.toLowerCase() === 'course assessment'){
+            org.ekstep.service.content.checkMaxLimit(content).then(function(response){
+                if(response){
+                    window.postMessage({
+                        event: 'renderer:maxLimitExceeded',
+                        data: {
+                        }
+                    })
+                } else{
+                    EkstepRendererAPI.dispatchEvent('renderer:content:replay');
+                }
+            });
+        }else{
+            EkstepRendererAPI.dispatchEvent('renderer:content:replay');
+        }
     }
 
     $scope.init();

@@ -94,6 +94,24 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
         });
     };
     $scope.replayCallback = function(){
+        if (content.primaryCategory && content.primaryCategory.toLowerCase() === 'course assessment'){
+            org.ekstep.service.content.checkMaxLimit(content).then(function(response){
+                if(response){
+                    window.postMessage({
+                        event: 'renderer:maxLimitExceeded',
+                        data: {
+                        }
+                    })
+                } else{
+                    $scope.replayPlayer();
+                }
+            });
+        }else{
+            $scope.replayPlayer();
+        }
+    };
+
+    $scope.replayPlayer = function(){
         EkstepRendererAPI.hideEndPage();
         EkstepRendererAPI.dispatchEvent('renderer:content:replay');
     };
