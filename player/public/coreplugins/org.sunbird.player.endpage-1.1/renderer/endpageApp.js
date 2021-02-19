@@ -96,10 +96,14 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     $scope.replayCallback = function(){
         if (content.primaryCategory && content.primaryCategory.toLowerCase() === 'course assessment'){
             org.ekstep.service.content.checkMaxLimit(content).then(function(response){
-                if(response){
+                if (response.isCloseButtonClicked){
+                    return;
+                }
+                if(response.limitExceeded){
                     window.postMessage({
                         event: 'renderer:maxLimitExceeded',
                         data: {
+                            "initialtedFrom": "replay"
                         }
                     })
                 } else{
@@ -202,8 +206,11 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
 
         var contentToPlay = (contentType === 'previous') ? $scope.previousContent[contentId] : $scope.nextContent[contentId];
         var contentMetadata = {};
-        $scope.checkMaxLimit(contentToPlay, function(isMaxLimitReached){
-            if (isMaxLimitReached) {
+        $scope.checkMaxLimit(contentToPlay, function(response){
+            if (response && response.isCloseButtonClicked){
+                return;
+            }
+            else if (response && response.limitExceeded) {
                     window.postMessage({
                     event: 'renderer:maxLimitExceeded',
                     data: {
