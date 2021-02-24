@@ -72,7 +72,8 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     };
 
     $scope.replayAssessment = function(){
-        if (content.maxAttempt <= content.currentAttempt + 1){
+        content.currentAttempt = content.currentAttempt + 1
+        if (content.maxAttempt <= content.currentAttempt){
             window.postMessage('renderer:maxLimitExceeded');
             return;
         }else{
