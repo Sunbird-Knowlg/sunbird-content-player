@@ -12,6 +12,7 @@ node() {
                 cleanWs()
                 checkout scm
                 commit_hash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
+                branch_name = sh(script: 'git name-rev --name-only HEAD | rev | cut -d "/" -f1| rev', returnStdout: true).trim()
                 artifact_version = sh(script: "echo " + params.github_release_tag.split('/')[-1] + "_" + commit_hash + "_" + env.BUILD_NUMBER, returnStdout: true).trim()
                 echo "artifact_version: " + artifact_version
 
