@@ -194,8 +194,8 @@ OverlayManager = {
     moveToEndPage: function() {
         console.info("redirecting to endpage.");
         Renderer.theme._currentStage = undefined;
-        EkstepRendererAPI.dispatchEvent('renderer:telemetry:end');
         EkstepRendererAPI.dispatchEvent('renderer:content:end');
+        EkstepRendererAPI.dispatchEvent('renderer:telemetry:end');
         var stage = Renderer.theme._currentScene;
         Renderer.theme.setParam(stage.getStagestateKey(), stage._currentState);
         EkstepRendererAPI.removeHtmlElements();
