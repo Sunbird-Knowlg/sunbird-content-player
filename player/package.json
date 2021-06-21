@@ -25,7 +25,7 @@
         "copy-webpack-plugin": "^4.5.2",
         "cordova": "^6.0.0",
         "css-loader": "1.0.0",
-        "cssnano": "*",
+        "cssnano": "4.1.10",
         "expose-loader": "^0.7.5",
         "glob-all": "^3.1.0",
         "grunt": "~0.4.5",
