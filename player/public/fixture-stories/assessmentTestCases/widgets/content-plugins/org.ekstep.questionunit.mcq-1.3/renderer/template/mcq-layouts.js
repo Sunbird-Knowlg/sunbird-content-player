@@ -230,9 +230,9 @@ MCQController.horizontal.getOptionLayout = function (layout, question) {
 
     return '<div class="outer-option-container ' + layout + '">\
             <div class="option-container ' + layout + '">\
-            <div class="option-block-container">\
+            <div role="radiogroup" aria-label="Select the answer" class="option-block-container">\
             <% _.each(question.data.options,function(val,key){ %>\
-                <div class="option-block org-ekstep-questionunit-mcq-option-element<% if(val.isCorrect) { %> mcq-correct-answer<% } %>" onclick="MCQController.horizontal.onSelectOption(this, <%= key %>);MCQController.horizontal.onOptionSelected(event,<%= key %>)">\
+                <div role="radio" aria-checked="" tabindex="0" class="option-block org-ekstep-questionunit-mcq-option-element<% if(val.isCorrect) { %> mcq-correct-answer<% } %>" onclick="MCQController.horizontal.onSelectOption(this, <%= key %>);MCQController.horizontal.onOptionSelected(event,<%= key %>)">\
                     <div class="option-image-container <% if(!val.image) { %> no-image<% } %> <% if(!val.text) { %> image-only<% } %>" \>\
                   <%  if(val.image) { %>\
                     <%  if(MCQController.horizontal.isVerticalLayout) { %>\
@@ -682,9 +682,9 @@ MCQController.imagegrid.getOptionsTemplate = function (question) {
     var audioStop = 'audio_stop.png';
     return '<div class="outer-option-container ' + layout + ' imagegrid-mcq">\
     <div class="option-container ' + layout + '">\
-    <div class="option-block-container">\
+    <div role="radiogroup" aria-label="Select the answer" class="option-block-container">\
     <% _.each(question.data.options,function(val,key){ %>\
-        <div class="option-width-50 option-block org-ekstep-questionunit-mcq-option-element<% if(val.isCorrect) { %> mcq-correct-answer<% } %>" onclick="MCQController.onSelectingOption(this, <%= key %>);MCQController.horizontal.onOptionSelected(event,<%= key %>)">\
+        <div role="radio" aria-checked="" tabindex="0" class="option-width-50 option-block org-ekstep-questionunit-mcq-option-element<% if(val.isCorrect) { %> mcq-correct-answer<% } %>" onclick="MCQController.onSelectingOption(this, <%= key %>);MCQController.horizontal.onOptionSelected(event,<%= key %>)">\
             <%  if(val.audio) { %>\
               <img  src="<%= MCQController.pluginInstance.getDefaultAsset("' + audioIcon + '") %>" class="audio-icon" id="mcq-imagegird-audio-play<%=key+1%>" style="display:block"/>\
               <img  src="<%= MCQController.pluginInstance.getDefaultAsset("' + audioStop + '") %>" class="audio-icon" id="mcq-imagegird-audio-stop<%=key+1%>" style="display:none" />\
