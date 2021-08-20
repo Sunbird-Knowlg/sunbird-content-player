@@ -35,7 +35,8 @@
 
 @font-face {
     font-family: 'NotoNastaliqUrdu';
-    src: url('fonts/NotoNastaliqUrdu-Regular.woff') format('woff')
+    src: url('fonts/NotoNastaliqUrdu-Regular.woff') format('woff'),
+    url('fonts/NotoNastaliqUrdu-Regular.ttf') format('ttf')
 }
 
 @font-face {
