@@ -8,32 +8,32 @@
         <p class="gc-content-owner gc-text-elipsis" ng-if="content.owner">{{ AppLables.author }}: {{content.owner}}</p>
     </div>
     <center class="gc-ep-credits" ng-hide="content.imageCredits == null && content.voiceCredits == null && content.soundCredits == null ">
-        <input class="gc-btn-credits btn-normal" type="button" ng-click="showCredits()" />
+        <input class="gc-btn-credits btn-normal" role="button" type="button" ng-click="showCredits()" />
     </center>
     <div class="gc-ep-content-holder">
         <div class="gc-ep-assessment-cont">
             <div class="gc-ep-rating-cont">
                 <div class="gc-ep-rating" ng-if="!showFeedbackPopup">
                     <p>{{AppLables.scores}}</p>
-                    <star-rating empty-rating="icn_credit_star.png" selected-rating="filled_star.png" rating="userRating" read-only="false" max-rating="5" click="showFeedback(param)"></star-rating>
+                    <star-rating empty-rating="icn_credit_star.png" tabindex="0" aria-label="Show Feedback" selected-rating="filled_star.png" rating="userRating" read-only="false" max-rating="5"  click="showFeedback(param)"></star-rating>
                 </div>
             </div>
             <div class="gc-ep-time-score" ng-show="showFeedbackArea">
-                <div ng-class="showScore ? 'gc-ep-time ' : 'gc-ep-time-mid '" id="timeSpentArea">
+                <div ng-class="showScore ? 'gc-ep-time ' : 'gc-ep-time-mid '" tabindex="0" aria-label="{{totalTimeSpent}}" id="timeSpentArea" role="contentinfo">
                     <image ng-class="showScore ? 'img-float-left':'img-float-mid' " ng-src="{{imageBasePath}}icn_watch.png" style="position:relative;" />
                     <p class="gc-white-text gc-ep-white-title">{{totalTimeSpent}}</p>
                 </div>
-                <div class="gc-ep-score" ng-show="showScore">
+                <div class="gc-ep-score" ng-show="showScore"  tabindex="0" role="contentinfo"  aria-label="{{totalScore}}">
                     <image ng-src="{{imageBasePath}}icn_trophy.png" />
                     <p class="gc-white-text gc-ep-white-title">{{totalScore}}</p>
                 </div>
             </div>
             <div class="gc-ep-footer">
-                <div ng-click="replayContent()" class="gc-ep-footer-icons gc-ep-replay">
+                <div ng-click="replayContent()" role="button" aria-label="{{AppLables.replay}}" tabindex="0" class="gc-ep-footer-icons gc-ep-replay">
                     <img class="replay" ng-src="{{imageBasePath}}icn_replay.png" />
                     <p>{{AppLables.replay}}</p>
                 </div>
-                <div ng-if="showUser" ng-click="ep_openUserSwitchingModal()" class="gc-ep-footer-icons gc-ep-userSwitch">
+                <div ng-if="showUser"  role="button" aria-label="{{currentUser.handle}} {{AppLables.change}} " tabindex="0" ng-click="ep_openUserSwitchingModal()" class="gc-ep-footer-icons gc-ep-userSwitch">
                     <img class="user" ng-src="{{currentUser.profileImage}}" />
                     <p><b>{{currentUser.handle}}</b>
                         <br/> <small> {{AppLables.change}} </small></p>
@@ -41,7 +41,7 @@
             </div>
         </div>
         <div class="gc-ep-related-cont" ng-controller="RelatedContentCtrl">
-            <div class="gc-ep-next">
+            <div class="gc-ep-next" tabindex="0">
                 <p class="gc-ep-related-cont-next gc-text-elipsis">{{ AppLables.nextContent }}</p>
             </div>
             <div id="endPageLoader" class="gc-ep-loader">
@@ -50,7 +50,7 @@
                 </div>
             </div>
             <div class="gc-related-cont" ng-show="showRelatedContent">
-                <div class="gc-related-list" ng-repeat="story in relatedContents" ng-click="playRelatedContent(story, $index);">
+                <div class="gc-related-list" tabindex="0" ng-repeat="story in relatedContents" ng-click="playRelatedContent(story, $index);">
                     <div class="gc-related-item">
                         <p class="gc-text-elipsis gc-related-cont-title">{{story.name}}</p>
                         <div class="gc-rel-content-img">
@@ -76,7 +76,7 @@
                         <div class="gc-fd-title">
                             <p>{{AppLables.comment}}</p>
                         </div>
-                        <textarea class="gc-fd-text" ng-keyup="commentLength()" id="commentText"></textarea>
+                        <textarea class="gc-fd-text" ng-keyup="commentLength()" autofocus id="commentText"></textarea>
                         <div class="gc-fd-commentInfo">
                             <p>{{stringLeft}}</p>
                         </div>
