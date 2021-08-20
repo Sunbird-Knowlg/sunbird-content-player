@@ -21,7 +21,6 @@ node() {
                         export NVM_DIR="\$HOME/.nvm"
                         [ -s "\$NVM_DIR/nvm.sh" ] && source "\$NVM_DIR/nvm.sh" # This loads nvm
                         [ -s "\$NVM_DIR/bash_completion" ] && source "\$NVM_DIR/bash_completion" # This loads nvm bash_completion
-                        nvm install 10.16.3
                         export player_version_number=${branch_name}
                         export build_number=${commit_hash}
                         export filter_plugins=false # For the preview build generation dont split the plugins.
