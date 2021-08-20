@@ -9,7 +9,7 @@ jobs:
           path: ~/content-player
 
       - run: sudo npm install -g grunt-cli@1.2.0
-      - run: npm install
+      - run: sudo npm install
       - run: npm run build-preview ekstep
       - run: grunt compress:preview
       - run: grunt generate-libs
