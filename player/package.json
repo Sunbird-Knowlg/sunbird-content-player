@@ -13,6 +13,7 @@
         "grunt-contrib-concat": "^1.0.1",
         "jsonfile": "*",
         "node-rest-client": "3.1.0",
+        "npm": "^6.11.3",
         "underscore": "*",
         "xml2json": "*"
     },
