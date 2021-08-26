@@ -2,7 +2,7 @@
 <!-- Menu container -->
 <div class="gc-menu">
     <a ng-if="!showUser" class="gc-menu-btn old_menu" aria-controls="sideBar" [attr.aria-expanded]="false" role="button" aria-label="Open Sidebar" title="Sidebar menu" id="sideBarBtn" href="javascript:void(0)"  ng-keydown="$event.keyCode === 13 && openMenu()" ng-click="openMenu()">
-        <img class="menu-icon icon" ng-src="{{imageBasePath}}menu_icon_old.png" ng-hide="menuOpened"/>
+        <img class="menu-icon icon" ng-src="{{imageBasePath}}menu_icon_old.png" alt="Sidebar Menu Icon" ng-hide="menuOpened"/>
     </a>
     <a ng-if="showUser" class="gc-menu-btn" aria-controls="sideBar" [attr.aria-expanded]="false" role="button" aria-label="Open Sidebar" title="Sidebar menu" id="sideBarBtn" href="javascript:void(0)"  ng-keydown="$event.keyCode === 13 && openMenu()" ng-click="openMenu()">
         <img class="menu-icon icon" ng-src="{{imageBasePath}}menu_icon.png" ng-hide="menuOpened"/>
