@@ -71,18 +71,18 @@
             <div class="gc-popup-title-new">{{AppLables.feedback}}</div>
             <div class="gc-popup-body-new">
                 <div class="gc-feedback-popup">
-                    <div star-rating empty-rating="star_inactive.png" selected-rating="star_active.png" rating="popUserRating" read-only="false" max-rating="5" click="updatePopUserRating(param)"></div>
+                    <div star-rating tabindex="0" empty-rating="star_inactive.png" selected-rating="star_active.png" rating="popUserRating" read-only="false" max-rating="5" click="updatePopUserRating(param)"></div>
                     <div class="gc-fd-comments">
                         <div class="gc-fd-title">
                             <p>{{AppLables.comment}}</p>
                         </div>
-                        <textarea class="gc-fd-text" ng-keyup="commentLength()" autofocus id="commentText"></textarea>
+                        <textarea class="gc-fd-text" tabindex="0" ng-keyup="commentLength()" autofocus id="commentText"></textarea>
                         <div class="gc-fd-commentInfo">
                             <p>{{stringLeft}}</p>
                         </div>
                     </div>
                     <div ng-class="enableFeedBackButton  ? 'gc-fd-footer icon-opacity' : 'gc-fd-footer'">
-                        <input class="btn-black" type="button" value="{{AppLables.submit}}" ng-click="submitFeedback()">
+                        <input class="btn-black" type="submit" value="{{AppLables.submit}}" ng-click="submitFeedback()">
                     </div>
                 </div>
             </div>
