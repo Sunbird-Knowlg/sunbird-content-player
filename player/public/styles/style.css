@@ -2148,5 +2148,14 @@ body {
     margin-top: 0;
     width: 100%;
 }
-
+*:focus-visible{
+  border: 0.0625rem #fe0000 solid !important;
+  border-radius: 0.25rem;
+  outline: none;
+}
+input[type=radio]:focus-visible, input[type=checkbox]:focus-visible{
+    outline: 2px solid #fe0000;
+    border-radius: 5px;
+    
+  }
 /* new popup style */
