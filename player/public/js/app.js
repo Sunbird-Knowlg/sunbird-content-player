@@ -37,6 +37,9 @@ var app = angular.module("genie-canvas", ["ionic", "ngCordova", "oc.lazyLoad"])
 			mobileView.init($ionicPlatform, $timeout)
 		}
 	}).config(function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvider, $sceDelegateProvider) {
+		if (window.ionic.Platform.isIOS()) {
+			$compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|file|blob|ionic):|data:image/)
+		}
 		app.controllerProvider = $controllerProvider
 		app.compileProvider = $compileProvider
 		console.log("AppConfig", AppConfig.whiteListUrl)
