@@ -93,7 +93,7 @@ describe(
             const nextButton = await page.waitForSelector('body > div:nth-child(8) > div > div > custom-next-navigation > div > a > img');
             await nextButton.click();
             await page.screenshot({ path: '__tests__/screenshots/firstQuestin_onclick_firstTimeNextButton.png' });
-            const tryAgainButton = await page.waitForSelector('.popup-buttons-container > div.right.primary.button');
+            const tryAgainButton = await page.waitForSelector('#popup-buttons-container > div.right.primary.button');
             await tryAgainButton.click();
             await page.screenshot({ path: '__tests__/screenshots/firstQuestin_onclick_tryAgainButton.png' });
             const correctImageZoom = await page.waitForSelector('#mcq-question-container > div.bg-graphics-2 > div.outer-option-container.horizontal > div > div > div.option-block.org-ekstep-questionunit-mcq-option-element.mcq-correct-answer > div.option-image-container > div > img.option-image-zoom-icon');
@@ -107,7 +107,7 @@ describe(
             await page.screenshot({ path: '__tests__/screenshots/firstQuestin_onclick_correctOption.png' });
             await nextButton.click()
             await page.screenshot({ path: '__tests__/screenshots/firstQuestin_onclick_secondTimeNextButton.png' });
-            const correctAnswerPopupNext = await page.waitForSelector('.popup-buttons-container > div');
+            const correctAnswerPopupNext = await page.waitForSelector('#popup-buttons-container > div');
             await correctAnswerPopupNext.click();
             await page.screenshot({ path: '__tests__/screenshots/firstQuestin_onclick_correctAnswerPopNext.png' });
         })
@@ -142,7 +142,7 @@ describe(
             const nextButton = await page.waitForSelector('body > div:nth-child(8) > div > div > custom-next-navigation > div > a > img');
             await nextButton.click();
             await page.screenshot({ path: '__tests__/screenshots/secondQuestin_onclick_nextButton.png' });
-            const popupLeftNext = await page.waitForSelector('.popup-buttons-container > div.left.button');
+            const popupLeftNext = await page.waitForSelector('#popup-buttons-container > div.left.button');
             await popupLeftNext.click();
             await page.screenshot({ path: '__tests__/screenshots/secondQuestin_onclick_popupLeftNext.png' });
         })
@@ -163,7 +163,7 @@ describe(
             const nextButton = await page.waitForSelector('body > div:nth-child(8) > div > div > custom-next-navigation > div > a > img');
             await nextButton.click();
             await page.screenshot({ path: '__tests__/screenshots/thirdQuestin_onclick_nextButton1.png' });
-            const tryAgainButton = await page.waitForSelector('.popup-buttons-container > div.right.primary.button');
+            const tryAgainButton = await page.waitForSelector('#popup-buttons-container > div.right.primary.button');
             await tryAgainButton.click();
             await page.screenshot({ path: '__tests__/screenshots/thirdQuestin_onclick_tryAgainButton.png' });
             const w4 = await page.waitForSelector('#w4');
@@ -171,7 +171,7 @@ describe(
             await page.screenshot({ path: '__tests__/screenshots/thirdQuestin_onclick_question_mark.png' });
             await nextButton.click();
             await page.screenshot({ path: '__tests__/screenshots/thirdQuestin_onclick_nextButton2.png' });
-            const correctAnswerPopNext = await page.waitForSelector('.popup-buttons-container > div')
+            const correctAnswerPopNext = await page.waitForSelector('#popup-buttons-container > div')
             await correctAnswerPopNext.click();
             await page.screenshot({ path: '__tests__/screenshots/thirdQuestin_onclick_correctAnswerPopNext.png' });
         })
@@ -193,7 +193,7 @@ describe(
             const nextButton = await page.waitForSelector('body > div:nth-child(8) > div > div > custom-next-navigation > div > a > img');
             await nextButton.click();
             await page.screenshot({ path: '__tests__/screenshots/fourthQuestin_onclick_nextButton1.png' });
-            const tryAgainButton = await page.waitForSelector('.popup-buttons-container > div.right.primary.button')
+            const tryAgainButton = await page.waitForSelector('#popup-buttons-container > div.right.primary.button')
             await tryAgainButton.click();
             await page.screenshot({ path: '__tests__/screenshots/fourthQuestin_onclick_tryAgainButton.png' });
             await page.evaluate(() => {
@@ -202,7 +202,7 @@ describe(
             await page.screenshot({ path: '__tests__/screenshots/fourthQuestin_input_fields_setting_correct_value.png' });
             await nextButton.click();
             await page.screenshot({ path: '__tests__/screenshots/fourthQuestin_onclick_nextButton2.png' });
-            const correctAnswerPopNext = await page.waitForSelector('.popup-buttons-container > div');
+            const correctAnswerPopNext = await page.waitForSelector('#popup-buttons-container > div');
             await correctAnswerPopNext.click();
             await page.screenshot({ path: '__tests__/screenshots/fourthQuestin_onclick_correctAnswerPopNext.png' });
         })
@@ -219,13 +219,13 @@ describe(
             const popupClass = await page.evaluate('document.querySelector("#qs-feedback-model-popup > div > div.popup-full-body > div").getAttribute("class")');
 
             if (popupClass == 'font-lato assess-popup assess-tryagain-popup') {
-                const popupLeftNext = await page.waitForSelector('.popup-buttons-container > div.left.button');
+                const popupLeftNext = await page.waitForSelector('#popup-buttons-container > div.left.button');
                 await popupLeftNext.click();
                 await page.screenshot({ path: '__tests__/screenshots/fifthQuestin_onclick_wromgAnswerPopNext.png' });
             }
 
             if (popupClass == 'font-lato assess-popup assess-goodjob-popup') {
-                const correctAnswerPopNext = await page.waitForSelector('.popup-buttons-container > div');
+                const correctAnswerPopNext = await page.waitForSelector('#popup-buttons-container > div');
                 await correctAnswerPopNext.click();
                 await page.screenshot({ path: '__tests__/screenshots/fifthQuestin_onclick_correctAnswerPopNext.png' });
             }
