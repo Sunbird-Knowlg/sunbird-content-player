@@ -2157,5 +2157,31 @@ input[type=radio]:focus-visible, input[type=checkbox]:focus-visible{
     outline: 2px solid #fe0000;
     border-radius: 5px;
     
-  }
+}
+.popup-buttons-container {
+    background-color: white;
+    height: 30%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-transform: uppercase;
+}
+
+.popup-buttons-container .button {
+    font-size: 2.5vw;
+    min-height: 0;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    padding-right: 5vw;
+    padding-left: 5vw;
+    border-radius: 0.6em;
+    align-items: center;
+}
+
+.popup-buttons-container .primary {
+    background: #3098CD;
+    color: white;
+    border: 0.1px solid #307ccd;
+}
 /* new popup style */
