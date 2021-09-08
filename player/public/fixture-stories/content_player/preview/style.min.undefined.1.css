@@ -16306,7 +16306,7 @@ body {
 .gc-loader-prog {
     position: absolute;
     height: 2em;
-    color: #000;
+    color: white;
     width: 100%;
     font-weight: bold;
     overflow: hidden;
