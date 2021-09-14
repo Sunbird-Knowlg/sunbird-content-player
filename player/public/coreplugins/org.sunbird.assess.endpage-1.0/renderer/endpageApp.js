@@ -146,15 +146,20 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
                     "next": true,
                     "prev": true
                 };
-                //Call getPreviousAndNextContent function which is present inside interfaceService.js by passing current content-id and user-id 
-                org.ekstep.service.content.getRelevantContent(JSON.stringify(requestBody)).then(function(response){
-                    if(response){
-                        $scope.previousContent[contentId] = response.prev;
-                        $scope.nextContent[contentId] = response.next;
-                    } else{
-                        console.log('Error has occurred');
-                    }
-                });
+                if (window.ionic && window.ionic.Platform.isIOS()){
+                    // Do nothing TODO: IOS - need to right the interfaces
+                    console.log('ios')
+                }else {
+                    //Call getPreviousAndNextContent function which is present inside interfaceService.js by passing current content-id and user-id 
+                    org.ekstep.service.content.getRelevantContent(JSON.stringify(requestBody)).then(function(response){
+                        if(response){
+                            $scope.previousContent[contentId] = response.prev;
+                            $scope.nextContent[contentId] = response.next;
+                        } else{
+                            console.log('Error has occurred');
+                        }
+                    });
+                }
             }
         }
     };
@@ -242,7 +247,12 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     EkstepRendererAPI.addEventListener('renderer:endpage:show', function() {
         $scope.showEndPage = true;
         $scope.initEndpage();
-        document.webkitExitFullscreen();
+        if (window.ionic && window.ionic.Platform.isIOS()) {
+             // Do nothing. TODO: need to find the another way
+            console.log("IOS");
+        }else{
+            document.webkitExitFullscreen();
+        }
         $scope.safeApply();
     });
     EkstepRendererAPI.addEventListener('renderer:endpage:hide',function() {
