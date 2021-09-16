@@ -315,7 +315,9 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     EkstepRendererAPI.addEventListener('renderer:endpage:show', function() {
         $scope.showEndPage = true;
         $scope.initEndpage();
-        document.webkitExitFullscreen();
+        if (document['webkitExitFullscreen']) {
+            document['webkitExitFullscreen']();
+        }
         $scope.safeApply();
     });
     EkstepRendererAPI.addEventListener('renderer:endpage:hide',function() {
