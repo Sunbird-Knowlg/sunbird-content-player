@@ -247,16 +247,8 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     EkstepRendererAPI.addEventListener('renderer:endpage:show', function() {
         $scope.showEndPage = true;
         $scope.initEndpage();
-<<<<<<< HEAD
         if (document['webkitExitFullscreen']) {
             document['webkitExitFullscreen']();
-=======
-        if (window.ionic && window.ionic.Platform.isIOS()) {
-             // Do nothing. TODO: need to find the another way
-            console.log("IOS");
-        }else{
-            document.webkitExitFullscreen();
->>>>>>> upstream/release-4.1.1
         }
         $scope.safeApply();
     });
