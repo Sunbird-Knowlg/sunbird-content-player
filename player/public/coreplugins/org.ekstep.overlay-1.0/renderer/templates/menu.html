@@ -1,11 +1,11 @@
-<div class="menu-overlay" ng-click="hideMenu()" tabindex="0" role="link" aria-label="Close Sidebar" ng-keydown="$event.keyCode === 13 && hideMenu()" ng-cloak></div>
+<div class="menu-overlay" ng-click="hideMenu()" tabindex="0" role="link" aria-label="Close Sidebar" ng-cloak></div>
 <!-- Menu container -->
 <div class="gc-menu">
-    <a ng-if="!showUser" class="gc-menu-btn old_menu" tabindex="0" aria-controls="sideBar" [attr.aria-expanded]="false" role="button" aria-label="Open Sidebar" title="Sidebar menu" id="sideBarBtn" href="javascript:void(0)" ng-keydown="$event.keyCode === 13 && openMenu()" ng-click="openMenu()">
+    <a ng-if="!showUser" class="gc-menu-btn old_menu" tabindex="0" aria-controls="sideBar" [attr.aria-expanded]="false" role="button" aria-label="Open Sidebar" title="Sidebar menu" id="sideBarBtn" href="javascript:void(0)" ng-click="openMenu()">
         <img ng-if="!navigationTop" class="menu-icon icon" ng-src="{{imageBasePath}}menu_icon_old.png" alt="Sidebar Menu Icon" ng-hide="menuOpened"/>
         <div><img ng-if="navigationTop" class="menu-icon icon nav-top hamberger-menu" ng-src="{{imageBasePath}}menu.png" ng-hide="menuOpened"/></div>
     </a>
-    <a ng-if="showUser" class="gc-menu-btn hamberger-menu"  tabindex="0" aria-controls="sideBar" [attr.aria-expanded]="false" role="button" aria-label="Open Sidebar" title="Sidebar menu" id="sideBarBtn" href="javascript:void(0)"  ng-keydown="$event.keyCode === 13 && openMenu()" ng-click="openMenu()">
+    <a ng-if="showUser" class="gc-menu-btn hamberger-menu"  tabindex="0" aria-controls="sideBar" [attr.aria-expanded]="false" role="button" aria-label="Open Sidebar" title="Sidebar menu" id="sideBarBtn" href="javascript:void(0)" ng-click="openMenu()">
         <img ng-if="!navigationTop" class="menu-icon icon" ng-src="{{imageBasePath}}menu_icon.png" ng-hide="menuOpened"/>
         <img ng-if="navigationTop" class="menu-icon icon nav-top hamberger-menu" ng-src="{{imageBasePath}}menu.png" ng-hide="menuOpened"/>
         <!-- <img class="menu-icon user" ng-src="{{imageBasePath}}avatar_anonymous.png" ng-hide="menuOpened"/> -->
@@ -15,11 +15,11 @@
             <p class="icon-font">{{ content.name }}</p>
         </div>
         <div class = "gc-menu-options" role="none">
-            <div role="button" tabindex="0" aria-label="{{AppLables.replay}}" ng-keydown="$event.keyCode === 13 && replayContent()" ng-click="replayContent()">
+            <div role="button" tabindex="0" aria-label="{{AppLables.replay}}" ng-click="replayContent()">
                 <img ng-src="{{imageBasePath}}icn_replay.png"/><span> {{AppLables.replay}} </span>
              </div>
         </div>
-        <div ng-if="showUser" role="button" aria-label="{{currentUser.handle}} {{AppLables.change}}" ng-click="openUserSwitchingModal()" ng-keydown="$event.keyCode === 13 && openUserSwitchingModal()" class = "gc-menu-options profile" tabindex="0">
+        <div ng-if="showUser" role="button" aria-label="{{currentUser.handle}} {{AppLables.change}}" ng-click="openUserSwitchingModal()" class = "gc-menu-options profile" tabindex="0">
             <img alt="prof img" ng-src="{{imageBasePath}}avatar_anonymous.png"/>
             <span class="menu-text"> {{currentUser.handle}} <br/> <small> {{AppLables.change}} </small></span>
         </div>
