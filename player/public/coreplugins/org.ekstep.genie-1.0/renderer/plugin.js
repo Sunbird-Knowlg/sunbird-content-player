@@ -8,7 +8,7 @@ Plugin.extend({
         app.compileProvider.directive("genie", ["$rootScope", function($rootScope) {
             return {
                 restrict: "E",
-                template: '<div ng-class="enableGenie ? \'genie-home\' : \'icon-opacity genie-home\'" role="button" aria-label="{{AppLables.exit}}" tabindex="0" aria-disabled="true" ng-keydown="$event.keyCode === 13 && showInstructions()" ng-click="goToGenie()"><img ng-src="{{imageBasePath}}icn_home.png"/><span> {{AppLables.exit}} </span></div>',
+                template: '<div ng-class="enableGenie ? \'genie-home\' : \'icon-opacity genie-home\'" role="button" aria-label="{{AppLables.exit}}" tabindex="0" aria-disabled="true" ng-click="goToGenie()"><img ng-src="{{imageBasePath}}icn_home.png"/><span> {{AppLables.exit}} </span></div>',
                 link: function(scope) {
                     scope.AppLables = AppLables
                     scope.enableGenie = typeof cordova !== "undefined"
