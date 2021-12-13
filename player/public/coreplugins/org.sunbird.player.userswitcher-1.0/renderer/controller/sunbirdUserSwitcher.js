@@ -275,11 +275,11 @@ app.compileProvider.directive('sunbirdUserswitcher', function($rootScope, $compi
             scope.getUserSwitcherTemplate = function() {
                 var userSwitcherPluginInstance = EkstepRendererAPI.getPluginObjs("org.sunbird.player.userswitcher");
                 var config = EkstepRendererAPI.getGlobalConfig();
-                if (!config.isCorePluginsPackaged) {
+                // if (!config.isCorePluginsPackaged) {
                     return userSwitcherPluginInstance._templatePath;
-                } else {
-                   return 'sunbirdUserSwitch.html';
-                }                
+                // } else {
+                //     return 'sunbirdUserSwitch.html';
+                // }                
             }
         }
     }
