@@ -81,6 +81,11 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     }
    
     $scope.replayContent = function() {
+        //Generate Telemetry for redo button
+        TelemetryService.interact("TOUCH", "redo_btn", "TOUCH", {
+            stageId: "ContentApp-EndScreen",
+            subtype: "ContentID"
+        });
         if(!isbrowserpreview && $rootScope.enableUserSwitcher && ($rootScope.users.length > 1)) {
             EkstepRendererAPI.dispatchEvent("event:openUserSwitchingModal", {'logGEEvent': $scope.pluginInstance._isAvailable});
         }else if(!$scope.isCordova && content.primaryCategory && content.primaryCategory.toLowerCase() === 'course assessment'){
@@ -88,12 +93,6 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
         }else{
             $scope.replayCallback();
         }
-
-        //Generate Telemetry for redo button
-        TelemetryService.interact("TOUCH", "redo_btn", "TOUCH", {
-            stageId: "ContentApp-EndScreen",
-            subtype: "ContentID"
-        });
     };
     $scope.replayAssessment = function(){
         content.currentAttempt = content.currentAttempt + 1;
