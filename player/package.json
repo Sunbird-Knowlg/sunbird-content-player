@@ -1,6 +1,6 @@
 {
     "name": "@project-sunbird/content-player",
-    "version": "4.4.0",
+    "version": "4.4.1",
     "description": "Which renders the contents in both web and devices",
     "dependencies": {
         "@project-sunbird/telemetry-sdk": "^0.0.14",
