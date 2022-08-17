@@ -109,7 +109,7 @@ function packagePlugins () {
 		}
 		dependenciesArr.push("org.ekstep.pluginframework.pluginManager.registerPlugin(" + JSON.stringify(manifest) + "," + pluginContent.code.replace(/;\s*$/, "") + ")")
 
-		fs.appendFile(`${PLUGINS_BASE_PATH}${plugin}${DIST_OUTPUT_FILE_PATH}`, [...dependenciesArr].join("\n"))
+		fs.appendFileSync(`${PLUGINS_BASE_PATH}${plugin}${DIST_OUTPUT_FILE_PATH}`, [...dependenciesArr].join("\n"))
 		pluginPackageArr.push(`${PLUGINS_BASE_PATH}${plugin}${DIST_OUTPUT_FILE_PATH}`)
 	})
 
@@ -299,12 +299,12 @@ module.exports = (env, argv) => {
 						manifest.renderer.dependencies.forEach(function (dependency) {
 							jsDependencyPath = (dependency.type === "js") && `${PLUGINS_BASE_PATH}${plugin.id}-${plugin.ver}/${dependency.src}`
 							cssDependencyPath = (dependency.type === "css") && `${PLUGINS_BASE_PATH}${plugin.id}-${plugin.ver}/${dependency.src}`
-							jsDependencyPath && fs.appendFile(`${OUTPUT_PATH}${PACKAGE_JS_FILE_NAME}`, fs.readFileSync(`${jsDependencyPath}`), "utf8")
-							cssDependencyPath && fs.appendFile(`${OUTPUT_PATH}${PACKAGE_CSS_FILE_NAME}`, fs.readFileSync(`${cssDependencyPath}`), "utf8")
+							jsDependencyPath && fs.appendFileSync(`${OUTPUT_PATH}${PACKAGE_JS_FILE_NAME}`, fs.readFileSync(`${jsDependencyPath}`), "utf8")
+							cssDependencyPath && fs.appendFileSync(`${OUTPUT_PATH}${PACKAGE_CSS_FILE_NAME}`, fs.readFileSync(`${cssDependencyPath}`), "utf8")
 						})
 					}
 					if (pluginContent.code) {
-						fs.appendFile(`${OUTPUT_PATH}${PACKAGE_JS_FILE_NAME}`, "org.ekstep.pluginframework.pluginManager.registerPlugin(" + JSON.stringify(manifest) + ",eval('" + pluginContent.code.replace(/'/g, "\\'") + "'))" + "\n")
+						fs.appendFileSync(`${OUTPUT_PATH}${PACKAGE_JS_FILE_NAME}`, "org.ekstep.pluginframework.pluginManager.registerPlugin(" + JSON.stringify(manifest) + ",eval('" + pluginContent.code.replace(/'/g, "\\'") + "'))" + "\n")
 					} else {
 						throw new Error("Unable to read the plugin content")
 					}
