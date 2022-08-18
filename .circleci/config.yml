@@ -9,6 +9,7 @@ jobs:
           path: ~/content-player
 
       - run: sudo npm install -g grunt-cli@1.2.0
+      - run: git config --global url."https://".insteadOf git://
       - run: npm install
       - run: npm run build-preview ekstep
       - run: grunt compress:preview
