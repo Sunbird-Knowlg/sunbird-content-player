@@ -11,12 +11,7 @@ LoadByStageStrategy = Class.extend({
     init: function(themeData, basePath) {
         //console.info('createjs.CordovaAudioPlugin.isSupported()', createjs.CordovaAudioPlugin.isSupported());
         var instance = this;
-        var regex = new RegExp("^(http|https)://", "i");
-        if(regex.test(basePath)){
-            createjs.Sound.registerPlugins([createjs.WebAudioPlugin, createjs.CordovaAudioPlugin, createjs.HTMLAudioPlugin]);
-        }else{
-            createjs.Sound.registerPlugins([createjs.CordovaAudioPlugin, createjs.WebAudioPlugin, createjs.HTMLAudioPlugin]);
-        }
+        createjs.Sound.registerPlugins([createjs.WebAudioPlugin, createjs.CordovaAudioPlugin, createjs.HTMLAudioPlugin]);
         createjs.Sound.alternateExtensions = ["mp3"];
         this.destroy();
         this.loadAppAssets();
@@ -34,11 +29,11 @@ LoadByStageStrategy = Class.extend({
                             media.src = basePath + media.src;
                         }
                     }
-                    if (createjs.CordovaAudioPlugin.isSupported()) { // Only supported in mobile
-                        if (media.type !== 'sound' && media.type !== 'audiosprite' && !regex.test(media.src)) {
-                            media.src = 'file:///' + media.src;
-                        }
-                    }
+                    // if (createjs.CordovaAudioPlugin.isSupported()) { // Only supported in mobile
+                    //     if (media.type !== 'sound' && media.type !== 'audiosprite' && !regex.test(media.src)) {
+                    //         media.src = 'file:///' + media.src;
+                    //     }
+                    // }
                     if (media.type == 'json') {
                         instance.commonAssets.push(_.clone(media));
                     } else if (media.type == 'spritesheet') {
@@ -329,7 +324,13 @@ LoadByStageStrategy = Class.extend({
         }
     },
     _createLoader: function() {
-        return "undefined" == typeof cordova ? new createjs.LoadQueue(true, null, true) : new createjs.LoadQueue(false);
+        var regex = new RegExp("^(http|https)://", "i");
+        var globalConfig = EkstepRendererAPI.getGlobalConfig();
+        if(regex.test(globalConfig.basepath)){
+            return new createjs.LoadQueue(true, null, true);
+        }else{
+            return new createjs.LoadQueue(false);
+        }
     },
     isStageAssetsLoaded : function(stageId) {
         // Show weather stage manifest are loaded or not.
@@ -385,7 +386,9 @@ LoadByStageStrategy = Class.extend({
                 }
                 progressPercent = loader.progress;
                 if (progressPercent < 1){
-                    bar.animate(loader.progress);
+                    if(document.body.contains(bar.path) ){
+                        bar.animate(loader.progress);
+                    }
                 }
             });
         }

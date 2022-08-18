@@ -3,42 +3,54 @@ jobs:
   build:
     working_directory: ~/content-player/player
     docker:
-      - image: circleci/node:6.10-browsers
-        environment:
-           player_version_number: $CIRCLE_BRANCH
-           build_number: $CIRCLE_BUILD_NUM
-           filter_plugins: false
-           
+      - image: circleci/node:12.0.0
     steps:
       - checkout:
           path: ~/content-player
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-      
-      - run:
-          name: clone plugins
-          command: |
-            prnumber=$(echo $CI_PULL_REQUEST | awk -F'/' '{print $NF}')
-            prdata=$(curl -X GET -u $GITHUB_USER_TOKEN:x-oauth-basic https://api.github.com/repos/project-sunbird/sunbird-content-player/pulls/$prnumber)
-            target_branch=$(echo "${prdata}" | jq -r '.base.ref')
-            git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins -b $target_branch
-          
-      #- run: git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins -b $CIRCLE_BRANCH
-      - run: sudo npm install -g grunt-cli@1.2.0 codacy-coverage
+
+      - run: sudo npm install -g grunt-cli@1.2.0
       - run: npm install
       - run: npm run build-preview ekstep
       - run: grunt compress:preview
       - run: grunt generate-libs
-      - run: grunt build-jsdoc
-     
-      #- store_artifacts:
-          #path: /tmp
-          #destination:
-          
-      - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-          paths: ./node_modules
+        #      - run: grunt build-jsdoc
 
+          #
+      # - run:
+      #     name: running test cases
+      #     command: npm run test-player
+
+      - run:
+          name: Install NVM
+          command: 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh|bash'
+    
+      - run:
+          name: alter node version
+          command: 'source ~/.nvm/nvm.sh && nvm install 8 && nvm use 8 && nvm alias default 8 && node -v'
+
+      - run: 
+          name: Install sonar scanner
+          command: 'source ~/.nvm/nvm.sh && sudo npm install -g sonarqube-scanner'
+          
+      - run: 
+          name: Sonar scanner
+          command: source ~/.nvm/nvm.sh |
+            sonar-scanner -Dsonar.projectKey=project-sunbird_sunbird-content-player -Dsonar.organization=project-sunbird -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.language=js
+      
+      - run:
+          name: Publish to NPM
+          command: |
+            if [ -z $CIRCLE_PR_NUMBER ]; then 
+              commit_hash=$(echo $CIRCLE_SHA1 | cut -c 1-7)
+              npm version prerelease --preid=alpha-${commit_hash}
+              npm run build-npm-package
+              npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
+              npm pack ./www/preview
+              npm publish project-sunbird-content-player-*     
+            else
+              npm run build-npm-package
+            fi
+             
 workflows:
   version: 2.1
   build_and_test:

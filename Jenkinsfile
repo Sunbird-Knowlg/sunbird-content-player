@@ -10,32 +10,18 @@ node() {
         ansiColor('xterm') {
             stage('Checkout') {
                 cleanWs()
-                if (params.github_release_tag == "") {
-                    checkout scm
-                    commit_hash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
-                    branch_name = sh(script: 'git name-rev --name-only HEAD | rev | cut -d "/" -f1| rev', returnStdout: true).trim()
-                    artifact_version = branch_name + "_" + commit_hash
-                    println(ANSI_BOLD + ANSI_YELLOW + "github_release_tag not specified, using the latest commit hash: " + commit_hash + ANSI_NORMAL)
-                } else {
-                    def scmVars = checkout scm
-                    checkout scm: [$class: 'GitSCM', branches: [[name: "refs/tags/${params.github_release_tag}"]], userRemoteConfigs: [[url: scmVars.GIT_URL]]]
-                    artifact_version = params.github_release_tag
-                    commit_hash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
-                    branch_name = params.github_release_tag
-                    println(ANSI_BOLD + ANSI_YELLOW + "github_release_tag specified, building from github_release_tag: " + params.github_release_tag + ANSI_NORMAL)
-                    sh "git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins"
-                    sh """
-                        cd plugins
-                        checkout_tag=\$(git ls-remote --tags origin release-* | grep -o 'release-.*' | sort -V | tail -n1)
-                        git checkout tags/\${checkout_tag} -b \${checkout_tag}
-                        
-                    """
-                }
+                checkout scm
+                commit_hash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
+                branch_name = sh(script: 'git name-rev --name-only HEAD | rev | cut -d "/" -f1| rev', returnStdout: true).trim()
+                artifact_version = sh(script: "echo " + params.github_release_tag.split('/')[-1] + "_" + commit_hash + "_" + env.BUILD_NUMBER, returnStdout: true).trim()
                 echo "artifact_version: " + artifact_version
 
                 stage('Build') {
-                    sh """
-                        #s3 preview deployment
+                    sh """#!/bin/bash
+                        export NVM_DIR="\$HOME/.nvm"
+                        [ -s "\$NVM_DIR/nvm.sh" ] && source "\$NVM_DIR/nvm.sh" # This loads nvm
+                        [ -s "\$NVM_DIR/bash_completion" ] && source "\$NVM_DIR/bash_completion" # This loads nvm bash_completion
+                        nvm install 10.16.3
                         export player_version_number=${branch_name}
                         export build_number=${commit_hash}
                         export filter_plugins=false # For the preview build generation dont split the plugins.

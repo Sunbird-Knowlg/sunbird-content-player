@@ -35,12 +35,14 @@ describe('Container Plugin test cases', function() {
     it('Container plugin initPlugin', function() {
         expect(true).toEqual(this.plugin._self.hitArea instanceof createjs.Shape);
         this.plugin.initPlugin({ primary: true });
+        this.plugin.initPlugin();
         expect(this.plugin.initPlugin).toHaveBeenCalled();
         expect(this.plugin.initPlugin.calls.count()).toEqual(1);
     });
 
     it('Container plugin refrsh', function() {
         this.plugin.refresh({ primary: true });
+        this.plugin.refresh();
         expect(this.plugin.refresh).toHaveBeenCalled();
         expect(this.plugin.refresh.calls.count()).toEqual(1);
     });

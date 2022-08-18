@@ -1,0 +1,120 @@
+{
+    "content": [{
+            "identifier": "do_20043647",
+            "mimeType": "application/vnd.ekstep.html-archive",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "fixture-stories/HTMLContent/logo.png",
+                "subject": "literacy_v2",
+                "description": "HTML Content",
+                "name": "HTML Content",
+                "downloadUrl": "",
+                "checksum": null,
+                "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "config": {
+                    "languageL2": "en",
+                    "sid": "de305d54-75b4-431b-adb2-eb6b9e546013",
+                    "uid": "123e4567-e89b-12d3-a456-426655440000",
+                    "did": "ff305d54-85b4-341b-da2f-eb6b9e5460fa", 
+                    "level": "5"
+                },
+                "identifier": "do_20043647",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "fixture-stories/HTMLContent"
+        },{
+            "identifier": "do_20045479",
+            "mimeType": "application/vnd.ekstep.html-archive",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "fixture-stories/HTMLContent/logo.png",
+                "subject": "literacy_v2",
+                "description": "HTML Content2",
+                "name": "HTML Content2",
+                "downloadUrl": "",
+                "checksum": null,
+                "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "config": {
+                    "theme": "blue",
+                    "language": "english"
+                },
+                "identifier": "do_20045479",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "fixture-stories/HTMLContent2"
+        }
+    ],
+    "languageSearch":{
+        "words": [
+        {
+          "identifier": "en_2",
+          "score": 1.0,
+          "lemma": "cat",
+          "pictures": [
+            "https://s3.amazon.com/ekstep-public/language_assets/cat.jpg"
+          ],
+          "pronunciations": [
+            "https://s3.amazon.com/ekstep-public/language_assets/cat.mp3"
+          ]
+        },
+        {
+          "identifier": "en_5",
+          "score": 1.0,
+          "lemma": "tiger",
+          "pictures": [
+            "https://s3.amazon.com/ekstep-public/language_assets/tiger.jpg"
+          ],
+          "pronunciations": [
+            "https://s3.amazon.com/ekstep-public/language_assets/tiger.mp3"
+          ]
+        },
+        {
+          "identifier": "en_1",
+          "score": 0.8,
+          "lemma": "rat",
+          "pictures": [
+            "https://s3.amazon.com/ekstep-public/language_assets/rat.jpg"
+          ],
+          "pronunciations": [
+            "https://s3.amazon.com/ekstep-public/language_assets/rat.mp3"
+          ]
+        }
+        ],
+        "relations": [
+          {
+            "score": "6.4",
+            "title": "", 
+            "list": [
+              "en_2",
+              "en_5",
+              "en_1"
+            ],
+            "relation": "akshara_boundary"
+          },
+          {
+            "score": "4.5",
+            "title": "", 
+            "list": [
+              "en_12",
+              "en_11",
+              "en_20"
+            ],
+            "relation": "akshara_boundary"
+          }
+        ]
+    }
+}

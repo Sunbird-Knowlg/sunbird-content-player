@@ -2,7 +2,6 @@ window.genieServiceBridge = (function () {
 	var _callbackFunc
 
 	function initialize () {
-		var isMobile = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()))
 		var contentId = getUrlParameter("contentId")
 		if (contentId) {
 			// This is to GC end-page when html content is launched in mobile or poratl preview

@@ -5,6 +5,7 @@ org.ekstep.contentrenderer.webDispatcher = new (org.ekstep.contentrenderer.IDisp
 		event = (typeof event === "string") ? event : JSON.stringify(event)
 		if (typeof telemetry !== "undefined") {
 			EventBus.dispatch("telemetryEvent", event)
+			EventBus.dispatch("questionsetEvent", event)
 			telemetry.send(event).then(function () {
 				return event
 			}).catch(function (err) {

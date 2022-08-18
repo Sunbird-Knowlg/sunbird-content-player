@@ -17,7 +17,6 @@ describe('base Launcher for external url preview', function () {
     var instance = this;
     beforeAll(function (callback) {
         // org.ekstep.service.init();
-
         org.ekstep.pluginframework.pluginManager.loadPluginWithDependencies('org.ekstep.extcontentpreview', '1.0', 'plugin', undefined, function () {
             baseLauncher = org.ekstep.pluginframework.pluginManager.pluginObjs['org.ekstep.extcontentpreview'];
             callback()
@@ -69,40 +68,36 @@ describe('base Launcher for external url preview', function () {
 
     });
 
-    beforeEach(function (done) {
-        test = new getPreviewFromURL(function (cb) {
-            baseLauncher.fetchUrlMeta(request.url);
-            setTimeout(function () {
-                console.log("in beforeEach() | setTimeout()");
-                cb(baseLauncher.generatePreview(resp.result));
-                done()
-            }, 500);
-        });
+    beforeEach(function () {
+        
     });
 
-    xit('It should inovoke initLauncher of external url', function (done) {
+    it('It should inovoke initLauncher of external url', function (done) {
+        spyOn(baseLauncher,"getPreviewFromURL").and.callThrough();
         spyOn(baseLauncher, "initLauncher").and.callThrough();
         baseLauncher.initLauncher();
         expect(baseLauncher.initLauncher).toHaveBeenCalled();
         done();
     });
 
-    xit('generate preview from url to be called', function (done) {
-        spyOn(EkstepRendererAPI, 'dispatchEvent').and.callThrough();
-        setTimeout(function () {
+    it('generate preview from url to be called', function (done) {
+        var spy = spyOn(EkstepRendererAPI, 'dispatchEvent').and.callThrough();
+        // setTimeout(function () {
             EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
             done();
-        }, 1000);
-        expect(EkstepRendererAPI.dispatchEvent).toHaveBeenCalled();
+        // }, 1000);
+        expect(spy).toHaveBeenCalled();
     });
 
 
-    xit('generate preview from url Error response', function () {
+    it('generate preview from url Error response', function (done) {
         spyOn(baseLauncher, "getPreviewFromURL").and.callThrough();
         baseLauncher.getPreviewFromURL(data.artifactUrl, bindHtml);
+        expect(baseLauncher.getPreviewFromURL).toHaveBeenCalled();
+        done();
     });
 
-    xit('htmlString generate', function () {
+    it('htmlString generate', function (done) {
         iframediv.innerHTML = '<div><p> No Preview available </p></div>';
         jQuery(iframediv).click(function (event) {
             setTimeout(function () {
@@ -114,30 +109,13 @@ describe('base Launcher for external url preview', function () {
             }, 200)
         });
         EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
+        spyOn(baseLauncher, "addToGameArea").and.callThrough();
         baseLauncher.addToGameArea(iframediv);
+        expect(baseLauncher.addToGameArea).toHaveBeenCalled();
+        done();
     });
 
-    xit('should call fetchData from apiService', function (done) {
-        spyOn(baseLauncher, 'fetchUrlMeta').and.returnValue(resp);
-        baseLauncher.fetchUrlMeta(request.url);
-        // baseLauncher.fetchUrlMeta(request.url).then(function(resp) {
-        //     expect(resp).toBe(true);
-        //     done();
-        //   });
-        var previewHtml = "<div><p> No Preview available </p></div>";
-        image = '<img src=resp.result["og:image"]/>';
-        previewHtml = "<div class='item preview-link-content'>" +
-            "<div class='left-content'><h2 class='grey-text'>" + resp.result["og:site_name"] +
-            "</h2><a class='calm'><span class='header'>" + resp.result["og:title"] +
-            "</span></a><p align='left'>" + resp.result["og:description"] + "</p></div>" +
-            "<div class='right-content'>" + image + "</div></div>"
-
-
-        expect(previewHtml).toEqual(previewHtml);
-        baseLauncher.fetchUrlMeta(request.url);
-    });
-
-    xit("causes a timeout to be called synchronously", function (done) {
+    it("causes a timeout to be called synchronously", function (done) {
         setTimeout(function () {
             var newWindow = window.open(window.location.origin + window.top.location.pathname + '#!/redirect', '_blank')
 
@@ -150,7 +128,7 @@ describe('base Launcher for external url preview', function () {
     });
 
 
-    xit('It should inovoke initLauncher of external url', function (done) {
+    it('It should inovoke initLauncher of external url', function (done) {
         spyOn(baseLauncher, "reset").and.callThrough();
         baseLauncher.reset();
         expect(baseLauncher.reset).toHaveBeenCalled();
@@ -159,3 +137,5 @@ describe('base Launcher for external url preview', function () {
     });
 
 });
+
+//# sourceURL=extContentPreviewSpec.js

@@ -35,7 +35,7 @@ describe('Embed Plugin test cases', function() {
            "template" : "item",
            "var-item": "item"
        };
-        // this.plugin.initPlugin(data);
+        this.plugin.initPlugin(data);
         expect(this.plugin.initPlugin).toHaveBeenCalled();
         expect(this.plugin.initPlugin.calls.count()).toEqual(1);
 

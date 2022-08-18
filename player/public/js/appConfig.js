@@ -15,7 +15,7 @@ AppConfig = {
 	apislug: "/action",
 	telemetryEventsConfigFields: ["env", "sid", "uid", "did", "channel", "etags", "pdata", "cdata", "app", "dims", "partner", "tags", "rollup", "contextRollup", "mode", "enableTelemetryValidation", "timeDiff"],
 	mimetypes: [
-		"application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive", "application/vnd.ekstep.h5p-archive", "application/epub", "video/mp4", "application/pdf", "video/x-youtube", "video/webm"
+		"application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive", "application/vnd.ekstep.h5p-archive", "application/epub", "video/mp4", "application/pdf", "video/x-youtube", "video/webm", "audio/mp3"
 	],
 	whiteListUrl: [
 		'self',
@@ -36,6 +36,7 @@ AppConfig = {
 		"isAvailable": true,
 		"path": ""
 	},
+	questionMinFontSize: '1.285em',
 	contentLaunchers: [{
 		mimeType: ["application/vnd.ekstep.html-archive", "application/vnd.ekstep.h5p-archive"],
 		id: "org.ekstep.htmlrenderer",
@@ -54,9 +55,15 @@ AppConfig = {
 		type: "plugin"
 	},
 	{
-		mimeType: ["video/mp4", "video/x-youtube", "video/webm"],
+		mimeType: ["video/mp4", "video/webm", "audio/mp3"],
 		id: "org.ekstep.videorenderer",
 		ver: 1.1,
+		type: "plugin"
+	},
+	{
+		mimeType: [ "video/x-youtube"],
+		id: "org.ekstep.youtuberenderer",
+		ver: 1.0,
 		type: "plugin"
 	},
 	{

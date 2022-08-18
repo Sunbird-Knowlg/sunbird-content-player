@@ -26,64 +26,20 @@ var app = angular.module("genie-canvas", ["ionic", "ngCordova", "oc.lazyLoad"])
 				}
 			}
 		}
-		$rootScope.addIonicEvents = function () {
-			// To override back button behaviour
-			$ionicPlatform.registerBackButtonAction(function () {
-				if (EkstepRendererAPI.hasEventListener(EkstepRendererEvents["renderer:device:back"])) {
-					EkstepRendererAPI.dispatchEvent(EkstepRendererEvents["renderer:device:back"])
-				} else {
-					var type = (Renderer && !Renderer.running) ? "EXIT_APP" : "EXIT_CONTENT"
-					var stageId = getCurrentStageId()
-					TelemetryService.interact("TOUCH", "DEVICE_BACK_BTN", "EXIT", { type: type, stageId: stageId })
-					contentExitCall()
-				}
-			}, 100)
-			$ionicPlatform.on("pause", function () {
-				Renderer && Renderer.pause()
-				TelemetryService.interrupt("BACKGROUND", getCurrentStageId)
-			})
-			$ionicPlatform.on("resume", function () {
-				Renderer && Renderer.resume()
-				TelemetryService.interrupt("RESUME", getCurrentStageId)
-			})
+
+		splashScreen.addEvents()
+		org.ekstep.service.init()
+		if (typeof org.ekstep.contentrenderer.local === "function") {
+			org.ekstep.contentrenderer.local()
+			return
+		}		
+		if (isMobile) {
+			mobileView.init($ionicPlatform, $timeout)
 		}
-		$timeout(function () {
-			$ionicPlatform.ready(function () {
-				splashScreen.addEvents()
-				org.ekstep.service.init()
-				if (typeof Promise === "undefined") {
-					alert("Your device isn’t compatible with this version of Genie.")
-					exitApp()
-				}
-				$rootScope.addIonicEvents()
-				if (window.cordova && window.cordova.plugins.Keyboard) {
-					cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true)
-					StatusBar.hide()
-					MobileAccessibility.usePreferredTextZoom(false)
-					window.navigationbar.setUp(true)
-					navigationbar.hideNavigationBar()
-				} else {
-					globalConfig.recorder = "android"
-				}
-				window.StatusBar && StatusBar.styleDefault()
-				GlobalContext.init(packageName, version).then(function (appInfo) {
-					if (typeof localPreview !== "undefined" && localPreview === "local") { return }
-					if (!isbrowserpreview) {
-						org.ekstep.contentrenderer.device()
-					}
-				}).catch(function (res) {
-					console.log("Error Globalcontext.init:", res)
-					EkstepRendererAPI.logErrorEvent(res, {
-						"type": "system",
-						"severity": "fatal",
-						"action": "play"
-					})
-					alert(res.errors)
-					exitApp()
-				})
-			})
-		})
 	}).config(function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvider, $sceDelegateProvider) {
+		if (window.ionic && window.ionic.Platform.isIOS()) {
+			$compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|file|blob|ionic):|data:image/)
+		}
 		app.controllerProvider = $controllerProvider
 		app.compileProvider = $compileProvider
 		console.log("AppConfig", AppConfig.whiteListUrl)
@@ -158,6 +114,7 @@ var app = angular.module("genie-canvas", ["ionic", "ngCordova", "oc.lazyLoad"])
 		EkstepRendererAPI.addEventListener("renderer.content.getMetadata", function () {
 			var configuration = EkstepRendererAPI.getGlobalConfig()
 			content.metadata = (_.isUndefined(configuration.metadata) || _.isNull(configuration.metadata)) ? globalConfig.defaultMetadata : configuration.metadata
+
 			if (_.isUndefined(configuration.data)) {
 				org.ekstep.contentrenderer.web(configuration.context.contentId)
 			} else {

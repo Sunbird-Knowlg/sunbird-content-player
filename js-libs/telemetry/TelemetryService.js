@@ -146,11 +146,11 @@ TelemetryService = {
         TelemetryService.instance.end(data);
         return this.flushEvent(TelemetryService.instanceV2.end(data), TelemetryService.apis.telemetry);
     },
-    interact: function(type, id, extype, data, eid) {
+    interact: function(type, id, extype, data, eid, options) {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
-        TelemetryService.instance.interact(type, id, extype, data, eid);
+        TelemetryService.instance.interact(type, id, extype, data, eid, options);
         return TelemetryService.flushEvent(TelemetryService.instanceV2.interact(type, id, extype, data, eid), TelemetryService.apis.telemetry);
     },
     setUser: function(data, stageid, eid) {

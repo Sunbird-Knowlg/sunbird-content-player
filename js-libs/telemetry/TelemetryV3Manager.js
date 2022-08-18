@@ -35,6 +35,7 @@ TelemetryV3Manager = Class.extend({
         this._end.push("END", {});
         this._start.push({id: id , ver : ver});
         var config = this.getConfig();
+        config.cdata = this.addPlaySession(config.cdata)
         var edata = {
           "type":  data.type || "content",
           "mode": data.mode || config.mode,
@@ -68,7 +69,7 @@ TelemetryV3Manager = Class.extend({
             console.warn("Telemetry service end is already logged Please log start telemetry again");
         }
     },
-    interact: function(type, id, extype, eks, eid) {
+    interact: function(type, id, extype, eks, eid, options) {
         if(type == undefined || id == undefined) {
             console.error('Invalid interact data');
             return;
@@ -90,8 +91,21 @@ TelemetryV3Manager = Class.extend({
         if(eks.plugin) {
             eksData["plugin"] = eks.plugin;
         }
-        EkTelemetry.interact(eksData);
+        EkTelemetry.interact(eksData, this.generateOptionsData(options));
     },
+	generateOptionsData: function (options) {
+		var optionsData = {
+			context:{}
+		}
+		var globalCdata = EkTelemetry.config && EkTelemetry.config.cdata ? EkTelemetry.config.cdata : [];
+		Object.assign(optionsData, options)
+		if (options && options.context && options.context.cdata) {
+			optionsData.context.cdata = optionsData.context.cdata.concat(globalCdata)
+		}else{
+			optionsData.context.cdata = globalCdata;
+		}
+		return optionsData;
+	},
     assess: function(qid, subj, qlevel, data) {
         var maxscore;
         subj = subj ? subj : "";
@@ -117,6 +131,7 @@ TelemetryV3Manager = Class.extend({
             var v3questionItem = {
                 id: eventObj.event.edata.eks.qid,
                 maxscore: eventObj.event.edata.eks.maxscore,
+                type: data.type,
                 exlength: 0,
                 params: data.params || eventObj.event.edata.eks.params || [],
                 uri: data.uri || "",
@@ -129,15 +144,16 @@ TelemetryV3Manager = Class.extend({
             }else{
                 v3questionItem.desc = "";
             }
+            data.res = data.res.filter(Boolean) //  An array with all falsey values removed. The values false, null, 0, "", undefined, and NaN are falsey.
             var v3questionData = {
                 item: v3questionItem,
-                index: data.qindex || data.index || 0,
+                index: Number(data.qindex) || Number(data.index) || 0,
                 pass: data.pass ? 'Yes' : 'No',
                 score: data.score || (data.pass == 'Yes' ? 1 : 0),
                 resvalues: data.res || data.resvalues || [],
                 duration: Number(Math.round((getCurrentTime() - eventObj.startTime ) / 1000).toFixed(2))
             }
-            EkTelemetry.assess(v3questionData);
+            EkTelemetry.assess(v3questionData, {'eventVer': data.eventVer});
         } else {
             console.error("question id is required to create assess event.");
             // TelemetryService.logError("OE_ASSESS", "qid is required to create assess event.")
@@ -176,7 +192,7 @@ TelemetryV3Manager = Class.extend({
         var eksData = {
           "type": (data && data.type) ? data.type : "workflow" ,
           "subtype": (data && data.subtype) ? data.subtype : "" ,
-          "pageid": stageto,
+          "pageid": stageto ? stageto.toString() : "" ,
           "uri": (data && data.uri) ? data.uri : stageid,
           "duration": (data && data.duration)? Number(data.duration.toFixed(2)) : 0
         }
@@ -226,9 +242,9 @@ TelemetryV3Manager = Class.extend({
     xapi: function(data) {
         var xdata = {
             type: data.type || "",
-            data: data
+            data: JSON.stringify(data.data)
         }
-        EkTelemetry.exdata(data);
+        EkTelemetry.exdata(xdata);
     },
     hasRequiredData: function(data, mandatoryFields) {
         var isValid = true;
@@ -236,5 +252,25 @@ TelemetryV3Manager = Class.extend({
             if (!data.hasOwnProperty(key)) isValid = false;
         });
         return isValid;
+    },
+    addPlaySession: function(cdata){
+        var playerSessionObj = {
+            "id": this.getUid(),
+            "type": "PlaySession"
+        }
+        var isPlaySessionAlreadyExist = false;
+        cdata.forEach(function(cDataObj, index){
+            if (cDataObj.type == "PlaySession"){
+                cdata[index] = playerSessionObj;
+                isPlaySessionAlreadyExist = true;
+            }
+        })
+        if (!isPlaySessionAlreadyExist){
+            cdata.push(playerSessionObj)
+        }
+        return cdata;
+    },
+    getUid: function(){
+        return CryptoJS.MD5(Math.random().toString()).toString();
     }
 })

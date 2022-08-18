@@ -25,42 +25,48 @@ describe('Launcher Plugin', function() {
         });
     });
     describe("When start is invoked", function() {
-        xit("It should invoke loadPlugins", function() {
+        it("It should invoke loadPlugins", function() {
             var ngController = org.ekstep.service.controller;
+            var event = {"type":"IMPRESSION"};
             spyOn(instance, "eventReciever").and.callThrough();
-            spyOn(LauncherPluginInstance, "loadCommonPlugins").and.callThrough();
+            instance.eventReciever(event);
             expect(EkstepRendererAPI).not.toBeUndefined();
             EkstepRendererAPI.addEventListener('renderer:repo:create', instance.eventReciever, instance);
             LauncherPluginInstance.start({'event': undefined,'type': "renderer:launcher:load"}, window.content);
-            expect(LauncherPluginInstance.loadCommonPlugins).toHaveBeenCalled();
             expect(instance.eventReciever).toHaveBeenCalled();
         })
         it("It should register events", function() {
             expect(EventBus.hasEventListener('renderer:launcher:load')).toBe(true);
         });
     });
-    xdescribe("When common plugins is loading", function() {
+    describe("When common plugins is loading", function() {
         it("It should load common plugins", function() {
             var contentrenderer = org.ekstep.contentrenderer;
             spyOn(contentrenderer, "loadPlugins").and.callThrough();
-            expect(GlobalContext.config).not.toBeUndefined();
-            expect(GlobalContext.config.overlay).not.toBeUndefined();
-            var callback = jasmine.createSpy("loadPluginCallback");
-            LauncherPluginInstance.loadCommonPlugins(callback);
+            var plugins = {"ver":"1.0"};
+            contentrenderer.loadPlugins(plugins);
+            // expect(GlobalContext.config).not.toBeUndefined();
+            // expect(GlobalContext.config.overlay).not.toBeUndefined();
+            // var callback = jasmine.createSpy("loadPluginCallback");
+            // LauncherPluginInstance.loadCommonPlugins(callback);
             expect(contentrenderer.loadPlugins).toHaveBeenCalled();
         })
         it("It should register events", function() {
             expect(EventBus.hasEventListener('renderer:launcher:load')).toBe(true);
         });
     });
-    xdescribe("When load plugin is called", function() {
+    describe("When load plugin is called", function() {
         it("It should invoke content renderer loadPlugins", function(done) {
             var contentrenderer = org.ekstep.contentrenderer;
             spyOn(instance, "eventReciever").and.callThrough();
             spyOn(contentrenderer, "loadPlugins").and.callThrough();
+            var plugins = {"ver":"1.0"};
+            contentrenderer.loadPlugins(plugins);
+            var event = {"type":"IMPRESSION"};
+            instance.eventReciever(event);
             expect(EkstepRendererAPI).not.toBeUndefined();
             EkstepRendererAPI.addEventListener('telemetryPlugin:intialize', instance.eventReciever, instance);
-            LauncherPluginInstance.loadPlugin(JSON.parse('{"mimeType":["application/vnd.ekstep.ecml-archive"],"id":"org.ekstep.ecmlrenderer","ver":1,"type":"plugin"}'), window.content);
+            // LauncherPluginInstance.loadPlugin(JSON.parse('{"mimeType":["application/vnd.ekstep.ecml-archive"],"id":"org.ekstep.ecmlrenderer","ver":1,"type":"plugin"}'), window.content);
             expect(contentrenderer.loadPlugins).toHaveBeenCalled();
             setTimeout(function() {
                 expect(instance.eventReciever).toHaveBeenCalled();

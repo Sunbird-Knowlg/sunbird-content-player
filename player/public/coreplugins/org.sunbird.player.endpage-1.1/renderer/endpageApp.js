@@ -9,6 +9,11 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     $scope.replayIcon;
     $scope.userScore = undefined;
     $scope.totalScore = undefined;
+    $scope.templateToRender = undefined;
+    $scope.displayScore = true;
+    $scope.currentPlayer = undefined;
+    $scope.currentPlayerFirstChar = undefined; 
+
     /**
      * @property - {Object} which holds previous content of current content
      */     
@@ -26,6 +31,16 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
         $scope.licenseAttribute = $scope.playerMetadata.license || 'Licensed under CC By 4.0 license'
     };
 
+    $scope.setCurrentUser = function() {
+        if($scope.isCordova) { 
+            $scope.currentPlayer = (_.has($scope.currentUser,"handle"))? $scope.currentUser.handle : $scope.currentUser.name;
+        }
+        else {
+            $scope.currentPlayer = (_.has(globalConfig.context, "userData")) ? globalConfig.context.userData.firstName : $scope.currentUser.handle;
+        }
+        $scope.currentPlayerFirstChar = $scope.currentPlayer.charAt(0).toUpperCase().slice(0);
+    }
+
     $scope.getTotalScore = function(id) {
         var totalScore = 0, maxScore = 0;
         var teleEvents = org.ekstep.service.content.getTelemetryEvents();
@@ -42,17 +57,74 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
             });
             $scope.userScore = $scope.convert(totalScore);
             $scope.totalScore = $scope.convert(maxScore);
-        } 
+        }
+
     };
+
+    // Job is to decide which template is assigned in config as part of endpage based on contenttype
+    $scope.checkTemplate = function(contentType) {
+            /* istanbul ignore else */
+            if (!_.isUndefined(globalConfig.config.endPage)) { // check if endpage Manifest/config exist
+                var endpageManifest = globalConfig.config.endPage;
+                var endpageObj = [];
+                if (!Array.isArray(endpageManifest)) { // check if it a proper Array of Obj, if not convert
+                    endpageObj.push(endpageManifest)
+                    endpageManifest = endpageObj
+                }
+                _.each(endpageManifest, function(value, key) { // search content type in object and get template
+                    /* istanbul ignore else */
+                    if (_.contains(value.contentType, contentType)) {
+                        $scope.templateToRender = (value.template).toLowerCase();
+                    }
+                })
+            }
+    }
    
     $scope.replayContent = function() {
-        if(!isbrowserpreview && ($rootScope.users.length > 1)) {
+        //Generate Telemetry for redo button
+        TelemetryService.interact("TOUCH", "redo_btn", "TOUCH", {
+            stageId: "ContentApp-EndScreen",
+            subtype: "ContentID"
+        });
+        if(!isbrowserpreview && $rootScope.enableUserSwitcher && ($rootScope.users.length > 1)) {
             EkstepRendererAPI.dispatchEvent("event:openUserSwitchingModal", {'logGEEvent': $scope.pluginInstance._isAvailable});
-        }else {
+        }else if(!$scope.isCordova && content.primaryCategory && content.primaryCategory.toLowerCase() === 'course assessment'){
+            $scope.replayAssessment();
+        }else{
             $scope.replayCallback();
         }
     };
+    $scope.replayAssessment = function(){
+        content.currentAttempt = content.currentAttempt + 1;
+        if (content.maxAttempt <= content.currentAttempt){
+            window.postMessage('renderer:maxLimitExceeded');
+            return;
+        }else{
+            $scope.replayPlayer();
+        }
+    };
     $scope.replayCallback = function(){
+        if (content.primaryCategory && content.primaryCategory.toLowerCase() === 'course assessment'){
+            org.ekstep.service.content.checkMaxLimit(content).then(function(response){
+                if (response.isCloseButtonClicked){
+                    return;
+                }
+                if(response.limitExceeded){
+                    window.postMessage({
+                        event: 'renderer:maxLimitExceeded',
+                        data: {
+                        }
+                    })
+                } else{
+                    $scope.replayPlayer();
+                }
+            });
+        }else{
+            $scope.replayPlayer();
+        }
+    };
+
+    $scope.replayPlayer = function(){
         EkstepRendererAPI.hideEndPage();
         EkstepRendererAPI.dispatchEvent('renderer:content:replay');
     };
@@ -76,8 +148,13 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     $scope.openGenie = function(){
         EkstepRendererAPI.dispatchEvent('renderer:genie:click');
     };
-    
+
     $scope.handleEndpage = function() {
+        if(!_.isUndefined($scope.playerMetadata.displayScore)) {
+            $scope.displayScore = $scope.playerMetadata.displayScore;
+        }
+        $scope.scoreDisplayConfig = $scope.playerMetadata.scoreDisplayConfig;
+        !_.isUndefined($scope.playerMetadata.contentType) ? $scope.checkTemplate($scope.playerMetadata.contentType) : '';
         $scope.setLicense();
         if (_(TelemetryService.instance).isUndefined()) {
             var otherData = GlobalContext.config.otherData;
@@ -94,6 +171,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
             $rootScope.$apply();
         }, 1000);
         EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
+        $scope.setCurrentUser();
         $scope.setTotalTimeSpent();
         $scope.getTotalScore($rootScope.content.identifier);
         $scope.getRelevantContent($rootScope.content.identifier);
@@ -111,15 +189,20 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
                     "next": true,
                     "prev": true
                 };
-                //Call getPreviousAndNextContent function which is present inside interfaceService.js by passing current content-id and user-id 
-                org.ekstep.service.content.getRelevantContent(JSON.stringify(requestBody)).then(function(response){
-                    if(response){
-                        $scope.previousContent[contentId] = response.prev;
-                        $scope.nextContent[contentId] = response.next;
-                    } else{
-                        console.log('Error has occurred');
-                    }
-                });
+                if (window.ionic && window.ionic.Platform.isIOS()){
+                    // Do nothing TODO: IOS - need to right the interfaces
+                    console.log('ios')
+                }else {
+                    //Call getPreviousAndNextContent function which is present inside interfaceService.js by passing current content-id and user-id 
+                    org.ekstep.service.content.getRelevantContent(JSON.stringify(requestBody)).then(function(response){
+                        if(response){
+                            $scope.previousContent[contentId] = response.prev;
+                            $scope.nextContent[contentId] = response.next;
+                        } else{
+                            console.log('Error has occurred');
+                        }
+                    });
+                }
             }
         }
     };
@@ -128,6 +211,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
      * @description - to play next or previous content
      */
     $scope.contentLaunch = function(contentType, contentId) {
+
         var eleId = (contentType === 'previous') ? "gc_previousContent" : "gc_nextcontentContent";
         TelemetryService.interact("TOUCH", eleId, "TOUCH", {
             stageId: "ContentApp-EndScreen",
@@ -136,36 +220,89 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
 
         var contentToPlay = (contentType === 'previous') ? $scope.previousContent[contentId] : $scope.nextContent[contentId];
         var contentMetadata = {};
-        if(contentToPlay){
-            contentMetadata = contentToPlay.content.contentData;
-            _.extend(contentMetadata,  _.pick(contentToPlay.content, "hierarchyInfo", "isAvailableLocally", "basePath", "rollup"));
-            contentMetadata.basepath = contentMetadata.basePath;
-            $rootScope.content = window.content = content = contentMetadata;
-        }
-
-        if (contentToPlay.content.isAvailableLocally) {
-                EkstepRendererAPI.hideEndPage();
-                var object = {
-                    'config': GlobalContext.config,
-                    'data': undefined,
-                    'metadata': contentMetadata
-                }
-                GlobalContext.config = mergeJSON(AppConfig, contentMetadata);
-                window.globalConfig = GlobalContext.config;
-
-                org.ekstep.contentrenderer.initializePreview(object)
-                EkstepRendererAPI.dispatchEvent('renderer:player:show');
-        } else {
-            if(contentMetadata.identifier && window.parent.hasOwnProperty('onContentNotFound')) {
-                window.parent.onContentNotFound(contentMetadata.identifier, contentMetadata.hierarchyInfo);
-            } else {
-                console.warn('Content not Available');
+        $scope.checkMaxLimit(contentToPlay, function(response){
+            if (response && response.isCloseButtonClicked){
+                return;
             }
-        }
+            else if (response && response.limitExceeded) {
+                    window.postMessage({
+                    event: 'renderer:maxLimitExceeded',
+                    data: {
+                    }
+                })
+                return;
+            }
+            if (window.cordova && contentToPlay.content && !contentToPlay.content.isCompatible) {
+                window.postMessage({
+                    event: 'renderer:contentNotComaptible',
+                    data: {
+                    }
+                });
+                return;
+            }
+            if (contentToPlay.content && contentToPlay.content.trackableParentInfo){
+                var trackableParentInfo = contentToPlay.content.trackableParentInfo;
+                window.postMessage(JSON.stringify({
+                    event: 'renderer:navigate',
+                    data: {
+                        identifier: trackableParentInfo.identifier,
+                        hierarchyInfo: trackableParentInfo.hierarchyInfo,
+                        trackable: 'Yes'
+                    }
+                }));
+                return;
+            }else if (contentToPlay.content){
+                contentMetadata = contentToPlay.content.contentData;
+                _.extend(contentMetadata,  _.pick(contentToPlay.content, "hierarchyInfo", "isAvailableLocally", "basePath", "rollup"));
+                contentMetadata.basepath = contentMetadata.basePath;
+                $rootScope.content = window.content = content = contentMetadata;
+            }
+            
+            if(content.mimeType === "video/x-youtube"){
+                contentToPlay.content.isAvailableLocally = false;
+            }
+
+            if (contentToPlay.content.isAvailableLocally) {
+                    EkstepRendererAPI.hideEndPage();
+                    var object = {
+                        'config': GlobalContext.config,
+                        'data': undefined,
+                        'metadata': contentMetadata
+                    }
+                    GlobalContext.config = mergeJSON(AppConfig, contentMetadata);
+                    window.globalConfig = GlobalContext.config;
+
+                    org.ekstep.contentrenderer.initializePreview(object)
+                    EkstepRendererAPI.dispatchEvent('renderer:player:show');
+            } else {
+                if(contentMetadata.identifier && window.parent.hasOwnProperty('onContentNotFound')) {
+                    window.parent.onContentNotFound(contentMetadata.identifier, contentMetadata.hierarchyInfo);
+                } else {
+                    console.warn('Content not Available');
+                }
+            }
+        });
     };
 
+    $scope.checkMaxLimit = function(contentToPlay, callback) {
+        var contentMetadata = contentToPlay.content.contentData
+        if (contentToPlay.content && contentToPlay.content.primaryCategory.toLowerCase() === 'course assessment'){
+            org.ekstep.service.content.checkMaxLimit(contentMetadata).then(function(response){
+                if(response){
+                    callback(response);
+                } else{
+                    console.log('Error has occurred');
+                    callback(false);
+                }
+            });
+        }else{
+            callback(false);
+        }
+    }
+
     $scope.initEndpage = function() {
-        $scope.playerMetadata = content;
+
+        $rootScope.content = $scope.playerMetadata = content;
         $scope.genieIcon = EkstepRendererAPI.resolvePluginResource($scope.pluginManifest.id, $scope.pluginManifest.ver, "renderer/assets/home.png");
         $scope.scoreIcon = EkstepRendererAPI.resolvePluginResource($scope.pluginManifest.id, $scope.pluginManifest.ver, "renderer/assets/score.svg");
         $scope.leftArrowIcon = EkstepRendererAPI.resolvePluginResource($scope.pluginManifest.id, $scope.pluginManifest.ver, "renderer/assets/left-arrow.svg");
@@ -182,7 +319,9 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     EkstepRendererAPI.addEventListener('renderer:endpage:show', function() {
         $scope.showEndPage = true;
         $scope.initEndpage();
-        document.webkitExitFullscreen();
+        if (document['webkitExitFullscreen']) {
+            document['webkitExitFullscreen']();
+        }
         $scope.safeApply();
     });
     EkstepRendererAPI.addEventListener('renderer:endpage:hide',function() {
