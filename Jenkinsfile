@@ -25,6 +25,8 @@ node() {
                         export player_version_number=${branch_name}
                         export build_number=${commit_hash}
                         export filter_plugins=false # For the preview build generation dont split the plugins.
+                        git config --global url."https://".insteadOf git://
+                        sudo npm i -g grunt
                         cd player
                         npm install
                         npm run build-preview ekstep
