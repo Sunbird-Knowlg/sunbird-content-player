@@ -32,7 +32,7 @@ var app = angular.module("genie-canvas", ["ionic", "ngCordova", "oc.lazyLoad"])
 		if (typeof org.ekstep.contentrenderer.local === "function") {
 			org.ekstep.contentrenderer.local()
 			return
-		}		
+		}
 		if (isMobile) {
 			mobileView.init($ionicPlatform, $timeout)
 		}
@@ -42,8 +42,13 @@ var app = angular.module("genie-canvas", ["ionic", "ngCordova", "oc.lazyLoad"])
 		}
 		app.controllerProvider = $controllerProvider
 		app.compileProvider = $compileProvider
-		console.log("AppConfig", AppConfig.whiteListUrl)
-		$sceDelegateProvider.resourceUrlWhitelist(AppConfig.whiteListUrl)
+		EkstepRendererAPI.addEventListener("renderer.content.mergeWhiteListUrl", function () {
+			$sceDelegateProvider.resourceUrlWhitelist(window.globalConfig.whiteListUrl)
+			angular.module("org.ekstep.question", []).config(function ($sceDelegateProvider) {
+				$sceDelegateProvider.resourceUrlWhitelist(window.globalConfig.whiteListUrl)
+				console.log("AppConfig", window.globalConfig.whiteListUrl)
+			})
+		}, this)
 	}).controller("BaseCtrl", function ($scope, $rootScope, $state, $ocLazyLoad, $stateParams, $compile, $templateCache, appConstants) {
 		$scope.templates = []
 
@@ -123,9 +128,5 @@ var app = angular.module("genie-canvas", ["ionic", "ngCordova", "oc.lazyLoad"])
 			}
 		}, this)
 	})
-
-angular.module("org.ekstep.question", []).config(function ($sceDelegateProvider) {
-	$sceDelegateProvider.resourceUrlWhitelist(AppConfig.whiteListUrl)
-})
 
 window.app = app

@@ -168,6 +168,7 @@ org.ekstep.contentrenderer.initializePreview = function (configuration) {
 		if (_.isUndefined(configurationObj.appContext)) {
 			configurationObj.appContext = {}
 		}
+
 		setGlobalConfig(configurationObj)
 		GlobalContext.game = { id: configurationObj.contentId || GlobalContext.game.id, ver: (configurationObj.metadata && configurationObj.metadata.pkgVersion) || "1.0" }
 		GlobalContext.game.ver = GlobalContext.game.ver.toString()
@@ -181,6 +182,7 @@ org.ekstep.contentrenderer.initializePreview = function (configuration) {
              * @memberof EkstepRendererEvents
              */
 		EkstepRendererAPI.dispatchEvent("renderer.content.getMetadata")
+		EkstepRendererAPI.dispatchEvent("renderer.content.mergeWhiteListUrl")
 	}
 }
 
