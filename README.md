@@ -60,7 +60,7 @@ var previewObj = {
 
     },
     "config": {
-    	"whiteListUrl": ["CNAME_or_blob_url_Path"], // The URLs that passed as this config only will allow from player, other URLs will be blocked.
+    	"whiteListUrl": ["contentProviderPath"], // The URLs that passed as this config only will allow from player, other URLs will be blocked. eg. 'https://obj.stage.sunbirded.org/**', 'https://*.blob.core.windows.net/**' etc.
         "repos": ["s3path"], // plugins repo path where all the plugins are pushed s3 or absolute folder path
         "plugins": [{ id: "org.sunbird.telemtryPlugin", "ver": "1.0", "type": "plugin" }], //Inject external custom plugins into content (for externl telemetry sync)
         "overlay": { // Configuarable propeties of overlay showing by GenieCanvas on top of the content
