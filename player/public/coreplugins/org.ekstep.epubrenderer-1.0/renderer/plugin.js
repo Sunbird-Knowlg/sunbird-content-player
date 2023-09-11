@@ -13,11 +13,11 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     lastPage: false,
     stageId:[],
     enableHeartBeatEvent: false,
-    _constants: {	
-        mimeType: ["application/epub"],	
-        events: {	
-            launchEvent: "renderer:launch:epub"	
-        }	
+    _constants: {
+        mimeType: ["application/epub"],
+        events: {
+            launchEvent: "renderer:launch:epub"
+        }
     },
     initLauncher: function () {
         var instance = this;
@@ -26,24 +26,32 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         EkstepRendererAPI.addEventListener('nextClick', function () {
             if (this.sleepMode) return;
             EkstepRendererAPI.dispatchEvent('sceneEnter',instance);
+            setTimeout(function() {
+                jQuery('custom-previous-navigation').show();
+                jQuery('custom-next-navigation').show();
+            }, 100);
             if (instance.lastPage) {
                 EkstepRendererAPI.dispatchEvent('renderer:content:end');
-                instance.removeProgressElements(); 
+                instance.removeProgressElements();
             } else {
-                instance.book.nextPage();
+                instance.rendition.next();
             }
         }, this);
-
+        
         EkstepRendererAPI.addEventListener('previousClick', function () {
             if (this.sleepMode) return;
             EkstepRendererAPI.dispatchEvent('sceneEnter',instance);
-            if(instance.currentPage === 2) {
+            setTimeout(function() {
+                jQuery('custom-previous-navigation').show();
+                jQuery('custom-next-navigation').show();
+            }, 100);
+            /*if(instance.currentPage === 2) {
                 // This is needed because some ePubs do not go back to the cover page on `book.prevPage()`
-                instance.book.gotoPage(1);
+                instance.rendition.display(1);
                 instance.logTelemetryNavigate("2", "1");
-            } else {
-                instance.book.prevPage();
-            }
+            } else {*/
+                instance.rendition.prev();
+            //}
             instance.lastPage = false;
         }, this);
 
@@ -68,7 +76,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             if(!regex.test(globalConfigObj.basepath)){
                 var prefix_url = globalConfigObj.basepath || '';
                 epubPath = prefix_url + "/" + data.artifactUrl;
-            }else   
+            }else
                 epubPath = data.streamingUrl;
         } else {
             epubPath = data.artifactUrl;
@@ -81,42 +89,71 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             } else {
                 EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
                 EkstepRendererAPI.dispatchEvent('renderer:overlay:show');
+
+                var obj = {"tempName": ""};
+                EkstepRendererAPI.dispatchEvent("renderer:navigation:load", obj);
+                setTimeout(function() {
+                    jQuery('custom-previous-navigation').show();
+                    jQuery('custom-next-navigation').show();
+                }, 100);
                 instance.renderEpub(epubPath);
             }
         });
     },
     renderEpub: function (epubPath) {
         jQuery('#gameArea').css({left: '10%', top: '0px', width: "80%", height: "90%", margin: "5% 0 0 0"});
-        var epubOptions = {
-            width: document.getElementById('gameArea').offsetWidth,
-            height: document.getElementById('gameArea').offsetHeight,
-            spreads: false
-        };
-        this.book = ePub(epubPath, epubOptions);
-        this.book.setStyle("padding-right", "1px");
-        this.book.setStyle("padding-left", "1px");
-        this.book.setStyle("height", "100%");
-        this.book.setStyle("overflow", "auto");
-        this.book.forceSingle(true);
-        this.book.renderTo(this.manifest.id);
-        this.addEventHandlers();
-        this.initProgressElements();
-    },
-    addEventHandlers: function () {
+        var epubOptionsToDisplay = {  spread: false,flow: "scrolled-doc", width: document.getElementById('gameArea').offsetWidth, height: document.getElementById('gameArea').offsetHeight }
+        this.book = ePub(epubPath);
+        this.rendition = this.book.renderTo(this.manifest.id,epubOptionsToDisplay);
+        var displayed = this.rendition.display();
         var instance = this;
-        instance.book.generatePagination().then(function (data) {
-            instance._start = data[0].cfi;
-            instance.totalPages = data.length;
+        displayed.then(function() {
+            instance.rendition.moveTo(3);
+            console.log("aHello");
+            instance.addEventHandlers();
+            instance.initProgressElements();
+            let currentLocation = instance.rendition.currentLocation();
+            instance._start = currentLocation.start.cfi;
+            instance.totalPages = instance.book.spine.length;
+            if(instance.totalPages <= 1) instance.lastPage = true; // if all pages are non linear or only one page is linear
             instance.updateProgressElements();
         });
+       
+    },
 
-        instance.book.on('book:pageChanged', function (data) {
-            instance.logTelemetryInteract(instance.currentPage.toString());
-            instance.logTelemetryNavigate(instance.currentPage.toString(), data.anchorPage.toString());
-            instance.currentPage = data.anchorPage;
+    // Get the total number of actual pages to render
+    // remove page from pagination if in <spine> <itemref> property is linear=no
+    getTotalPages: function () {
+        var instance = this
+        var data = instance.book.locations.spine
+        var array = []
+        try {
+             for (var index = 0; index < data.length; index++) {
+                if (_.has(data[index], 'linear') && (data[index].linear).toLowerCase() != "no") {
+                    array[index] = data[index]
+                }
+            }
+            return array.length;
+        } catch(e) {
+            console.log("error while iterating spine of epub" + e);
+            return data.length;
+        } 
+    },
+
+    addEventHandlers: function () {
+        var instance = this;
+        instance.rendition.on("relocated",function(location) {
+            let currentLocation = instance.rendition.currentLocation();
+        //instance.book.on('book:pageChanged', function (data) {
+            instance.logTelemetryInteract(location.start);
+            instance.logTelemetryNavigate(location.start, location.end);
+            instance.currentPage = location.end.index+1;
+            
             instance.updateProgressElements();
-            if (instance.book.pagination.lastPage === data.anchorPage || instance.book.pagination.lastPage === data.pageRange[1]) {
+            if (currentLocation.atEnd == true || instance.currentPage == instance.totalPages) {
                 instance.lastPage = true;
+            } else {
+                instance.lastPage = false;
             }
         });
     },
@@ -128,7 +165,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         this.removeProgressElements();
         this._super();
     },
-   
     logTelemetryInteract: function (stageId) {
         var oeInteractData = {
             type: "TOUCH",
@@ -165,7 +201,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             'text-align': 'center'
         });
         jQuery('#gameArea').parent().append($pageDiv);
-
         // Add progress bar
         var $progressDiv = jQuery('<div>', {id: 'progress-container'}).css({
             width: '100%',
@@ -209,8 +244,29 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var currentStageIndex = _.size(_.uniq(this.stageId)) || 1;
         return this.progres(currentStageIndex + 1, totalStages);
     },
+    contentPlaySummary: function () {
+        var playSummary =  [
+            {
+              "totallength":  parseInt(this.totalPages)
+            },
+            {
+              "visitedlength": parseInt(_.max(this.stageId))
+            },
+            {
+              "visitedcontentend": (this.totalPages == Math.max.apply(Math, this.stageId)) ? true : false
+            },
+            {
+              "totalseekedlength": parseInt(this.totalPages) - _.size(_.uniq(this.stageId))
+            }
+        ]
+        return playSummary;
+    },
+    // use this methos to send additional content statistics
+    additionalContentSummary: function () {
+        return
+    },
     cleanUp: function() {
-        if (this.sleepMode) return;	
+        if (this.sleepMode) return; 
         this.sleepMode = true;
         this.removeProgressElements();
         EkstepRendererAPI.removeEventListener('actionNavigateNext', undefined, undefined, true);

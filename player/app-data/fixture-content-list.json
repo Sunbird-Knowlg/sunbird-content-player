@@ -13,6 +13,161 @@
     "result": {
         "content": [
             {
+                "identifier": "org.ekstep.ques-set",
+                "mimeType": "application/vnd.ekstep.ecml-archive",
+                "contentData": {
+                    "hierarchyInfo": [
+                        {
+                          "contentType": "textbook",
+                          "identifier": "do_2125251490189148161635"
+                        },
+                        {
+                          "contentType": "textbookunit",
+                          "identifier": "do_2125251493823201281636"
+                        }
+                      ],
+                    "questionnaire": null,
+                    "appIcon": "fixture-stories/ques-set/logo.png",
+                    "subject": "literacy_v2",
+                    "description": "epub - Beyond Good and Evil",
+                    "name": "Cques-set",
+                    "owner": "Vinu Kumar V S",
+                    "downloadUrl": "",
+                    "displayScore": false,
+                    "checksum": null,
+                    "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+                    "concepts": [{
+                        "identifier": "LO1",
+                        "name": "Receptive Vocabulary",
+                        "objectType": "Concept"
+                    }],
+                    "identifier": "org.ekstep.ques-set",
+                    "grayScaleAppIcon": null,
+                    "pkgVersion": 1
+                },
+                "isAvailable": true,
+                "path": "fixture-stories/ques-set"
+            },
+            {"identifier": "do_312719162116210688118940",
+                "mimeType": "video/mp4",
+                "contentData":
+                {
+                    "subject": "Mathematics",
+                    "channel": "01254592085869363222",
+                    "language": [
+                        "English"
+                    ],
+                    "mimeType": "video/mp4",
+                    "appIcon": "https://ntpproductionall.blob.core.windows.net/ntp-content-production/content/do_312719162116210688118940/artifact/1bfnp6jsjtiqughwossozy1ibot_3mh5w.thumb.png",
+                    "gradeLevel": [
+                        "Class 7"
+                    ],
+                    "artifactUrl": "https://ntpproductionall.blob.core.windows.net/ntp-content-production/content/assets/do_312719162116210688118940/1e9id3spwfzvobzbuyonlibqgwl2r-de6_1_streamed.mp4",
+                    "contentType": "Resource",
+                    "identifier": "do_312719162116210688118940",
+                    "audience": [
+                        "Learner"
+                    ],
+                    "visibility": "Default",
+                    "mediaType": "content",
+                    "osId": "org.ekstep.quiz.app",
+                    "name": "Perimeter of Circle",
+                    "attributions": [
+                        "NCERT"
+                    ],
+                    "status": "Live",
+                    "code": "org.sunbird.PVFF72",
+                    "streamingUrl": "https://ntpprodmedia-inct.streaming.media.azure.net/30901810-e22d-4b37-8807-9c6fc727343f/1e9id3spwfzvobzbuyonlibqgwl2r-de.ism/manifest(format=m3u8-aapl-v3)",
+                    "medium": "English",
+                    "createdOn": "2019-03-15T06:41:34.264+0000",
+                    "lastUpdatedOn": "2019-03-29T10:20:02.506+0000",
+                    "owner": "DIKSHA Creator",
+                    "pkgVersion": 3,
+                    "versionKey": "1553854802684",
+                    "framework": "ekstep_ncert_k-12",
+                    "createdBy": "ebbbe5b4-a55f-4081-9ee9-38117231ccbb",
+                    "board": "CBSE",
+                    "resourceType": "Learn",
+                    "languageCode": "en",
+                    "orgDetails": {
+                        "email": null,
+                        "orgName": "Jammu And Kashmir"
+                    }
+                },
+                "isAvailable": true,
+                "path": "fixture-stories/custom_eval"
+            },
+            {
+                "identifier": "org.ekstep.Covid-19-content",
+                "mimeType": "application/vnd.ekstep.html-archive",
+                "contentData": {
+                    "hierarchyInfo": [
+                        {
+                          "contentType": "textbook",
+                          "identifier": "do_2125251490189148161635"
+                        },
+                        {
+                          "contentType": "textbookunit",
+                          "identifier": "do_2125251493823201281636"
+                        }
+                      ],
+                    "questionnaire": null,
+                    "appIcon": "fixture-stories/Covid-19-content/logo.jpeg",
+                    "subject": "literacy_v2",
+                    "description": "Covid-19-content",
+                    "name": "Covid-19-content",
+                    "owner": "Vinu Kumar V S",
+                    "downloadUrl": "",
+                    "checksum": null,
+                    "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+                    "concepts": [{
+                        "identifier": "LO1",
+                        "name": "Receptive Vocabulary",
+                        "objectType": "Concept"
+                    }],
+                    "identifier": "org.ekstep.Covid-19-content",
+                    "grayScaleAppIcon": null,
+                    "pkgVersion": 1
+                },
+                "isAvailable": true,
+                "path": "fixture-stories/Covid-19-content"
+            },
+            {
+                "identifier": "org.ekstep.contentplayer",
+                "mimeType": "application/vnd.ekstep.html-archive",
+                "contentData": {
+                    "hierarchyInfo": [
+                        {
+                          "contentType": "textbook",
+                          "identifier": "do_2125251490189148161635"
+                        },
+                        {
+                          "contentType": "textbookunit",
+                          "identifier": "do_2125251493823201281636"
+                        }
+                      ],
+                    "questionnaire": null,
+                    "appIcon": "fixture-stories/content_player/logo.png",
+                    "subject": "literacy_v2",
+                    "description": "content_player",
+                    "name": "Content Player",
+                    "owner": "Vinu Kumar V S",
+                    "downloadUrl": "",
+                    "checksum": null,
+                    "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+                    "concepts": [{
+                        "identifier": "LO1",
+                        "name": "Receptive Vocabulary",
+                        "objectType": "Concept"
+                    }],
+                    "identifier": "org.ekstep.contentplayer",
+                    "grayScaleAppIcon": null,
+                    "pkgVersion": 1
+                },
+                "isAvailable": true,
+                "path": "fixture-stories/content_player"
+            },
+            {
                 "identifier": "org.ekstep.customeval",
                 "mimeType": "application/vnd.ekstep.ecml-archive",
                 "contentData": {
@@ -895,6 +1050,32 @@
             },
             "isAvailable": true,
             "path": "fixture-stories/the_moon_and_the_cap"
+        },
+        {
+            "identifier": "org.ekstep.questionset",
+            "mimeType": "application/vnd.ekstep.ecml-archive",
+            "contentData": {
+                "questionnaire": null,
+                "appIcon": "",
+                "subject": "literacy_v2",
+                "description": "assessmentTestCases",
+                "name": "assessmentTestCases",
+                "downloadUrl": "",
+                "checksum": null,
+                "loadingMessage": "AssessmentTestCases content for plugin unit test case",
+                "concepts": [{
+                    "identifier": "",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.questionset",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            
+            
+            "isAvailable": true,
+            "path": "fixture-stories/assessmentTestCases"
         }],
         "ttl": 21
     }

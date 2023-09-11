@@ -7,8 +7,8 @@ AudioManager = {
         return action.stageId + ':' + action.asset;
     },
     play: function(action, instance) {
-
-        if (("undefined" != typeof action) && ("undefined" != typeof action.asset) && (null != action.asset)) {
+        var isAsset = typeof (AssetManager.getAsset(Renderer.theme._currentStage, action.asset)) === "string" ? false : true;
+        if (isAsset && ("undefined" != typeof action) && ("undefined" != typeof action.asset) && (null != action.asset)) {
             instance = instance || AudioManager.instances[AudioManager.uniqueId(action)] || {};
             if (instance.object) {
                 instance.object.volume = 1;
@@ -22,9 +22,16 @@ AudioManager = {
                 // Reclaim a space if necessary
                 AudioManager.reclaim();
                 // Instantiate the current audio to play
+                if(action.asset == RecorderManager.recordedAsset){ //Recorded Audio use CordovaAudioPlugin to play
+                    RecorderManager.switchToCordova();
+                }
                 instance.object = createjs.Sound.play(action.asset, {
                     interrupt: createjs.Sound.INTERRUPT_ANY
                 });
+                if(action.asset == RecorderManager.recordedAsset){ //Normal audio need WebAudioPlugin to play in online play
+                    RecorderManager.switchBackToDefault();
+                }
+                
                 instance.object.muted = this.muted;
                 instance._data = {
                     id: AudioManager.uniqueId(action)

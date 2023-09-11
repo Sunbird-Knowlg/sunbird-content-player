@@ -35,23 +35,6 @@ GlobalContext = {
 					}
 					resolve(globalConfig)
 				})
-			} else {
-				// Only for the local
-				if (!isbrowserpreview) {
-					GlobalContext.config = {
-						origin: "Genie",
-						contentId: "org.ekstep.num.addition.by.grouping",
-						appInfo: {
-							code: "org.ekstep.contentplayer",
-							mimeType: "application/vnd.android.package-archive",
-							identifier: "org.ekstep.contentplayer"
-						}
-					}
-					window.globalConfig = mergeJSON(AppConfig, GlobalContext.config)
-					GlobalContext.config = window.globalConfig
-					setTelemetryEventFields(window.globalConfig)
-					resolve(GlobalContext.config)
-				}
 			}
 		}).then(function (config) {
 			if (config.origin === "Genie") {

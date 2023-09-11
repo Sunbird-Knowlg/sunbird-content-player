@@ -24,10 +24,9 @@ org.ekstep.contentrenderer.init = function () {
 org.ekstep.contentrenderer.loadDefaultPlugins = function (cb) {
 	org.ekstep.contentrenderer.initPlugins("", "coreplugins")
 	var globalConfig = EkstepRendererAPI.getGlobalConfig()
-
+	EkstepRendererAPI.dispatchEvent("renderer:content:progress", {"name": window.splashScreen.loadType.corePlugins, "files": globalConfig.defaultPlugins})
 	// This is to load preview from CDN or proxy(relative path)
 	var corePluginsPath = globalConfig.previewCdnUrl ? globalConfig.previewCdnUrl + "/coreplugins.js?" : "./coreplugins.js?"
-	console.log("globalConfig.previewCdnUrl: " + globalConfig.previewCdnUrl)
 	if (globalConfig.isCorePluginsPackaged) {
 		org.ekstep.pluginframework.resourceManager.loadResource(corePluginsPath + globalConfig.version, "script", function () {
 			org.ekstep.contentrenderer.loadPlugins(globalConfig.defaultPlugins, [], function () {
@@ -51,18 +50,19 @@ org.ekstep.contentrenderer.loadDefaultPlugins = function (cb) {
  * @param  {obj} appInfo [metadata]
  */
 org.ekstep.contentrenderer.startGame = function (appInfo) {
-	window.PLAYER_START_TIME = Date.now()/1000;
-	globalConfig.basepath = (appInfo.streamingUrl) ? (appInfo.streamingUrl) : (globalConfig.basepath || appInfo.baseDir)
+	console.log("appInfo", appInfo);
+	window.PLAYER_START_TIME = Date.now() / 1000
+	globalConfig.basepath = (appInfo && appInfo.streamingUrl) ? (appInfo.streamingUrl) : (globalConfig.basepath || appInfo.baseDir)
 	org.ekstep.contentrenderer.loadDefaultPlugins(function () {
 		org.ekstep.contentrenderer.loadExternalPlugins(function () {
 			var globalConfig = EkstepRendererAPI.getGlobalConfig()
 			if (globalConfig.mimetypes.indexOf(appInfo.mimeType) > -1) {
 				/**
-                     * renderer:player:init event will get dispatch after loading default & external injected plugins
-                     * @event 'renderer:player:init'
-                     * @fires 'renderer:player:init'
-                     * @memberof EkstepRendererEvents
-                     */
+				 * renderer:player:init event will get dispatch after loading default & external injected plugins
+				 * @event 'renderer:player:init'
+				 * @fires 'renderer:player:init'
+				 * @memberof EkstepRendererEvents
+				 */
 				EkstepRendererAPI.dispatchEvent("renderer:player:init")
 			} else {
 				if (!isbrowserpreview) {
@@ -104,7 +104,10 @@ org.ekstep.contentrenderer.loadExternalPlugins = function (cb) {
 	var globalConfig = EkstepRendererAPI.getGlobalConfig()
 	org.ekstep.contentrenderer.addRepos()
 	if (globalConfig.config.plugins) {
+		EkstepRendererAPI.dispatchEvent("renderer:content:progress", {"name": window.splashScreen.loadType.externalPlugins, "files": globalConfig.config.plugins})
 		org.ekstep.contentrenderer.loadPlugins(globalConfig.config.plugins, [], function () {
+			console.log("Load default plugins")
+			EkstepRendererAPI.dispatchEvent("renderer:content:progress", {"name": window.splashScreen.loadType.contentPlugins, "files": globalConfig.contentLaunchers})
 			console.info("External plugins are loaded")
 			EkstepRendererAPI.dispatchEvent("renderer:launcher:loadRendererPlugins", cb)
 			// if (cb) cb();
@@ -143,6 +146,7 @@ org.ekstep.contentrenderer.setContent = function (metadata, data, configuration)
 org.ekstep.contentrenderer.initializePreview = function (configuration) {
 	// Checking if renderer is running or not
 	if (EkstepRendererAPI.isRendererRunning()) {
+		EkstepRendererAPI.dispatchEvent("renderer:telemetry:end")
 		// If renderer is running just call function to load aluncher
 		var contentObj = configuration.metadata || globalConfig.defaultMetadata
 		if (configuration.data) contentObj.body = configuration.data
@@ -164,6 +168,7 @@ org.ekstep.contentrenderer.initializePreview = function (configuration) {
 		if (_.isUndefined(configurationObj.appContext)) {
 			configurationObj.appContext = {}
 		}
+
 		setGlobalConfig(configurationObj)
 		GlobalContext.game = { id: configurationObj.contentId || GlobalContext.game.id, ver: (configurationObj.metadata && configurationObj.metadata.pkgVersion) || "1.0" }
 		GlobalContext.game.ver = GlobalContext.game.ver.toString()
@@ -177,6 +182,7 @@ org.ekstep.contentrenderer.initializePreview = function (configuration) {
              * @memberof EkstepRendererEvents
              */
 		EkstepRendererAPI.dispatchEvent("renderer.content.getMetadata")
+		EkstepRendererAPI.dispatchEvent("renderer.content.mergeWhiteListUrl")
 	}
 }
 
@@ -215,7 +221,8 @@ org.ekstep.contentrenderer.pluginError = function (event, data) {
 		"type": "plugin",
 		"action": data.action,
 		"objectType": data.plugin,
-		"objectId": data.objectid
+		"objectId": data.objectid,
+		"plugin": {"id": data.plugin, "ver": data.version}
 	})
 }
 
@@ -345,9 +352,9 @@ org.ekstep.contentrenderer.web = function (id) {
 		})
 }
 
-org.ekstep.contentrenderer.device = function () {
+/*org.ekstep.contentrenderer.device = function () {
 	var globalconfig = EkstepRendererAPI.getGlobalConfig()
-	var isMobile = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()));
+	var isMobile = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()))
 	if (!isbrowserpreview && isMobile) {
 		if (globalconfig.metadata) {
 			org.ekstep.contentrenderer.setContentMetadata(globalconfig.metadata, function () {
@@ -361,7 +368,7 @@ org.ekstep.contentrenderer.device = function () {
 	} else {
 		org.ekstep.contentrenderer.startGame(GlobalContext.config.appInfo)
 	}
-}
+}*/
 
 org.ekstep.contentrenderer.isStreamingContent = function () {
 	var globalConfig = EkstepRendererAPI.getGlobalConfig()

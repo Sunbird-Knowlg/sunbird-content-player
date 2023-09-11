@@ -4,7 +4,6 @@
 var RendererServices = function () {}
 window.org.ekstep.service = new RendererServices()
 RendererServices = undefined
-var isMobile = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()));
 
 org.ekstep.service.mainService = Class.extend({
 	getAPISlug: function () {
@@ -18,7 +17,7 @@ org.ekstep.service.mainService = Class.extend({
 	initialize: function () {}
 })
 org.ekstep.service.init = function () {
-	if (!isbrowserpreview && isMobile) {
+	if (isMobile) {
 		org.ekstep.service.renderer = genieservice
 	}
 }
@@ -36,4 +35,4 @@ telemetry_web = {
 	}
 }
 // eslint-disable-next-line
-if(isbrowserpreview || !(isbrowserpreview && isMobile)) telemetry = telemetry_web
+if(isbrowserpreview || !isMobile) telemetry = telemetry_web

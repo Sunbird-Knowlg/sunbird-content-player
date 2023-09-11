@@ -18,7 +18,11 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
     $scope.showReload = true;
     $scope.showContentClose = false;
     $scope.init = function() {
-
+        document.onkeydown = function(e) { 
+            if(e.keyCode === 13) { console.log(document.activeElement);
+                jQuery(document.activeElement).click()
+            }
+        };
         /**
          * renderer:overlay:show event to show the overlay on top the content.
          * @event renderer:overlay:show
@@ -230,7 +234,21 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
          * @fires renderer:content:replay
          * @memberof EkstepRendererEvents
          */
-        EkstepRendererAPI.dispatchEvent('renderer:content:replay');
+        if (content.primaryCategory && content.primaryCategory.toLowerCase() === 'course assessment'){
+            org.ekstep.service.content.checkMaxLimit(content).then(function(response){
+                if(response){
+                    window.postMessage({
+                        event: 'renderer:maxLimitExceeded',
+                        data: {
+                        }
+                    })
+                } else{
+                    EkstepRendererAPI.dispatchEvent('renderer:content:replay');
+                }
+            });
+        }else{
+            EkstepRendererAPI.dispatchEvent('renderer:content:replay');
+        }
     }
 
     $scope.init();
@@ -239,7 +257,7 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
 app.compileProvider.directive('mute', function($rootScope) {
     return {
         restrict: 'E',
-        template: '<div ng-click="toggleMute()"><img ng-src="{{muteImg}}"/><span>Sound {{AppLables.mute}} </span></div>',
+        template: '<div role="button" tabindex="0" aria-label="Turn off Sound" ng-click="toggleMute()"><img ng-src="{{muteImg}}"/><span> Turn {{AppLables.mute}} Sound </span></div>',
         link: function(scope, url) {
 
             /**
@@ -251,7 +269,7 @@ app.compileProvider.directive('mute', function($rootScope) {
 
             EkstepRendererAPI.addEventListener('renderer:overlay:unmute', function() {
                 scope.muteImg = scope.imageBasePath + "audio_icon.png";
-                AppLables.mute = "on";
+                AppLables.mute = "Off";
                 AudioManager.unmute();
             });
 
@@ -264,7 +282,7 @@ app.compileProvider.directive('mute', function($rootScope) {
             EkstepRendererAPI.addEventListener('renderer:overlay:mute', function() {
                     AudioManager.mute();
                     scope.muteImg = scope.imageBasePath + "audio_mute_icon.png";
-                    AppLables.mute = "off";
+                    AppLables.mute = "On";
             });
             EkstepRendererAPI.dispatchEvent('renderer:overlay:unmute');
             scope.toggleMute = function() {
@@ -284,7 +302,7 @@ app.compileProvider.directive('mute', function($rootScope) {
 app.compileProvider.directive('reloadStage', function($rootScope) {
     return {
         restrict: 'E',
-        template: '<span class="reload-stage" onclick="EventBus.dispatch(\'actionReload\')"><img id="reload_id" ng-show="reload !== state_off" ng-src="{{imageBasePath}}icn_replayaudio.png" style="width:100%;"/></span>',
+        template: '<span class="reload-stage" role="button" tabindex="0" aria-label="replayaudio" onclick="EventBus.dispatch(\'actionReload\')"><img id="reload_id" ng-show="reload !== state_off" ng-src="{{imageBasePath}}icn_replayaudio.png" style="width:100%;"/></span>',
         link: function(scope) {
 
             scope.toggleReload = function(event) {
@@ -327,9 +345,17 @@ app.compileProvider.directive('menu', function($rootScope, $sce) {
         restrict: 'E',
         scope: false,
         link: function(scope) {
+            scope.navigationTop = false;
             scope.getTemplate = function() {
                 return scope.pluginInstance._menuTP;
             }
+            scope.changeNavigation = function (event) {
+                switch (event.target.tempName) {
+                    case "navigationTop": scope.navigationTop = true; break;
+                    default: scope.navigationTop = false; break;
+                }
+            }
+			EkstepRendererAPI.addEventListener("renderer:navigation:load", scope.changeNavigation, scope);
         },
         template: "<div ng-include=getTemplate()></div>"
     }
@@ -338,7 +364,7 @@ app.compileProvider.directive('menu', function($rootScope, $sce) {
 app.compileProvider.directive('stageInstructions', function($rootScope) {
     return {
         restrict: 'E',
-        template: '<div ng-class="{\'icon-opacity\' : !stageData.params.instructions}" ng-click="showInstructions()"><img ng-src="{{imageBasePath}}icn_teacher.png" style="z-index:2;" alt="note img"/><span> {{AppLables.instructions}} </span></div>',
+        template: '<div ng-class="{\'icon-opacity\' : !stageData.params.instructions}" role="button" tabindex="0" aria-disabled="true" ng-click="showInstructions()"><img ng-src="{{imageBasePath}}icn_teacher.png" style="z-index:2;" alt="note img"/><span> {{AppLables.instructions}} </span></div>',
         controller: function($scope, $rootScope) {
             $scope.stageInstMessage = "";
             $scope.showInst = false;
@@ -417,7 +443,7 @@ app.compileProvider.directive('assess', function($rootScope) {
 app.compileProvider.directive('goodJob', function($rootScope) {
     return {
         restrict: 'E',
-        template: '<div class="popup"> <div class="popup-overlay" ng-click="hidePopup()"></div> <div class="popup-full-body"> <div class="font-lato assess-popup assess-goodjob-popup"> <div class="correct-answer" style=" text-align: center;"> <div class="banner"> <img ng-src="{{imageBasePath}}banner3.png" height="100%" width="100%"> </div> <div class="sign-board"> <img ng-src="{{imageBasePath}}check.png" id="correctButton" width="40%" /> </div> </div> <div id="popup-buttons-container"> <div ng-click="hidePopup(); moveToNextStage(\'next\');" class="primary center button">{{AppLables.next}}</div> </div> </div> </div> </div>',
+        template: '<div class="popup"> <div class="popup-overlay" ng-click="hidePopup()"></div> <div class="popup-full-body"> <div class="font-lato assess-popup assess-goodjob-popup"> <div class="correct-answer" style=" text-align: center;"> <div class="banner"> <img ng-src="{{imageBasePath}}banner3.png" height="100%" width="100%"> </div> <div class="sign-board"> <img ng-src="{{imageBasePath}}check.png" id="correctButton" width="40%" /> </div> </div> <div class="popup-buttons-container"> <div ng-click="hidePopup(); moveToNextStage(\'next\');" tabindex="0" aria-label="{{AppLables.next}}" role="button" class="primary center button">{{AppLables.next}}</div> </div> </div> </div> </div>',
         controller: function($scope, $rootScope, $timeout) {
             $scope.retryAssessment = function(id, e) {
                 $scope.hidePopup(id);
@@ -447,7 +473,7 @@ app.compileProvider.directive('goodJob', function($rootScope) {
 app.compileProvider.directive('tryAgain', function($rootScope) {
     return {
         restrict: 'E',
-        template: '<div class="popup"> <div class="popup-overlay" ng-click="hidePopup()"></div> <div class="popup-full-body"> <div class="font-lato assess-popup assess-tryagain-popup"> <div class="wrong-answer" style=" text-align: center;"> <div class="banner"> <img ng-src="{{imageBasePath}}banner2.png" height="100%" width="100%"> </div> <div class="sign-board"><img ng-src="{{imageBasePath}}incorrect.png" width="40%" id="incorrectButton" /> </div> </div> <div id="popup-buttons-container"> <div ng-click="hidePopup(); moveToNextStage(\'next\');" class="left button">{{AppLables.next}}</div> <div ng-click="retryAssessment(\'gc_retry\', $event);" href="javascript:void(0);" class="right primary button">{{AppLables.tryAgain}}</div> </div> </div> </div> </div>'
+        template: '<div class="popup"> <div class="popup-overlay" ng-click="hidePopup()"></div> <div class="popup-full-body"> <div class="font-lato assess-popup assess-tryagain-popup"> <div class="wrong-answer" style=" text-align: center;"> <div class="banner"> <img ng-src="{{imageBasePath}}banner2.png" height="100%" width="100%"> </div> <div class="sign-board"><img ng-src="{{imageBasePath}}incorrect.png" width="40%" alt="Incorrect Icon" id="incorrectButton" /> </div> </div> <div class="popup-buttons-container"> <div ng-click="hidePopup(); moveToNextStage(\'next\');" tabindex="0" aria-label="{{AppLables.next}}" role="button" class="left button">{{AppLables.next}}</div> <div ng-click="retryAssessment(\'gc_retry\', $event);" href="javascript:void(0);" tabindex="0" aria-label="{{AppLables.tryAgain}}" role="button" class="right primary button">{{AppLables.tryAgain}}</div> </div> </div> </div> </div>'
     }
 });
 

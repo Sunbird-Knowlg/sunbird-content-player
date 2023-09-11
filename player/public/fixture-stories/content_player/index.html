@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title> HTML Content </title>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src * data: filesystem:; style-src 'self' 'unsafe-inline';  script-src 'self' 'unsafe-inline' 'unsafe-eval'; font-src *;" >
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+</head>
+<body>
+
+  <h1 style="text-align: center;">HTML Content</h1>
+  <div class="content-player">
+      <iframe id="previewContentIframe" title="player" src="preview/preview.html?webview=false" style="width:100%;height:100vh;border:none;"></iframe>
+    </div>
+  <script type="text/javascript">
+    var previewContentIframe = document.getElementById('previewContentIframe');
+    window.onload = function() {
+        setTimeout(function() {
+          var metadata = {
+              "identifier": "do_312719162116210688118940",
+              "mimeType": "video/mp4",
+              // "contentData":
+              //   {
+              //       "subject": "Mathematics",
+              //       "channel": "01254592085869363222",
+              //       "language": [
+              //           "English"
+              //       ],
+              //       "mimeType": "video/mp4",
+              //       "appIcon": "https://ntpproductionall.blob.core.windows.net/ntp-content-production/content/do_312719162116210688118940/artifact/1bfnp6jsjtiqughwossozy1ibot_3mh5w.thumb.png",
+              //       "gradeLevel": [
+              //           "Class 7"
+              //       ],
+              //       "artifactUrl": "https://ntpproductionall.blob.core.windows.net/ntp-content-production/content/assets/do_312719162116210688118940/1e9id3spwfzvobzbuyonlibqgwl2r-de6_1_streamed.mp4",
+              //       "contentType": "Resource",
+              //       "identifier": "do_312719162116210688118940",
+              //       "audience": [
+              //           "Learner"
+              //       ],
+              //       "visibility": "Default",
+              //       "mediaType": "content",
+              //       "osId": "org.ekstep.quiz.app",
+              //       "name": "Perimeter of Circle",
+              //       "attributions": [
+              //           "NCERT"
+              //       ],
+              //       "status": "Live",
+              //       "code": "org.sunbird.PVFF72",
+              //       "streamingUrl": "https://ntpprodmedia-inct.streaming.media.azure.net/30901810-e22d-4b37-8807-9c6fc727343f/1e9id3spwfzvobzbuyonlibqgwl2r-de.ism/manifest(format=m3u8-aapl-v3)",
+              //       "medium": "English",
+              //       "createdOn": "2019-03-15T06:41:34.264+0000",
+              //       "lastUpdatedOn": "2019-03-29T10:20:02.506+0000",
+              //       "owner": "DIKSHA Creator",
+              //       "pkgVersion": 3,
+              //       "versionKey": "1553854802684",
+              //       "framework": "ekstep_ncert_k-12",
+              //       "createdBy": "ebbbe5b4-a55f-4081-9ee9-38117231ccbb",
+              //       "board": "CBSE",
+              //       "resourceType": "Learn",
+              //       "languageCode": "en",
+              //       "orgDetails": {
+              //           "email": null,
+              //           "orgName": "Jammu And Kashmir"
+              //       }
+              //   },
+              "contentData":{
+  "subject": "Mathematics",
+  "channel": "0123221617357783046602",
+  "language": [
+    "English"
+  ],
+  "mimeType": "application/pdf",
+  "appIcon": "https://ntpproductionall.blob.core.windows.net/ntp-content-production/content/assets/do_31268669755482931215420/0b2zkgdpsivvzbvrtszl5tvzyd2qty0nredhsexzmwfnqtgnj.jpg",
+  "gradeLevel": [
+    "Class 10"
+  ],
+  "artifactUrl": "https://ntpproductionall.blob.core.windows.net/ntp-content-production/content/assets/do_31268669755482931215420/1zdciyexh_xurufjo9exwhlcxzaoxutq_.pdf",
+  "contentType": "Resource",
+  "identifier": "do_31268669755482931215420",
+  "audience": [
+    "Learner"
+  ],
+  "visibility": "Default",
+  "mediaType": "content",
+  "osId": "org.ekstep.quiz.app",
+  "name": "MarathiMathematicsPart-2(Geometry)Set_1_Ans.pdf",
+  "attributions": [
+    "Balbharati"
+  ],
+  "status": "Live",
+  "code": "org.sunbird.zWhFbY",
+  "medium": "Marathi",
+  "streamingUrl": "https://ntpproductionall.blob.core.windows.net/ntp-content-production/content/assets/do_31268669755482931215420/1zdciyexh_xurufjo9exwhlcxzaoxutq_.pdf",
+  "createdOn": "2019-01-28T09:52:15.110+0000",
+  "lastUpdatedOn": "2019-01-28T10:10:49.853+0000",
+  "owner": "undefined",
+  "pkgVersion": 1,
+  "versionKey": "1548670249853",
+  "framework": "mh_k-12_1",
+  "createdBy": "80ae760d-f9dd-43a9-91a7-09dfabba2293",
+  "board": "State (Maharashtra)",
+  "resourceType": "Learn",
+  "languageCode": "en",
+  "orgDetails": {
+    "email": "vgarad@maa.ac.in",
+    "orgName": "MITRA"
+  }
+},
+                "isAvailable": true,
+                "path": "fixture-stories/custom_eval"
+            };
+          var data = '';
+
+          var configuration = {};
+          configuration.context = {};
+          configuration.config = {showEndPage: true};
+          configuration.metadata = metadata;
+          configuration.data = data;
+          previewContentIframe.contentWindow.initializePreview(configuration);
+      }, 1000);
+    };
+  </script>
+</body>
+</html>

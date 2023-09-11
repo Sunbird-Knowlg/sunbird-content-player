@@ -14,6 +14,7 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
 	enableHeartBeatEvent: false,
 	heartBeatData: {},
 	sleepMode: true,
+	isEndPageSeen: false,
 
 	/**
      * init of the launcher with the given data.
@@ -22,6 +23,7 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
      */
 	init: function (manifest) {
 		try {
+			EkstepRendererAPI.raiseInternetConnectivityError();
 			EkstepRendererAPI.addEventListener("renderer:telemetry:end", this.endTelemetry, this)
 			EkstepRendererAPI.addEventListener("renderer:content:end", this.end, this)
 			EkstepRendererAPI.addEventListener("renderer:content:replay", this.replay, this)
@@ -64,6 +66,7 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
      */
 	end: function () {
 		if (this.sleepMode) return
+		this.isEndPageSeen = true	
 		this.heartBeatEvent(false)
 		this.endTelemetry()
 		EkstepRendererAPI.dispatchEvent("renderer:endpage:show")
@@ -107,6 +110,18 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
 	},
 
 	/**
+	 *  generic Summary event
+	 */
+	
+	contentPlaySummary : function () {
+		return [{"totallength":""},{"visitedlength":""},{"visitedcontentend":""},{"totalseekedlength": ""}]
+	},
+	
+	additionalContentSummary: function () {
+		console.warn("content launcher should implement this for additional content statistics ")
+	},
+
+	/**
      * Generation of the OE_START Telemetry event.
      */
 
@@ -128,8 +143,11 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
 		if (this.sleepMode) return
 		if (TelemetryService.instance && TelemetryService.instance.telemetryStartActive()) {
 			var telemetryEndData = {}
+			var endpageSeen = [{ "endpageseen" : this.isEndPageSeen }]
+			var contentProgress = [{ "progress" : this.contentProgress() }]
 			telemetryEndData.stageid = getCurrentStageId()
 			telemetryEndData.progress = this.contentProgress()
+			telemetryEndData.summary = _.union(contentProgress,this.contentPlaySummary(),endpageSeen)
 			console.info("telemetryEndData", telemetryEndData)
 			TelemetryService.end(telemetryEndData)
 		} else {
@@ -217,7 +235,7 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
 				type: "error",
 				custom: { timeOut: 200000 },
 				errorInfo: {
-					errorStack: errorObj.stack,
+					errorStack: errorObj,
 					data: errorObj.data || { "severity": "fatal", "type": "content", "action": "play" }
 				}
 			})

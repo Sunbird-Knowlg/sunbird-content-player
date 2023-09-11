@@ -1,19 +1,18 @@
 {
     "name": "@project-sunbird/content-player",
-    "version": "1.0.0",
+    "version": "5.1.0",
     "description": "Which renders the contents in both web and devices",
     "dependencies": {
-        "@project-sunbird/telemetry-sdk": "^0.0.13",
+        "@project-sunbird/telemetry-sdk": "^0.0.14",
         "ajv": "^6.9.2",
-        "async": "*",
         "audiosprite": "*",
-        "download": "4.4.3",
+        "download": "8.0.0",
         "ejs": "*",
-        "express": ">=3.11.0",
+        "express": "^3.11.0",
         "fingerprintjs2": "^2.0.6",
         "grunt-contrib-concat": "^1.0.1",
         "jsonfile": "*",
-        "node-rest-client": ">=1.0.0",
+        "node-rest-client": "3.1.0",
         "underscore": "*",
         "xml2json": "*"
     },
@@ -33,7 +32,7 @@
         "grunt-aws-s3": "*",
         "grunt-cli": "*",
         "grunt-contrib-clean": "*",
-        "grunt-contrib-compress": "*",
+        "grunt-contrib-compress": "^1.5.0",
         "grunt-contrib-copy": "*",
         "grunt-contrib-uglify": "^0.9.1",
         "grunt-contrib-watch": "^1.0.0",
@@ -65,7 +64,7 @@
         "karma-ng-html2js-preprocessor": "^1.0.0",
         "karma-phantomjs-launcher": "^1.0.0",
         "karma-verbose-reporter": "0.0.3",
-        "mini-css-extract-plugin": "*",
+        "mini-css-extract-plugin": "0.11.2",
         "ng-annotate-webpack-plugin": "^0.3.0",
         "ngmin-webpack-plugin": "^0.1.3",
         "optimize-css-assets-webpack-plugin": "^4.0.3",
@@ -98,13 +97,28 @@
         "eslint-plugin-promise": "^4.0.0",
         "eslint-plugin-standard": "^3.1.0"
     },
+    "watch": {
+        "build-preview-windows": {
+            "patterns": [
+                "src",
+                "test"
+            ],
+            "extensions": "js,jsx",
+            "quiet": true,
+            "legacyWatch": true,
+            "delay": 2500,
+            "runOnChangeOnly": false
+        }
+    },
     "scripts": {
+        "watch": "npm-watch",
         "build-sunbird": "webpack --env.channel=sunbird",
         "build-ekstep": "webpack --env.channel=ekstep",
         "package-coreplugins": "webpack --config webpack.plugin.config.js",
         "build-preview": "bash -c 'grunt uglify:renderermin && if [[ ${1} == \"ekstep\" ]]; then npm run package-coreplugins -- --env.channel=ekstep && npm run build-ekstep && grunt build-preview; else echo ${1} npm run package-coreplugins -- --env.channel=sunbird && npm run build-sunbird && grunt build-preview; fi' -- ",
+        "build-preview-windows": "grunt uglify:renderermin && npm run package-coreplugins -- --env.channel=sunbird && npm run build-sunbird && grunt build-preview ",
         "build-aar": "bash -c 'grunt uglify:renderermin && if [[ ${1} == \"ekstep\" ]]; then npm run package-coreplugins -- --env.channel=ekstep && npm run build-ekstep && grunt build-app; else npm run package-coreplugins -- --env.channel=sunbird && npm run build-sunbird && grunt build-app; fi' -- ",
-        "build-npm-package": "node_modules/.bin/rimraf ./www && npm run build-preview sunbird && node_modules/.bin/cpy package.json ./www/preview && node_modules/.bin/cpy ../README.md ./www/preview",
+        "build-npm-package": "node_modules/.bin/rimraf ./www && npm run package-coreplugins -- --env.channel=sunbird && npm run build-preview sunbird && node_modules/.bin/cpy package.json ./www/preview && node_modules/.bin/cpy ../README.md ./www/preview",
         "build-player-interface": "node_modules/.bin/cpy public/js/htmlInterface.js ./npm-dist/content-player-interface",
         "test-player": "npm run build-preview && grunt player-test",
         "test-renderer": "npm run build-preview && grunt renderer-test"

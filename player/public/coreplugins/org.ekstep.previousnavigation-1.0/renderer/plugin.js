@@ -6,13 +6,32 @@
 Plugin.extend({
     _type: "navigation",
     initialize: function() {
-        console.info('Previous navigation intialize');
-        app.compileProvider.directive('previousNavigation', ['$rootScope', function($rootScope) {
+        var instance = this;
+        app.compileProvider.directive('previousNavigation', ['$rootScope', "$compile", function ($rootScope, $compile) {
             return {
                 restrict: 'E',
-                template: '<div><a class="nav-icon nav-previous" ng-show="showOverlayPrevious !== state_off" ng-class="{\'nav-disable\': showOverlayPrevious == state_disable}" href="javascript:void(0);"><img ng-src="{{imageBasePath}}previous.png" ng-click="navigate(\'previous\')"></a></div>',
-                link: function(scope) {
-                    var events = ["renderer:previous:show", "renderer:previous:hide", "overlayPrevious"];
+                template: '<div id="nav-previous"></div>',
+                link: function(scope, element) {
+                    var events = [ "overlayPrevious", "renderer:previous:show", "renderer:previous:hide"];
+                    var defaultTempate = org.ekstep.pluginframework.pluginManager.resolvePluginResource(instance._manifest.id, instance._manifest.ver, "renderer/templates/default.html");
+					var navigationTop = org.ekstep.pluginframework.pluginManager.resolvePluginResource(instance._manifest.id, instance._manifest.ver, "renderer/templates/top.html");
+
+                    scope.changeNavigation = function (event) {
+						var tempUrl = "";
+						switch (event.target.tempName) {
+                            case "navigationTop": tempUrl = navigationTop; break;
+                            default: tempUrl = defaultTempate;
+                                    setTimeout(function() {
+                                        jQuery('custom-previous-navigation').show();
+                                    }, 100);
+                                    break;
+						}
+						var template = '<div ng-include="\'' + tempUrl + '\'"></div>';
+						// var tempUrl = (event.target.tempName === "navigationTop") ? scope.navigationTop : scope.defaultTempate;
+						element.html(template).show();
+						$compile(element.contents())(scope);
+                    }
+
                     scope.changeValue = function(event) {
                         var val;
                         var globalConfig = EkstepRendererAPI.getGlobalConfig();
@@ -57,6 +76,7 @@ Plugin.extend({
                     _.each(events, function(event) {
                         EkstepRendererAPI.addEventListener(event, scope.changeValue, scope)
                     })
+                    EkstepRendererAPI.addEventListener("renderer:navigation:load", scope.changeNavigation, scope);
                 }
             }
         }])

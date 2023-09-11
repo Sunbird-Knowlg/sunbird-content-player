@@ -1,0 +1,66 @@
+@Library('deploy-conf') _ 
+node() {
+    try {
+        String ANSI_GREEN = "\u001B[32m"
+        String ANSI_NORMAL = "\u001B[0m"
+        String ANSI_BOLD = "\u001B[1m"
+        String ANSI_RED = "\u001B[31m"
+        String ANSI_YELLOW = "\u001B[33m"
+
+        ansiColor('xterm') {
+            stage('Checkout') {
+               tag_name = env.JOB_NAME.split("/")[-1]
+               pre_checks()
+               cleanWs()
+               def scmVars = checkout scm
+               checkout scm: [$class: 'GitSCM', branches: [[name: "refs/tags/$tag_name"]], userRemoteConfigs: [[url: scmVars.GIT_URL]]]
+               commit_hash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
+               artifact_version = tag_name
+               branch_name = tag_name.split('_')[0].split('\\.')[0] + "." + tag_name.split('_')[0].split('\\.')[1]
+            }  
+                echo "artifact_version: " + artifact_version
+
+        //        stage Build
+                    sh """#!/bin/bash
+                        export NVM_DIR="\$HOME/.nvm"
+                        [ -s "\$NVM_DIR/nvm.sh" ] && source "\$NVM_DIR/nvm.sh" # This loads nvm
+                        [ -s "\$NVM_DIR/bash_completion" ] && source "\$NVM_DIR/bash_completion" # This loads nvm bash_completion
+                        nvm install 10.16.3
+                        export player_version_number=${branch_name}
+                        export build_number=${commit_hash}
+                        export filter_plugins=false # For the preview build generation dont split the plugins.
+                        cd player
+                        npm install
+                        npm run build-preview ekstep
+                        grunt compress:preview
+                        grunt generate-libs
+                        #grunt renderer-test
+                        #grunt build-jsdoc
+                    """
+                
+      //          stage ArchiveArtifacts
+                    sh """
+                        mkdir CR_Preview_Artifacts
+                        cp player/preview.zip CR_Preview_Artifacts
+                        #cp player/libs.zip CR_Preview_Artifacts
+                        zip -j CR_Preview_Artifacts.zip:${artifact_version} CR_Preview_Artifacts/*                      
+                    """
+                    archiveArtifacts "CR_Preview_Artifacts.zip:${artifact_version}"
+                    sh """echo {\\"artifact_name\\" : \\"CR_Preview_Artifacts.zip\\", \\"artifact_version\\" : \\"${artifact_version}\\", \\"node_name\\" : \\"${env.NODE_NAME}\\"} > metadata.json"""
+                    archiveArtifacts artifacts: 'metadata.json', onlyIfSuccessful: true
+                    currentBuild.description = "${artifact_version}"
+                
+        }
+        currentBuild.result = "SUCCESS"    
+        slack_notify(currentBuild.result, tag_name)
+        email_notify()  
+        auto_build_deploy()
+    }
+    catch (err) {
+        currentBuild.result = "FAILURE"
+        slack_notify(currentBuild.result, tag_name)
+        email_notify()
+        throw err
+    }
+
+}

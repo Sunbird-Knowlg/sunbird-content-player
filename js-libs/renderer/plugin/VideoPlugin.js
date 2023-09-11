@@ -230,6 +230,10 @@ var VideoPlugin = Plugin.extend({
      *   @memberof VideoPlugin
      */
     createVideoElement: function() {
+        // User has to long press to play/pause or mute/unmute the video in mobile view. 
+        // TO fix this problem we are removing the tap events of the videoJs library.
+        // link:- https://github.com/videojs/video.js/issues/6222
+        videojs.getComponent('Component').prototype.emitTapEvents = function () {};
         var videoAsset;
         videoAsset = this._theme.getAsset(this._data.asset);
 
@@ -269,7 +273,8 @@ var VideoPlugin = Plugin.extend({
             var videoPlayer = videojs(this._data.asset, {
                 "controls": this._data.controls,
                 "autoplay": this._data.autoplay,
-                "preload": "auto"
+                "preload": "auto",
+                inactivityTimeout: 0
             });
             videojs(videoAsset.id).ready(function() {
                 var videoItem = document.getElementById(videoAsset.id);
@@ -286,6 +291,10 @@ var VideoPlugin = Plugin.extend({
             var src = videoAsset;
             videoAsset = document.createElement("video");
             videoAsset.src = src;
+            videoAsset.addEventListener('timeupdate', function(){
+                //set controls settings to controls,this make controls show everytime this event is triggered
+                videoAsset.setAttribute("controls","controls");
+            }, false);
         }
         var jqVideoEle = jQuery(videoAsset).insertBefore("#gameArea");
         !_.isUndefined(this._data.type) ? jQuery(jqVideoEle).attr("type", this._data.type) : console.warn("Video type is not defined");

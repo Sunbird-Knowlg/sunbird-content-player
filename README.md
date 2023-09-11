@@ -60,6 +60,7 @@ var previewObj = {
 
     },
     "config": {
+    	"whiteListUrl": ["contentProviderPath"], // The URLs that passed as this config only will allow from player, other URLs will be blocked. eg. 'https://obj.stage.sunbirded.org/**', 'https://*.blob.core.windows.net/**' etc.
         "repos": ["s3path"], // plugins repo path where all the plugins are pushed s3 or absolute folder path
         "plugins": [{ id: "org.sunbird.telemtryPlugin", "ver": "1.0", "type": "plugin" }], //Inject external custom plugins into content (for externl telemetry sync)
         "overlay": { // Configuarable propeties of overlay showing by GenieCanvas on top of the content
@@ -118,6 +119,7 @@ var previewObj = {
 | `context` | It is an `object` it contains the `uid`,`did`,`sid`,`mode` etc., these will be logged inside the telemetry  | ```{}``` |
 | `config` | It is an `object` it contains the `repo`,`plugins`,`overlay`,`splash` etc., these will be used to configure the canvas  | ```{}```
 | `apislug` | It is `string` which defines proxy setup to make a api request | ```/action```
+| `whiteListUrl`| It is an `Array` which defines whiteList URLs which should allows from player| ```['self']```
 
 
 1. **How to render in Web**
