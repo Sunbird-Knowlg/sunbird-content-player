@@ -172,6 +172,12 @@ Content player will render inside Cordova environment and it's accepting the con
    1. **Preview**
       
      	Run `npm run build-preview sunbird` which creates the preview folder for sunbird instance
+	
+	Note: If you encounter errors in this step try the following to resolve:
+	 1. If the error conatains options related issue of css-loader consider change the npm version of css-loader to `1.0.0`
+	    `npm uninstall css-loader`
+	    `npm install css-loader@1.0.0`
+	 2. If you encounter errors related to `coreplugins.css` file then run step-3 (`npm run package-coreplugins -- --env.channel sunbird`) and proceed with this step.    
       
    2. **AAR**
    
