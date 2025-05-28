@@ -39,12 +39,9 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
         EkstepRendererAPI.addEventListener("renderer:content:start", $scope.showOverlay);
 
         $scope.pluginInstance = EkstepRendererAPI.getPluginObjs("org.ekstep.overlay");
-        if (globalConfig.languageInfo) {
-            for (var key in globalConfig.languageInfo) {
-                AppLables[key] = globalConfig.languageInfo[key];
-            }
-        }
-        $scope.AppLables = AppLables;
+
+        window.AppLables = EkstepRendererAPI.getGlobalConfig().context.resourceBundles || window.AppLables;
+        $scope.AppLables = window.AppLables;
         if (!_.isUndefined(globalConfig.overlay.menu) && !globalConfig.overlay.menu.showTeachersInstruction)
             $scope.showTeacherIns = globalConfig.overlay.menu.showTeachersInstruction;
         if (!globalConfig.overlay.showReload)
@@ -183,23 +180,57 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
         $rootScope.safeApply();
     }
 
+    // $scope.openMenu = function() {
+    //     //display a layer to disable clicking and scrolling on the gameArea while menu is shown
+    //     if (jQuery('.menu-overlay').css('display') == "block") {
+    //         $scope.hideMenu();
+    //         return;
+    //     }
+    //     $scope.menuOpened = true;
+    //     TelemetryService.interact("TOUCH", "gc_menuopen", "TOUCH", {
+    //         stageId: $rootScope.stageId
+    //     });
+    //     jQuery('.menu-overlay').css('display', 'block');
+    //     jQuery(".gc-menu").show();
+    //     var marginLeft = window.innerWidth > 1000 ? "-22%" : "0%";
+    //     jQuery(".gc-menu").animate({
+    //         "marginLeft": [marginLeft, 'easeOutExpo']
+    //     }, 700, function() {});
+    //     EkstepRendererAPI.addEventListener(EkstepRendererEvents['renderer:device:back'], $scope.hideMenu, $scope);
+    // }
     $scope.openMenu = function() {
+
         //display a layer to disable clicking and scrolling on the gameArea while menu is shown
+        
         if (jQuery('.menu-overlay').css('display') == "block") {
-            $scope.hideMenu();
-            return;
+        
+        $scope.hideMenu();
+        
+        return;
+        
         }
+        
         $scope.menuOpened = true;
+        
         TelemetryService.interact("TOUCH", "gc_menuopen", "TOUCH", {
-            stageId: $rootScope.stageId
+        
+        stageId: $rootScope.stageId
+        
         });
+        
         jQuery('.menu-overlay').css('display', 'block');
+        
         jQuery(".gc-menu").show();
+        
         jQuery(".gc-menu").animate({
-            "marginLeft": ["0%", 'easeOutExpo']
+        
+        "marginLeft": ["0%", 'easeOutExpo']
+        
         }, 700, function() {});
+        
         EkstepRendererAPI.addEventListener(EkstepRendererEvents['renderer:device:back'], $scope.hideMenu, $scope);
-    }
+        
+        }
 
     $scope.hideMenu = function() {
         if (EkstepRendererAPI.hasEventListener(EkstepRendererEvents['renderer:device:back'])) EkstepRendererAPI.removeEventListener(EkstepRendererEvents['renderer:device:back'], $scope.hideMenu, $scope);
@@ -208,6 +239,7 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
             stageId: $rootScope.stageId
         });
         jQuery('.menu-overlay').css('display', 'none');
+        var marginLeft = window.innerWidth > 1200 ? "-56%" : "-35%";
         jQuery(".gc-menu").animate({
             "marginLeft": ["-35%", 'easeOutExpo']
         }, 700, function() {});
@@ -230,7 +262,21 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
          * @fires renderer:content:replay
          * @memberof EkstepRendererEvents
          */
-        EkstepRendererAPI.dispatchEvent('renderer:content:replay');
+        if (content.primaryCategory && content.primaryCategory.toLowerCase() === 'course assessment'){
+            org.ekstep.service.content.checkMaxLimit(content).then(function(response){
+                if(response){
+                    window.postMessage({
+                        event: 'renderer:maxLimitExceeded',
+                        data: {
+                        }
+                    })
+                } else{
+                    EkstepRendererAPI.dispatchEvent('renderer:content:replay');
+                }
+            });
+        }else{
+            EkstepRendererAPI.dispatchEvent('renderer:content:replay');
+        }
     }
 
     $scope.init();
@@ -239,7 +285,7 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
 app.compileProvider.directive('mute', function($rootScope) {
     return {
         restrict: 'E',
-        template: '<div role="button" tabindex="0" aria-label="Sound {{AppLables.mute}}"  ng-keydown="$event.keyCode === 13 && toggleMute()" ng-click="toggleMute()"><img ng-src="{{muteImg}}"/><span>Sound {{AppLables.mute}} </span></div>',
+        template: '<div ng-click="toggleMute()"><img ng-src="{{muteImg}}"/><span> {{AppLables.mute}} </span></div>',
         link: function(scope, url) {
 
             /**
@@ -251,7 +297,7 @@ app.compileProvider.directive('mute', function($rootScope) {
 
             EkstepRendererAPI.addEventListener('renderer:overlay:unmute', function() {
                 scope.muteImg = scope.imageBasePath + "audio_icon.png";
-                AppLables.mute = "on";
+                AppLables.mute = AppLables.turnOffSound || "Turn Off Sound";
                 AudioManager.unmute();
             });
 
@@ -264,7 +310,7 @@ app.compileProvider.directive('mute', function($rootScope) {
             EkstepRendererAPI.addEventListener('renderer:overlay:mute', function() {
                     AudioManager.mute();
                     scope.muteImg = scope.imageBasePath + "audio_mute_icon.png";
-                    AppLables.mute = "off";
+                    AppLables.mute = AppLables.turnOnSound || "Turn Off Sound";
             });
             EkstepRendererAPI.dispatchEvent('renderer:overlay:unmute');
             scope.toggleMute = function() {
@@ -284,7 +330,7 @@ app.compileProvider.directive('mute', function($rootScope) {
 app.compileProvider.directive('reloadStage', function($rootScope) {
     return {
         restrict: 'E',
-        template: '<span class="reload-stage" role="button" tabindex="0" aria-label="replayaudio" onclick="EventBus.dispatch(\'actionReload\')"><img id="reload_id" ng-show="reload !== state_off" ng-src="{{imageBasePath}}icn_replayaudio.png" style="width:100%;"/></span>',
+        template: '<span class="reload-stage" onclick="EventBus.dispatch(\'actionReload\')"><img id="reload_id" ng-show="reload !== state_off" ng-src="{{imageBasePath}}icn_replayaudio.png" style="width:100%;"/></span>',
         link: function(scope) {
 
             scope.toggleReload = function(event) {
@@ -327,9 +373,17 @@ app.compileProvider.directive('menu', function($rootScope, $sce) {
         restrict: 'E',
         scope: false,
         link: function(scope) {
+            scope.navigationTop = false;
             scope.getTemplate = function() {
                 return scope.pluginInstance._menuTP;
             }
+            scope.changeNavigation = function (event) {
+                switch (event.target.tempName) {
+                    case "navigationTop": scope.navigationTop = true; break;
+                    default: scope.navigationTop = false; break;
+                }
+            }
+			EkstepRendererAPI.addEventListener("renderer:navigation:load", scope.changeNavigation, scope);
         },
         template: "<div ng-include=getTemplate()></div>"
     }
@@ -338,7 +392,7 @@ app.compileProvider.directive('menu', function($rootScope, $sce) {
 app.compileProvider.directive('stageInstructions', function($rootScope) {
     return {
         restrict: 'E',
-        template: '<div ng-class="{\'icon-opacity\' : !stageData.params.instructions}" aria-label="{{AppLables.instructions}}" role="button" tabindex="0" aria-disabled="true" ng-keydown="$event.keyCode === 13 && showInstructions()" ng-click="showInstructions()"><img ng-src="{{imageBasePath}}icn_teacher.png" style="z-index:2;" alt="note img"/><span> {{AppLables.instructions}} </span></div>',
+        template: '<div ng-class="{\'icon-opacity\' : !stageData.params.instructions}" ng-click="showInstructions()"><img ng-src="{{imageBasePath}}icn_teacher.png" style="z-index:2;" alt="note img"/><span> {{AppLables.instructions || "Teacher\'s Note"}} </span></div>',
         controller: function($scope, $rootScope) {
             $scope.stageInstMessage = "";
             $scope.showInst = false;
@@ -417,7 +471,7 @@ app.compileProvider.directive('assess', function($rootScope) {
 app.compileProvider.directive('goodJob', function($rootScope) {
     return {
         restrict: 'E',
-        template: '<div class="popup"> <div class="popup-overlay" ng-click="hidePopup()"></div> <div class="popup-full-body"> <div class="font-lato assess-popup assess-goodjob-popup"> <div class="correct-answer" style=" text-align: center;"> <div class="banner"> <img ng-src="{{imageBasePath}}banner3.png" height="100%" width="100%"> </div> <div class="sign-board"> <img ng-src="{{imageBasePath}}check.png" id="correctButton" width="40%" /> </div> </div> <div id="popup-buttons-container"> <div ng-click="hidePopup(); moveToNextStage(\'next\');" ng-keydown="$event.keyCode === 13 && hidePopup(); moveToNextStage(\'next\');" tabindex="0" aria-label="{{AppLables.next}}" role="button" class="primary center button">{{AppLables.next}}</div> </div> </div> </div> </div>',
+        template: '<div class="popup"> <div class="popup-overlay" ng-click="hidePopup()"></div> <div class="popup-full-body"> <div class="font-lato assess-popup assess-goodjob-popup"> <div class="correct-answer" style=" text-align: center;"> <div class="banner"> <img ng-src="{{imageBasePath}}banner3.png" height="100%" width="100%"> </div> <div class="sign-board"> <img ng-src="{{imageBasePath}}check.png" id="correctButton" width="40%" /> </div> </div> <div id="popup-buttons-container"> <div ng-click="hidePopup(); moveToNextStage(\'next\');" class="primary center button">{{AppLables.next}}</div> </div> </div> </div> </div>',
         controller: function($scope, $rootScope, $timeout) {
             $scope.retryAssessment = function(id, e) {
                 $scope.hidePopup(id);
@@ -447,7 +501,7 @@ app.compileProvider.directive('goodJob', function($rootScope) {
 app.compileProvider.directive('tryAgain', function($rootScope) {
     return {
         restrict: 'E',
-        template: '<div class="popup"> <div class="popup-overlay" ng-click="hidePopup()"></div> <div class="popup-full-body"> <div class="font-lato assess-popup assess-tryagain-popup"> <div class="wrong-answer" style=" text-align: center;"> <div class="banner"> <img ng-src="{{imageBasePath}}banner2.png" height="100%" width="100%"> </div> <div class="sign-board"><img ng-src="{{imageBasePath}}incorrect.png" width="40%" alt="Incorrect Icon"  id="incorrectButton" /> </div> </div> <div id="popup-buttons-container"> <div ng-click="hidePopup(); moveToNextStage(\'next\');" ng-keydown="$event.keyCode === 13 && hidePopup(); moveToNextStage(\'next\');" tabindex="0" aria-label="{{AppLables.next}}" role="button" class="left button">{{AppLables.next}}</div> <div ng-click="retryAssessment(\'gc_retry\', $event);" ng-keydown="$event.keyCode === 13 && retryAssessment(\'gc_retry\', $event);" href="javascript:void(0);" tabindex="0" aria-label="{{AppLables.tryAgain}}" role="button" class="right primary button">{{AppLables.tryAgain}}</div> </div> </div> </div> </div>'
+        template: '<div class="popup"> <div class="popup-overlay" ng-click="hidePopup()"></div> <div class="popup-full-body"> <div class="font-lato assess-popup assess-tryagain-popup"> <div class="wrong-answer" style=" text-align: center;"> <div class="banner"> <img ng-src="{{imageBasePath}}banner2.png" height="100%" width="100%"> </div> <div class="sign-board"><img ng-src="{{imageBasePath}}incorrect.png" width="40%" id="incorrectButton" /> </div> </div> <div id="popup-buttons-container"> <div ng-click="hidePopup(); moveToNextStage(\'next\');" class="left button">{{AppLables.next}}</div> <div ng-click="retryAssessment(\'gc_retry\', $event);" href="javascript:void(0);" class="right primary button">{{AppLables.tryAgain}}</div> </div> </div> </div> </div>'
     }
 });
 
