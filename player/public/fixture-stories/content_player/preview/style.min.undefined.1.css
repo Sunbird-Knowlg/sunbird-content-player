@@ -3878,7 +3878,7 @@ html {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    font-family: sans-serif;
+    font-family: 'Times New Roman', Arial, Times, serif !important;
     /* 1 */
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
@@ -3972,7 +3972,7 @@ kbd,
 pre,
 samp {
     font-size: 1em;
-    font-family: monospace, serif;
+    font-family: 'Times New Roman', Arial, Times, serif !important;
 }
 
 
@@ -4246,7 +4246,7 @@ body,
     color: #000;
     word-wrap: break-word;
     font-size: 14px;
-    font-family: "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
+    font-family: 'Times New Roman', Arial, Times, serif !important;
     line-height: 20px;
     text-rendering: optimizeLegibility;
     -webkit-backface-visibility: hidden;
@@ -4554,7 +4554,7 @@ h6,
 .h6 {
     color: #000;
     font-weight: 500;
-    font-family: "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
+    font-family: 'Times New Roman', Arial, Times, serif !important;
     line-height: 1.2;
 }
 
@@ -6849,7 +6849,7 @@ ion-tabs.tabs-color-active-dark .tab-item.activated {
     white-space: nowrap;
     font-weight: 400;
     font-size: 14px;
-    font-family: "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
+    font-family: 'Times New Roman', Arial, Times, serif !important;
     opacity: 0.7;
 }
 
@@ -9168,7 +9168,7 @@ input,
 button,
 select,
 textarea {
-    font-family: "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
+    font-family: 'Times New Roman', Arial, Times, serif !important;
 }
 
 .item-input {
@@ -12223,7 +12223,7 @@ a.dark {
     background: #000;
     border: #444 solid 1px;
     font-size: 16px;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Times New Roman', Arial, Times, serif !important;
     height: 20px;
     line-height: 20px;
     margin-top: 15px;
@@ -12241,7 +12241,7 @@ a.dark {
 
 .menu_top {
     float: right;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Times New Roman', Arial, Times, serif !important;
     font-size: 12px;
     line-height: 12px;
     margin: 15px 15px 0px auto;
@@ -12338,7 +12338,7 @@ visited {
     overflow: hidden;
     border-top: none;
     font-size: 12px;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Times New Roman', Arial, Times, serif !important;
     letter-spacing: 1px;
     box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
     -moz-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
@@ -12441,7 +12441,7 @@ visited {
     padding: 0;
     font-size: 11px;
     padding: 0 2px;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Times New Roman', Arial, Times, serif !important;
 }
 
 .product_description {
@@ -12526,7 +12526,7 @@ visited {
     width: 944px;
     margin: 40px auto;
     font-size: 12px;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Times New Roman', Arial, Times, serif !important;
     padding: 8px;
 }
 
@@ -12545,7 +12545,7 @@ visited {
 #popup_title {
     position: absolute;
     color: #000;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Times New Roman', Arial, Times, serif !important;
     font-size: 14px;
     top: 0px;
     text-align: left;
@@ -12660,7 +12660,7 @@ visited {
     color: #266576;
     padding: 2px 8px;
     font-size: 30px;
-    font-family: flavours, Helvetica, sans-serif;
+    font-family: 'Times New Roman', Arial, Times, serif !important;
     height: 20px;
     line-height: 20px;
     margin-top: 15px;
@@ -12687,7 +12687,7 @@ visited {
     float: left;
     color: #5A3C22;
     font-size: 20px;
-    font-family: flavours;
+    font-family: 'Times New Roman', Arial, Times, serif !important;
     margin-top: -10px;
     padding-top: 25px;
 }
@@ -12697,7 +12697,7 @@ visited {
 
 .menu_top {
     float: right;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Times New Roman', Arial, Times, serif !important;
     font-size: 12px;
     line-height: 12px;
     margin: 15px 15px 0px auto;
@@ -12779,7 +12779,7 @@ visited {
     overflow: hidden;
     border-top: none;
     font-size: 12px;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Times New Roman', Arial, Times, serif !important;
     letter-spacing: 1px;
     box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.3);
     -moz-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.3);
@@ -12909,7 +12909,7 @@ visited {
     position: fixed;
     text-align: center;
     bottom: 50px;
-    font-family: flavours;
+    font-family: 'Times New Roman', Arial, Times, serif !important;
     font-size: 1.5em;
     display: block;
     padding: 10px;
@@ -12933,7 +12933,7 @@ visited {
 
 .product_title p {
     font-size: 17px;
-    font-family: flavours !important;
+    font-family: 'Times New Roman', Arial, Times, serif !important;
     color: #266576 !important;
     padding-top: 10px;
     margin-top: 20px;
@@ -12941,7 +12941,7 @@ visited {
 
 .product_name {
     font-size: 0.8em;
-    font-family: BalooBhai;
+    font-family: 'Times New Roman', Arial, Times, serif !important;
     font-style: bold;
     color: #454545;
     margin: 8px 0;
@@ -14470,11 +14470,11 @@ visited {
     background-color: rgba(255, 255, 255, 0.9)
 }
 @font-face {
-    font-family: 'NotoSansDevanagari';
-    src: url(fonts/NotoSansDevanagari-Regular.woff) format('woff')
+    font-family: 'Times New Roman';
+    src: url(fonts/Times\ New\ Roman.woff) format('woff')
 }
 
-@font-face {
+/* @font-face {
     font-family: 'NotoSansTelugu';
     src: url(fonts/NotoSansTelugu-Regular.woff) format('woff')
 }
@@ -14519,41 +14519,12 @@ visited {
     src: url(fonts/NotoSansTamil-Regular.woff) format('woff')
 }
 
-@font-face {
-    font-family: 'flavours';
-    src: url(fonts/Flavors-Regular.ttf) format('truetype')
-}
 
 @font-face {
     font-family: 'NotoSans';
     src: url(fonts/NotoSans-Regular.woff) format('woff')
 }
 
-@font-face {
-    /* reference: http://www.latofonts.com/lato-free-fonts/ */
-    font-family: 'lato-black';
-    src: url(fonts/Lato-Black.woff) format('woff')
-}
-
-@font-face {
-    font-family: 'lato-bold';
-    src: url(fonts/Lato-Bold.woff) format('woff')
-}
-
-@font-face {
-    font-family: 'lato-light';
-    src: url(fonts/Lato-Light.woff) format('woff')
-}
-
-@font-face {
-    font-family: 'lato-medium';
-    src: url(fonts/Lato-Medium.woff) format('woff')
-}
-
-@font-face {
-    font-family: 'lato-regular';
-    src: url(fonts/Lato-Regular.woff) format('woff')
-}
 
 @font-face {
     font-family: 'NotoSans-SemiBold';
@@ -14563,11 +14534,11 @@ visited {
 @font-face {
     font-family: 'NotoSans-Bold';
     src: url(fonts/NotoSans-Bold.woff) format('woff')
-}
+} */
 
-body {	
-    font-family: NotoSans, NotoSansOriya, NotoSansGujarati, NotoSansMalayalam;	
-} 
+body {
+    font-family: 'Times New Roman', Arial, Times, serif !important;
+}
 
 .splashText {
     position: absolute;
@@ -14594,7 +14565,7 @@ body {
     bottom: 8vh;
     text-align: center;
     position: absolute;
-    font-family: lato-medium;
+    font-family: 'Times New Roman', Arial, Times, serif !important;
     color: #494949;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -14648,7 +14619,7 @@ ion-popover-view.fit ion-content {
     pointer-events: none;
     position: absolute;
     height: 100%;
-    width: 100%;
+    width: 100% !important;
     z-index: 99999;
 }
 
@@ -14657,7 +14628,7 @@ ion-popover-view.fit ion-content {
 }
 
 .font-lato {
-    font-family: lato-medium;
+    font-family: 'Times New Roman', Arial, Times, serif !important;
 }
 
 .cover-page-title.icon-font {
@@ -14697,7 +14668,7 @@ ion-popover-view.fit ion-content {
 
 .menu-overlay {
     position: absolute;
-    width: 100%;
+    width: 100vw;
     height: 100%;
     background-color: black;
     opacity: 0.6;
@@ -14705,7 +14676,7 @@ ion-popover-view.fit ion-content {
 }
 
 .icon-font {
-    font-family: lato-medium;
+    font-family: 'Times New Roman', Arial, Times, serif !important;
     color: #FFFFFF;
     text-align: center;
 }
@@ -14716,11 +14687,12 @@ ion-popover-view.fit ion-content {
 
 .gc-menu {
     font-size: 1.8vw;
-    position: absolute;
-    /*text-transform: uppercase;*/
+    position: fixed;
+    text-transform: uppercase;
     width: 35%;
     height: 100%;
     top: 0;
+    left: 0;
     margin-left: -35%;
 }
 
@@ -14750,7 +14722,7 @@ ion-popover-view.fit ion-content {
     overflow: hidden;
     padding-top: 2.5%;
     padding: 2.6% 3%;
-    font-family: lato-regular;
+    font-family: 'Times New Roman', Arial, Times, serif !important;
 }
 
 .gc-menu-cont .gc-menu-options img {
@@ -14807,7 +14779,7 @@ ion-popover-view.fit ion-content {
 }
 
 .gc-menu a.gc-menu-btn {
-    position: relative;
+    /*position: relative;*/
 }
 
 .gc-menu-collection-cont {
@@ -14883,7 +14855,7 @@ ion-popover-view.fit ion-content {
 }
 
 .inst-message-cont p {
-    font-family: NotoSansRegular;
+    font-family: 'Times New Roman', Arial, Times, serif !important;
     font-size: 1.2em;
     margin: 25% 5%;
     height: 72%;
@@ -14917,11 +14889,17 @@ ion-popover-view.fit ion-content {
 .gc-menu-btn img.icon {
     position: absolute;
     margin-top: 40%;
-    width: 100%;
 }
 
 .gc-menu-btn.old_menu img.icon {
     margin-top: 0;
+    width: 20%;
+}
+
+.gc-menu-btn img.icon.nav-top {
+     margin-top: 0%;
+    width: auto;
+    height: auto;
 }
 
 .nav-icon {
@@ -14952,6 +14930,7 @@ ion-popover-view.fit ion-content {
 
 .nav-disable {
     opacity: 0.4;
+    pointer-events: none;
 }
 
 .overlay-html>assess {
@@ -14984,7 +14963,7 @@ ion-popover-view.fit ion-content {
     line-height: 100%;
     font-size: 5vh;
     color: white;
-    font-family: NotoSansRegular;
+    font-family: 'Times New Roman', Arial, Times, serif !important;
     text-align: center;
     width: 100%;
     padding-top: 10%;
@@ -15630,7 +15609,7 @@ ion-popover-view.fit ion-content {
     font-size: 0.8em;
     vertical-align: middle;
     display: table-cell;
-    font-family: NotoSans;
+    font-family: 'Times New Roman', Arial, Times, serif !important;
 }
 
 .gc-ep-credits {
@@ -16130,7 +16109,7 @@ ion-popover-view.fit ion-content {
 #userSwitchingModal .modal-content .user-header {
     background-color: #eee;
     text-align: center;
-    font-family: lato-Regular;
+    font-family: 'Times New Roman', Arial, Times, serif !important;
     font-size: 2vw;
 }
 
@@ -16194,7 +16173,7 @@ ion-popover-view.fit ion-content {
     left: 20px;
     margin-top: 1.5vh;
     font-size: 1.8vw;
-    font-family: lato-regular;
+    font-family: 'Times New Roman', Arial, Times, serif !important;
 }
 
 #userSwitchingModal #userSlider .profile,
@@ -16230,7 +16209,7 @@ ion-popover-view.fit ion-content {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    font-family: lato-light;
+    font-family: 'Times New Roman', Arial, Times, serif !important;
 }
 
 #userSwitchingModal .modal-content .model-butttons {
@@ -16256,7 +16235,7 @@ ion-popover-view.fit ion-content {
 }
 
 #userSwitchingModal .model-butttons span {
-    font-family: lato-regular;
+    font-family: 'Times New Roman', Arial, Times, serif !important;
     font-size: 2vw;
 }
 
@@ -16620,127 +16599,30 @@ body {
 .center {
     margin: 0 auto;
 }
-
+.gc-menu a.gc-menu-btn .hamberger-menu {
+    cursor: pointer;
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    max-width: 4%;
+    z-index: 10000;
+    position: fixed;
+    left: 1.25%;
+    min-height: 28px;
+    min-width: 28px;
+    width: 4%;
+    top: 1.75%;
+    height: calc(10% - 3.5%);
+}
+.gc-menu a.gc-menu-btn .hamberger-menu img {
+    max-width: 100%;
+    position: unset;
+    margin-top: 0;
+    width: 100%;
+}
 
 /* new popup style */
-#pdf-main-container {
-    width: 100%;
-    height: auto;
-    margin: 0px auto;
-}
 
-#pdf-loader {
-    display: none;
-    text-align: center;
-    color: #999999;
-    font-size: 13px;
-    line-height: 100px;
-    height: 100px;
-}
-
-#pdf-no-page {
-    display: none;
-    text-align: center;
-    color: #999999;
-    font-size: 13px;
-    line-height: 100px;
-    height: 100px;
-}
-
-#pdf-contents {
-    display: none;
-}
-
-#pdf-meta {
-    width: 100%;
-    padding-top: 1%;
-    padding-bottom: 1%;
-    position: fixed;
-    border: 2px thin black;
-    background: black;
-    opacity: 0.2;
-}
-
-#pdf-buttons {
-    width: 30%;
-    float: left;
-}
-
-#pdf-next {
-    margin-left: 10px;
-}
-
-#pdf-search-container {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    margin-top: 0%;
-    transform: translate(-50%, -50%);
-    opacity: 0.2;
-}
-
-#pdf-find-text {
-    display: inline;
-    border: 1px solid black;
-    height: 24px;
-    margin-right: 5px;
-    padding: 3px;
-}
-
-#page-count-container {
-    text-align: right;
-    margin-right: 5%;
-    float: right;
-    margin-top: 0.5%;
-    font-size: 1.3em;
-    color: white;
-    opacity: 0.2;
-}
-
-#pdf-current-page {
-    display: inline;
-}
-
-#pdf-total-pages {
-    display: inline;
-}
-
-#pdf-canvas {
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    box-sizing: border-box;
-    /*width: 100%;*/
-    height: auto;
-}
-
-#page-loader {
-    height: 100px;
-    line-height: 100px;
-    text-align: center;
-    display: none;
-    color: #999999;
-    font-size: 13px;
-    padding-top: 1%;
-}
-
-#htmldiv {
-    height: 100%;
-}
-
-.loweropacity {
-    opacity: 0.2 !important;
-}
-
-.higheropacity {
-    opacity: 1 !important;
-}
-
-.pdf-download-btn{
-    padding-left: 2.5px;
-    margin-left: 2px; 
-    width: 13.5%;
-    margin-bottom: -3%;
-    cursor: pointer;
-}
 .grey-text {
     color: #717274;
 }

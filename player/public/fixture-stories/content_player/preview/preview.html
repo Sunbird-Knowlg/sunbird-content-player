@@ -10,7 +10,7 @@
     <title></title>
 
     <!-- injector:css -->
-    <link rel="stylesheet" href="style.min.undefined.1.css">
+    <link rel="stylesheet" href="style.min.1.1.css">
     <!-- endinjector -->
 
     <style>
@@ -19,6 +19,39 @@
             left: 50%;
             top: 50%;
         }
+
+        @media screen and (min-width: 75.063rem) {
+    #gameArea {
+        left: 0px !important;
+        top: 0px !important;
+        width: 100% !important;
+        height: 100% !important;
+        margin-top: 0px !important;
+        margin-left: 0px !important;
+    }
+}
+
+        @media screen and (min-width: 56.25rem) and (max-width: 75rem) {
+    #gameArea {
+        left: 0px !important;
+        top: 0px !important;
+        width: 100% !important;
+        height: 100% !important;
+        margin-top: 0px !important;
+        margin-left: 0px !important;
+    }
+}
+
+@media screen and (max-width: 56.25rem) {
+    #gameArea {
+        left: 0px !important;
+        top: 0px !important;
+        width: 100% !important;
+        height: 100% !important;
+        margin-top: 0px !important;
+        margin-left: 0px !important;
+    }
+}
 
         #gameCanvas {
             width: 100%;
@@ -35,11 +68,15 @@
             padding-right: 5px;
             z-index: 1000;
             text-align: center;
+            font-family: Times New Roman !important;
+        }
+        html[dir="rtl"] body {
+            direction: rtl !important;
         }
     </style>
 </head>
 
-<body ng-controller="BaseCtrl">
+<body ng-controller="BaseCtrl" style="font-family: 'Times New Roman', Arial, sans-serif !important;">
     <div id="loading" class="gc-loader-area"></div>
 
     <div class="content-holder" ng-repeat="template in templates">
@@ -47,7 +84,21 @@
     </div>
 
     <!-- injector:js -->
-    <script src="script.min.undefined.1.js"></script>
+    
+    <script src="script.min.1.1.js"></script>
+    <script>
+        setTimeout(() => {
+        let globalObj = this.window;
+        let globalConfig = globalObj?.GlobalContext
+        console.log({globalConfig})
+        console.log(globalConfig?.config?.dir)
+        if (globalConfig?.config?.dir === 'rtl') {
+            document.body.setAttribute('dir', 'rtl');
+        } else {
+            document.body.setAttribute('dir', 'ltr');
+        }
+        }, 5000);
+     </script>
     <!-- endinjector -->
 </body>
 
