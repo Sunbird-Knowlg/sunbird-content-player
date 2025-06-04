@@ -27,11 +27,12 @@ Plugin.extend({
         // org.ekstep.service.controller.loadNgModules(this._menuTP);
 
         EkstepRendererAPI.addEventListener("render:overlay:applyStyles", instance.updateRendererStyles, instance);
-        EkstepRendererAPI.addEventListener("renderer:overlay:show", instance.showOrHideOverlay, instance);        
+        EkstepRendererAPI.addEventListener("renderer:overlay:show", instance.showOrHideOverlay, instance);
         EkstepRendererAPI.addEventListener("renderer:content:start", instance.showOrHideOverlay, instance);
     },
     showOrHideOverlay: function(){
         this.overlayVisible = true;
+        var labels = EkstepRendererAPI.getGlobalConfig().context.resourceBundles || {};
     },
     updateRendererStyles: function(event, instance){
         setTimeout(function(){
