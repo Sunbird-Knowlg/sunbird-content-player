@@ -29,19 +29,20 @@ jobs:
         id: cache
         uses: actions/cache@v4
         with:
-          path: node_modules
+          path: player/node_modules
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-modules-
     
       - name: Install dependencies
+        working-directory: player
         run: npm ci
     
       - name: Save node_modules cache
         if: steps.cache.outputs.cache-hit != 'true'
         uses: actions/cache@v4
         with:
-          path: node_modules
+          path: player/node_modules
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
 
       - name: Build preview
