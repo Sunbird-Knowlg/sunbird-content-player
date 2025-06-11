@@ -34,28 +34,28 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-modules-
 
-    #   - name: Install pyenv
-    #     run: |
-    #       curl https://pyenv.run | bash
-    #       export PATH="$HOME/.pyenv/bin:$PATH"
-    #       eval "$(pyenv init --path)"
-    #       eval "$(pyenv init -)"
-    #       eval "$(pyenv virtualenv-init -)"
+      - name: Install pyenv
+        run: |
+          curl https://pyenv.run | bash
+          export PATH="$HOME/.pyenv/bin:$PATH"
+          eval "$(pyenv init --path)"
+          eval "$(pyenv init -)"
+          eval "$(pyenv virtualenv-init -)"
               
-    #   - name: Install Python 2.7.18
-    #     run: |
-    #       export PATH="$HOME/.pyenv/bin:$PATH"
-    #       eval "$(pyenv init --path)"
-    #       eval "$(pyenv init -)"
-    #       eval "$(pyenv virtualenv-init -)"
-    #       pyenv install 2.7.18
-    #       pyenv global 2.7.18
-    #       python --version
+      - name: Install Python 2.7.18
+        run: |
+          export PATH="$HOME/.pyenv/bin:$PATH"
+          eval "$(pyenv init --path)"
+          eval "$(pyenv init -)"
+          eval "$(pyenv virtualenv-init -)"
+          pyenv install 2.7.18
+          pyenv global 2.7.18
+          python --version
 
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '2.7.18'
+      - name: Check Python version
+        run: |
+          source $HOME/.bashrc
+          python --version
 
       - name: Install node-gyp
         run: npm install -g node-gyp
