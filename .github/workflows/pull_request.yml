@@ -19,9 +19,6 @@ jobs:
         with:
           node-version: '10.16.3'
 
-    #   - name: Install grunt-cli
-    #     run: sudo npm install -g grunt-cli@1.5.0
-
       - name: Configure git to use HTTPS
         run: git config --global url."https://".insteadOf git://
 
@@ -42,36 +39,6 @@ jobs:
               
       - name: Set npm python config
         run: npm config set python /usr/bin/python2
-              
-
-    #   - name: Install pyenv
-    #     run: |
-    #       curl https://pyenv.run | bash
-    #       export PATH="$HOME/.pyenv/bin:$PATH"
-    #       eval "$(pyenv init --path)"
-    #       eval "$(pyenv init -)"
-    #       eval "$(pyenv virtualenv-init -)"
-              
-    #   - name: Install Python 2.7.18
-    #     run: |
-    #       export PATH="$HOME/.pyenv/bin:$PATH"
-    #       eval "$(pyenv init --path)"
-    #       eval "$(pyenv init -)"
-    #       eval "$(pyenv virtualenv-init -)"
-    #       pyenv install 2.7.18
-    #       pyenv global 2.7.18
-    #       python --version
-
-    #   - name: Check Python version
-    #     run: |
-    #       source $HOME/.bashrc
-    #       python --version
-
-    #   - name: Install node-gyp
-    #     run: npm install -g node-gyp
-
-    #   - name: Set Python path in npm config
-    #     run: npm config set python $(which python2)
 
       - name: Check Python version
         run: python --version
@@ -90,14 +57,6 @@ jobs:
       - name: Build preview
         working-directory: player
         run: npm run build-preview ekstep
-
-      - name: Compress preview
-        working-directory: player
-        run: grunt compress:preview
-
-      - name: Generate libs
-        working-directory: player
-        run: grunt generate-libs
 
       - name: Run test
         working-directory: player
