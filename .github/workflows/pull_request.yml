@@ -19,8 +19,8 @@ jobs:
         with:
           node-version: '10.16.3'
 
-      - name: Install grunt-cli
-        run: sudo npm install -g grunt-cli@1.5.0
+    #   - name: Install grunt-cli
+    #     run: sudo npm install -g grunt-cli@1.5.0
 
       - name: Configure git to use HTTPS
         run: git config --global url."https://".insteadOf git://
