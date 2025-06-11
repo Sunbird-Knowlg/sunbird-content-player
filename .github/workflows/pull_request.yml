@@ -34,28 +34,24 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-modules-
 
-    #   - name: Install pyenv
-    #     run: |
-    #       curl https://pyenv.run | bash
-    #       export PATH="$HOME/.pyenv/bin:$PATH"
-    #       eval "$(pyenv init --path)"
-    #       eval "$(pyenv init -)"
-    #       eval "$(pyenv virtualenv-init -)"
+      - name: Install pyenv
+        run: |
+          curl https://pyenv.run | bash
+          export PATH="$HOME/.pyenv/bin:$PATH"
+          eval "$(pyenv init --path)"
+          eval "$(pyenv init -)"
+          eval "$(pyenv virtualenv-init -)"
               
-    #   - name: Install Python 2.7.18
-    #     run: |
-    #       export PATH="$HOME/.pyenv/bin:$PATH"
-    #       eval "$(pyenv init --path)"
-    #       eval "$(pyenv init -)"
-    #       eval "$(pyenv virtualenv-init -)"
-    #       pyenv install 2.7.18
-    #       pyenv global 2.7.18
-    #       python --version
-    #       npm install -g node-gyp
-    #       npm config set python "$(pyenv which python)"
-    #       # Ensure Python is accessible to node-gyp
-    #       export PYTHON="$(pyenv which python)"
-
+      - name: Install Python 2.7.18
+        run: |
+          export PATH="$HOME/.pyenv/bin:$PATH"
+          eval "$(pyenv init --path)"
+          eval "$(pyenv init -)"
+          eval "$(pyenv virtualenv-init -)"
+          pyenv install 2.7.18
+          pyenv global 2.7.18
+          python --version
+          
       - name: Install Python 2
         run: sudo apt-get install python2 -y
 
