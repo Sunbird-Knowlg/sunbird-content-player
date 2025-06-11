@@ -52,6 +52,11 @@ jobs:
           pyenv global 2.7.18
           python --version
           npm install -g node-gyp
+          # Ensure Python is accessible to node-gyp
+          export PYTHON="$(pyenv which python)"
+
+      - name: python --version
+        run: python --version
     
       - name: Install dependencies
         working-directory: player
