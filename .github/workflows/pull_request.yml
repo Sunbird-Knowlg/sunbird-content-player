@@ -34,34 +34,42 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-modules-
 
-      - name: Install pyenv
-        run: |
-          curl https://pyenv.run | bash
-          export PATH="$HOME/.pyenv/bin:$PATH"
-          eval "$(pyenv init --path)"
-          eval "$(pyenv init -)"
-          eval "$(pyenv virtualenv-init -)"
+    #   - name: Install pyenv
+    #     run: |
+    #       curl https://pyenv.run | bash
+    #       export PATH="$HOME/.pyenv/bin:$PATH"
+    #       eval "$(pyenv init --path)"
+    #       eval "$(pyenv init -)"
+    #       eval "$(pyenv virtualenv-init -)"
               
-      - name: Install Python 2.7.18
+    #   - name: Install Python 2.7.18
+    #     run: |
+    #       export PATH="$HOME/.pyenv/bin:$PATH"
+    #       eval "$(pyenv init --path)"
+    #       eval "$(pyenv init -)"
+    #       eval "$(pyenv virtualenv-init -)"
+    #       pyenv install 2.7.18
+    #       pyenv global 2.7.18
+    #       python --version
+    #       npm install -g node-gyp
+    #       npm config set python "$(pyenv which python)"
+    #       # Ensure Python is accessible to node-gyp
+    #       export PYTHON="$(pyenv which python)"
+
+      - name: Install build tools
         run: |
-          export PATH="$HOME/.pyenv/bin:$PATH"
-          eval "$(pyenv init --path)"
-          eval "$(pyenv init -)"
-          eval "$(pyenv virtualenv-init -)"
-          pyenv install 2.7.18
-          pyenv global 2.7.18
-          python --version
-          npm install -g node-gyp
-          npm config set python "$(pyenv which python)"
-          # Ensure Python is accessible to node-gyp
-          export PYTHON="$(pyenv which python)"
+          sudo apt-get update
+          sudo apt-get install -y build-essential python-is-python3
+  
+      - name: Install node-gyp
+        run: npm install -g node-gyp@latest
 
       - name: python --version
         run: python --version
     
       - name: Install dependencies
         working-directory: player
-        run: npm ci
+        run: npm i --legacy-peer-deps
     
       - name: Save node_modules cache
         if: steps.cache.outputs.cache-hit != 'true'
