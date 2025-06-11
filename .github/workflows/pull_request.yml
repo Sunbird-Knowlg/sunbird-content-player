@@ -34,34 +34,44 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-modules-
 
-      - name: Install pyenv
+      - name: Install Python 2
         run: |
-          curl https://pyenv.run | bash
-          export PATH="$HOME/.pyenv/bin:$PATH"
-          eval "$(pyenv init --path)"
-          eval "$(pyenv init -)"
-          eval "$(pyenv virtualenv-init -)"
+          sudo apt-get update
+          sudo apt-get install -y python2
+          sudo ln -sf /usr/bin/python2 /usr/bin/python
               
-      - name: Install Python 2.7.18
-        run: |
-          export PATH="$HOME/.pyenv/bin:$PATH"
-          eval "$(pyenv init --path)"
-          eval "$(pyenv init -)"
-          eval "$(pyenv virtualenv-init -)"
-          pyenv install 2.7.18
-          pyenv global 2.7.18
-          python --version
+      - name: Set npm python config
+        run: npm config set python /usr/bin/python2
+              
 
-      - name: Check Python version
-        run: |
-          source $HOME/.bashrc
-          python --version
+    #   - name: Install pyenv
+    #     run: |
+    #       curl https://pyenv.run | bash
+    #       export PATH="$HOME/.pyenv/bin:$PATH"
+    #       eval "$(pyenv init --path)"
+    #       eval "$(pyenv init -)"
+    #       eval "$(pyenv virtualenv-init -)"
+              
+    #   - name: Install Python 2.7.18
+    #     run: |
+    #       export PATH="$HOME/.pyenv/bin:$PATH"
+    #       eval "$(pyenv init --path)"
+    #       eval "$(pyenv init -)"
+    #       eval "$(pyenv virtualenv-init -)"
+    #       pyenv install 2.7.18
+    #       pyenv global 2.7.18
+    #       python --version
+
+    #   - name: Check Python version
+    #     run: |
+    #       source $HOME/.bashrc
+    #       python --version
 
     #   - name: Install node-gyp
     #     run: npm install -g node-gyp
 
-      - name: Set Python path in npm config
-        run: npm config set python $(which python2)
+    #   - name: Set Python path in npm config
+    #     run: npm config set python $(which python2)
 
       - name: Check Python version
         run: python --version
