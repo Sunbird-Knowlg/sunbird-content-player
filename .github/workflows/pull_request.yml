@@ -52,14 +52,6 @@ jobs:
           pyenv global 2.7.18
           python --version
           npm install -g node-gyp
-
-      - name: Install Python 2.7.18
-        run: |
-          pyenv install 2.7.18
-          pyenv global 2.7.18
-          python --version
-          xcode-select --install
-          npm install -g node-gyp
     
       - name: Install dependencies
         working-directory: player
