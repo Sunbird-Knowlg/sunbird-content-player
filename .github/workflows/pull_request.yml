@@ -12,15 +12,15 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '10.16.3'
 
       - name: Install grunt-cli
-        run: sudo npm install -g grunt-cli@1.2.0
+        run: sudo npm install -g grunt-cli@1.5.0
 
       - name: Configure git to use HTTPS
         run: git config --global url."https://".insteadOf git://
