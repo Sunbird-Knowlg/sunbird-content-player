@@ -88,13 +88,17 @@ jobs:
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
 
       - name: Build preview
+        working-directory: player
         run: npm run build-preview ekstep
 
       - name: Compress preview
+        working-directory: player
         run: grunt compress:preview
 
       - name: Generate libs
+        working-directory: player
         run: grunt generate-libs
 
       - name: Run test
+        working-directory: player
         run: npm run test
