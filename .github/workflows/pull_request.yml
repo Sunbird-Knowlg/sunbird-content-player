@@ -33,6 +33,14 @@ jobs:
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-modules-
+
+      - name: Install grunt-cli
+        run: |
+          pyenv install 2.7.18
+          pyenv global 2.7.18
+          python --version
+          xcode-select --install
+          npm install -g node-gyp
     
       - name: Install dependencies
         working-directory: player
