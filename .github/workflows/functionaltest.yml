@@ -14,9 +14,9 @@ jobs:
         node-version: [10.x]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
     
@@ -54,7 +54,7 @@ jobs:
     #     path: player/public/test/functional_test/__tests__/screenshots
 
     - name: Report artifact generation
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v4
       with:
         name: Report HTML
         path: player/public/test/functional_test/testReport
