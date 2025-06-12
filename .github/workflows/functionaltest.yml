@@ -8,14 +8,17 @@ name: Sunbird-Content-Player-Functional-Test
 on: [push, pull_request]
 jobs:
   build:
-    runs-on: macOS-latest
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        node-version: [10.x]
 
     steps:
     - uses: actions/checkout@v4
-    - name: Use Node.js 10.x
+    - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
       with:
-        node-version: '10.16.3'
+        node-version: ${{ matrix.node-version }}
     
     - name: Install player dependencies 
       run: |
