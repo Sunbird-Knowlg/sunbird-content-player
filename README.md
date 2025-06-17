@@ -204,6 +204,39 @@ We use [SemVer](https://semver.org/) for versioning. For the versions available,
 ## Any Issues ?
 We have an open and active [issue tracker](https://github.com/Field-Issues/issues). Please report any issues. 
 
+## Code Quality
 
+The project maintains code quality through automated checks that run on every pull request:
 
+1. **Dependencies**
+   - Uses `npm i --legacy-peer-deps` for installation
+   - GitHub Actions cache for faster builds
+
+2. **Testing**
+   - Unit tests using Karma
+   - Command: `npm run test`
+
+3. **Code Analysis**
+   - SonarCloud integration for code quality metrics
+   - Analyzes:
+     - Code quality
+     - Test coverage
+     - Code duplications
+     - Security vulnerabilities
+
+These checks ensure consistent code style, secure dependency management, and reliable testing.
+
+## Package Publishing
+
+Workflow automatically builds and publishes NPM packages whenever a new tag is pushed to the repository.
+
+### Publish Workflow
+
+The workflow is triggered on:
+- push of any tag
+
+Key features of the workflow:
+1. Automatically builds the project
+2. Creates NPM package
+3. Publishes to NPM registry as @project-sunbird/sunbird-collection-editor-web-component, using NPM authentication token (must be provided as GitHub secret `NPM_TOKEN`)
 

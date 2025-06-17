@@ -70,7 +70,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
-            -Dsonar.projectKey=project-sunbird_sunbird-content-player
-            -Dsonar.organization=project-sunbird
+            -Dsonar.projectKey=Sunbird-Knowlg_sunbird-content-player
+            -Dsonar.organization=sunbird-knowlg-1
             -Dsonar.sources=.
             -Dsonar.host.url=https://sonarcloud.io
