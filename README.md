@@ -218,11 +218,7 @@ The project maintains code quality through automated checks that run on every pu
 
 3. **Code Analysis**
    - SonarCloud integration for code quality metrics
-   - Analyzes:
-     - Code quality
-     - Test coverage
-     - Code duplications
-     - Security vulnerabilities
+   - Analyzes code quality, test coverage, duplications, and security vulnerabilities.
 
 These checks ensure consistent code style, secure dependency management, and reliable testing.
 
