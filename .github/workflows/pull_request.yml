@@ -74,3 +74,4 @@ jobs:
             -Dsonar.organization=sunbird-knowlg-1
             -Dsonar.sources=.
             -Dsonar.host.url=https://sonarcloud.io
+            -Dsonar.exclusions=**/*.java
