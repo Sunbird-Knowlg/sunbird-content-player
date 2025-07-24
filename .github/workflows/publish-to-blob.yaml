@@ -1,0 +1,83 @@
+# Working workflow for gcp upload.
+name: Build and Upload to GCP
+
+on:
+  push:
+    tags:
+      - '**'
+
+env:
+  CLOUD_PROVIDER: ${{ vars.CLOUD_PROVIDER }}
+  GCP_BUCKET: ${{ vars.GCP_BUCKET }}
+  AZURE_CONTAINER: ${{ vars.AZURE_CONTAINER }}
+
+jobs:
+  build-and-upload:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '10.16.3'
+          cache: 'npm'
+          cache-dependency-path: 'player/package-lock.json'
+
+      - name: Restore node_modules cache
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: player/node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-
+
+      - name: Configure git to use HTTPS
+        run: git config --global url."https://".insteadOf git://
+
+      - name: Install Python 2
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python2
+          sudo ln -sf /usr/bin/python2 /usr/bin/python
+                      
+      - name: Set npm python config
+        run: npm config set python /usr/bin/python2
+
+      - name: Install Dependencies
+        working-directory: player
+        run: npm install --legacy-peer-deps
+        timeout-minutes: 15
+
+      - name: Build preview
+        working-directory: player
+        run: npm run build-preview ekstep
+
+      - name: Build Project
+        working-directory: player
+        run: |
+          npm run build-npm-package
+
+      - name: Authenticate and Upload to Google Cloud Storage
+        if: env.CLOUD_PROVIDER == 'gcp'
+        run: |
+          echo "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" | base64 -d > /tmp/service-account-key.json
+          gcloud auth activate-service-account --key-file=/tmp/service-account-key.json
+          gsutil -m cp -r player/www/* gs://${{ env.GCP_BUCKET }}/v3/
+          rm -f /tmp/service-account-key.json
+
+      - name: Upload to Azure Blob Storage
+        if: env.CLOUD_PROVIDER == 'azure'
+        uses: azure/CLI@v2
+        with:
+          azcliversion: latest
+          inlineScript: |
+              az storage blob upload-batch \
+              --account-name "${{ secrets.AZURE_STORAGE_ACCOUNT }}" \
+              --account-key "${{ secrets.AZURE_STORAGE_KEY }}" \
+              --destination "${{ env.AZURE_CONTAINER }}/v3" \
+              --source . \
+              --overwrite
