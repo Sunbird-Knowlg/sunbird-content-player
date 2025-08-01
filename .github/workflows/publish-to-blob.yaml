@@ -79,5 +79,5 @@ jobs:
               --account-name "${{ secrets.AZURE_STORAGE_ACCOUNT }}" \
               --account-key "${{ secrets.AZURE_STORAGE_KEY }}" \
               --destination "${{ env.AZURE_CONTAINER }}/v3" \
-              --source . \
+              --source player/www \
               --overwrite
