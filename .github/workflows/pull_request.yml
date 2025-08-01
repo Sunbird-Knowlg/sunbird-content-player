@@ -1,0 +1,77 @@
+name: Code Quality Checks
+
+on:
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  code-quality:
+    name: Run Code Quality Checks
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '10.16.3'
+
+      - name: Configure git to use HTTPS
+        run: git config --global url."https://".insteadOf git://
+
+      - name: Restore node_modules cache
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: player/node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-
+
+      - name: Install Python 2
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python2
+          sudo ln -sf /usr/bin/python2 /usr/bin/python
+              
+      - name: Set npm python config
+        run: npm config set python /usr/bin/python2
+
+      - name: Install dependencies
+        working-directory: player
+        run: npm i --legacy-peer-deps
+    
+      - name: Save node_modules cache
+        if: steps.cache.outputs.cache-hit != 'true'
+        uses: actions/cache@v4
+        with:
+          path: player/node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Build preview
+        working-directory: player
+        run: npm run build-preview ekstep
+
+      - name: Run test
+        working-directory: player
+        run: npm run test
+
+      - name: Install Sonar Scanner
+        run: |
+          npm install -g sonarqube-scanner
+        
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.projectKey=Sunbird-Knowlg_sunbird-content-player
+            -Dsonar.organization=sunbird-knowlg-1
+            -Dsonar.sources=.
+            -Dsonar.host.url=https://sonarcloud.io
+            -Dsonar.exclusions=**/*.java
