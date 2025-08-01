@@ -28,6 +28,9 @@ jobs:
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-modules-
+            
+      - name: Configure git to use HTTPS
+        run: git config --global url."https://".insteadOf git://
       
       - name: Install Python 2
         run: |
