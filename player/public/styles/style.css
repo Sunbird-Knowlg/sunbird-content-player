@@ -148,7 +148,7 @@ ion-popover-view.fit ion-content {
     pointer-events: none;
     position: absolute;
     height: 100%;
-    width: 100%;
+    width: 100% !important;
     z-index: 99999;
 }
 
@@ -197,7 +197,7 @@ ion-popover-view.fit ion-content {
 
 .menu-overlay {
     position: absolute;
-    width: 100%;
+    width: 100vw;
     height: 100%;
     background-color: black;
     opacity: 0.6;
@@ -216,11 +216,12 @@ ion-popover-view.fit ion-content {
 
 .gc-menu {
     font-size: 1.8vw;
-    position: absolute;
-    /*text-transform: uppercase;*/
+    position: fixed;
+    /* text-transform: uppercase; */
     width: 35%;
     height: 100%;
     top: 0;
+    left: 0;
     margin-left: -35%;
 }
 
