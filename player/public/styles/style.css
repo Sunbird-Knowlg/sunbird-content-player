@@ -148,7 +148,7 @@ ion-popover-view.fit ion-content {
     pointer-events: none;
     position: absolute;
     height: 100%;
-    width: 100% !important;
+    width: 100%;
     z-index: 99999;
 }
 
