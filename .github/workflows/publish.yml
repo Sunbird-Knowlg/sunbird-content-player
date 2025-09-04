@@ -19,6 +19,8 @@ jobs:
         with:
           node-version: '10.16.3'
           cache: 'npm'
+          cache-dependency-path: 'player/package-lock.json'
+
       
       - name: Restore node_modules cache
         id: cache
