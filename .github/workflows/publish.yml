@@ -74,6 +74,6 @@ jobs:
           npm run build-npm-package
           echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > ~/.npmrc
           npm pack ./www/preview
-          npm publish project-sunbird-content-player-*
+          npm publish project-sunbird-content-player-* --access public
       
           
