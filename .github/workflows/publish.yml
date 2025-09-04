@@ -67,6 +67,7 @@ jobs:
         run: grunt generate-libs
 
       - name: Build and publish package
+        working-directory: player
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
