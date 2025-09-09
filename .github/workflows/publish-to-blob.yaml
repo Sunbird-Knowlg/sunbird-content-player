@@ -1,9 +1,15 @@
-name: Build and Upload to GitHub Artifacts
+# Working workflow for gcp upload.
+name: Build and Upload to GCP
 
 on:
   push:
     tags:
       - '**'
+
+env:
+  CLOUD_PROVIDER: ${{ vars.CLOUD_PROVIDER }}
+  GCP_BUCKET: ${{ vars.GCP_BUCKET }}
+  AZURE_CONTAINER: ${{ vars.AZURE_CONTAINER }}
 
 jobs:
   build-and-upload:
@@ -55,9 +61,23 @@ jobs:
         run: |
           npm run build-npm-package
 
-      - name: Upload to GitHub Artifacts
-        uses: actions/upload-artifact@v4
+      - name: Authenticate and Upload to Google Cloud Storage
+        if: env.CLOUD_PROVIDER == 'gcp'
+        run: |
+          echo "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" | base64 -d > /tmp/service-account-key.json
+          gcloud auth activate-service-account --key-file=/tmp/service-account-key.json
+          gsutil -m cp -r player/www/* gs://${{ env.GCP_BUCKET }}/v3/
+          rm -f /tmp/service-account-key.json
+
+      - name: Upload to Azure Blob Storage
+        if: env.CLOUD_PROVIDER == 'azure'
+        uses: azure/CLI@v2
         with:
-          name: sunbird-content-player-v3
-          path: player/www/
-          retention-days: 90
+          azcliversion: latest
+          inlineScript: |
+              az storage blob upload-batch \
+              --account-name "${{ secrets.AZURE_STORAGE_ACCOUNT }}" \
+              --account-key "${{ secrets.AZURE_STORAGE_KEY }}" \
+              --destination "${{ env.AZURE_CONTAINER }}/v3" \
+              --source player/www \
+              --overwrite
