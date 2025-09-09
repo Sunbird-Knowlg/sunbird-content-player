@@ -1800,9 +1800,10 @@ body {
 }
 
 #progressArea {
-    position: relative;
-    left: 25vw;
-    top: 50vh;
+    position: absolute; /* or fixed if you want to pin it to viewport */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 50vw;
     height: 2em;
     text-align: center;
@@ -1813,7 +1814,7 @@ body {
 .gc-loader-prog {
     position: absolute;
     height: 2em;
-    color: #000;
+    color: white;
     width: 100%;
     font-weight: bold;
     overflow: hidden;
