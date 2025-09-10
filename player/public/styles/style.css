@@ -216,11 +216,12 @@ ion-popover-view.fit ion-content {
 
 .gc-menu {
     font-size: 1.8vw;
-    position: absolute;
+    position: fixed;
     /*text-transform: uppercase;*/
     width: 35%;
     height: 100%;
     top: 0;
+    left:0;
     margin-left: -35%;
 }
 
