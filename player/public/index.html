@@ -112,7 +112,7 @@
         if (globalConfig?.config?.dir === 'rtl') {
             document.body.setAttribute('dir', 'rtl');
         } 
-        else if(window.parent.ecEditor.getConfig('dir')){
+        else if(window.parent.ecEditor && typeof window.parent.ecEditor.getConfig === 'function' && window.parent.ecEditor.getConfig('dir')){
             document.body.setAttribute('dir', window.parent.ecEditor.getConfig('dir'));
         }
         else {
