@@ -43,6 +43,8 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
         EkstepRendererAPI.addEventListener("renderer:content:start", $scope.showOverlay);
 
         $scope.pluginInstance = EkstepRendererAPI.getPluginObjs("org.ekstep.overlay");
+        window.AppLables = EkstepRendererAPI.getGlobalConfig().context.resourceBundles || window.AppLables;
+        $scope.AppLables = window.AppLables;
         if (globalConfig.languageInfo) {
             for (var key in globalConfig.languageInfo) {
                 AppLables[key] = globalConfig.languageInfo[key];
