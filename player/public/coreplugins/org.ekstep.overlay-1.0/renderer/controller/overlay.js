@@ -366,7 +366,7 @@ app.compileProvider.directive('menu', function($rootScope, $sce) {
 app.compileProvider.directive('stageInstructions', function($rootScope) {
     return {
         restrict: 'E',
-        template: `<div ng-class="{\'icon-opacity\' : !stageData.params.instructions}" role="button" tabindex="0" aria-disabled="true" ng-click="showInstructions()"><img ng-src="{{imageBasePath}}icn_teacher.png" style="z-index:2;" alt="note img"/><span> ${AppLables.instructions ? AppLables.instructions : "Teacher's note"} </span></div>`,
+        template: `<div ng-class="{\'icon-opacity\' : !stageData.params.instructions}" role="button" tabindex="0" aria-disabled="true" ng-click="showInstructions()"><img ng-src="{{imageBasePath}}icn_teacher.png" style="z-index:2;" alt="note img"/><span> {{AppLables.instructions || "Teacher's note"}} </span></div>`,
         controller: function($scope, $rootScope) {
             $scope.stageInstMessage = "";
             $scope.showInst = false;
