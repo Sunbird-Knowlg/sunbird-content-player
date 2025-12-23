@@ -105,6 +105,21 @@
 
     <script type="text/javascript" src="renderer/manager/AudioManager.js"></script>
     <!-- endinjector -->
+    <script>
+        setTimeout(() => {
+        let globalObj = this.window;
+        let globalConfig = globalObj?.GlobalContext || {};
+        if (globalConfig?.config?.dir === 'rtl') {
+            document.body.setAttribute('dir', 'rtl');
+        } 
+        else if(window.parent.ecEditor && typeof window.parent.ecEditor.getConfig === 'function' && window.parent.ecEditor.getConfig('dir')){
+            document.body.setAttribute('dir', window.parent.ecEditor.getConfig('dir'));
+        }
+        else {
+            document.body.setAttribute('dir', 'ltr');
+        }
+        }, 3000);
+     </script>
 </body>
 
 </html>

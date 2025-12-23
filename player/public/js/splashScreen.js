@@ -42,7 +42,19 @@ var splashScreen = {
 		EkstepRendererAPI.addEventListener("plugin:load:success", splashScreen.pluginLoadSuccess)
 	},
 	createHtml: function () {
-		var html = "<img src=\"" + splashScreen.config.bgImage + "\" class=\"gc-loader-img\" onerror=\"this.style.display='none'\" /><P class=\"splashText\" id=\"splashTextId\"> Loading your content</p><div id=\"progressArea\"><div id=\"progressBar\"></div><p id=\"progressCount\" class=\"font-lato gc-loader-prog\"></p></div><a href=\"" + splashScreen.config.webLink + "\" target=\"_blank\"><div id=\"splashScreen\" class=\"splashScreen\"> <img src=\"" + splashScreen.config.icon + "\" class=\"splash-icon \" onerror=\"this.style.display='none'\" /> <span>" + splashScreen.config.text + "</span> </div></a>"
+		const loadingText = (
+			EkstepRendererAPI.getGlobalConfig().context.resourceBundles ||
+			(
+				window.parent &&
+				window.parent.ecEditor &&
+				window.parent.ecEditor.getConfig &&
+				window.parent.ecEditor.getConfig('resourceBundles') &&
+				window.parent.ecEditor.getConfig('resourceBundles').frmelmnts &&
+				window.parent.ecEditor.getConfig('resourceBundles').frmelmnts.lbl
+			) ||
+			{}
+		).loadingYourContent || "Loading your content";
+		var html = "<img src=\"" + splashScreen.config.bgImage + "\" class=\"gc-loader-img\" onerror=\"this.style.display='none'\" /><P class=\"splashText\" id=\"splashTextId\">" + loadingText + "</p><div id=\"progressArea\"><div id=\"progressBar\"></div><p id=\"progressCount\" class=\"font-lato gc-loader-prog\"></p></div><a href=\"" + splashScreen.config.webLink + "\" target=\"_blank\"><div id=\"splashScreen\" class=\"splashScreen\"> <img src=\"" + splashScreen.config.icon + "\" class=\"splash-icon \" onerror=\"this.style.display='none'\" /> <span>" + splashScreen.config.text + "</span> </div></a>"
 		return html
 	},
 
