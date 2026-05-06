@@ -1,20 +1,37 @@
 org.ekstep.contentrenderer.baseLauncher.extend({
     s3_folders: {
         'application/vnd.ekstep.html-archive': "html/",
-        'application/vnd.ekstep.h5p-archive': 'h5p/'
+        'application/vnd.ekstep.h5p-archive': 'h5p/',
+        'application/vnd.ekstep.scorm-archive': 'scorm/'
     },
     heartBeatData: {},
     currentIndex: 50,
     totalIndex: 100,
     enableHeartBeatEvent: true,
     _constants: {
-        mimeType: ["application/vnd.ekstep.html-archive", "application/vnd.ekstep.h5p-archive"],
+        mimeType: ["application/vnd.ekstep.html-archive", "application/vnd.ekstep.h5p-archive", "application/vnd.ekstep.scorm-archive"],
         events: {
-            launchEvent: "renderer:launch:html"
+            launchEvent: "renderer:launch:html",
+            setValue : "renderer:scorm:setvalue"
         }
     },
     initLauncher: function() {
         EkstepRendererAPI.addEventListener(this._constants.events.launchEvent, this.start, this);
+        EkstepRendererAPI.addEventListener(this._constants.events.setValue, this.persistScormState, this);
+    },
+    persistScormState: function(event) {
+        var data = event.target;
+        console.log("Persisting SCORM state: ", data);
+        EkstepRendererAPI.getService(ServiceConstants.TELEMETRY_SERVICE).interact({
+            "type": "OTHER",
+            "subtype": "SCORM_SET_VALUE",
+            "target": "Content",
+            "pluginid": this.manifest.id,
+            "pluginver": this.manifest.ver,
+            "objectid": data.key,
+            "stage": EkstepRendererAPI.getCurrentStageId(),
+            "data": JSON.stringify({value: data.value})
+        });
     },
     start: function() {
         this._super();
@@ -32,6 +49,13 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         jQuery(this.manifest.id).remove();
         var iframe = document.createElement('iframe');
         iframe.src = path;
+        iframe.onload = function() {
+            if(data.mimeType === 'application/vnd.ekstep.scorm-archive') {
+                var script = iframe.contentWindow.document.createElement('script');
+                script.innerHTML = "var API = { LMSInitialize: function() { return 'true'; }, LMSGetValue: function(k) { return ''; }, LMSSetValue: function(k, v) { EkstepRendererAPI.dispatchEvent('renderer:scorm:setvalue', {key: k, value: v}); return 'true'; }, LMSCommit: function() { return 'true'; }, LMSFinish: function() { return 'true'; }, LMSGetLastError: function() { return '0'; }, LMSGetErrorString: function(e) { return 'No error'; }, LMSGetDiagnostic: function(e) { return 'No diagnostic'; } }; window.API = API;";
+                iframe.contentWindow.document.head.appendChild(script);
+            }
+        };
         this.validateSrc(path, iframe);
         var instance = this;
         var obj = {"tempName": ""};
