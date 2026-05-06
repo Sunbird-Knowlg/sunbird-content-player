@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest identifier="com.example.scorm1.2.test"
+          version="1.2"
+          xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2"
+          xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 
+          http://www.imsglobal.org/xsd/imscp_rootv1p1p2.xsd 
+          http://www.adlnet.org/xsd/adlcp_rootv1p2 
+          http://www.adlnet.org/xsd/adlcp_rootv1p2.xsd">
+
+    <organizations default="org1">
+        <organization identifier="org1">
+            <title>SCORM 1.2 Test Course</title>
+            <item identifier="item1" identifierref="resource1">
+                <title>SCORM 1.2 Test Module</title>
+            </item>
+        </organization>
+    </organizations>
+
+    <resources>
+        <resource identifier="resource1" type="webcontent" href="index.html" adlcp:scormtype="sco">
+            <file href="index.html"/>
+            <file href="api/SCORM_API.js"/>
+        </resource>
+    </resources>
+</manifest>

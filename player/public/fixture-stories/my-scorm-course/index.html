@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCORM 1.2 Test</title>
+    <script src="api/SCORM_API.js"></script>
+    <script>
+        let scorm = null;
+        window.onload = function () {
+            scorm = new ScormAPI();
+            scorm.initialize(); // Initialize the SCORM API when the page loads
+        };
+
+        window.onbeforeunload = function () {
+            scorm.terminate(); // Terminate the SCORM session before the page unloads
+        };
+
+        function completeCourse() {
+            scorm.setLessonStatus('completed');  // Mark the course as completed
+            scorm.commit();  // Commit data to the LMS
+            alert('Course Completed!');
+        }
+    </script>
+</head>
+<body>
+    <center>
+    <h1>Welcome to SCORM 1.2 Content</h1>
+
+    <button onclick="completeCourse()">Complete Course</button>
+    </center>
+</body>
+</html>
