@@ -42,7 +42,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var launchData = { "env": envHTML, "envpath": 'dev' };
         var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
         var prefix_url = isbrowserpreview ? this.getAsseturl(data) : globalConfigObj.basepath;
-        var path = prefix_url + '/index.html?contentId=' + data.identifier + '&launchData=' + JSON.stringify(launchData) + "&appInfo=" + JSON.stringify(GlobalContext.config.appInfo);
+        var launchFile = data.launchFile || 'index.html';
+        var path = prefix_url + '/' + launchFile + '?contentId=' + data.identifier + '&launchData=' + JSON.stringify(launchData) + "&appInfo=" + JSON.stringify(GlobalContext.config.appInfo);
         if (isbrowserpreview) {
             path += "&flavor=" + "t=" + getTime();
         }
@@ -70,7 +71,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         org.ekstep.pluginframework.resourceManager.loadResource(path, 'TEXT', function(err, data) {
             if (err) {
                 showToaster("error", "Sorry!!.. Unable to open the Game!", { timeOut: 200000 });
-                EkstepRendererAPI.logErrorEvent('index.html file not found.', { 'type': 'content', 'action': 'play', 'severity': 'fatal' });
+                EkstepRendererAPI.logErrorEvent('Launch file not found.', { 'type': 'content', 'action': 'play', 'severity': 'fatal' });
             } else {
                 EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
                 instance.configOverlay();
