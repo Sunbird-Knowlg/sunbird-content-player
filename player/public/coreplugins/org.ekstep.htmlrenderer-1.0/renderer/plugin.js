@@ -53,7 +53,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         iframe.onload = function() {
             if(data.mimeType === 'application/vnd.ekstep.scorm-archive') {
                 var script = iframe.contentWindow.document.createElement('script');
-                script.innerHTML = "var API = { LMSInitialize: function() { return 'true'; }, LMSGetValue: function(k) { return ''; }, LMSSetValue: function(k, v) { EkstepRendererAPI.dispatchEvent('renderer:scorm:setvalue', {key: k, value: v}); return 'true'; }, LMSCommit: function() { return 'true'; }, LMSFinish: function() { return 'true'; }, LMSGetLastError: function() { return '0'; }, LMSGetErrorString: function(e) { return 'No error'; }, LMSGetDiagnostic: function(e) { return 'No diagnostic'; } }; window.API = API;";
+                script.innerHTML = "window.ISCOOKIELMS = false; var API = { LMSInitialize: function() { return 'true'; }, LMSGetValue: function(k) { return ''; }, LMSSetValue: function(k, v) { window.parent.EkstepRendererAPI.dispatchEvent('renderer:scorm:setvalue', {key: k, value: v}); return 'true'; }, LMSCommit: function() { return 'true'; }, LMSFinish: function() { return 'true'; }, LMSGetLastError: function() { return '0'; }, LMSGetErrorString: function(e) { return 'No error'; }, LMSGetDiagnostic: function(e) { return 'No diagnostic'; } }; window.API = API;";
                 iframe.contentWindow.document.head.appendChild(script);
             }
         };
