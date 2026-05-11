@@ -1084,7 +1084,7 @@
                 "description": "Local SCORM Course",
                 "appIcon": "fixture-stories/my-scorm-course/logo.png",
                 "pkgVersion": 1,
-                "launchFile": "index_lms.html"
+                "launchFile": "index.html"
             },
             "isAvailable": true,
             "path": "fixture-stories/my-scorm-course"
