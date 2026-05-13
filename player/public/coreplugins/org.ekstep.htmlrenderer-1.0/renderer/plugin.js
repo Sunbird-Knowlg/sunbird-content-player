@@ -11,24 +11,24 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     _constants: {
         mimeType: ["application/vnd.ekstep.html-archive", "application/vnd.ekstep.h5p-archive", "application/vnd.ekstep.scorm-archive"],
         events: {
-            launchEvent: "renderer:launch:html",
-            setValue: "renderer:scorm:setvalue"
-        }
+                launchEvent: "renderer:launch:html"
+            }
     },
     initLauncher: function() {
         EkstepRendererAPI.addEventListener(this._constants.events.launchEvent, this.start, this);
-        EkstepRendererAPI.addEventListener(this._constants.events.setValue, this.persistScormState, this);
         var instance = this;
         window.addEventListener('message', function(event) {
             if (event.data && event.data.type === 'SCORM_API') {
                 switch(event.data.method) {
-                    case 'LMSSetValue':
-                        EkstepRendererAPI.dispatchEvent('renderer:scorm:setvalue', {key: event.data.key, value: event.data.value});
-                        break;
                     case 'LMSInitialize':
+                        instance.debugLog("SCORM session started");
+                        break;
                     case 'LMSCommit':
                     case 'LMSFinish':
                         instance.debugLog("SCORM API Method called: " + event.data.method);
+                        if (event.data.state) {
+                            instance.persistScormState(event.data.method, event.data.state);
+                        }
                         break;
                 }
             }
@@ -43,15 +43,14 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             }
         }
     },
-    persistScormState: function(event) {
-        var data = event.target;
-        this.debugLog("Persisting SCORM state: ", data);
-        EkstepRendererAPI.getService(ServiceConstants.TELEMETRY_SERVICE).interact(
+    persistScormState: function(method, stateJson) {
+        this.debugLog("Persisting SCORM state on " + method, stateJson);
+        EkstepRendererAPI.getTelemetryService().interact(
             "OTHER",
-            data.key,
-            "SCORM_SET_VALUE",
+            "scorm_" + method.toLowerCase(),
+            "SCORM_" + method.toUpperCase(),
             {
-                subtype: "SCORM_SET_VALUE",
+                subtype: "SCORM_" + method.toUpperCase(),
                 stageId: EkstepRendererAPI.getCurrentStageId(),
                 target: "Content",
                 plugin: {

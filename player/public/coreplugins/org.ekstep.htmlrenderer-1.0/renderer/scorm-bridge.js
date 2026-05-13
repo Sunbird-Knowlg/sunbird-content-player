@@ -25,15 +25,14 @@
         },
         LMSSetValue: function(k, v) {
             scormState[k] = v;
-            window.parent.postMessage({ type: 'SCORM_API', method: 'LMSSetValue', key: k, value: v }, '*');
             return 'true';
         },
         LMSCommit: function() {
-            window.parent.postMessage({ type: 'SCORM_API', method: 'LMSCommit' }, '*');
+            window.parent.postMessage({ type: 'SCORM_API', method: 'LMSCommit', state: JSON.stringify(scormState) }, '*');
             return 'true';
         },
         LMSFinish: function() {
-            window.parent.postMessage({ type: 'SCORM_API', method: 'LMSFinish' }, '*');
+            window.parent.postMessage({ type: 'SCORM_API', method: 'LMSFinish', state: JSON.stringify(scormState) }, '*');
             return 'true';
         },
         LMSGetLastError: function() { return '0'; },
