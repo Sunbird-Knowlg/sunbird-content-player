@@ -12,16 +12,40 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         mimeType: ["application/vnd.ekstep.html-archive", "application/vnd.ekstep.h5p-archive", "application/vnd.ekstep.scorm-archive"],
         events: {
             launchEvent: "renderer:launch:html",
-            setValue : "renderer:scorm:setvalue"
+            setValue: "renderer:scorm:setvalue"
         }
     },
     initLauncher: function() {
         EkstepRendererAPI.addEventListener(this._constants.events.launchEvent, this.start, this);
         EkstepRendererAPI.addEventListener(this._constants.events.setValue, this.persistScormState, this);
+        var instance = this;
+        window.addEventListener('message', function(event) {
+            if (event.data && event.data.type === 'SCORM_API') {
+                switch(event.data.method) {
+                    case 'LMSSetValue':
+                        EkstepRendererAPI.dispatchEvent('renderer:scorm:setvalue', {key: event.data.key, value: event.data.value});
+                        break;
+                    case 'LMSInitialize':
+                    case 'LMSCommit':
+                    case 'LMSFinish':
+                        instance.debugLog("SCORM API Method called: " + event.data.method);
+                        break;
+                }
+            }
+        }, false);
+    },
+    debugLog: function(message, data) {
+        if (EkstepRendererAPI.getGlobalConfig() && EkstepRendererAPI.getGlobalConfig().debug) {
+            if (data) {
+                console.log(message, data);
+            } else {
+                console.log(message);
+            }
+        }
     },
     persistScormState: function(event) {
         var data = event.target;
-        console.log("Persisting SCORM state: ", data);
+        this.debugLog("Persisting SCORM state: ", data);
         EkstepRendererAPI.getService(ServiceConstants.TELEMETRY_SERVICE).interact({
             "type": "OTHER",
             "subtype": "SCORM_SET_VALUE",
@@ -35,6 +59,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     start: function() {
         this._super();
+        var instance = this;
         data = content;
         this.reset();
         var isMobile = window.cordova ? true : false;
@@ -51,31 +76,18 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var iframe = document.createElement('iframe');
         iframe.src = path;
         iframe.onload = function() {
-            if(data.mimeType === 'application/vnd.ekstep.scorm-archive') {
-                var script = iframe.contentWindow.document.createElement('script');
-                script.innerHTML = "window.ISCOOKIELMS = false; " +
-                    "var API = { " +
-                    "    LMSInitialize: function() { return 'true'; }, " +
-                    "    LMSGetValue: function(k) { return ''; }, " +
-                    "    LMSSetValue: function(k, v) { window.parent.EkstepRendererAPI.dispatchEvent('renderer:scorm:setvalue', {key: k, value: v}); return 'true'; }, " +
-                    "    LMSCommit: function() { return 'true'; }, " +
-                    "    LMSFinish: function() { return 'true'; }, " +
-                    "    LMSGetLastError: function() { return '0'; }, " +
-                    "    LMSGetErrorString: function(e) { return 'No error'; }, " +
-                    "    LMSGetDiagnostic: function(e) { return 'No diagnostic'; } " +
-                    "}; " +
-                    "window.API = API;";
-                iframe.contentWindow.document.head.appendChild(script);
-            }
+            instance.debugLog("Iframe loaded");
         };
         this.validateSrc(path, iframe);
-        var instance = this;
         var obj = {"tempName": ""};
         EkstepRendererAPI.dispatchEvent("renderer:navigation:load", obj);
         setTimeout(function() {
             jQuery('custom-previous-navigation').hide();
             jQuery('custom-next-navigation').hide();
         }, 100);
+    },
+    startTelemetry: function() {
+        this._super();
     },
     validateSrc: function(path, iframe) {
         var instance = this;
