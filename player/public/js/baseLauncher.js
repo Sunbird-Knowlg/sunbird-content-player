@@ -130,8 +130,12 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
 		data.stageid = EkstepRendererAPI.getCurrentStageId()
 		data.mode = getPreviewMode()
 		data.duration = (Date.now() / 1000) - window.PLAYER_START_TIME
-		var gameId = content.identifier
-		var version = content.pkgVersion || "1.0"
+		var gameId = content.identifier || GlobalContext.game.id
+		var version = content.pkgVersion || GlobalContext.game.ver || "1.0"
+		if (!gameId) {
+			console.warn('TelemetryService.start() aborted: content identifier not available')
+			return
+		}
 		window.PLAYER_STAGE_START_TIME = Date.now() / 1000
 		TelemetryService.start(gameId, version, data)
 	},

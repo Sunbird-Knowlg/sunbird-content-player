@@ -46,16 +46,20 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     persistScormState: function(event) {
         var data = event.target;
         this.debugLog("Persisting SCORM state: ", data);
-        EkstepRendererAPI.getService(ServiceConstants.TELEMETRY_SERVICE).interact({
-            "type": "OTHER",
-            "subtype": "SCORM_SET_VALUE",
-            "target": "Content",
-            "pluginid": this.manifest.id,
-            "pluginver": this.manifest.ver,
-            "objectid": data.key,
-            "stage": EkstepRendererAPI.getCurrentStageId(),
-            "data": JSON.stringify({value: data.value})
-        });
+        EkstepRendererAPI.getService(ServiceConstants.TELEMETRY_SERVICE).interact(
+            "OTHER",
+            data.key,
+            "SCORM_SET_VALUE",
+            {
+                subtype: "SCORM_SET_VALUE",
+                stageId: EkstepRendererAPI.getCurrentStageId(),
+                target: "Content",
+                plugin: {
+                    id: this.manifest.id,
+                    ver: this.manifest.ver
+                }
+            }
+        );
     },
     start: function() {
         this._super();
