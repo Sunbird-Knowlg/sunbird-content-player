@@ -65,6 +65,19 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var instance = this;
         data = content;
         this.reset();
+        if (data.mimeType === 'application/vnd.ekstep.scorm-archive' && !window.API) {
+            var scormState = {};
+            window.API = {
+                LMSInitialize: function() { instance.debugLog("SCORM: LMSInitialize"); return "true"; },
+                LMSGetValue: function(k) { return scormState[k] || ""; },
+                LMSSetValue: function(k, v) { scormState[k] = v; instance.debugLog("SCORM: LMSSetValue", k + "=" + v); return "true"; },
+                LMSCommit: function() { instance.persistScormState('LMSCommit', JSON.stringify(scormState)); return "true"; },
+                LMSFinish: function() { instance.persistScormState('LMSFinish', JSON.stringify(scormState)); return "true"; },
+                LMSGetLastError: function() { return "0"; },
+                LMSGetErrorString: function(e) { return "No error"; },
+                LMSGetDiagnostic: function(e) { return "No diagnostic"; }
+            };
+        }
         var isMobile = window.cordova ? true : false;
         var envHTML = isMobile ? "app" : "portal";
         var launchData = { "env": envHTML, "envpath": 'dev' };
