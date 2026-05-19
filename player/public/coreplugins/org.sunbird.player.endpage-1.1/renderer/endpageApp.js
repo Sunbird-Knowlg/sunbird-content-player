@@ -97,7 +97,9 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     $scope.replayAssessment = function(){
         content.currentAttempt = content.currentAttempt + 1;
         if (content.maxAttempt <= content.currentAttempt){
-            window.postMessage('renderer:maxLimitExceeded');
+            // Validate origin and lock postMessage to trusted origin
+            const targetOrigin = window.location.origin;  // or use a specific trusted origin
+            window.postMessage('renderer:maxLimitExceeded', targetOrigin);
             return;
         }else{
             $scope.replayPlayer();
@@ -110,11 +112,12 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
                     return;
                 }
                 if(response.limitExceeded){
+                    const targetOrigin = window.location.origin;
                     window.postMessage({
                         event: 'renderer:maxLimitExceeded',
                         data: {
                         }
-                    })
+                    }, targetOrigin)
                 } else{
                     $scope.replayPlayer();
                 }
@@ -225,23 +228,26 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
                 return;
             }
             else if (response && response.limitExceeded) {
+                    const targetOrigin = window.location.origin;
                     window.postMessage({
                     event: 'renderer:maxLimitExceeded',
                     data: {
                     }
-                })
+                }, targetOrigin)
                 return;
             }
             if (window.cordova && contentToPlay.content && !contentToPlay.content.isCompatible) {
+                const targetOrigin = window.location.origin;
                 window.postMessage({
                     event: 'renderer:contentNotComaptible',
                     data: {
                     }
-                });
+                }, targetOrigin);
                 return;
             }
             if (contentToPlay.content && contentToPlay.content.trackableParentInfo){
                 var trackableParentInfo = contentToPlay.content.trackableParentInfo;
+                const targetOrigin = window.location.origin;
                 window.postMessage(JSON.stringify({
                     event: 'renderer:navigate',
                     data: {
@@ -249,7 +255,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
                         hierarchyInfo: trackableParentInfo.hierarchyInfo,
                         trackable: 'Yes'
                     }
-                }));
+                }), targetOrigin);
                 return;
             }else if (contentToPlay.content){
                 contentMetadata = contentToPlay.content.contentData;

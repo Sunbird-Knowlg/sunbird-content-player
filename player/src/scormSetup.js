@@ -8,8 +8,13 @@ const scormAPI = new Scorm12API({
   logLevel: 1,
 });
 
-// Expose on parent window
-window.API = scormAPI;
+// Expose on parent window — lock to prevent tampering
+Object.defineProperty(window, 'API', {
+  writable: false,
+  configurable: false,
+  value: scormAPI,
+});
+Object.freeze(scormAPI);
 
 // Event hooks for real-time telemetry
 function fireTelemetry(eid, edata) {
@@ -49,9 +54,6 @@ scormAPI.on('LMSFinish', () => {
   fireTelemetry('END', { subtype: 'SCORM_FINISH', state });
 });
 
-window.addEventListener('pagehide', () => {
-  const state = JSON.stringify(scormAPI.runtimeData);
-  navigator.sendBeacon('/api/scorm/commit', state);
-});
+// Note: sendBeacon removed — telemetry is write-only, not persisting to backend
 
 export default scormAPI;
