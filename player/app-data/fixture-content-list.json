@@ -1083,8 +1083,7 @@
                 "name": "SCORM Sample Course",
                 "description": "Local SCORM Course",
                 "appIcon": "fixture-stories/my-scorm-course/logo.png",
-                "pkgVersion": 1,
-                "launchFile": "index.html"
+                "pkgVersion": 1
             },
             "isAvailable": true,
             "path": "fixture-stories/my-scorm-course"

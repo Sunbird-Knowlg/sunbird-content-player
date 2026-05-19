@@ -17,22 +17,24 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     initLauncher: function() {
         EkstepRendererAPI.addEventListener(this._constants.events.launchEvent, this.start, this);
         var instance = this;
-        window.addEventListener('message', function(event) {
-            if (event.data && event.data.type === 'SCORM_API') {
-                switch(event.data.method) {
-                    case 'LMSInitialize':
-                        instance.debugLog("SCORM session started");
-                        break;
-                    case 'LMSCommit':
-                    case 'LMSFinish':
-                        instance.debugLog("SCORM API Method called: " + event.data.method);
-                        if (event.data.state) {
-                            instance.persistScormState(event.data.method, event.data.state);
-                        }
-                        break;
+        if (!window.API) {
+            window.addEventListener('message', function(event) {
+                if (event.data && event.data.type === 'SCORM_API') {
+                    switch(event.data.method) {
+                        case 'LMSInitialize':
+                            instance.debugLog("SCORM session started");
+                            break;
+                        case 'LMSCommit':
+                        case 'LMSFinish':
+                            instance.debugLog("SCORM API Method called: " + event.data.method);
+                            if (event.data.state) {
+                                instance.persistScormState(event.data.method, event.data.state);
+                            }
+                            break;
+                    }
                 }
-            }
-        }, false);
+            }, false);
+        }
     },
     debugLog: function(message, data) {
         if (EkstepRendererAPI.getGlobalConfig() && EkstepRendererAPI.getGlobalConfig().debug) {
@@ -65,18 +67,22 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var instance = this;
         data = content;
         this.reset();
-        if (data.mimeType === 'application/vnd.ekstep.scorm-archive' && !window.API) {
-            var scormState = {};
-            window.API = {
-                LMSInitialize: function() { instance.debugLog("SCORM: LMSInitialize"); return "true"; },
-                LMSGetValue: function(k) { return scormState[k] || ""; },
-                LMSSetValue: function(k, v) { scormState[k] = v; instance.debugLog("SCORM: LMSSetValue", k + "=" + v); return "true"; },
-                LMSCommit: function() { instance.persistScormState('LMSCommit', JSON.stringify(scormState)); return "true"; },
-                LMSFinish: function() { instance.persistScormState('LMSFinish', JSON.stringify(scormState)); return "true"; },
-                LMSGetLastError: function() { return "0"; },
-                LMSGetErrorString: function(e) { return "No error"; },
-                LMSGetDiagnostic: function(e) { return "No diagnostic"; }
-            };
+        if (data.mimeType === 'application/vnd.ekstep.scorm-archive') {
+            if (!window.API) {
+                var scormState = {};
+                window.API = {
+                    LMSInitialize: function() { instance.debugLog("SCORM: LMSInitialize"); return "true"; },
+                    LMSGetValue: function(k) { return scormState[k] || ""; },
+                    LMSSetValue: function(k, v) { scormState[k] = v; instance.debugLog("SCORM: LMSSetValue", k + "=" + v); return "true"; },
+                    LMSCommit: function() { instance.persistScormState('LMSCommit', JSON.stringify(scormState)); return "true"; },
+                    LMSFinish: function() { instance.persistScormState('LMSFinish', JSON.stringify(scormState)); return "true"; },
+                    LMSGetLastError: function() { return "0"; },
+                    LMSGetErrorString: function(e) { return "No error"; },
+                    LMSGetDiagnostic: function(e) { return "No diagnostic"; }
+                };
+            } else {
+                instance.debugLog("SCORM: window.API already exists, skipping legacy implementation.");
+            }
         }
         var isMobile = window.cordova ? true : false;
         var envHTML = isMobile ? "app" : "portal";
