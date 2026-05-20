@@ -18,7 +18,11 @@
         logLevel: 1,
       });
 
-      // Expose on parent window — lock to prevent tampering
+      // Expose on parent window — lock to prevent tampering.
+      // NOTE: This makes window.API non-configurable. Third-party content 
+      // attempting to reassign window.API will fail (TypeError in strict mode).
+      // If this plugin's fallback path runs after this in a code path where 
+      // !window.API is somehow true, any assignment attempt will also fail.
       Object.defineProperty(window, 'API', {
         writable: false,
         configurable: false,

@@ -94,6 +94,16 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
 		EkstepRendererAPI.removeEventListener("renderer:launcher:clean", this.cleanUp, this)
 	},
 
+	debugLog: function(message, data) {
+		if (EkstepRendererAPI.getGlobalConfig() && EkstepRendererAPI.getGlobalConfig().debug) {
+			if (data) {
+				console.warn(message, data);
+			} else {
+				console.warn(message);
+			}
+		}
+	},
+
 	/**
      * Calculates the content progress
      * @param currentIndex {int} Current stage number
@@ -106,7 +116,7 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
 		return totalProgress
 	},
 	contentProgress: function () {
-		console.warn("Child Launcher should calculate")
+		this.debugLog("Child Launcher should calculate")
 	},
 
 	/**
@@ -118,7 +128,7 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
 	},
 	
 	additionalContentSummary: function () {
-		console.warn("content launcher should implement this for additional content statistics ")
+		this.debugLog("content launcher should implement this for additional content statistics ")
 	},
 
 	/**
@@ -133,7 +143,7 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
 		var gameId = content.identifier || GlobalContext.game.id
 		var version = content.pkgVersion || GlobalContext.game.ver || "1.0"
 		if (!gameId) {
-			console.warn('TelemetryService.start() aborted: content identifier not available')
+			this.debugLog('TelemetryService.start() aborted: content identifier not available')
 			return
 		}
 		window.PLAYER_STAGE_START_TIME = Date.now() / 1000
@@ -155,7 +165,7 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
 			console.info("telemetryEndData", telemetryEndData)
 			TelemetryService.end(telemetryEndData)
 		} else {
-			console.warn("Telemetry service end is already logged Please log start telemetry again")
+			this.debugLog("Telemetry service end is already logged Please log start telemetry again")
 		}
 	},
 
