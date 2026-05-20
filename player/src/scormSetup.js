@@ -11,7 +11,7 @@
   if (window.Scorm12API) {
     try {
       var scormAPI = new window.Scorm12API({
-        autocommit: true,
+        autocommit: false,
         autocommitSeconds: 60,
         lmsCommitUrl: '',
         dataCommitFormat: 'json',
