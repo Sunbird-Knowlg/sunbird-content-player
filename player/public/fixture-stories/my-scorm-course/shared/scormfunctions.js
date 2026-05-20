@@ -84,7 +84,6 @@ function getAPI()
 //Constants
 var SCORM_TRUE = "true";
 var SCORM_FALSE = "false";
-var SCORM_NO_ERROR = "0";
 
 //Since the Unload handler will be called twice, from both the onunload
 //and onbeforeunload events, ensure that we only call LMSFinish once.
@@ -146,57 +145,11 @@ function ScormProcessFinish(){
 
 
 /*
-The onload and onunload event handlers are assigned in launchpage.html because more processing needs to 
-occur at these times in this example.
+Assign the processing functions to the page's load and unload
+events. The onbeforeunload event is included because it can be 
+more reliable than the onunload event and we want to make sure 
+that Terminate is ALWAYS called.
 */
-//window.onload = ScormProcessInitialize;
-//window.onunload = ScormProcessTerminate;
-//window.onbeforeunload = ScormProcessTerminate;
-
-
-function ScormProcessGetValue(element){
-    
-    var result;
-    
-    if (initialized == false || finishCalled == true){return;}
-    
-    result = API.LMSGetValue(element);
-    
-    if (result == ""){
-    
-        var errorNumber = API.LMSGetLastError();
-        
-        if (errorNumber != SCORM_NO_ERROR){
-            var errorString = API.LMSGetErrorString(errorNumber);
-            var diagnostic = API.LMSGetDiagnostic(errorNumber);
-            
-            var errorDescription = "Number: " + errorNumber + "\nDescription: " + errorString + "\nDiagnostic: " + diagnostic;
-            
-            alert("Error - Could not retrieve a value from the LMS.\n\n" + errorDescription);
-            return "";
-        }
-    }
-    
-    return result;
-}
-
-function ScormProcessSetValue(element, value){
-   
-    var result;
-    
-    if (initialized == false || finishCalled == true){return;}
-    
-    result = API.LMSSetValue(element, value);
-    
-    if (result == SCORM_FALSE){
-        var errorNumber = API.LMSGetLastError();
-        var errorString = API.LMSGetErrorString(errorNumber);
-        var diagnostic = API.LMSGetDiagnostic(errorNumber);
-        
-        var errorDescription = "Number: " + errorNumber + "\nDescription: " + errorString + "\nDiagnostic: " + diagnostic;
-        
-        alert("Error - Could not store a value in the LMS.\n\nYour results may not be recorded.\n\n" + errorDescription);
-        return;
-    }
-    
-}
+window.onload = ScormProcessInitialize;
+window.onunload = ScormProcessFinish;
+window.onbeforeunload = ScormProcessFinish;

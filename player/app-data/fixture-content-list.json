@@ -1084,7 +1084,99 @@
                 "description": "Local SCORM Course",
                 "appIcon": "fixture-stories/my-scorm-course/logo.png",
                 "pkgVersion": 1,
-                "launchFile": "shared/launchpage.html"
+                "launchFile": "shared/launchpage.html",
+                  "scoList": [
+                {
+                    "identifier": "playing_playing_item",
+                    "title": "How to Play",
+                    "href": "Playing/Playing.html"
+                },
+                {
+                    "identifier": "playing_par_item",
+                    "title": "Par",
+                    "href": "Playing/Par.html"
+                },
+                {
+                    "identifier": "playing_scoring_item",
+                    "title": "Keeping Score",
+                    "href": "Playing/Scoring.html"
+                },
+                {
+                    "identifier": "playing_otherscoring_item",
+                    "title": "Other Scoring Systems",
+                    "href": "Playing/OtherScoring.html"
+                },
+                {
+                    "identifier": "playing_rules_item",
+                    "title": "The Rules of Golf",
+                    "href": "Playing/RulesOfGolf.html"
+                },
+                {
+                    "identifier": "playing_quiz_item",
+                    "title": "Playing Golf Quiz",
+                    "href": "shared/assessmenttemplate.html"
+                },
+                {
+                    "identifier": "etiquette_course_item",
+                    "title": "Taking Care of the Course",
+                    "href": "Etiquette/Course.html"
+                },
+                {
+                    "identifier": "etiquette_distracting_item",
+                    "title": "Avoiding Distraction",
+                    "href": "Etiquette/Distracting.html"
+                },
+                {
+                    "identifier": "etiquette_play_item",
+                    "title": "Playing Politely",
+                    "href": "Etiquette/Play.html"
+                },
+                {
+                    "identifier": "etiquette_quiz_item",
+                    "title": "Etiquette Quiz",
+                    "href": "shared/assessmenttemplate.html"
+                },
+                {
+                    "identifier": "handicapping_overview_item",
+                    "title": "Handicapping Overview",
+                    "href": "Handicapping/Overview.html"
+                },
+                {
+                    "identifier": "handicapping_calchandi_item",
+                    "title": "Calculating a Handicap",
+                    "href": "Handicapping/CalculatingHandicap.html"
+                },
+                {
+                    "identifier": "handicapping_calcscore_item",
+                    "title": "Calculating a Handicapped Score",
+                    "href": "Handicapping/CalculatingScore.html"
+                },
+                {
+                    "identifier": "handicapping_example_item",
+                    "title": "Handicapping Example",
+                    "href": "Handicapping/CalculatingScore.html"
+                },
+                {
+                    "identifier": "handicapping_quiz_item",
+                    "title": "Handicapping Quiz",
+                    "href": "shared/assessmenttemplate.html"
+                },
+                {
+                    "identifier": "havingfun_howto_item",
+                    "title": "How to Have Fun Playing Golf",
+                    "href": "HavingFun/HowToHaveFun.html"
+                },
+                {
+                    "identifier": "havingfun_makefriends_item",
+                    "title": "How to Make Friends Playing Golf",
+                    "href": "HavingFun/MakeFriends.html"
+                },
+                {
+                    "identifier": "havingfun_quiz_item",
+                    "title": "Having Fun Quiz",
+                    "href": "shared/assessmenttemplate.html"
+                }
+            ]
             },
             "isAvailable": true,
             "path": "fixture-stories/my-scorm-course"

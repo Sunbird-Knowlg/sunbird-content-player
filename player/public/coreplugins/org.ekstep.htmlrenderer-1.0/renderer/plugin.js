@@ -67,15 +67,45 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var instance = this;
         data = content;
         this.reset();
+        
+        // --- Multi-SCO initialization ---
+        instance.allScoStates = {};
+        instance.scoList = [];
+        if (data.scoList) {
+            try {
+                instance.scoList = typeof data.scoList === 'string' ? JSON.parse(data.scoList) : data.scoList;
+            } catch (e) {
+                instance.debugLog("SCORM: Error parsing scoList", e);
+            }
+        }
+        
+        if (instance.scoList.length === 0) {
+            // Fallback for single-SCO packages
+            instance.scoList = [{ identifier: 'default', title: 'Default', href: data.launchFile || 'index.html' }];
+        }
+        
+        instance.activeScoId = instance.scoList[0].identifier;
+        instance.scoList.forEach(function(sco) {
+            instance.allScoStates[sco.identifier] = {};
+        });
+        
+        instance.injectNavigationUI();
+        // --- End Multi-SCO initialization ---
+        
+        jQuery(this.manifest.id).remove();
+
         if (data.mimeType === 'application/vnd.ekstep.scorm-archive') {
             if (!window.API) {
-                var scormState = {};
                 window.API = {
                     LMSInitialize: function() { instance.debugLog("SCORM: LMSInitialize"); return "true"; },
-                    LMSGetValue: function(k) { return scormState[k] || ""; },
-                    LMSSetValue: function(k, v) { scormState[k] = v; instance.debugLog("SCORM: LMSSetValue", k + "=" + v); return "true"; },
-                    LMSCommit: function() { instance.persistScormState('LMSCommit', JSON.stringify(scormState)); return "true"; },
-                    LMSFinish: function() { instance.persistScormState('LMSFinish', JSON.stringify(scormState)); return "true"; },
+                    LMSGetValue: function(k) { return instance.allScoStates[instance.activeScoId][k] || ""; },
+                    LMSSetValue: function(k, v) { 
+                        instance.allScoStates[instance.activeScoId][k] = v; 
+                        instance.debugLog("SCORM: LMSSetValue", k + "=" + v); 
+                        return "true"; 
+                    },
+                    LMSCommit: function() { instance.persistScormState('LMSCommit', JSON.stringify(instance.allScoStates[instance.activeScoId])); return "true"; },
+                    LMSFinish: function() { instance.persistScormState('LMSFinish', JSON.stringify(instance.allScoStates[instance.activeScoId])); return "true"; },
                     LMSGetLastError: function() { return "0"; },
                     LMSGetErrorString: function(e) { return "No error"; },
                     LMSGetDiagnostic: function(e) { return "No diagnostic"; }
@@ -84,30 +114,81 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 instance.debugLog("SCORM: window.API already exists, skipping legacy implementation.");
             }
         }
+        
+        instance.loadSco(instance.activeScoId);
+
+        var obj = {"tempName": ""};
+        EkstepRendererAPI.dispatchEvent("renderer:navigation:load", obj);
+    },
+    
+    loadSco: function(scoId) {
+        var instance = this;
+        var sco = instance.scoList.find(function(s) { return s.identifier === scoId; });
+        if (!sco) return;
+
+        instance.debugLog("SCORM: Loading SCO", sco);
+        
+        // Persist current SCO state before switching
+        if (instance.activeScoId) {
+            instance.persistScormState('LMSFinish', JSON.stringify(instance.allScoStates[instance.activeScoId]));
+        }
+        
+        instance.activeScoId = scoId;
+        
         var isMobile = window.cordova ? true : false;
         var envHTML = isMobile ? "app" : "portal";
         var launchData = { "env": envHTML, "envpath": 'dev' };
         var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
         var prefix_url = isbrowserpreview ? this.getAsseturl(data) : globalConfigObj.basepath;
-        var launchFile = data.launchFile || 'index.html';
+        
+        var launchFile = sco.href;
+        
         var path = prefix_url + '/' + launchFile + '?contentId=' + data.identifier + '&launchData=' + JSON.stringify(launchData) + "&appInfo=" + JSON.stringify(GlobalContext.config.appInfo);
         if (isbrowserpreview) {
             path += "&flavor=" + "t=" + getTime();
         }
-        jQuery(this.manifest.id).remove();
+        
+        instance.debugLog("SCORM: Trying to load path: " + path);
+        
+        // --- Clean up / Wipe and Recreate ---
+        var oldIframe = document.getElementById(this.manifest.id);
+        if (oldIframe) {
+            oldIframe.parentNode.removeChild(oldIframe);
+        }
+        
         var iframe = document.createElement('iframe');
         iframe.src = path;
-        iframe.onload = function() {
-            instance.debugLog("Iframe loaded");
-        };
+        
+        // Let baseLauncher handle insertion and overlay config via validateSrc
         this.validateSrc(path, iframe);
-        var obj = {"tempName": ""};
-        EkstepRendererAPI.dispatchEvent("renderer:navigation:load", obj);
-        setTimeout(function() {
-            jQuery('custom-previous-navigation').hide();
-            jQuery('custom-next-navigation').hide();
-        }, 100);
     },
+
+    injectNavigationUI: function() {
+        var instance = this;
+        if (instance.scoList.length <= 1) return;
+
+        var container = document.createElement('div');
+        container.style.position = 'absolute';
+        container.style.top = '10px';
+        container.style.right = '10px';
+        container.style.zIndex = '10000';
+
+        var select = document.createElement('select');
+        instance.scoList.forEach(function(sco) {
+            var option = document.createElement('option');
+            option.value = sco.identifier;
+            option.text = sco.title;
+            select.appendChild(option);
+        });
+
+        select.onchange = function(e) {
+            instance.loadSco(e.target.value);
+        };
+        
+        container.appendChild(select);
+        document.body.appendChild(container);
+    },
+
     startTelemetry: function() {
         this._super();
     },
