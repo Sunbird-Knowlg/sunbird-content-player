@@ -17,8 +17,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     initLauncher: function() {
         EkstepRendererAPI.addEventListener(this._constants.events.launchEvent, this.start, this);
         var instance = this;
-        // Only add listener if SCORM API is not already provided (e.g. by scorm-again)
-        if (!window.API) {
+        // Only add listener if it is SCORM content and SCORM API is not already provided (e.g. by scorm-again)
+        var mimeType = (this.contentMetaData && this.contentMetaData.mimeType) || (window.content && window.content.mimeType) || (typeof content !== 'undefined' && content && content.mimeType);
+        if (mimeType === 'application/vnd.ekstep.scorm-archive' && !window.API) {
             window.addEventListener('message', function(event) {
                 // Validate origin (replace '*' with trusted domain if known)
                 // if (event.origin !== 'https://trusted-domain.com') return;

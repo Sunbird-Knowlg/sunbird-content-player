@@ -24,18 +24,16 @@
         configurable: false,
         value: scormAPI,
       });
-      Object.freeze(scormAPI);
 
       // Event hooks for real-time telemetry
       function fireTelemetry(eid, edata) {
-        console.log('fireTelemetry called', eid, edata);
         if (eid === 'END') {
           if (window.TelemetryService && window.TelemetryService.end) {
             window.TelemetryService.end(edata);
           }
         } else {
           if (window.TelemetryService && window.TelemetryService.interact) {
-            window.TelemetryService.interact(edata.type || 'OTHER', edata.id || edata.subtype.toLowerCase(), edata.subtype, edata);
+            window.TelemetryService.interact(edata.type || 'OTHER', edata.id || (edata.subtype || '').toLowerCase(), edata.subtype, edata);
           }
         }
       }
@@ -63,12 +61,9 @@
       });
 
       scormAPI.on('LMSFinish', function() {
-        console.log('LMSFinish event received');
         var state = scormAPI.runtimeData;
         fireTelemetry('END', { subtype: 'SCORM_FINISH', state });
       });
-
-      console.log('SCORM API initialized successfully via scorm-again library');
     } catch (error) {
       console.error('Error initializing SCORM API:', error);
     }
