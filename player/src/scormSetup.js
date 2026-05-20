@@ -4,7 +4,7 @@
  * Falls back to inline SCORM API if library is not loaded
  */
 
-(function() {
+(function () {
   'use strict';
 
   // Check if scorm-again is available (loaded via script tag or npm)
@@ -38,29 +38,31 @@
         }
       }
 
-      scormAPI.on('LMSSetValue.cmi.core.score.raw', function(element, value) {
+      scormAPI.on('LMSSetValue.cmi.core.score.raw', function (element, value) {
         fireTelemetry('ASSESSMENT', { subtype: 'SCORM_SCORE', score: value });
       });
 
-      scormAPI.on('LMSSetValue.cmi.core.lesson_status', function(element, value) {
+      scormAPI.on('LMSSetValue.cmi.core.lesson_status', function (element, value) {
         fireTelemetry('INTERACT', { subtype: 'SCORM_STATUS_CHANGE', status: value });
       });
 
-      scormAPI.on('LMSSetValue.cmi.core.exit', function(element, value) {
+      scormAPI.on('LMSSetValue.cmi.core.exit', function (element, value) {
         fireTelemetry('INTERACT', { subtype: 'SCORM_EXIT_CHANGE', exit: value });
       });
 
-      scormAPI.on('LMSSetValue.cmi.interactions.n.result', function(element, value) {
-        fireTelemetry('INTERACT', { subtype: 'SCORM_INTERACTION_RESULT', result: value });
+      scormAPI.on('LMSSetValue.cmi.*', function (element, value) {
+        if (element.indexOf('cmi.interactions.') === 0 && element.endsWith('.result')) {
+          fireTelemetry('INTERACT', { subtype: 'SCORM_INTERACTION_RESULT', result: value });
+        }
       });
 
       // LMSCommit and LMSFinish hooks
-      scormAPI.on('LMSCommit', function() {
+      scormAPI.on('LMSCommit', function () {
         var state = scormAPI.runtimeData;
         fireTelemetry('INTERACT', { subtype: 'SCORM_COMMIT', state });
       });
 
-      scormAPI.on('LMSFinish', function() {
+      scormAPI.on('LMSFinish', function () {
         var state = scormAPI.runtimeData;
         fireTelemetry('END', { subtype: 'SCORM_FINISH', state });
       });

@@ -11,8 +11,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     _constants: {
         mimeType: ["application/vnd.ekstep.html-archive", "application/vnd.ekstep.h5p-archive", "application/vnd.ekstep.scorm-archive"],
         events: {
-                launchEvent: "renderer:launch:html"
-            }
+            launchEvent: "renderer:launch:html"
+        }
     },
     initLauncher: function() {
         EkstepRendererAPI.addEventListener(this._constants.events.launchEvent, this.start, this);
@@ -112,9 +112,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             jQuery('custom-previous-navigation').hide();
             jQuery('custom-next-navigation').hide();
         }, 100);
-    },
-    startTelemetry: function() {
-        this._super();
     },
     validateSrc: function(path, iframe) {
         var instance = this;
