@@ -89,7 +89,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             instance.allScoStates[sco.identifier] = {};
         });
         
-        instance.injectNavigationUI();
         // --- End Multi-SCO initialization ---
         
         jQuery(this.manifest.id).remove();
@@ -161,32 +160,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         
         // Let baseLauncher handle insertion and overlay config via validateSrc
         this.validateSrc(path, iframe);
-    },
-
-    injectNavigationUI: function() {
-        var instance = this;
-        if (instance.scoList.length <= 1) return;
-
-        var container = document.createElement('div');
-        container.style.position = 'absolute';
-        container.style.top = '10px';
-        container.style.right = '10px';
-        container.style.zIndex = '10000';
-
-        var select = document.createElement('select');
-        instance.scoList.forEach(function(sco) {
-            var option = document.createElement('option');
-            option.value = sco.identifier;
-            option.text = sco.title;
-            select.appendChild(option);
-        });
-
-        select.onchange = function(e) {
-            instance.loadSco(e.target.value);
-        };
-        
-        container.appendChild(select);
-        document.body.appendChild(container);
     },
 
     startTelemetry: function() {
