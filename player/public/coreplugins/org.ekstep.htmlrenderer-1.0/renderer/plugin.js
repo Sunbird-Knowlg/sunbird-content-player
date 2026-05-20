@@ -17,8 +17,12 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     initLauncher: function() {
         EkstepRendererAPI.addEventListener(this._constants.events.launchEvent, this.start, this);
         var instance = this;
+        // Only add listener if SCORM API is not already provided (e.g. by scorm-again)
         if (!window.API) {
             window.addEventListener('message', function(event) {
+                // Validate origin (replace '*' with trusted domain if known)
+                // if (event.origin !== 'https://trusted-domain.com') return;
+
                 if (event.data && event.data.type === 'SCORM_API') {
                     switch(event.data.method) {
                         case 'LMSInitialize':

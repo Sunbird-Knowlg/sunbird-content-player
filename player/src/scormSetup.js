@@ -13,7 +13,7 @@
       var scormAPI = new window.Scorm12API({
         autocommit: true,
         autocommitSeconds: 60,
-        lmsCommitUrl: '/api/scorm/commit',
+        lmsCommitUrl: '',
         dataCommitFormat: 'json',
         logLevel: 1,
       });
@@ -41,7 +41,7 @@
       }
 
       scormAPI.on('LMSSetValue.cmi.core.score.raw', function(element, value) {
-        fireTelemetry('ASSESMENT', { subtype: 'SCORM_SCORE', score: value });
+        fireTelemetry('ASSESSMENT', { subtype: 'SCORM_SCORE', score: value });
       });
 
       scormAPI.on('LMSSetValue.cmi.core.lesson_status', function(element, value) {
