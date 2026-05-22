@@ -11,15 +11,22 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     _constants: {
         mimeType: ["application/vnd.ekstep.html-archive", "application/vnd.ekstep.h5p-archive", "application/vnd.ekstep.scorm-archive"],
         events: {
-                launchEvent: "renderer:launch:html"
-            }
+            launchEvent: "renderer:launch:html"
+        }
     },
     initLauncher: function() {
         EkstepRendererAPI.addEventListener(this._constants.events.launchEvent, this.start, this);
+    },
+    registerScormMessageListener: function() {
         var instance = this;
-        if (!window.API) {
+        var mimeType = (this.contentMetaData && this.contentMetaData.mimeType) || (window.content && window.content.mimeType) || (typeof content !== 'undefined' && content && content.mimeType);
+        if (mimeType === 'application/vnd.ekstep.scorm-archive' && !window.API) {
             window.addEventListener('message', function(event) {
+                // Validate origin
+                if (event.origin !== window.location.origin) return;
+
                 if (event.data && event.data.type === 'SCORM_API') {
+
                     switch(event.data.method) {
                         case 'LMSInitialize':
                             instance.debugLog("SCORM session started");
@@ -64,6 +71,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     start: function() {
         this._super();
+        this.registerScormMessageListener();
         var instance = this;
         data = content;
         this.reset();
@@ -160,10 +168,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         
         // Let baseLauncher handle insertion and overlay config via validateSrc
         this.validateSrc(path, iframe);
-    },
-
-    startTelemetry: function() {
-        this._super();
     },
     validateSrc: function(path, iframe) {
         var instance = this;

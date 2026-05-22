@@ -4,71 +4,72 @@
  * Falls back to inline SCORM API if library is not loaded
  */
 
-(function() {
+(function () {
   'use strict';
 
   // Check if scorm-again is available (loaded via script tag or npm)
   if (window.Scorm12API) {
     try {
       var scormAPI = new window.Scorm12API({
-        autocommit: true,
+        autocommit: false,
         autocommitSeconds: 60,
-        lmsCommitUrl: '/api/scorm/commit',
+        lmsCommitUrl: '',
         dataCommitFormat: 'json',
         logLevel: 1,
       });
 
-      // Expose on parent window — lock to prevent tampering
+      // Expose on parent window — lock to prevent tampering.
+      // NOTE: This makes window.API non-configurable. Third-party content 
+      // attempting to reassign window.API will fail (TypeError in strict mode).
+      // If this plugin's fallback path runs after this in a code path where 
+      // !window.API is somehow true, any assignment attempt will also fail.
       Object.defineProperty(window, 'API', {
         writable: false,
         configurable: false,
         value: scormAPI,
       });
-      Object.freeze(scormAPI);
 
       // Event hooks for real-time telemetry
       function fireTelemetry(eid, edata) {
-        console.log('fireTelemetry called', eid, edata);
         if (eid === 'END') {
           if (window.TelemetryService && window.TelemetryService.end) {
             window.TelemetryService.end(edata);
           }
         } else {
           if (window.TelemetryService && window.TelemetryService.interact) {
-            window.TelemetryService.interact(edata.type || 'OTHER', edata.id || edata.subtype.toLowerCase(), edata.subtype, edata);
+            window.TelemetryService.interact(edata.type || 'OTHER', edata.id || (edata.subtype || '').toLowerCase(), edata.subtype, edata);
           }
         }
       }
 
-      scormAPI.on('LMSSetValue.cmi.core.score.raw', function(element, value) {
-        fireTelemetry('ASSESMENT', { subtype: 'SCORM_SCORE', score: value });
+      scormAPI.on('LMSSetValue.cmi.core.score.raw', function (element, value) {
+        fireTelemetry('ASSESSMENT', { subtype: 'SCORM_SCORE', score: value });
       });
 
-      scormAPI.on('LMSSetValue.cmi.core.lesson_status', function(element, value) {
+      scormAPI.on('LMSSetValue.cmi.core.lesson_status', function (element, value) {
         fireTelemetry('INTERACT', { subtype: 'SCORM_STATUS_CHANGE', status: value });
       });
 
-      scormAPI.on('LMSSetValue.cmi.core.exit', function(element, value) {
+      scormAPI.on('LMSSetValue.cmi.core.exit', function (element, value) {
         fireTelemetry('INTERACT', { subtype: 'SCORM_EXIT_CHANGE', exit: value });
       });
 
-      scormAPI.on('LMSSetValue.cmi.interactions.n.result', function(element, value) {
-        fireTelemetry('INTERACT', { subtype: 'SCORM_INTERACTION_RESULT', result: value });
+      scormAPI.on('LMSSetValue.cmi.*', function (element, value) {
+        if (element.indexOf('cmi.interactions.') === 0 && element.endsWith('.result')) {
+          fireTelemetry('INTERACT', { subtype: 'SCORM_INTERACTION_RESULT', result: value });
+        }
       });
 
       // LMSCommit and LMSFinish hooks
-      scormAPI.on('LMSCommit', function() {
+      scormAPI.on('LMSCommit', function () {
         var state = scormAPI.runtimeData;
         fireTelemetry('INTERACT', { subtype: 'SCORM_COMMIT', state });
       });
 
-      scormAPI.on('LMSFinish', function() {
-        console.log('LMSFinish event received');
+      scormAPI.on('LMSFinish', function () {
         var state = scormAPI.runtimeData;
         fireTelemetry('END', { subtype: 'SCORM_FINISH', state });
       });
-
-      console.log('SCORM API initialized successfully via scorm-again library');
     } catch (error) {
       console.error('Error initializing SCORM API:', error);
     }
