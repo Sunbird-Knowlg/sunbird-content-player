@@ -76,9 +76,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         data = content;
         this.reset();
         
-        // --- Multi-SCO initialization ---
         instance.allScoStates = {};
         instance.scoList = [];
+        instance.currentScoIndex = 0;
         if (data.scoList) {
             try {
                 instance.scoList = typeof data.scoList === 'string' ? JSON.parse(data.scoList) : data.scoList;
@@ -88,16 +88,12 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }
         
         if (instance.scoList.length === 0) {
-            // Fallback for single-SCO packages
             instance.scoList = [{ identifier: 'default', title: 'Default', href: data.launchFile || 'index.html' }];
         }
         
-        instance.activeScoId = instance.scoList[0].identifier;
         instance.scoList.forEach(function(sco) {
             instance.allScoStates[sco.identifier] = {};
         });
-        
-        // --- End Multi-SCO initialization ---
         
         jQuery(this.manifest.id).remove();
 
@@ -117,30 +113,30 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                     LMSGetErrorString: function(e) { return "No error"; },
                     LMSGetDiagnostic: function(e) { return "No diagnostic"; }
                 };
-            } else {
-                instance.debugLog("SCORM: window.API already exists, skipping legacy implementation.");
             }
         }
         
-        instance.loadSco(instance.activeScoId);
+        instance.navigateToSCO(0);
 
         var obj = {"tempName": ""};
         EkstepRendererAPI.dispatchEvent("renderer:navigation:load", obj);
     },
-    
-    loadSco: function(scoId) {
+    navigateToSCO: function(index) {
         var instance = this;
-        var sco = instance.scoList.find(function(s) { return s.identifier === scoId; });
-        if (!sco) return;
+        if (!instance.scoList || index < 0 || index >= instance.scoList.length) return;
 
+        instance.currentScoIndex = index;
+        var sco = instance.scoList[index];
         instance.debugLog("SCORM: Loading SCO", sco);
         
-        // Persist current SCO state before switching
         if (instance.activeScoId) {
             instance.persistScormState('LMSFinish', JSON.stringify(instance.allScoStates[instance.activeScoId]));
         }
         
-        instance.activeScoId = scoId;
+        instance.activeScoId = sco.identifier;
+        if (!instance.allScoStates[instance.activeScoId]) {
+            instance.allScoStates[instance.activeScoId] = {};
+        }
         
         var isMobile = window.cordova ? true : false;
         var envHTML = isMobile ? "app" : "portal";
@@ -149,15 +145,16 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var prefix_url = isbrowserpreview ? this.getAsseturl(data) : globalConfigObj.basepath;
         
         var launchFile = sco.href;
-        
-        var path = prefix_url + '/' + launchFile + '?contentId=' + data.identifier + '&launchData=' + JSON.stringify(launchData) + "&appInfo=" + JSON.stringify(GlobalContext.config.appInfo);
+        var queryParams = 'contentId=' + encodeURIComponent(data.identifier) + 
+                          '&launchData=' + encodeURIComponent(JSON.stringify(launchData)) + 
+                          '&appInfo=' + encodeURIComponent(JSON.stringify(GlobalContext.config.appInfo));
+        var path = prefix_url + '/' + launchFile + '?' + queryParams;
         if (isbrowserpreview) {
             path += "&flavor=" + "t=" + getTime();
         }
         
         instance.debugLog("SCORM: Trying to load path: " + path);
         
-        // --- Clean up / Wipe and Recreate ---
         var oldIframe = document.getElementById(this.manifest.id);
         if (oldIframe) {
             oldIframe.parentNode.removeChild(oldIframe);
@@ -183,12 +180,54 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         });
     },
     configOverlay: function() {
+        var instance = this;
         setTimeout(function() {
             EkstepRendererAPI.dispatchEvent("renderer:overlay:show");
             EkstepRendererAPI.dispatchEvent('renderer:stagereload:hide');
-            EkstepRendererAPI.dispatchEvent('renderer:next:hide');
-            EkstepRendererAPI.dispatchEvent('renderer:previous:hide');
+            
+            if (instance.scoList && instance.scoList.length > 1) {
+                EkstepRendererAPI.dispatchEvent('renderer:next:hide');
+                EkstepRendererAPI.dispatchEvent('renderer:previous:hide');
+                instance.showMultiScoNavigation();
+            } else {
+                EkstepRendererAPI.dispatchEvent('renderer:next:hide');
+                EkstepRendererAPI.dispatchEvent('renderer:previous:hide');
+            }
         }, 100)
+    },
+    showMultiScoNavigation: function() {
+        var instance = this;
+        jQuery('#multi-sco-nav').remove();
+        
+        var isLastSco = instance.currentScoIndex === instance.scoList.length - 1;
+        var nextButtonHtml = isLastSco ? 
+            '<button id="sco-complete" style="pointer-events: auto; padding: 10px 20px; cursor: pointer; background: #28a745; color: white; border: none; border-radius: 4px; font-weight: bold;">Complete</button>' :
+            '<button id="sco-next" style="pointer-events: auto; background: none; border: none; cursor: pointer; padding: 0;"><img src="assets/icons/next.png" style="width: 40px; height: 40px;"></button>';
+
+        var navHtml = '<div id="multi-sco-nav" style="position: absolute; top: 50%; transform: translateY(-50%); width: 100%; display: flex; justify-content: space-between; padding: 0 10px; box-sizing: border-box; pointer-events: none;">' +
+                      '<button id="sco-prev" style="pointer-events: auto; background: none; border: none; cursor: pointer; padding: 0;" ' + (instance.currentScoIndex === 0 ? 'disabled style="opacity: 0.5; pointer-events: none;"' : '') + '><img src="assets/icons/previous.png" style="width: 40px; height: 40px;"></button>' +
+                      nextButtonHtml +
+                      '</div>';
+        
+        jQuery('#gameArea').append(navHtml);
+        
+        jQuery('#sco-prev').click(function() {
+            if (instance.currentScoIndex > 0) {
+                instance.navigateToSCO(instance.currentScoIndex - 1);
+            }
+        });
+        
+        if (isLastSco) {
+            jQuery('#sco-complete').click(function() {
+                EkstepRendererAPI.dispatchEvent('renderer:content:end');
+            });
+        } else {
+            jQuery('#sco-next').click(function() {
+                if (instance.currentScoIndex < instance.scoList.length - 1) {
+                    instance.navigateToSCO(instance.currentScoIndex + 1);
+                }
+            });
+        }
     },
 
     getAsseturl: function(content) {
