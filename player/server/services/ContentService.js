@@ -14,7 +14,7 @@ var Download = require("download")
 
 var jsonfile = require("jsonfile")
 
-var SUPPORTED_MIMETYPES = ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"]
+var SUPPORTED_MIMETYPES = ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive","application/vnd.ekstep.scorm-archive"]
 
 var downloading = false
 
