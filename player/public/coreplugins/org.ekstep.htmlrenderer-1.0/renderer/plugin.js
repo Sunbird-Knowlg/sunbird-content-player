@@ -21,7 +21,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var instance = this;
         var mimeType = (this.contentMetaData && this.contentMetaData.mimeType) || (window.content && window.content.mimeType) || (typeof content !== 'undefined' && content && content.mimeType);
         if (mimeType === 'application/vnd.ekstep.scorm-archive' && !window.API) {
-            window.addEventListener('message', function(event) {
+            this._scormMessageHandler = function(event) {
                 // Validate origin: allow local origin or the configured host origin
                 var allowedOrigin = EkstepRendererAPI.getGlobalConfig().host || window.location.origin;
                 if (event.origin !== window.location.origin && event.origin !== allowedOrigin) return;
@@ -41,7 +41,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                             break;
                     }
                 }
-            }, false);
+            };
+            window.addEventListener('message', this._scormMessageHandler, false);
         }
     },
     debugLog: function(message, data) {
@@ -275,13 +276,11 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             EkstepRendererAPI.dispatchEvent("renderer:overlay:show");
             EkstepRendererAPI.dispatchEvent('renderer:stagereload:hide');
             
+            EkstepRendererAPI.dispatchEvent('renderer:next:hide');
+            EkstepRendererAPI.dispatchEvent('renderer:previous:hide');
+            
             if (instance.scoList && instance.scoList.length > 1) {
-                EkstepRendererAPI.dispatchEvent('renderer:next:hide');
-                EkstepRendererAPI.dispatchEvent('renderer:previous:hide');
                 instance.showMultiScoNavigation();
-            } else {
-                EkstepRendererAPI.dispatchEvent('renderer:next:hide');
-                EkstepRendererAPI.dispatchEvent('renderer:previous:hide');
             }
         }, 100)
     },
@@ -346,6 +345,11 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     cleanUp: function() {
         this._super();
+        // Remove the listener to prevent memory leaks
+        if (this._scormMessageHandler) {
+            window.removeEventListener('message', this._scormMessageHandler, false);
+            this._scormMessageHandler = null;
+        }
         EkstepRendererAPI.dispatchEvent('renderer:next:show')
         EkstepRendererAPI.dispatchEvent('renderer:previous:show')
     }
