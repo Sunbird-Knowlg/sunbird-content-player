@@ -22,8 +22,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var mimeType = (this.contentMetaData && this.contentMetaData.mimeType) || (window.content && window.content.mimeType) || (typeof content !== 'undefined' && content && content.mimeType);
         if (mimeType === 'application/vnd.ekstep.scorm-archive' && !window.API) {
             window.addEventListener('message', function(event) {
-                // Validate origin
-                if (event.origin !== window.location.origin) return;
+                // Validate origin: allow local origin or the configured host origin
+                var allowedOrigin = EkstepRendererAPI.getGlobalConfig().host || window.location.origin;
+                if (event.origin !== window.location.origin && event.origin !== allowedOrigin) return;
 
                 if (event.data && event.data.type === 'SCORM_API') {
 
@@ -69,6 +70,96 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             }
         );
     },
+    setupScormAPI: function() {
+        var instance = this;
+        var scormAPI = null;
+        if (window.Scorm12API) {
+            try {
+                scormAPI = new window.Scorm12API({
+                    autocommit: false,
+                    autocommitSeconds: 60,
+                    lmsCommitUrl: null, // Disabled remote commit
+                    dataCommitFormat: 'json',
+                    logLevel: 1,
+                });
+
+                // Telemetry hooks
+                var fireTelemetry = function(eid, edata) {
+                    var telemetry = EkstepRendererAPI.getTelemetryService();
+                    if (eid === 'END') {
+                        if (telemetry && telemetry.end) telemetry.end(edata);
+                    } else {
+                        if (telemetry && telemetry.interact) {
+                            telemetry.interact(edata.type || 'OTHER', edata.id || (edata.subtype || '').toLowerCase(), edata.subtype, edata);
+                        }
+                    }
+                };
+
+                scormAPI.on('LMSSetValue.cmi.core.score.raw', function (element, value) {
+                    fireTelemetry('ASSESSMENT', { subtype: 'SCORM_SCORE', score: value });
+                });
+                scormAPI.on('LMSSetValue.cmi.core.lesson_status', function (element, value) {
+                    fireTelemetry('INTERACT', { subtype: 'SCORM_STATUS_CHANGE', status: value });
+                });
+                scormAPI.on('LMSSetValue.cmi.core.exit', function (element, value) {
+                    fireTelemetry('INTERACT', { subtype: 'SCORM_EXIT_CHANGE', exit: value });
+                });
+                scormAPI.on('LMSSetValue.cmi.*', function (element, value) {
+                    if (element.indexOf('cmi.interactions.') === 0 && element.endsWith('.result')) {
+                        fireTelemetry('INTERACT', { subtype: 'SCORM_INTERACTION_RESULT', result: value });
+                    }
+                });
+                scormAPI.on('LMSCommit', function () {
+                    fireTelemetry('INTERACT', { subtype: 'SCORM_COMMIT', state: scormAPI.runtimeData });
+                });
+                scormAPI.on('LMSFinish', function () {
+                    fireTelemetry('END', { subtype: 'SCORM_FINISH', state: scormAPI.runtimeData });
+                });
+            } catch (error) {
+                console.error('Error initializing SCORM API:', error);
+            }
+        }
+
+        window.API = {
+            LMSInitialize: function() {
+                if (instance.currentScoIndex === 0) {
+                    return scormAPI ? scormAPI.LMSInitialize() : "true";
+                }
+                return "true";
+            },
+            LMSGetValue: function(k) {
+                var val = instance.allScoStates[instance.activeScoId][k];
+                if (k === 'cmi.core.lesson_status' && !val) return 'not attempted';
+                if (val) return val;
+                return scormAPI ? scormAPI.LMSGetValue(k) : "";
+            },
+            LMSSetValue: function(k, v) {
+                instance.allScoStates[instance.activeScoId][k] = v;
+                instance.debugLog("SCORM: LMSSetValue", k + "=" + v);
+                return scormAPI ? scormAPI.LMSSetValue(k, v) : "true";
+            },
+            LMSCommit: function() {
+                instance.persistScormState('LMSCommit', JSON.stringify(instance.allScoStates[instance.activeScoId]));
+                return scormAPI ? scormAPI.LMSCommit() : "true";
+            },
+            LMSFinish: function() {
+                instance.persistScormState('LMSFinish', JSON.stringify(instance.allScoStates[instance.activeScoId]));
+                
+                // Only terminate the actual session if this is the last SCO
+                var isLastSco = instance.currentScoIndex === instance.scoList.length - 1;
+                if (isLastSco) {
+                    var result = scormAPI ? scormAPI.LMSFinish() : "true";
+                    // Notify player that content has finished
+                    EkstepRendererAPI.dispatchEvent('renderer:content:end');
+                    return result;
+                }
+                return "true";
+            },
+            LMSGetLastError: function() { return scormAPI ? scormAPI.LMSGetLastError() : "0"; },
+            LMSGetErrorString: function(e) { return scormAPI ? scormAPI.LMSGetErrorString(e) : "No error"; },
+            LMSGetDiagnostic: function(e) { return scormAPI ? scormAPI.LMSGetDiagnostic(e) : "No diagnostic"; }
+        };
+    },
     start: function() {
         this._super();
         this.registerScormMessageListener();
@@ -98,26 +189,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         jQuery(this.manifest.id).remove();
 
         if (data.mimeType === 'application/vnd.ekstep.scorm-archive') {
-            if (!window.API) {
-                window.API = {
-                    LMSInitialize: function() { instance.debugLog("SCORM: LMSInitialize"); return "true"; },
-                    LMSGetValue: function(k) { 
-                        var val = instance.allScoStates[instance.activeScoId][k];
-                        if (k === 'cmi.core.lesson_status' && !val) return 'not attempted';
-                        return val || ""; 
-                    },
-                    LMSSetValue: function(k, v) { 
-                        instance.allScoStates[instance.activeScoId][k] = v; 
-                        instance.debugLog("SCORM: LMSSetValue", k + "=" + v); 
-                        return "true"; 
-                    },
-                    LMSCommit: function() { instance.persistScormState('LMSCommit', JSON.stringify(instance.allScoStates[instance.activeScoId])); return "true"; },
-                    LMSFinish: function() { instance.persistScormState('LMSFinish', JSON.stringify(instance.allScoStates[instance.activeScoId])); return "true"; },
-                    LMSGetLastError: function() { return "0"; },
-                    LMSGetErrorString: function(e) { return "No error"; },
-                    LMSGetDiagnostic: function(e) { return "No diagnostic"; }
-                };
-            }
+            this.setupScormAPI();
         }
         
         instance.navigateToSCO(0);
@@ -149,10 +221,24 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var prefix_url = isbrowserpreview ? this.getAsseturl(data) : globalConfigObj.basepath;
         
         var launchFile = sco.href;
-        var queryParams = 'contentId=' + encodeURIComponent(data.identifier) + 
+        var playerParams = 'contentId=' + encodeURIComponent(data.identifier) + 
                           '&launchData=' + encodeURIComponent(JSON.stringify(launchData)) + 
                           '&appInfo=' + encodeURIComponent(JSON.stringify(GlobalContext.config.appInfo));
-        var path = prefix_url + '/' + launchFile + '?' + queryParams;
+        var path;
+        
+        if (launchFile === 'shared/assessmenttemplate.html') {
+            var folderMap = {
+                'playing': 'Playing',
+                'etiquette': 'Etiquette',
+                'havingfun': 'HavingFun',
+                'handicapping': 'Handicapping'
+            };
+            var folder = folderMap[sco.identifier.split('_')[0]];
+            path = prefix_url + '/' + launchFile + '?questions=' + folder + '#' + playerParams;
+        } else {
+            path = prefix_url + '/' + launchFile + '#' + playerParams;
+        }
+        
         if (isbrowserpreview) {
             path += "&flavor=" + "t=" + getTime();
         }
@@ -208,8 +294,14 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             '<button id="sco-complete" style="pointer-events: auto; padding: 10px 20px; cursor: pointer; background: #28a745; color: white; border: none; border-radius: 4px; font-weight: bold;">Complete</button>' :
             '<button id="sco-next" style="pointer-events: auto; background: none; border: none; cursor: pointer; padding: 0;"><img src="assets/icons/next.png" style="width: 40px; height: 40px;"></button>';
 
+        var isPrevDisabled = instance.currentScoIndex === 0;
+        var prevStyle = isPrevDisabled 
+            ? 'opacity: 0.5; pointer-events: none; background: none; border: none; padding: 0;'
+            : 'pointer-events: auto; background: none; border: none; cursor: pointer; padding: 0;';
+        var disabledAttr = isPrevDisabled ? 'disabled' : '';
+
         var navHtml = '<div id="multi-sco-nav" style="position: absolute; top: 50%; transform: translateY(-50%); width: 100%; display: flex; justify-content: space-between; padding: 0 10px; box-sizing: border-box; pointer-events: none;">' +
-                      '<button id="sco-prev" style="pointer-events: auto; background: none; border: none; cursor: pointer; padding: 0;" ' + (instance.currentScoIndex === 0 ? 'disabled style="opacity: 0.5; pointer-events: none;"' : '') + '><img src="assets/icons/previous.png" style="width: 40px; height: 40px;"></button>' +
+                      '<button id="sco-prev" style="' + prevStyle + '" ' + disabledAttr + '><img src="assets/icons/previous.png" style="width: 40px; height: 40px;"></button>' +
                       nextButtonHtml +
                       '</div>';
         
