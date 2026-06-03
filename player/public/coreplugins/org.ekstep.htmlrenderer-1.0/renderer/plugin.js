@@ -101,7 +101,11 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             if (!window.API) {
                 window.API = {
                     LMSInitialize: function() { instance.debugLog("SCORM: LMSInitialize"); return "true"; },
-                    LMSGetValue: function(k) { return instance.allScoStates[instance.activeScoId][k] || ""; },
+                    LMSGetValue: function(k) { 
+                        var val = instance.allScoStates[instance.activeScoId][k];
+                        if (k === 'cmi.core.lesson_status' && !val) return 'not attempted';
+                        return val || ""; 
+                    },
                     LMSSetValue: function(k, v) { 
                         instance.allScoStates[instance.activeScoId][k] = v; 
                         instance.debugLog("SCORM: LMSSetValue", k + "=" + v); 
