@@ -182,7 +182,7 @@ module.exports = function (grunt) {
 				},
 				files: {
 					"public/coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs/renderer.min.js": [
-						"public/libs/xml2json.js",
+						"public/libs/xml2json.min.js",
 						"../js-libs/renderer/manager/PluginManager.js",
 						"../js-libs/renderer/manager/ControllerManager.js",
 						"../js-libs/renderer/manager/AudioManager.js",
