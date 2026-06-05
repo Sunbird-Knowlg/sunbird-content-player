@@ -273,11 +273,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
 
         var path = prefix_url + '/' + sco.href;
-        
-        if (sco.parameters) {
-            path += '?' + sco.parameters;
-        }
-
+    
         instance.debugLog("SCORM: Loading path", path);
 
         var oldIframe = document.getElementById(instance.manifest.id);
