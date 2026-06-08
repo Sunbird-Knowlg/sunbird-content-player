@@ -371,6 +371,32 @@
                 "path": "fixture-stories/Dependency-managment"
             },
             {
+                "identifier": "org.ekstep.dependency",
+                "mimeType": "application/vnd.ekstep.ecml-archive",
+                "contentData": {
+                    "questionnaire": null,
+                    "appIcon": "fixture-stories/shapes/logo.png",
+                    "subject": "literacy_v2",
+                    "description": "shapes",
+                    "name": "Dependency-Managment Test",
+                    "downloadUrl": "",
+                    "checksum": null,
+                    "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+                    "concepts": [
+                        {
+                            "identifier": "LO1",
+                            "name": "Receptive Vocabulary",
+                            "objectType": "Concept"
+                        }
+                    ],
+                    "identifier": "org.ekstep.dependency",
+                    "grayScaleAppIcon": null,
+                    "pkgVersion": 1
+                },
+                "isAvailable": true,
+                "path": "fixture-stories/Dependency-managment"
+            },
+            {
                 "identifier": "org.ekstep.H5P_Sample",
                 "mimeType": "application/vnd.ekstep.h5p-archive",
                 "contentData": {
@@ -1150,18 +1176,6 @@
                 },
                 "isAvailable": true,
                 "path": "fixture-stories/assessmentTestCases"
-            },
-            {
-                "identifier": "org.ekstep.scorm.sample",
-                "mimeType": "application/vnd.ekstep.scorm-archive",
-                "contentData": {
-                    "name": "SCORM Sample Course",
-                    "description": "Local SCORM Course",
-                    "pkgVersion": 1,
-                    "launchFile": "index.html"
-                },
-                "isAvailable": true,
-                "path": "fixture-stories/my-scorm-course"
             }
         ],
         "ttl": 21
