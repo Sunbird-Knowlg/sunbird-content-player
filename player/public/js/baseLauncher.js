@@ -17,10 +17,10 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
 	isEndPageSeen: false,
 
 	/**
-     * init of the launcher with the given data.
-     * @param data {object} return the manifest object data
-     * @memberof org.ekstep.contentrenderer.baseLauncher
-     */
+	 * init of the launcher with the given data.
+	 * @param data {object} return the manifest object data
+	 * @memberof org.ekstep.contentrenderer.baseLauncher
+	 */
 	init: function (manifest) {
 		try {
 			EkstepRendererAPI.raiseInternetConnectivityError();
@@ -41,9 +41,9 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
 	},
 
 	/**
-     * launch of the particular launcher based on the mimetype.
-     * @memberof org.ekstep.contentrenderer.baseLauncher
-     */
+	 * launch of the particular launcher based on the mimetype.
+	 * @memberof org.ekstep.contentrenderer.baseLauncher
+	 */
 	start: function () {
 		var instance = this
 		this.cleanUp()
@@ -60,23 +60,23 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
 	},
 
 	/**
-     * End of the content listen for the renderer:content:end event.
-     * Any child launcher can extend/override this functionality.
-     * @memberof org.ekstep.contentrenderer.baseLauncher
-     */
+	 * End of the content listen for the renderer:content:end event.
+	 * Any child launcher can extend/override this functionality.
+	 * @memberof org.ekstep.contentrenderer.baseLauncher
+	 */
 	end: function () {
 		if (this.sleepMode) return
-		this.isEndPageSeen = true	
+		this.isEndPageSeen = true
 		this.heartBeatEvent(false)
 		this.endTelemetry()
 		EkstepRendererAPI.dispatchEvent("renderer:endpage:show")
 	},
 
 	/**
-     * Replay of the particular launcher.
-     * Any child launcher can extends/override this functionality.
-     * @memberof org.ekstep.contentrenderer.baseLauncher
-     */
+	 * Replay of the particular launcher.
+	 * Any child launcher can extends/override this functionality.
+	 * @memberof org.ekstep.contentrenderer.baseLauncher
+	 */
 	replay: function () {
 		if (this.sleepMode) return
 		this.heartBeatEvent(false)
@@ -85,30 +85,21 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
 	},
 
 	/**
-     * Clearing of the Launcher instace
-     * @memberof org.ekstep.contentrenderer.baseLauncher
-     */
+	 * Clearing of the Launcher instace
+	 * @memberof org.ekstep.contentrenderer.baseLauncher
+	 */
 	cleanUp: function () {
 		console.info("Clearing the launcher instance")
 		this.sleepMode = true
 		EkstepRendererAPI.removeEventListener("renderer:launcher:clean", this.cleanUp, this)
 	},
 
-	debugLog: function(message, data) {
-		if (EkstepRendererAPI.getGlobalConfig() && EkstepRendererAPI.getGlobalConfig().debug) {
-			if (data) {
-				console.warn(message, data);
-			} else {
-				console.warn(message);
-			}
-		}
-	},
 
 	/**
-     * Calculates the content progress
-     * @param currentIndex {int} Current stage number
-     * @param totalIndex {int} Total number of stages in the content.
-     */
+	 * Calculates the content progress
+	 * @param currentIndex {int} Current stage number
+	 * @param totalIndex {int} Total number of stages in the content.
+	 */
 	progres: function (currentIndex, totalIndex) {
 		var totalProgress = (currentIndex / totalIndex) * 100
 		totalProgress = _.isFinite(totalProgress) ? totalProgress : 0
@@ -116,24 +107,24 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
 		return totalProgress
 	},
 	contentProgress: function () {
-		this.debugLog("Child Launcher should calculate")
+		console.warn("Child Launcher should calculate")
 	},
 
 	/**
 	 *  generic Summary event
 	 */
-	
-	contentPlaySummary : function () {
-		return [{"totallength":""},{"visitedlength":""},{"visitedcontentend":""},{"totalseekedlength": ""}]
+
+	contentPlaySummary: function () {
+		return [{ "totallength": "" }, { "visitedlength": "" }, { "visitedcontentend": "" }, { "totalseekedlength": "" }]
 	},
-	
+
 	additionalContentSummary: function () {
-		this.debugLog("content launcher should implement this for additional content statistics ")
+		console.warn("content launcher should implement this for additional content statistics ")
 	},
 
 	/**
-     * Generation of the OE_START Telemetry event.
-     */
+	 * Generation of the OE_START Telemetry event.
+	 */
 
 	startTelemetry: function () {
 		var data = {}
@@ -142,37 +133,34 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
 		data.duration = (Date.now() / 1000) - window.PLAYER_START_TIME
 		var gameId = content.identifier || GlobalContext.game.id
 		var version = content.pkgVersion || GlobalContext.game.ver || "1.0"
-		if (!gameId) {
-			this.debugLog('TelemetryService.start() aborted: content identifier not available')
-			return
-		}
+
 		window.PLAYER_STAGE_START_TIME = Date.now() / 1000
 		TelemetryService.start(gameId, version, data)
 	},
 
 	/**
-     * Generation of OE_END Telemetry event.
-     */
+	 * Generation of OE_END Telemetry event.
+	 */
 	endTelemetry: function () {
 		if (this.sleepMode) return
 		if (TelemetryService.instance && TelemetryService.instance.telemetryStartActive()) {
 			var telemetryEndData = {}
-			var endpageSeen = [{ "endpageseen" : this.isEndPageSeen }]
-			var contentProgress = [{ "progress" : this.contentProgress() }]
+			var endpageSeen = [{ "endpageseen": this.isEndPageSeen }]
+			var contentProgress = [{ "progress": this.contentProgress() }]
 			telemetryEndData.stageid = getCurrentStageId()
 			telemetryEndData.progress = this.contentProgress()
-			telemetryEndData.summary = _.union(contentProgress,this.contentPlaySummary(),endpageSeen)
+			telemetryEndData.summary = _.union(contentProgress, this.contentPlaySummary(), endpageSeen)
 			console.info("telemetryEndData", telemetryEndData)
 			TelemetryService.end(telemetryEndData)
 		} else {
-			this.debugLog("Telemetry service end is already logged Please log start telemetry again")
+			console.warn("Telemetry service end is already logged Please log start telemetry again")
 		}
 	},
 
 	/**
-     * It Generates the HEARTBEAT Telemetry event.
-     * Any child launcher can extends/overide this functionality.
-     */
+	 * It Generates the HEARTBEAT Telemetry event.
+	 * Any child launcher can extends/overide this functionality.
+	 */
 
 	heartBeatEvent: function (flag) {
 		var instance = this
@@ -181,22 +169,22 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
 				EkstepRendererAPI.getTelemetryService().interact("HEARTBEAT", "", "", instance.heartBeatData || {})
 			}, EkstepRendererAPI.getGlobalConfig().heartBeatTime)
 		} else
-		if (!flag) {
-			clearInterval(instance._time)
-		}
+			if (!flag) {
+				clearInterval(instance._time)
+			}
 	},
 
 	/**
-     * It return the current player gameArea.
-     */
+	 * It return the current player gameArea.
+	 */
 	getGameArea: function () {
 		return document.getElementById("gameArea")
 	},
 
 	/**
-     * Provides an ability to add dom element to player gamearea.
-     * Any child launcher can extends/override this functionality.
-     */
+	 * Provides an ability to add dom element to player gamearea.
+	 * Any child launcher can extends/override this functionality.
+	 */
 	addToGameArea: function (domElement) {
 		domElement.id = this.manifest.id
 		jQuery("#" + this.manifest.id).insertBefore("#gameArea")
@@ -218,9 +206,9 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
 	},
 
 	/**
-     * Provides an ability to remove the dom element from player gamearea.
-     * Any child launcher can extends/override this functionality.
-     */
+	 * Provides an ability to remove the dom element from player gamearea.
+	 * Any child launcher can extends/override this functionality.
+	 */
 	resetDomElement: function () {
 		jQuery("#" + this.manifest.id).remove()
 		var chilElemtns = jQuery("#gameArea").children()
@@ -232,16 +220,16 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
 	},
 
 	/**
-     * Return the dom element which is being added to gameArea.
-     */
+	 * Return the dom element which is being added to gameArea.
+	 */
 	getLauncherDom: function () {
 		return document.getElementById(this.manifest.id)
 	},
 
 	/**
-     * Provides an ability to throw an custom error message and it will generates an OE_ERROR events.
-     * Any child launcher can extends/override this functionality.
-     */
+	 * Provides an ability to throw an custom error message and it will generates an OE_ERROR events.
+	 * Any child launcher can extends/override this functionality.
+	 */
 	throwError: function (errorObj) {
 		if (errorObj) {
 			EkstepRendererAPI.dispatchEvent("renderer:toast:show", undefined, {
