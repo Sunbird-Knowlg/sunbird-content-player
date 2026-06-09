@@ -1076,6 +1076,18 @@
             
             "isAvailable": true,
             "path": "fixture-stories/assessmentTestCases"
+        },
+        {
+                "identifier": "org.ekstep.scorm.sample",
+                "mimeType": "application/vnd.ekstep.scorm-archive",
+                "contentData": {
+                    "name": "SCORM Sample Course",
+                    "description": "Local SCORM Course",
+                    "pkgVersion": 1,
+                    "launchFile": "index.html"
+                },
+                "isAvailable": true,
+                "path": "fixture-stories/my-scorm-course"
         }],
         "ttl": 21
     }
