@@ -13,6 +13,7 @@
 | --- | --- | 
 |ECML | application/vnd.ekstep.ecml-archive|
 |HTML|application/vnd.ekstep.html-archive|
+|SCORM|application/vnd.ekstep.scorm-archive|
 |Epub|application/epub|
 |H5P|application/vnd.ekstep.h5p-archive|
 |PDF|application/pdf|
