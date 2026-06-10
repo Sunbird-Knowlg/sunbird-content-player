@@ -124,12 +124,17 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 if (k === 'cmi.core.lesson_status') {
                     instance.fireTelemetry('INTERACT', {
                         type: 'OTHER',
-                        subtype: 'SCORM_STATUS_CHANGE',
-                        id: 'scorm_status_change',
-                        status: v
+                        subtype: 'SCORM_PROGRESS',
+                        id: 'scorm_progress',
+                        status: v,
+                        scoId: instance.activeScoId
                     });
+                    var overallStatus = instance.computeOverallStatus();
+                    if (overallStatus === 'completed' || overallStatus === 'passed' || overallStatus === 'failed') {
+                        console.info("SCORM: Course completion detected via status change to", v);
+                        EkstepRendererAPI.dispatchEvent('renderer:content:end');
+                    }
                 }
-
                 if (k === 'cmi.core.exit') {
                     instance.fireTelemetry('INTERACT', {
                         type: 'OTHER',
