@@ -44,7 +44,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
   
     saveScormState: function (scoId, state) {
         this.allScoStates[scoId] = state;
-        console.info("SCORM: State saved for SCO", scoId);
     },
 
     computeOverallStatus: function () {
@@ -124,7 +123,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
             LMSSetValue: function (k, v) {
                 instance.allScoStates[instance.activeScoId][k] = v;
-                console.info("SCORM: LMSSetValue", k + "=" + v);
                 if (k === 'cmi.core.score.raw') {
                     instance.fireTelemetry('ASSESSMENT', {
                         type: 'ASSESSMENT',
@@ -141,17 +139,18 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                         status: v,
                         scoId: instance.activeScoId
                     });
+
+                    if (v === 'completed' || v === 'passed' || v === 'failed') {
+                        instance.allScoStates[instance.activeScoId]._finished = true;
+                        if (instance.scoList && instance.scoList.length > 1) {
+                            instance.showMultiScoNavigation();
+                        }
+                    }
+
                     var overallStatus = instance.computeOverallStatus();
                     if (!instance.isUnloading && (instance.scoList.length === 1) && (overallStatus === 'completed' || overallStatus === 'passed' || overallStatus === 'failed')) {
-                        console.info("SCORM: Course completion detected via status change to", v);
                         instance.allScoStates[instance.activeScoId]._finished = true;
                         EkstepRendererAPI.dispatchEvent('renderer:content:end');
-                    } else if ((v === 'completed' || v === 'passed') &&
-                        instance.scoList && instance.scoList.length > 1 &&
-                        instance.currentScoIndex < instance.scoList.length - 1) {
-                        instance.allScoStates[instance.activeScoId]._finished = true;
-                        console.info("SCORM: SCO completed via SetValue, showing inter-SCO nav", instance.activeScoId);
-                        instance.showMultiScoNavigation();
                     }
                 }
                 if (k === 'cmi.core.exit') {
@@ -186,7 +185,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                     });
                     scormAPI.LMSCommit();
                 }
-                console.info("SCORM: LMSCommit state", state);
                 return "true";
             },
 
@@ -207,7 +205,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var isLastSco = instance.currentScoIndex === instance.scoList.length - 1;
         if (isLastSco) {
             var overallStatus = instance.computeOverallStatus();
-            console.info("SCORM: Overall course status", overallStatus);
             var result = scormAPI && !isScorm2004
                 ? scormAPI.LMSFinish()
                 : "true";
@@ -216,8 +213,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             }
             return result;
         }
-        console.info("SCORM: SCO finished (non-last)", instance.activeScoId,
-            instance.allScoStates[instance.activeScoId]);
         if (instance.scoList && instance.scoList.length > 1) {
             instance.showMultiScoNavigation();
         }
@@ -271,7 +266,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
             SetValue: function (k, v) {
                 instance.allScoStates[instance.activeScoId][k] = v;
-                console.info("SCORM 2004: SetValue", k + "=" + v);
 
                 if (k === 'cmi.score.raw') {
                     instance.fireTelemetry('ASSESSMENT', {
@@ -290,17 +284,18 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                         status: v,
                         scoId: instance.activeScoId
                     });
+
+                    if (v === 'completed' || v === 'passed' || v === 'failed') {
+                        instance.allScoStates[instance.activeScoId]._finished = true;
+                        if (instance.scoList && instance.scoList.length > 1) {
+                            instance.showMultiScoNavigation();
+                        }
+                    }
+
                     var overallStatus = instance.computeOverallStatus();
                     if (!instance.isUnloading && (instance.scoList.length === 1) && (overallStatus === 'completed' || overallStatus === 'passed' || overallStatus === 'failed')) {
-                        console.info("SCORM 2004: Course completion detected via", k, "=", v);
                         instance.allScoStates[instance.activeScoId]._finished = true;
                         EkstepRendererAPI.dispatchEvent('renderer:content:end');
-                    } else if ((v === 'completed' || v === 'passed') &&
-                        instance.scoList && instance.scoList.length > 1 &&
-                        instance.currentScoIndex < instance.scoList.length - 1) {
-                        instance.allScoStates[instance.activeScoId]._finished = true;
-                        console.info("SCORM 2004: SCO completed via SetValue, showing inter-SCO nav", instance.activeScoId);
-                        instance.showMultiScoNavigation();
                     }
                 }
 
@@ -327,7 +322,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
             Commit: function (_) {
                 var state = instance.allScoStates[instance.activeScoId];
-                console.info("SCORM 2004: Commit state", state);
                 return "true";
             },
 
@@ -425,11 +419,6 @@ navigateToSCO: function (index) {
 
         jQuery('#multi-sco-nav').remove();
 
-        if (instance.activeScoId && instance.allScoStates[instance.activeScoId] && instance.allScoStates[instance.activeScoId]._finished) {
-            console.info("SCORM: SCO leaving", instance.activeScoId,
-                instance.allScoStates[instance.activeScoId]);
-        }
-
         instance.currentScoIndex = index;
         var sco = instance.scoList[index];
         instance.activeScoId = sco.identifier;
@@ -448,8 +437,6 @@ navigateToSCO: function (index) {
 
 
         var path = prefix_url + '/' + sco.href;
-
-        console.info("SCORM: Loading path", path);
 
         var iframe = document.createElement('iframe');
         iframe.id = instance.manifest.id;
