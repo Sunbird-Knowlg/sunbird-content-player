@@ -18,7 +18,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     initLauncher: function () {
         EkstepRendererAPI.addEventListener(this._constants.events.launchEvent, this.start, this);
         var instance = this;
-        window.addEventListener('beforeunload', function() {
+        window.addEventListener('beforeunload', function () {
             instance.isUnloading = true;
         });
     },
@@ -41,7 +41,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }
     },
 
-  
+
     saveScormState: function (scoId, state) {
         this.allScoStates[scoId] = state;
     },
@@ -175,16 +175,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             },
 
             LMSCommit: function () {
-                var state = instance.allScoStates[instance.activeScoId];
-                if (scormAPI) {
-                    Object.keys(state).forEach(function (k) {
-
-                        if (k !== '_finished') {
-                            scormAPI.LMSSetValue(k, state[k]);
-                        }
-                    });
-                    scormAPI.LMSCommit();
-                }
                 return "true";
             },
 
@@ -359,7 +349,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             path += "&flavor=" + "t=" + getTime();
         }
 
-        jQuery(instance.manifest.id).remove();
+
 
         if (instance.data.scoList) {
             try {
@@ -408,7 +398,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         EkstepRendererAPI.dispatchEvent("renderer:navigation:load", obj);
     },
 
-navigateToSCO: function (index) {
+    navigateToSCO: function (index) {
         var instance = this;
         if (!instance.scoList || index < 0 || index >= instance.scoList.length) return;
 
@@ -458,9 +448,9 @@ navigateToSCO: function (index) {
         });
     },
 
-configOverlay: function () {
+    configOverlay: function () {
         var instance = this;
-        
+
         jQuery('#multi-sco-nav').remove();
 
         setTimeout(function () {
@@ -477,42 +467,42 @@ configOverlay: function () {
 
     showMultiScoNavigation: function () {
         var instance = this;
-        jQuery('#multi-sco-nav').remove(); 
+        jQuery('#multi-sco-nav').remove();
 
-        var isLastSco = instance.currentScoIndex === instance.scoList.length - 1; 
-        var nextButtonHtml = isLastSco ? 
+        var isLastSco = instance.currentScoIndex === instance.scoList.length - 1;
+        var nextButtonHtml = isLastSco ?
             '<button id="sco-complete" style="pointer-events: auto; padding: 10px 20px; cursor: pointer; background: #28a745; color: white; border: none; border-radius: 4px; font-weight: bold;">Complete</button>' :
-            '<button id="sco-next" style="pointer-events: auto; background: none; border: none; cursor: pointer; padding: 0;"><img src="assets/icons/next.png" style="width: 40px; height: 40px;"></button>'; 
+            '<button id="sco-next" style="pointer-events: auto; background: none; border: none; cursor: pointer; padding: 0;"><img src="assets/icons/next.png" style="width: 40px; height: 40px;"></button>';
 
-        var isFirstSco = instance.currentScoIndex === 0; 
+        var isFirstSco = instance.currentScoIndex === 0;
         var prevButtonHtml = '';
-        
+
         if (isFirstSco) {
             prevButtonHtml = '<div style="width: 40px; height: 40px;"></div>';
         } else {
             prevButtonHtml = '<button id="sco-prev" style="pointer-events: auto; background: none; border: none; cursor: pointer; padding: 0;"><img src="assets/icons/previous.png" style="width: 40px; height: 40px;"></button>';
         }
 
-        var navHtml = '<div id="multi-sco-nav" style="position: absolute; top: 50%; transform: translateY(-50%); width: 100%; display: flex; justify-content: space-between; padding: 0 10px; box-sizing: border-box; pointer-events: none; z-index: 9999;">' + 
+        var navHtml = '<div id="multi-sco-nav" style="position: absolute; top: 50%; transform: translateY(-50%); width: 100%; display: flex; justify-content: space-between; padding: 0 10px; box-sizing: border-box; pointer-events: none; z-index: 9999;">' +
             prevButtonHtml +
             nextButtonHtml +
             '</div>';
 
-        jQuery('#gameArea').append(navHtml); 
+        jQuery('#gameArea').append(navHtml);
 
         if (!isFirstSco) {
-            jQuery('#sco-prev').click(function () { 
-                instance.navigateToSCO(instance.currentScoIndex - 1); 
+            jQuery('#sco-prev').click(function () {
+                instance.navigateToSCO(instance.currentScoIndex - 1);
             });
         }
 
-        if (isLastSco) { 
-            jQuery('#sco-complete').click(function () { 
-                EkstepRendererAPI.dispatchEvent('renderer:content:end'); 
+        if (isLastSco) {
+            jQuery('#sco-complete').click(function () {
+                EkstepRendererAPI.dispatchEvent('renderer:content:end');
             });
         } else {
-            jQuery('#sco-next').click(function () { 
-                instance.navigateToSCO(instance.currentScoIndex + 1); 
+            jQuery('#sco-next').click(function () {
+                instance.navigateToSCO(instance.currentScoIndex + 1);
             });
         }
     },
