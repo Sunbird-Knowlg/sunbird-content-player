@@ -15,73 +15,35 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }
     },
 
-    SCORM_PROFILES: {
-        '1.2': {
-            wrapperClass: 'Scorm12API',
-            apiNamespace: 'API',
-            statusKey: 'cmi.core.lesson_status',
-            scoreKey: 'cmi.core.score.raw',
-            exitKey: 'cmi.core.exit',
-            defaultState: {
-                'cmi.core.lesson_status': 'not attempted'
-            },
-            methods: {
-                init: 'LMSInitialize',
-                get: 'LMSGetValue',
-                set: 'LMSSetValue',
-                commit: 'LMSCommit',
-                finish: 'LMSFinish',
-                lastError: 'LMSGetLastError',
-                errorString: 'LMSGetErrorString',
-                diagnostic: 'LMSGetDiagnostic'
-            },
-            isComplete: function (state) {
-                var value = state['cmi.core.lesson_status'];
-                return value === 'completed' || value === 'passed';
-            },
-            isFailed: function (state) {
-                return state['cmi.core.lesson_status'] === 'failed';
-            }
-        },
-        '2004': {
-            wrapperClass: 'Scorm2004API',
-            apiNamespace: 'API_1484_11',
-            statusKey: 'cmi.completion_status',
-            successKey: 'cmi.success_status',
-            scoreKey: 'cmi.score.raw',
-            exitKey: 'cmi.exit',
-            defaultState: {
-                'cmi.completion_status': 'unknown',
-                'cmi.success_status': 'unknown'
-            },
-            methods: {
-                init: 'Initialize',
-                get: 'GetValue',
-                set: 'SetValue',
-                commit: 'Commit',
-                finish: 'Terminate',
-                lastError: 'GetLastError',
-                errorString: 'GetErrorString',
-                diagnostic: 'GetDiagnostic'
-            },
-            isComplete: function (state) {
-                return state['cmi.completion_status'] === 'completed';
-            },
-            isFailed: function (state) {
-                return state['cmi.success_status'] === 'failed';
-            }
-        }
-    },
-
     getScormProfile: function () {
         var raw = (this.data && this.data.scormVersion || '1.2').toString();
         var key = raw.indexOf('2004') !== -1 ? '2004' :
             raw.indexOf('1.2') !== -1 ? '1.2' : null;
-        if (!key || !this.SCORM_PROFILES[key]) {
+            
+        if (typeof window.SCORM_PROFILES === 'undefined') {
+            try {
+                var url = org.ekstep.pluginframework.pluginManager.resolvePluginResource(this.manifest.id, this.manifest.ver, "renderer/scormProfiles.js");
+                jQuery.ajax({
+                    async: false,
+                    url: url,
+                    dataType: "script",
+                    cache: true
+                });
+            } catch (e) {
+                console.error("Failed to load scormProfiles.js synchronously", e);
+            }
+        }
+
+        if (typeof window.SCORM_PROFILES === 'undefined') {
+            console.error("SCORM_PROFILES is not defined. Ensure scormProfiles.js is loaded.");
+            return null;
+        }
+
+        if (!key || !window.SCORM_PROFILES[key]) {
             console.warn('SCORM: unrecognized version "' + raw + '", defaulting to 1.2');
             key = '1.2';
         }
-        return this.SCORM_PROFILES[key];
+        return window.SCORM_PROFILES[key];
     },
 
     initLauncher: function () {
