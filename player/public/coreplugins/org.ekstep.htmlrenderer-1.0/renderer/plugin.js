@@ -18,11 +18,11 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     initLauncher: function () {
         EkstepRendererAPI.addEventListener(this._constants.events.launchEvent, this.start, this);
         var instance = this;
-        window.addEventListener('beforeunload', function () {
+        instance._unloadHandler = function () {
             instance.isUnloading = true;
-        });
+        };
+        window.addEventListener('beforeunload', instance._unloadHandler);
     },
-
 
     fireTelemetry: function (eid, edata) {
         var telemetry = EkstepRendererAPI.getTelemetryService();
@@ -39,11 +39,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 );
             }
         }
-    },
-
-
-    saveScormState: function (scoId, state) {
-        this.allScoStates[scoId] = state;
     },
 
     computeOverallStatus: function () {
@@ -143,13 +138,15 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                     if (v === 'completed' || v === 'passed' || v === 'failed') {
                         instance.allScoStates[instance.activeScoId]._finished = true;
                         if (instance.scoList && instance.scoList.length > 1) {
-                            instance.showMultiScoNavigation();
+                            if (!instance._navShown) {
+                                instance._navShown = true;
+                                instance.showMultiScoNavigation();
+                            }
                         }
                     }
 
                     var overallStatus = instance.computeOverallStatus();
                     if (!instance.isUnloading && (instance.scoList.length === 1) && (overallStatus === 'completed' || overallStatus === 'passed' || overallStatus === 'failed')) {
-                        instance.allScoStates[instance.activeScoId]._finished = true;
                         EkstepRendererAPI.dispatchEvent('renderer:content:end');
                     }
                 }
@@ -175,6 +172,19 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             },
 
             LMSCommit: function () {
+                var state = instance.allScoStates[instance.activeScoId];
+                if (scormAPI) {
+                    try {
+                        Object.keys(state).forEach(function (k) {
+                            if (k !== '_finished') {
+                                scormAPI.LMSSetValue(k, state[k]);
+                            }
+                        });
+                        scormAPI.LMSCommit();
+                    } catch (e) {
+                        console.warn("SCORM 1.2: LMSCommit sync skipped (likely post-termination)", e);
+                    }
+                }
                 return "true";
             },
 
@@ -198,7 +208,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             var result = scormAPI && !isScorm2004
                 ? scormAPI.LMSFinish()
                 : "true";
-            if (!instance.isUnloading && result === "true") {
+            if (!instance.isUnloading && result === "true" && (overallStatus === 'completed' || overallStatus === 'passed' || overallStatus === 'failed')) {
                 EkstepRendererAPI.dispatchEvent('renderer:content:end');
             }
             return result;
@@ -278,13 +288,15 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                     if (v === 'completed' || v === 'passed' || v === 'failed') {
                         instance.allScoStates[instance.activeScoId]._finished = true;
                         if (instance.scoList && instance.scoList.length > 1) {
-                            instance.showMultiScoNavigation();
+                            if (!instance._navShown) {
+                                instance._navShown = true;
+                                instance.showMultiScoNavigation();
+                            }
                         }
                     }
 
                     var overallStatus = instance.computeOverallStatus();
                     if (!instance.isUnloading && (instance.scoList.length === 1) && (overallStatus === 'completed' || overallStatus === 'passed' || overallStatus === 'failed')) {
-                        instance.allScoStates[instance.activeScoId]._finished = true;
                         EkstepRendererAPI.dispatchEvent('renderer:content:end');
                     }
                 }
@@ -312,6 +324,18 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
             Commit: function (_) {
                 var state = instance.allScoStates[instance.activeScoId];
+                if (scorm2004API) {
+                    try {
+                        Object.keys(state).forEach(function (k) {
+                            if (k !== '_finished') {
+                                scorm2004API.SetValue(k, state[k]);
+                            }
+                        });
+                        scorm2004API.Commit("");
+                    } catch (e) {
+                        console.warn("SCORM 2004: Commit sync skipped (likely post-termination)", e);
+                    }
+                }
                 return "true";
             },
 
@@ -418,6 +442,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }
 
         instance.allScoStates[instance.activeScoId]._finished = false;
+        instance._navShown = false;
 
         var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
         var prefix_url = isbrowserpreview
@@ -531,6 +556,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
     cleanUp: function () {
         this._super();
+        if (this._unloadHandler) {
+            window.removeEventListener('beforeunload', this._unloadHandler);
+        }
         EkstepRendererAPI.dispatchEvent('renderer:next:show');
         EkstepRendererAPI.dispatchEvent('renderer:previous:show');
     }
