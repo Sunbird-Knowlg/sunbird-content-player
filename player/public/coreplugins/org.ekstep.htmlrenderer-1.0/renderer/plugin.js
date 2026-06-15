@@ -15,6 +15,75 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }
     },
 
+    SCORM_PROFILES: {
+        '1.2': {
+            wrapperClass: 'Scorm12API',
+            apiNamespace: 'API',
+            statusKey: 'cmi.core.lesson_status',
+            scoreKey: 'cmi.core.score.raw',
+            exitKey: 'cmi.core.exit',
+            defaultState: {
+                'cmi.core.lesson_status': 'not attempted'
+            },
+            methods: {
+                init: 'LMSInitialize',
+                get: 'LMSGetValue',
+                set: 'LMSSetValue',
+                commit: 'LMSCommit',
+                finish: 'LMSFinish',
+                lastError: 'LMSGetLastError',
+                errorString: 'LMSGetErrorString',
+                diagnostic: 'LMSGetDiagnostic'
+            },
+            isComplete: function (state) {
+                var value = state['cmi.core.lesson_status'];
+                return value === 'completed' || value === 'passed';
+            },
+            isFailed: function (state) {
+                return state['cmi.core.lesson_status'] === 'failed';
+            }
+        },
+        '2004': {
+            wrapperClass: 'Scorm2004API',
+            apiNamespace: 'API_1484_11',
+            statusKey: 'cmi.completion_status',
+            successKey: 'cmi.success_status',
+            scoreKey: 'cmi.score.raw',
+            exitKey: 'cmi.exit',
+            defaultState: {
+                'cmi.completion_status': 'unknown',
+                'cmi.success_status': 'unknown'
+            },
+            methods: {
+                init: 'Initialize',
+                get: 'GetValue',
+                set: 'SetValue',
+                commit: 'Commit',
+                finish: 'Terminate',
+                lastError: 'GetLastError',
+                errorString: 'GetErrorString',
+                diagnostic: 'GetDiagnostic'
+            },
+            isComplete: function (state) {
+                return state['cmi.completion_status'] === 'completed';
+            },
+            isFailed: function (state) {
+                return state['cmi.success_status'] === 'failed';
+            }
+        }
+    },
+
+    getScormProfile: function () {
+        var raw = (this.data && this.data.scormVersion || '1.2').toString();
+        var key = raw.indexOf('2004') !== -1 ? '2004' :
+            raw.indexOf('1.2') !== -1 ? '1.2' : null;
+        if (!key || !this.SCORM_PROFILES[key]) {
+            console.warn('SCORM: unrecognized version "' + raw + '", defaulting to 1.2');
+            key = '1.2';
+        }
+        return this.SCORM_PROFILES[key];
+    },
+
     initLauncher: function () {
         EkstepRendererAPI.addEventListener(this._constants.events.launchEvent, this.start, this);
         var instance = this;
@@ -42,44 +111,32 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
 
     computeOverallStatus: function () {
-        var instance = this;
+        var profile = this.scormProfile;
+        var states = this.allScoStates;
 
-        if (instance.scormVersion === '2004') {
-            var allComplete2004 = instance.scoList.every(function (sco) {
-                return instance.allScoStates[sco.identifier]['cmi.completion_status'] === 'completed';
-            });
-            var anyFailed2004 = instance.scoList.some(function (sco) {
-                return instance.allScoStates[sco.identifier]['cmi.success_status'] === 'failed';
-            });
-            if (anyFailed2004) return 'failed';
-            if (allComplete2004) return 'completed';
-            return 'incomplete';
+        var scoStates = this.scoList.map(function (sco) {
+            return states[sco.identifier];
+        });
+
+        if (scoStates.some(profile.isFailed)) {
+            return 'failed';
         }
 
-        var allStatuses = instance.scoList.map(function (sco) {
-            return instance.allScoStates[sco.identifier]['cmi.core.lesson_status'] || 'not attempted';
-        });
+        if (scoStates.every(profile.isComplete)) {
+            return 'completed';
+        }
 
-        var allComplete = allStatuses.every(function (s) {
-            return s === 'completed' || s === 'passed';
-        });
-        var anyFailed = allStatuses.some(function (s) {
-            return s === 'failed';
-        });
-
-        if (anyFailed) return 'failed';
-        if (allComplete) return 'completed';
         return 'incomplete';
     },
 
-    setupScormAPI: function () {
+    setupScormAPI: function (profile) {
         var instance = this;
         var scormAPI = null;
         var scormSessionStarted = false;
 
-        if (window.Scorm12API) {
+        if (window[profile.wrapperClass]) {
             try {
-                scormAPI = new window.Scorm12API({
+                scormAPI = new window[profile.wrapperClass]({
                     autocommit: false,
                     autocommitSeconds: 60,
                     lmsCommitUrl: null,
@@ -91,262 +148,137 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             }
         }
 
-        window.API = {
-            LMSInitialize: function () {
-                if (!scormSessionStarted) {
-                    var result = scormAPI ? scormAPI.LMSInitialize() : "true";
-                    if (result === "true") {
-                        scormSessionStarted = true;
-                        instance.fireTelemetry('INTERACT', {
-                            type: 'OTHER',
-                            subtype: 'SCORM_INITIALIZE',
-                            id: 'scorm_initialize',
-                            stageId: EkstepRendererAPI.getCurrentStageId(),
-                            target: "Content"
-                        });
-                    }
-                    return result;
-                }
-                return "true";
-            },
+        window[profile.apiNamespace] = {};
+        var api = window[profile.apiNamespace];
 
-            LMSGetValue: function (k) {
-                var val = instance.allScoStates[instance.activeScoId][k];
-                if (k === 'cmi.core.lesson_status' && !val) return 'not attempted';
-                return val !== undefined ? val : "";
-            },
-
-            LMSSetValue: function (k, v) {
-                instance.allScoStates[instance.activeScoId][k] = v;
-                if (k === 'cmi.core.score.raw') {
-                    instance.fireTelemetry('ASSESSMENT', {
-                        type: 'ASSESSMENT',
-                        subtype: 'SCORM_SCORE',
-                        id: 'scorm_score',
-                        score: v
-                    });
-                }
-                if (k === 'cmi.core.lesson_status') {
+        api[profile.methods.init] = function (_) {
+            if (!scormSessionStarted) {
+                var result = scormAPI ? scormAPI[profile.methods.init]("") : "true";
+                if (result === "true" || result === true) {
+                    scormSessionStarted = true;
                     instance.fireTelemetry('INTERACT', {
                         type: 'OTHER',
-                        subtype: 'SCORM_PROGRESS',
-                        id: 'scorm_progress',
-                        status: v,
-                        scoId: instance.activeScoId
+                        subtype: 'SCORM_INITIALIZE',
+                        id: 'scorm_initialize',
+                        stageId: EkstepRendererAPI.getCurrentStageId(),
+                        target: "Content"
                     });
+                }
+                return String(result);
+            }
+            return "true";
+        };
 
-                    if (v === 'completed' || v === 'passed' || v === 'failed') {
-                        instance.allScoStates[instance.activeScoId]._finished = true;
-                        if (instance.scoList && instance.scoList.length > 1) {
-                            if (!instance._navShown) {
-                                instance._navShown = true;
-                                instance.showMultiScoNavigation();
-                            }
+        api[profile.methods.get] = function (k) {
+            var val = instance.allScoStates[instance.activeScoId][k];
+            if (val === undefined && profile.defaultState[k] !== undefined) {
+                return profile.defaultState[k];
+            }
+            return val !== undefined ? val : "";
+        };
+
+        api[profile.methods.set] = function (k, v) {
+            instance.allScoStates[instance.activeScoId][k] = v;
+
+            if (k === profile.scoreKey) {
+                instance.fireTelemetry('ASSESSMENT', {
+                    type: 'ASSESSMENT',
+                    subtype: 'SCORM_SCORE',
+                    id: 'scorm_score',
+                    score: v
+                });
+            }
+
+            if (k === profile.statusKey || (profile.successKey && k === profile.successKey)) {
+                instance.fireTelemetry('INTERACT', {
+                    type: 'OTHER',
+                    subtype: 'SCORM_PROGRESS',
+                    id: 'scorm_progress',
+                    status: v,
+                    scoId: instance.activeScoId
+                });
+
+                if (v === 'completed' || v === 'passed' || v === 'failed') {
+                    instance.allScoStates[instance.activeScoId]._finished = true;
+                    if (instance.scoList && instance.scoList.length > 1) {
+                        if (!instance._navShown) {
+                            instance._navShown = true;
+                            instance.showMultiScoNavigation();
                         }
                     }
-
-                    var overallStatus = instance.computeOverallStatus();
-                    if (!instance.isUnloading && (instance.scoList.length === 1) && (overallStatus === 'completed' || overallStatus === 'passed' || overallStatus === 'failed')) {
-                        EkstepRendererAPI.dispatchEvent('renderer:content:end');
-                    }
-                }
-                if (k === 'cmi.core.exit') {
-                    instance.fireTelemetry('INTERACT', {
-                        type: 'OTHER',
-                        subtype: 'SCORM_EXIT_CHANGE',
-                        id: 'scorm_exit_change',
-                        exit: v
-                    });
                 }
 
-                if (k.indexOf('cmi.interactions.') === 0 && k.endsWith('.result')) {
-                    instance.fireTelemetry('INTERACT', {
-                        type: 'OTHER',
-                        subtype: 'SCORM_INTERACTION_RESULT',
-                        id: 'scorm_interaction_result',
-                        result: v
-                    });
+                var overallStatus = instance.computeOverallStatus();
+                if (!instance.isUnloading && (instance.scoList.length === 1) && (overallStatus === 'completed' || overallStatus === 'passed' || overallStatus === 'failed')) {
+                    EkstepRendererAPI.dispatchEvent('renderer:content:end');
                 }
+            }
 
-                return "true";
-            },
+            if (k === profile.exitKey) {
+                instance.fireTelemetry('INTERACT', {
+                    type: 'OTHER',
+                    subtype: 'SCORM_EXIT_CHANGE',
+                    id: 'scorm_exit_change',
+                    exit: v
+                });
+            }
 
-            LMSCommit: function () {
-                var state = instance.allScoStates[instance.activeScoId];
-                if (scormAPI) {
-                    try {
-                        Object.keys(state).forEach(function (k) {
-                            if (k !== '_finished') {
-                                scormAPI.LMSSetValue(k, state[k]);
-                            }
-                        });
-                        scormAPI.LMSCommit();
-                    } catch (e) {
-                        console.warn("SCORM 1.2: LMSCommit sync skipped (likely post-termination)", e);
-                    }
-                }
-                return "true";
-            },
+            if (k.indexOf('cmi.interactions.') === 0 && k.endsWith('.result')) {
+                instance.fireTelemetry('INTERACT', {
+                    type: 'OTHER',
+                    subtype: 'SCORM_INTERACTION_RESULT',
+                    id: 'scorm_interaction_result',
+                    result: v
+                });
+            }
 
-
-            LMSFinish: function () {
-                return instance.handleScoFinish(scormAPI, false);
-            },
-
-            LMSGetLastError: function () { return scormAPI ? scormAPI.LMSGetLastError() : "0"; },
-            LMSGetErrorString: function (e) { return scormAPI ? scormAPI.LMSGetErrorString(e) : "No error"; },
-            LMSGetDiagnostic: function (e) { return scormAPI ? scormAPI.LMSGetDiagnostic(e) : "No diagnostic"; }
+            return "true";
         };
+
+        api[profile.methods.commit] = function (_) {
+            var state = instance.allScoStates[instance.activeScoId];
+            if (scormAPI) {
+                try {
+                    Object.keys(state).forEach(function (k) {
+                        if (k !== '_finished') {
+                            scormAPI[profile.methods.set](k, state[k]);
+                        }
+                    });
+                    scormAPI[profile.methods.commit]("");
+                } catch (e) {
+                    console.warn("SCORM: Commit sync skipped (likely post-termination)", e);
+                }
+            }
+            return "true";
+        };
+
+        api[profile.methods.finish] = function (_) {
+            return instance.handleScoFinish(scormAPI, profile);
+        };
+
+        api[profile.methods.lastError] = function () { return scormAPI ? scormAPI[profile.methods.lastError]() : "0"; };
+        api[profile.methods.errorString] = function (e) { return scormAPI ? scormAPI[profile.methods.errorString](e) : "No error"; };
+        api[profile.methods.diagnostic] = function (e) { return scormAPI ? scormAPI[profile.methods.diagnostic](e) : "No diagnostic"; };
     },
 
-    handleScoFinish: function (scormAPI, isScorm2004) {
+    handleScoFinish: function (scormAPI, profile) {
         var instance = this;
         instance.allScoStates[instance.activeScoId]._finished = true;
         var isLastSco = instance.currentScoIndex === instance.scoList.length - 1;
         if (isLastSco) {
             var overallStatus = instance.computeOverallStatus();
-            var result = scormAPI && !isScorm2004
-                ? scormAPI.LMSFinish()
+            var result = scormAPI
+                ? scormAPI[profile.methods.finish]("")
                 : "true";
-            if (!instance.isUnloading && result === "true" && (overallStatus === 'completed' || overallStatus === 'passed' || overallStatus === 'failed')) {
+            if (!instance.isUnloading && (result === "true" || result === true) && (overallStatus === 'completed' || overallStatus === 'passed' || overallStatus === 'failed')) {
                 EkstepRendererAPI.dispatchEvent('renderer:content:end');
             }
-            return result;
+            return String(result);
         }
         if (instance.scoList && instance.scoList.length > 1) {
             instance.showMultiScoNavigation();
         }
         return "true";
-    },
-
-    setupScorm2004API: function () {
-        var instance = this;
-        var scorm2004API = null;
-        var scormSessionStarted = false;
-
-        if (window.Scorm2004API) {
-            try {
-                scorm2004API = new window.Scorm2004API({
-                    autocommit: false,
-                    autocommitSeconds: 60,
-                    lmsCommitUrl: null,
-                    dataCommitFormat: 'json',
-                    logLevel: 1,
-                });
-            } catch (error) {
-                console.error('Error initializing SCORM 2004 API:', error);
-            }
-        }
-
-        window.API_1484_11 = {
-            Initialize: function (_) {
-                if (!scormSessionStarted) {
-                    var result = scorm2004API ? scorm2004API.Initialize("") : "true";
-                    if (result === "true") {
-                        scormSessionStarted = true;
-                        instance.fireTelemetry('INTERACT', {
-                            type: 'OTHER',
-                            subtype: 'SCORM_INITIALIZE',
-                            id: 'scorm_initialize',
-                            stageId: EkstepRendererAPI.getCurrentStageId(),
-                            target: "Content"
-                        });
-                    }
-                    return result;
-                }
-                return "true";
-            },
-
-            GetValue: function (k) {
-                var val = instance.allScoStates[instance.activeScoId][k];
-                if (k === 'cmi.completion_status' && !val) return 'unknown';
-                if (k === 'cmi.success_status' && !val) return 'unknown';
-                return val !== undefined ? val : "";
-            },
-
-            SetValue: function (k, v) {
-                instance.allScoStates[instance.activeScoId][k] = v;
-
-                if (k === 'cmi.score.raw') {
-                    instance.fireTelemetry('ASSESSMENT', {
-                        type: 'ASSESSMENT',
-                        subtype: 'SCORM_SCORE',
-                        id: 'scorm_score',
-                        score: v
-                    });
-                }
-
-                if (k === 'cmi.completion_status' || k === 'cmi.success_status') {
-                    instance.fireTelemetry('INTERACT', {
-                        type: 'OTHER',
-                        subtype: 'SCORM_PROGRESS',
-                        id: 'scorm_progress',
-                        status: v,
-                        scoId: instance.activeScoId
-                    });
-
-                    if (v === 'completed' || v === 'passed' || v === 'failed') {
-                        instance.allScoStates[instance.activeScoId]._finished = true;
-                        if (instance.scoList && instance.scoList.length > 1) {
-                            if (!instance._navShown) {
-                                instance._navShown = true;
-                                instance.showMultiScoNavigation();
-                            }
-                        }
-                    }
-
-                    var overallStatus = instance.computeOverallStatus();
-                    if (!instance.isUnloading && (instance.scoList.length === 1) && (overallStatus === 'completed' || overallStatus === 'passed' || overallStatus === 'failed')) {
-                        EkstepRendererAPI.dispatchEvent('renderer:content:end');
-                    }
-                }
-
-                if (k === 'cmi.exit') {
-                    instance.fireTelemetry('INTERACT', {
-                        type: 'OTHER',
-                        subtype: 'SCORM_EXIT_CHANGE',
-                        id: 'scorm_exit_change',
-                        exit: v
-                    });
-                }
-
-                if (k.indexOf('cmi.interactions.') === 0 && k.endsWith('.result')) {
-                    instance.fireTelemetry('INTERACT', {
-                        type: 'OTHER',
-                        subtype: 'SCORM_INTERACTION_RESULT',
-                        id: 'scorm_interaction_result',
-                        result: v
-                    });
-                }
-
-                return "true";
-            },
-
-            Commit: function (_) {
-                var state = instance.allScoStates[instance.activeScoId];
-                if (scorm2004API) {
-                    try {
-                        Object.keys(state).forEach(function (k) {
-                            if (k !== '_finished') {
-                                scorm2004API.SetValue(k, state[k]);
-                            }
-                        });
-                        scorm2004API.Commit("");
-                    } catch (e) {
-                        console.warn("SCORM 2004: Commit sync skipped (likely post-termination)", e);
-                    }
-                }
-                return "true";
-            },
-
-            Terminate: function (_) {
-                return instance.handleScoFinish(scorm2004API, true);
-            },
-
-            GetLastError: function () { return scorm2004API ? scorm2004API.GetLastError() : "0"; },
-            GetErrorString: function (e) { return scorm2004API ? scorm2004API.GetErrorString(e) : "No error"; },
-            GetDiagnostic: function (e) { return scorm2004API ? scorm2004API.GetDiagnostic(e) : "No diagnostic"; }
-        };
     },
 
     start: function () {
@@ -355,6 +287,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         instance.isUnloading = false;
         instance.data = content;
         instance.scormVersion = instance.data.scormVersion || '1.2';
+        var profile = instance.scormProfile = instance.getScormProfile();
         this.reset();
 
         instance.allScoStates = {};
@@ -394,26 +327,13 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }
 
         instance.scoList.forEach(function (sco) {
-            if (instance.scormVersion === '2004') {
-                instance.allScoStates[sco.identifier] = {
-                    'cmi.completion_status': 'unknown',
-                    'cmi.success_status': 'unknown'
-                };
-            } else {
-                instance.allScoStates[sco.identifier] = {
-                    'cmi.core.lesson_status': 'not attempted'
-                };
-            }
+            instance.allScoStates[sco.identifier] = Object.assign({}, profile.defaultState);
         });
 
         jQuery(instance.manifest.id).remove();
 
         if (instance.data.mimeType === 'application/vnd.ekstep.scorm-archive') {
-            if (instance.scormVersion === '2004') {
-                instance.setupScorm2004API();
-            } else {
-                instance.setupScormAPI();
-            }
+            instance.setupScormAPI(profile);
         }
 
         instance.navigateToSCO(0);
