@@ -35,12 +35,11 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }
 
         if (typeof window.SCORM_PROFILES === 'undefined') {
-            console.error("SCORM_PROFILES is not defined. Ensure scormProfiles.js is loaded.");
+            console.error("SCORM_PROFILES is not defined.");
             return null;
         }
 
         if (!key || !window.SCORM_PROFILES[key]) {
-            console.warn('SCORM: unrecognized version "' + raw + '", defaulting to 1.2');
             key = '1.2';
         }
         return window.SCORM_PROFILES[key];
@@ -208,7 +207,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                     });
                     scormAPI[profile.methods.commit]("");
                 } catch (e) {
-                    console.warn("SCORM: Commit sync skipped (likely post-termination)", e);
+                
                 }
             }
             return "true";
