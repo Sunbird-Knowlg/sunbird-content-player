@@ -1,31 +1,18 @@
-/**
- * @author Manjunath Davanam<manjunathd@ilimi.in>
- * @description - Which minifies and bundles the all core plugins  with js/css dependency files.
- *              - Before bundle It will read the plugins views and dependency object which is defined in the plugin manifest.json.
- * @example     - CMD to run this file for ekstep channel.  👉 [npm run package-coreplugins -- --env.channel=ekstep]
- *              - CMD to run this file for sunbird channel. 👉 [npm run package-coreplugins -- --env.channel=sunbird]
- */
-
-// Dependency files
 const path = require("path")
 const webpack = require("webpack")
-// eslint-disable-next-line
 const glob = require("glob")
 const uglifyjs = require("uglify-js")
-// eslint-disable-next-line
-const expose = require("expose-loader")
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const fs = require("fs")
 const entryPlus = require("webpack-entry-plus")
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin")
-const WebpackOnBuildPlugin = require("on-build-webpack")
+const TerserPlugin = require("terser-webpack-plugin")
 const APP_CONFIG = require("./build.config.js")
 
-const PLUGINS_BASE_PATH = "./public/coreplugins/" // Plugins base path
-const PACKAGE_JS_FILE_NAME = "coreplugins.js" // Packaged all plugins js file name
-const PACKAGE_CSS_FILE_NAME = "coreplugins.css" // Packaged all plugins css files name
-const OUTPUT_PATH = "public/coreplugins-dist/" // 'public/'; // Package file path.
-const DIST_OUTPUT_FILE_PATH = "/renderer/plugin.dist.js" // dist file path which is created in each plugins folder
+const PLUGINS_BASE_PATH = "./public/coreplugins/"
+const PACKAGE_JS_FILE_NAME = "coreplugins.js"
+const PACKAGE_CSS_FILE_NAME = "coreplugins.css"
+const OUTPUT_PATH = "public/coreplugins-dist/"
+const DIST_OUTPUT_FILE_PATH = "/renderer/plugin.dist.js"
 const CONFIG = {
 	drop_console: process.env.drop_console || false,
 	mangle: process.env.mangle || false
@@ -52,9 +39,10 @@ function getEntryFiles () {
 		outputName: PACKAGE_JS_FILE_NAME
 	}, {
 		entryFiles: getVendorCSS()
-	} ]
+	}]
 	return entryPlus(entryFiles)
 }
+
 // eslint-disable-next-line
 cleanDistFiles = function () {
 	PLUGINS.forEach(function (plugin) {
@@ -129,7 +117,7 @@ function getVendorCSS () {
 					cssDependencies.push(`${PLUGINS_BASE_PATH}${plugin}/${dep.src}`)
 				}
 			})
-		};
+		}
 	})
 	return cssDependencies
 }
@@ -143,7 +131,6 @@ module.exports = (env, argv) => {
 			filename: "[name]",
 			path: path.resolve(__dirname, OUTPUT_PATH),
 			chunkFilename: "chunks/[name].[chunkhash].js"
-
 		},
 		resolve: {
 			alias: {
@@ -151,86 +138,75 @@ module.exports = (env, argv) => {
 			}
 		},
 		module: {
-			rules: [{
-				test: /\.html$/,
-				use: [{
-					loader: "html-loader",
-					options: {
-						minimize: true,
-						removeComments: false,
-						collapseWhitespace: false
-					}
-				}]
-			},
-			{
-				test: require.resolve(`${PLUGINS_BASE_PATH}org.ekstep.toaster-1.0/renderer/libs/toastr.min.js`),
-				use: [{
-					loader: "expose-loader",
-					options: "toastr"
-				}]
-			},
-			{
-				test: require.resolve(`${PLUGINS_BASE_PATH}org.ekstep.telemetrysync-1.0/renderer/libs/md5.js`),
-				use: [{
-					loader: "expose-loader",
-					options: "CryptoJS"
-				}]
-			},
-			{
-				test: require.resolve(`${PLUGINS_BASE_PATH}org.ekstep.videorenderer-1.1/renderer/libs/videolibs/video.min.js`),
-				use: [{
-					loader: "expose-loader",
-					options: "videojs"
-				}]
-			},
-			{
-				test: require.resolve(`${PLUGINS_BASE_PATH}org.ekstep.pdfrenderer-1.0/renderer/libs/pdf.js`),
-				use: [{
-					loader: "expose-loader",
-					options: "pdfjsLib"
-				}]
-			},
-			{
-				test: /\.(s*)css$/,
-				use: [
-					MiniCssExtractPlugin.loader,
-					{
-						loader: "css-loader",
+			rules: [
+				{
+					test: /\.html$/,
+					use: [{
+						loader: "html-loader",
 						options: {
-							sourceMap: false,
-							minimize: true,
-							"preset": "advanced",
-							discardComments: {
-								removeAll: true
+							minimize: false
+						}
+					}]
+				},
+				{
+					test: require.resolve(`${PLUGINS_BASE_PATH}org.ekstep.toaster-1.0/renderer/libs/toastr.min.js`),
+					use: [{
+						loader: "expose-loader",
+						options: { exposes: ["toastr"] }
+					}]
+				},
+				{
+					test: require.resolve(`${PLUGINS_BASE_PATH}org.ekstep.telemetrysync-1.0/renderer/libs/md5.js`),
+					use: [{
+						loader: "expose-loader",
+						options: { exposes: ["CryptoJS"] }
+					}]
+				},
+				{
+					test: require.resolve(`${PLUGINS_BASE_PATH}org.ekstep.videorenderer-1.1/renderer/libs/videolibs/video.min.js`),
+					use: [{
+						loader: "expose-loader",
+						options: { exposes: ["videojs"] }
+					}]
+				},
+				{
+					test: require.resolve(`${PLUGINS_BASE_PATH}org.ekstep.pdfrenderer-1.0/renderer/libs/pdf.js`),
+					use: [{
+						loader: "expose-loader",
+						options: { exposes: ["pdfjsLib"] }
+					}]
+				},
+				{
+					test: /\.(s*)css$/,
+					use: [
+						MiniCssExtractPlugin.loader,
+						{
+							loader: "css-loader",
+							options: {
+								sourceMap: false
 							}
 						}
-					}
-				]
-			}, {
-				test: /\.(gif|png|jpeg|svg)$/,
-				use: [
-					"file-loader",
-					{
-						loader: "url-loader",
-						options: {
-							limit: 50, // it's important
-							outputPath: "./images/assets",
-							name: "[name].[ext]"
+					]
+				},
+				{
+					test: /\.(gif|png|jpeg|svg)$/,
+					type: 'asset',
+					parser: {
+						dataUrlCondition: {
+							maxSize: 50
 						}
+					},
+					generator: {
+						filename: 'images/assets/[name][ext]'
 					}
-				]
-			}, {
-				test: /\.(woff|woff2|eot|ttf|otf|svg|png)$/,
-				use: [{
-					loader: "file-loader",
-					options: {
-						name: "[name].[ext]",
-						outputPath: "./fonts/",
-						limit: 10000,
-						fallback: "responsive-loader"
+				},
+				{
+					test: /\.(woff|woff2|eot|ttf|otf)$/,
+					type: 'asset/resource',
+					generator: {
+						filename: 'fonts/[name][ext]'
 					}
-				}]
-			}
+				}
 			]
 		},
 		plugins: [
@@ -246,10 +222,9 @@ module.exports = (env, argv) => {
 				pdfjsLib: path.resolve(`${PLUGINS_BASE_PATH}org.ekstep.pdfrenderer-1.0/renderer/libs/pdf.js`),
 				videojs: path.resolve(`${PLUGINS_BASE_PATH}org.ekstep.videorenderer-1.1/renderer/libs/videolibs/video.min.js`)
 			}),
-			new UglifyJsPlugin({
-				cache: false,
+			new TerserPlugin({
 				parallel: true,
-				uglifyOptions: {
+				terserOptions: {
 					compress: {
 						dead_code: true,
 						drop_console: CONFIG.drop_console,
@@ -261,16 +236,19 @@ module.exports = (env, argv) => {
 					ecma: 5,
 					mangle: CONFIG.mangle
 				},
-				sourceMap: true
+				extractComments: false
 			}),
-			new WebpackOnBuildPlugin(function (stats) {
-				// eslint-disable-next-line
-				cleanDistFiles()
-				packageChannelPlugins(env.channel) // TODO: ECML Plugin is unable to pack with the webpack hence just writing the ecml plugin script to coreplugins.js
-				console.log("Cleared all plugin.dist.js files")
-				// Remove the plugin.dist files from all plugins folder once build is done.
-			})
-
+			// Replaces on-build-webpack (not compatible with webpack 5)
+			{
+				apply: (compiler) => {
+					compiler.hooks.afterEmit.tap('AfterBuildPlugin', () => {
+						// eslint-disable-next-line
+						cleanDistFiles()
+						packageChannelPlugins(env.channel)
+						console.log("Cleared all plugin.dist.js files")
+					})
+				}
+			}
 		],
 		optimization: {
 			minimize: true,
@@ -285,11 +263,6 @@ module.exports = (env, argv) => {
 		}
 	}
 
-	/**
-     * @description     - Which is basically bundles the only manifest.json, plugin.js and external libs.
-     *                    the reset template and controller will be loaded dynamically.
-     * @param {string} channel sunbird/ekstep
-     */
 	function packageChannelPlugins (channel) {
 		try {
 			let plugins = APP_CONFIG[channel].plugins

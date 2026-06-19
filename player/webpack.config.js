@@ -1,32 +1,17 @@
-/** 
- * @author Manjunath Davanam<manjunathd@ilimi.in>
- * @description    - Which minifies the content-player script files and style files.
- * @example        - CMD to run this file for ekstep channel  👉 [npm run build ekstep]
- *                 - CMD to run this file for sunbird channel 👉 [npm run build sunbird]
- */
-
-
 const BUILD_NUMBER = process.env.build_number || 1.0;
 const PLAYER_VER = process.env.player_version_number || 1.0;
-const FILTER_PLUGINS = process.env.filter_plugins || 'false'; // To seperate the plugins for ekstep and sunbird.
+const FILTER_PLUGINS = process.env.filter_plugins || 'false';
 
-// Required dependency files
 const path = require('path');
 const webpack = require('webpack');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const expose = require('expose-loader');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const glob = require('glob-all');
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const ImageminPlugin = require('imagemin-webpack-plugin').default;
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const ngAnnotatePlugin = require('ng-annotate-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const fs = require('fs');
 const replace = require('replace-in-file');
-const file_extra = require('fs-extra')
-var WebpackOnBuildPlugin = require('on-build-webpack');
-const APP_CONFIG = require('./build.config.js')
+const file_extra = require('fs-extra');
+const APP_CONFIG = require('./build.config.js');
 
 const CONSTANTS = {
     build_folder_name: 'player-build',
@@ -37,8 +22,8 @@ const CONSTANTS = {
 const FOLDER_PATHS = {
     basePath: './',
     jsLibs: "../js-libs/",
-
 };
+
 const APP_STYLE = [
     './public/styles/ionic.css',
     './public/styles/bookshelf_slider.css',
@@ -46,7 +31,7 @@ const APP_STYLE = [
     './public/styles/toastr.min.css',
     './public/styles/jquery.mCustomScrollbar.min.css',
     './public/styles/style.css',
-    './public/coreplugins-dist/coreplugins.css' // Include the coreplugins.css if have only else comment out this line
+    './public/coreplugins-dist/coreplugins.css'
 ];
 
 const EXTERNAL_SCRIPTS = [
@@ -76,7 +61,7 @@ const APP_SCRIPTS = [
     './public/js/app.js',
     './public/js/basePlugin.js',
     './public/services/mainservice.js',
-    //'./public/services/localservice.js', // For localdevelopment use localservice.js insted of webservice.js
+    //'./public/services/localservice.js',
     './public/services/webservice.js',
     './public/services/interfaceService.js',
     './public/js/ekstepRendererApi.js',
@@ -86,16 +71,17 @@ const APP_SCRIPTS = [
     './public/services/controllerservice.js',
     './public/js/ekstepRendererEvents.js',
     './public/js/iEvaluator.js',
-    //'./public/services/localView.js', // For localdevelopment use localView.js insted of moblieView.js
+    //'./public/services/localView.js',
     './public/js/mobileView.js',
     './public/dispatcher/idispatcher.js',
     './public/dispatcher/web-dispatcher.js',
     './public/dispatcher/device-dispatcher.js',
     '../js-libs/renderer/manager/AudioManager.js',
 ];
+
 const TELEMETRY = [
     './public/libs/date-format.js',
-    './node_modules/@project-sunbird/telemetry-sdk/index.js',
+    require.resolve('@project-sunbird/telemetry-sdk'),
     '../js-libs/telemetry/InActiveEvent.js',
     '../js-libs/telemetry/TelemetryEvent.js',
     '../js-libs/telemetry/TelemetryService.js',
@@ -105,17 +91,16 @@ const TELEMETRY = [
     '../js-libs/telemetry/TelemetryV3Manager.js',
 ];
 
-// removing the duplicate files
 const SCRIPTS = [...new Set([...EXTERNAL_SCRIPTS, ...TELEMETRY, ...APP_SCRIPTS])];
 
 if (!BUILD_NUMBER && !PLAYER_VER) {
     console.error('Error!!! Cannot find player_version_number and build_number env variables');
-    return process.exit(1)
+    return process.exit(1);
 }
 const VERSION = PLAYER_VER + '.' + BUILD_NUMBER;
 
 module.exports = (env, argv) => {
-    (env.channel === CONSTANTS.sunbird) ? SCRIPTS.unshift(APP_CONFIG.sunbird.configFile): SCRIPTS.unshift(APP_CONFIG.ekstep.configFile);
+    (env.channel === CONSTANTS.sunbird) ? SCRIPTS.unshift(APP_CONFIG.sunbird.configFile) : SCRIPTS.unshift(APP_CONFIG.ekstep.configFile);
     return {
         entry: {
             'script': SCRIPTS,
@@ -131,118 +116,104 @@ module.exports = (env, argv) => {
                 'underscore': path.resolve(`${FOLDER_PATHS.basePath}public/libs/underscore.js`),
                 'jquery-mousewheel': path.resolve(`${FOLDER_PATHS.basePath}node_modules/jquery-mousewheel/jquery.mousewheel.js`),
                 'Fingerprint2': path.resolve(`${FOLDER_PATHS.basePath}node_modules/fingerprintjs2/dist/fingerprint2.min.js`),
-                'ajv': require.resolve(`${FOLDER_PATHS.basePath}node_modules/ajv/dist/ajv.min.js`),
+                'ajv': require.resolve('ajv'),
                 'ProgressBar': path.resolve(`${FOLDER_PATHS.basePath}public/libs/progressbar.min.js`),
                 'UAParser': path.resolve(`${FOLDER_PATHS.basePath}public/libs/ua-parser.min.js`)
             }
         },
         module: {
-            rules: [{
+            rules: [
+                {
                     test: /\.(s*)css$/,
                     use: [
                         MiniCssExtractPlugin.loader,
                         {
                             loader: 'css-loader',
                             options: {
-                                sourceMap: false,
-                                minimize: true,
-                                "preset": "advanced",
-                                discardComments: {
-                                    removeAll: true
-                                }
+                                sourceMap: false
                             }
                         }
                     ]
                 },
-
                 {
                     test: /\.(woff|woff2|eot|ttf|otf|svg|png)$/,
-                    use: [{
-                        loader: 'file-loader',
-                        options: {
-                            name: '[name].[ext]',
-                            outputPath: './fonts/',
-                            limit: 10000,
-                            fallback: 'responsive-loader'
-                        }
-                    }]
-                }, {
+                    type: 'asset/resource',
+                    generator: {
+                        filename: 'fonts/[name][ext]'
+                    }
+                },
+                {
                     test: require.resolve(`${FOLDER_PATHS.basePath}public/libs/eventbus.min.js`),
                     use: [{
                         loader: 'expose-loader',
-                        options: 'EventBus'
+                        options: { exposes: ['EventBus'] }
                     }]
                 },
                 {
                     test: require.resolve(`${FOLDER_PATHS.basePath}public/libs/jquery.min.js`),
                     use: [{
                         loader: 'expose-loader',
-                        options: 'jQuery'
-                    }]
-                },
-                {
-                    test: require.resolve(`${FOLDER_PATHS.basePath}public/libs/jquery.min.js`),
-                    use: [{
-                        loader: 'expose-loader',
-                        options: '$'
+                        options: { exposes: ['jQuery', '$'] }
                     }]
                 },
                 {
                     test: require.resolve(`${FOLDER_PATHS.basePath}public/libs/underscore.js`),
                     use: [{
                         loader: 'expose-loader',
-                        options: '_'
+                        options: { exposes: ['_'] }
                     }]
                 },
                 {
-                    test: require.resolve(`${FOLDER_PATHS.basePath}/node_modules/@project-sunbird/telemetry-sdk/index.js`),
+                    test: require.resolve('@project-sunbird/telemetry-sdk'),
                     use: [{
                         loader: 'expose-loader',
-                        options: 'EkTelemetry'
+                        options: { exposes: ['EkTelemetry'] }
                     }]
                 },
                 {
                     test: require.resolve(`${FOLDER_PATHS.basePath}node_modules/fingerprintjs2/dist/fingerprint2.min.js`),
                     use: [{
                         loader: 'expose-loader',
-                        options: 'Fingerprint2'
+                        options: { exposes: ['Fingerprint2'] }
                     }]
                 },
                 {
                     test: require.resolve(`${FOLDER_PATHS.basePath}public/libs/md5.js`),
                     use: [{
                         loader: 'expose-loader',
-                        options: 'CryptoJS'
+                        options: { exposes: ['CryptoJS'] }
                     }]
                 },
                 {
-                   test: require.resolve(`${FOLDER_PATHS.basePath}public/libs/progressbar.min.js`),
-                   use: [{
-                       loader: 'expose-loader',
-                       options: 'ProgressBar'
-                   }]
-               },
-               {
+                    test: require.resolve(`${FOLDER_PATHS.basePath}public/libs/progressbar.min.js`),
+                    use: [{
+                        loader: 'expose-loader',
+                        options: { exposes: ['ProgressBar'] }
+                    }]
+                },
+                {
                     test: require.resolve(`${FOLDER_PATHS.basePath}public/libs/ua-parser.min.js`),
                     use: [{
                         loader: 'expose-loader',
-                        options: 'UAParser'
+                        options: { exposes: ['UAParser'] }
                     }]
                 }
             ]
         },
         plugins: [
-            new CleanWebpackPlugin([path.resolve(__dirname, 'public/' + CONSTANTS.build_folder_name)]),
+            new CleanWebpackPlugin(),
             new MiniCssExtractPlugin({
                 filename: `[name].min.${VERSION}.css`,
             }),
-            new WebpackOnBuildPlugin(function(stats) {
-                replaceStringInFiles(env.channel);
-                copyCorePlugins(env.channel);
-            }),
-            new ngAnnotatePlugin({
-                add: true,
-            }),
+            // Replaces on-build-webpack (not compatible with webpack 5)
+            {
+                apply: (compiler) => {
+                    compiler.hooks.afterEmit.tap('AfterBuildPlugin', () => {
+                        replaceStringInFiles(env.channel);
+                        copyCorePlugins(env.channel);
+                    });
+                }
+            },
             new webpack.ProvidePlugin({
                 "window.$": "jquery",
                 "window._": 'underscore',
@@ -254,21 +225,12 @@ module.exports = (env, argv) => {
                 ProgressBar: 'ProgressBar',
                 UAParser: 'UAParser'
             }),
-            new webpack.optimize.OccurrenceOrderPlugin(),
-            new webpack.HotModuleReplacementPlugin(),
-            new OptimizeCssAssetsPlugin({
-                assetNameRegExp: /\.optimize\.css$/g,
-                cssProcessor: require('cssnano'),
-                cssProcessorOptions: {
-                    safe: true,
-                    discardComments: {
-                        removeAll: true
-                    }
-                },
-                canPrint: true
-            })
         ],
         optimization: {
+            minimizer: [
+                '...', // keep default TerserPlugin for JS
+                new CssMinimizerPlugin()
+            ],
             splitChunks: {
                 chunks: 'async',
                 minSize: 30000,
@@ -276,7 +238,6 @@ module.exports = (env, argv) => {
                 maxAsyncRequests: 5,
                 maxInitialRequests: 3,
                 automaticNameDelimiter: '~',
-                name: true,
                 cacheGroups: {
                     styles: {
                         name: 'style',
@@ -286,33 +247,33 @@ module.exports = (env, argv) => {
                     }
                 },
             }
-
         }
-    }
+    };
 };
 
 function copyCorePlugins(channel) {
     let plugins = [];
-    console.log("FILTER_PLUGINS", FILTER_PLUGINS)
+    console.log("FILTER_PLUGINS", FILTER_PLUGINS);
     if (FILTER_PLUGINS === 'true') {
-        console.log("Plugins are filtering ")
+        console.log("Plugins are filtering ");
         plugins = (channel === CONSTANTS.sunbird) ? APP_CONFIG.sunbird.plugins : APP_CONFIG.ekstep.plugins;
     } else {
-        console.log("Plugins not filtered")
-        plugins = [...new Set([...APP_CONFIG.sunbird.plugins, ...APP_CONFIG.ekstep.plugins])]
+        console.log("Plugins not filtered");
+        plugins = [...new Set([...APP_CONFIG.sunbird.plugins, ...APP_CONFIG.ekstep.plugins])];
     }
     console.log("Plugins are ", plugins);
     plugins.forEach(plugin => {
         if (plugin.package) {
             console.log("Plugins moving", plugin);
-            file_extra.copy(`${FOLDER_PATHS.basePath}/public/coreplugins/${plugin.id}-${plugin.ver}`, `${FOLDER_PATHS.basePath}/public/${CONSTANTS.build_folder_name}/coreplugins/${plugin.id}-${plugin.ver}/`)
+            const src = `${FOLDER_PATHS.basePath}public/coreplugins/${plugin.id}-${plugin.ver}`;
+            const dest = `${FOLDER_PATHS.basePath}public/${CONSTANTS.build_folder_name}/coreplugins/${plugin.id}-${plugin.ver}`;
+            fs.cpSync(src, dest, { recursive: true, force: true });
         }
-    })
-};
+    });
+}
 
 function replaceStringInFiles(channel) {
-    // Which is used to replace the specific string from the mentioned file 
-    var replaceTo = (channel === CONSTANTS.sunbird) ? APP_CONFIG.sunbird.splashScreen.backgroundImage : APP_CONFIG.ekstep.splashScreen.backgroundImage
+    var replaceTo = (channel === CONSTANTS.sunbird) ? APP_CONFIG.sunbird.splashScreen.backgroundImage : APP_CONFIG.ekstep.splashScreen.backgroundImage;
     const options = [{
         src: "./config.xml",
         files: './config.dist.xml',
@@ -331,7 +292,7 @@ function replaceStringInFiles(channel) {
                     });
             })
             .catch(err => {
-                console.error("Error occurred", err)
-            })
+                console.error("Error occurred", err);
+            });
     });
 }

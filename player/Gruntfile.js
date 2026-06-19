@@ -753,13 +753,11 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks("grunt-contrib-watch")
 	grunt.loadNpmTasks("grunt-contrib-copy")
 	grunt.loadNpmTasks("grunt-contrib-compress")
-	grunt.loadNpmTasks("grunt-aws-s3")
 	grunt.loadNpmTasks("grunt-contrib-clean")
 	grunt.loadNpmTasks("grunt-rename")
 	grunt.loadNpmTasks("grunt-mkdir")
 	grunt.loadNpmTasks("grunt-text-replace")
 	grunt.loadNpmTasks("grunt-karma")
-	grunt.loadNpmTasks("grunt-jsdoc")
 	grunt.loadNpmTasks("grunt-contrib-concat")
 	grunt.loadNpmTasks("grunt-injector")
 
@@ -863,7 +861,7 @@ module.exports = function (grunt) {
 	// Added on 16/04/18. Simple command to build aar file. There is no xwalk build required. This changes made to share build for Sunbird.
 	grunt.registerTask("build-aar", ["mkdir:all", "build-aarshared-xwalk"])
 
-	grunt.registerTask("build-jsdoc", ["jsdoc", "compress:main"])
+	// grunt.registerTask("build-jsdoc", ["jsdoc", "compress:main"])  // grunt-jsdoc removed (taffydb security)
 
 	grunt.registerTask("test-setup", ["new-buildPreview", "copy:testinit", "clean"])
 	grunt.registerTask("player-test", ["karma:app"])

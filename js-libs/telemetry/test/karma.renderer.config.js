@@ -11,7 +11,6 @@ module.exports = function(config) {
         // frameworks to use
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
         frameworks: [
-            'jasmine-jquery',
             'jasmine',
             'jasmine-matchers'
         ],
@@ -22,6 +21,7 @@ module.exports = function(config) {
             '../js-libs/telemetry-lib/md5.js',
             'https://cdn.jsdelivr.net/npm/promise-polyfill@7/dist/polyfill.min.js',
             'www/preview/script.min.*.js',
+            'node_modules/jasmine-jquery/lib/jasmine-jquery.js',
             '../js-libs/telemetry/TelemetryV3Manager.js',
             '../js-libs/telemetry/tememetryv3Manager.spec.js'
         ],
@@ -35,8 +35,7 @@ module.exports = function(config) {
         },
 
         plugins: [
-            "karma-phantomjs-launcher",
-            "karma-jasmine-jquery",
+            "karma-chrome-launcher",
             "karma-jasmine",
             "karma-jasmine-matchers",
             "karma-junit-reporter",
@@ -94,7 +93,7 @@ module.exports = function(config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['PhantomJS'],
+        browsers: ['ChromeHeadless'],
 
 
         // Continuous Integration mode

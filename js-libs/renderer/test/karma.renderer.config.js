@@ -11,7 +11,6 @@ module.exports = function(config) {
         // frameworks to use
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
         frameworks: [
-            'jasmine-jquery',
             'jasmine',
             'jasmine-matchers'
         ],
@@ -25,6 +24,7 @@ module.exports = function(config) {
             'public/coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs/creatine-1.0.0.min.js',
             'public/libs/md5.js',
             'www/preview/script.min.*.js',
+            'node_modules/jasmine-jquery/lib/jasmine-jquery.js',
             '../js-libs/renderer/manager/PluginManager.js',
             '../js-libs/renderer/manager/ControllerManager.js',
             '../js-libs/renderer/manager/AudioManager.js',
@@ -126,8 +126,7 @@ module.exports = function(config) {
         },
 
         plugins: [
-            "karma-phantomjs-launcher",
-            "karma-jasmine-jquery",
+            "karma-chrome-launcher",
             "karma-jasmine",
             "karma-jasmine-matchers",
             "karma-junit-reporter",
@@ -185,7 +184,7 @@ module.exports = function(config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['PhantomJS'],
+        browsers: ['ChromeHeadless'],
 
 
         // Continuous Integration mode
