@@ -1,3 +1,13 @@
+/**
+ * @author Manjunath Davanam<manjunathd@ilimi.in>
+ * @description - Which minifies and bundles the all core plugins  with js/css dependency files.
+ *              - Before bundle It will read the plugins views and dependency object which is defined in the plugin manifest.json.
+ * @example     - CMD to run this file for ekstep channel.  👉 [npm run package-coreplugins -- --env.channel=ekstep]
+ *              - CMD to run this file for sunbird channel. 👉 [npm run package-coreplugins -- --env.channel=sunbird]
+ */
+
+// Dependency files
+
 const path = require("path")
 const webpack = require("webpack")
 const glob = require("glob")
@@ -8,11 +18,11 @@ const entryPlus = require("webpack-entry-plus")
 const TerserPlugin = require("terser-webpack-plugin")
 const APP_CONFIG = require("./build.config.js")
 
-const PLUGINS_BASE_PATH = "./public/coreplugins/"
-const PACKAGE_JS_FILE_NAME = "coreplugins.js"
-const PACKAGE_CSS_FILE_NAME = "coreplugins.css"
-const OUTPUT_PATH = "public/coreplugins-dist/"
-const DIST_OUTPUT_FILE_PATH = "/renderer/plugin.dist.js"
+const PLUGINS_BASE_PATH = "./public/coreplugins/" // Plugins base path
+const PACKAGE_JS_FILE_NAME = "coreplugins.js" // Packaged all plugins js file name
+const PACKAGE_CSS_FILE_NAME = "coreplugins.css" // Packaged all plugins css file name
+const OUTPUT_PATH = "public/coreplugins-dist/" // 'public/'; // Package file path.
+const DIST_OUTPUT_FILE_PATH = "/renderer/plugin.dist.js" // dist file path which is created in each plugins folder
 const CONFIG = {
 	drop_console: process.env.drop_console || false,
 	mangle: process.env.mangle || false

@@ -1,6 +1,14 @@
+/** 
+ * @author Manjunath Davanam<manjunathd@ilimi.in>
+ * @description    - Which minifies the content-player script files and style files.
+ * @example        - CMD to run this file for ekstep channel  👉 [npm run build ekstep]
+ *                 - CMD to run this file for sunbird channel 👉 [npm run build sunbird]
+ */
+
+
 const BUILD_NUMBER = process.env.build_number || 1.0;
 const PLAYER_VER = process.env.player_version_number || 1.0;
-const FILTER_PLUGINS = process.env.filter_plugins || 'false';
+const FILTER_PLUGINS = process.env.filter_plugins || 'false'; // To seperate the plugins for ekstep and sunbird.
 
 const path = require('path');
 const webpack = require('webpack');
@@ -31,7 +39,7 @@ const APP_STYLE = [
     './public/styles/toastr.min.css',
     './public/styles/jquery.mCustomScrollbar.min.css',
     './public/styles/style.css',
-    './public/coreplugins-dist/coreplugins.css'
+    './public/coreplugins-dist/coreplugins.css' // Include the coreplugins.css if have only else comment out this line
 ];
 
 const EXTERNAL_SCRIPTS = [
@@ -61,7 +69,7 @@ const APP_SCRIPTS = [
     './public/js/app.js',
     './public/js/basePlugin.js',
     './public/services/mainservice.js',
-    //'./public/services/localservice.js',
+    //'./public/services/localservice.js', // For localdevelopment use localservice.js insted of webservice.js
     './public/services/webservice.js',
     './public/services/interfaceService.js',
     './public/js/ekstepRendererApi.js',
@@ -71,7 +79,7 @@ const APP_SCRIPTS = [
     './public/services/controllerservice.js',
     './public/js/ekstepRendererEvents.js',
     './public/js/iEvaluator.js',
-    //'./public/services/localView.js',
+    //'./public/services/localView.js', // For localdevelopment use localView.js insted of moblieView.js
     './public/js/mobileView.js',
     './public/dispatcher/idispatcher.js',
     './public/dispatcher/web-dispatcher.js',
