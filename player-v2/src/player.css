@@ -1,0 +1,564 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap');
+
+/*
+ * ============================================================
+ * SUNBIRD PLAYER v2 — THEME SYSTEM
+ * ============================================================
+ *
+ * STEP 1 — 6 seed variables (set these to change the whole theme).
+ *   Portal's ThemeProvider sets them on :root — player inherits automatically.
+ *   Dev harness defaults match the Sunbird Spark default theme.
+ *
+ *   --sunbird-spark-theme-primary-h/s/l  → CTA / progress / button colour
+ *   --sunbird-spark-theme-chip-h/s       → badge / tint colours
+ *   --sunbird-spark-theme-icon-h         → icon / muted accent hue
+ *
+ * STEP 2 — Player derives all --sp-* tokens from those seeds.
+ *   Fixed brand colours (ink, ivory, forest) don't change with theme.
+ * ============================================================
+ */
+
+:root {
+  /* ---- 6 seed variables (defaults = Sunbird Spark brand terracotta/amber/teal) ---- */
+  /* primary = brick terracotta #a85236 ≈ hsl(15 51% 44%)  */
+  --sunbird-spark-theme-primary-h: 15;
+  --sunbird-spark-theme-primary-s: 51%;
+  --sunbird-spark-theme-primary-l: 44%;
+  /* chip = ginger amber #cc8545 ≈ hsl(35 55% 54%) */
+  --sunbird-spark-theme-chip-h:    35;
+  --sunbird-spark-theme-chip-s:    55%;
+  /* icon = ink teal #376673 ≈ hsl(193 35% 33%) */
+  --sunbird-spark-theme-icon-h:    193;
+
+  /* ---- Derived theme-reactive tokens ---- */
+  /* CTA / progress / button — driven by primary seed */
+  --sp-brick:
+    hsl(
+      var(--sunbird-spark-theme-primary-h)
+      var(--sunbird-spark-theme-primary-s)
+      var(--sunbird-spark-theme-primary-l)
+    );
+  /* Muted badge text — icon hue + primary saturation, mid lightness */
+  --sp-ginger:
+    hsl(
+      var(--sunbird-spark-theme-icon-h)
+      var(--sunbird-spark-theme-primary-s)
+      54%
+    );
+  /* Badge background — chip seed, high lightness */
+  --sp-warm-yellow:
+    hsl(
+      var(--sunbird-spark-theme-chip-h)
+      var(--sunbird-spark-theme-chip-s)
+      90%
+    );
+
+  /* ---- Fixed Sunbird Spark brand colours (theme-invariant) ---- */
+  --sp-ink:         hsl(193 35% 33%);   /* #376673 */
+  --sp-wave:        hsl(194 36% 59%);   /* #70adbf */
+  --sp-forest:      hsl(95  26% 53%);   /* #82a668 — completion green */
+  --sp-ivory:       hsl(55  100% 98%);  /* #fffef4 — canvas background */
+  --sp-obsidian:    hsl(0   0%  10%);   /* #1a1a1a */
+  --sp-charcoal:    hsl(0   0%  20%);   /* #333333 */
+  --sp-gray-50:     #f3f4f6;
+  --sp-gray-100:    #e5e5d8;
+  --sp-gray-400:    #aaaaaa;
+  --sp-gray-500:    #757575;
+  --sp-gray-700:    #555555;
+  --sp-white:       #ffffff;
+
+  /* ---- Font ---- */
+  /* When embedded in portal: inherit portal's language font (Rubik / Noto Sans Arabic / etc.)
+     When standalone:         fall back to Rubik loaded above via @import                   */
+  --sp-font: inherit;
+}
+
+.sp-player {
+  width: 100%;
+  height: 100%;
+  /* inherit portal's active font first; Rubik as standalone fallback */
+  font-family: inherit, 'Rubik', system-ui, -apple-system, sans-serif;
+  background: var(--sp-ivory);
+  position: relative;
+  overflow: hidden;
+  /* cqh/cqw units in child components reference this container, not viewport */
+  container-type: size;
+}
+
+/*
+ * ECML content (questions, options, MTF/sequence items) is authored HTML injected
+ * via dangerouslySetInnerHTML. Authors wrap text in <p> tags — and sometimes with
+ * an author font-size like 1.285em. Browser-default <p> margins (~1em top+bottom)
+ * silently add ~32px of height to EVERY option/card, and the em-scaling inflates
+ * the font beyond our container size. Neutralize both for paragraphs nested inside
+ * our text wrappers (<span>/<h3>) so injected text matches the container exactly.
+ * Our own screen <p> elements set inline margins/font-size and are NOT nested in
+ * span/h3, so they are untouched.
+ */
+.sp-player :is(span, h3) > p {
+  margin: 0 !important;
+  font-size: 1em !important;
+  line-height: inherit !important;
+}
+.sp-player :is(span, h3) > p:not(:last-child) {
+  margin-bottom: 0.25em !important;
+}
+
+/* ---- Card layout (Start / Loading / End screens) ---- */
+.sp-canvas {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sp-ivory);
+  padding: 20px;
+  box-sizing: border-box;
+  /* allow the centered card to shrink + scroll instead of overflowing the screen */
+  overflow: auto;
+  min-height: 0;
+}
+
+.sp-card {
+  background: var(--sp-white);
+  border-radius: 18px;
+  box-shadow: 0 2px 0 rgba(0,0,0,0.04), 0 8px 32px rgba(0,0,0,0.10);
+  border: 1px solid rgba(0,0,0,0.06);
+  padding: 22px;
+  width: 100%;
+  max-width: 280px;
+  max-height: 100%;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+/* Short viewports (landscape phones, tiny embeds): trim padding so the card fits. */
+@media (max-height: 480px) {
+  .sp-canvas { padding: 10px; }
+  .sp-card { padding: 14px; }
+  .sp-thumbnail { height: 72px; }
+}
+
+/* ---- Thumbnail ---- */
+.sp-thumbnail {
+  width: 100%;
+  height: 96px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--sp-brick), var(--sp-ginger));
+  position: relative;
+  overflow: hidden;
+}
+
+.sp-thumbnail-vignette {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 45%, rgba(0,0,0,0.3));
+}
+
+.sp-thumbnail-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+}
+
+.sp-play-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.22);
+  border: 2px solid rgba(255,255,255,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---- Badge ---- */
+.sp-badge {
+  display: inline-block;
+  margin-top: 10px;
+  background: var(--sp-warm-yellow);
+  color: var(--sp-brick);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1.5px solid var(--sp-brick);
+  opacity: 0.85;
+}
+
+/* ---- Title & metadata ---- */
+.sp-title {
+  margin-top: 14px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--sp-obsidian);
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.sp-meta {
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--sp-gray-400);
+}
+
+/* ---- Buttons ---- */
+.sp-btn-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  height: 46px;
+  margin-top: 16px;
+  border-radius: 12px;
+  border: none;
+  background: var(--sp-brick);
+  color: var(--sp-white);
+  font-family: var(--sp-font);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: filter 0.15s, transform 0.1s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+}
+.sp-btn-primary:hover  { filter: brightness(0.9); }
+.sp-btn-primary:active { transform: scale(0.97); }
+.sp-btn-primary:focus-visible { outline: 2px solid var(--sp-brick); outline-offset: 3px; }
+
+.sp-btn-outline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex: 1;
+  height: 44px;
+  border-radius: 11px;
+  border: 1.5px solid var(--sp-gray-100);
+  background: transparent;
+  color: var(--sp-gray-700);
+  font-family: var(--sp-font);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.12s;
+}
+.sp-btn-outline:hover  { background: var(--sp-gray-50); }
+.sp-btn-outline:active { background: var(--sp-gray-100); }
+
+.sp-btn-row {
+  display: flex;
+  gap: 9px;
+  margin-top: 13px;
+}
+
+/* ---- Loading screen ---- */
+.sp-loader-dots {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+.sp-dot {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--sp-brick);
+  animation: sp-pulse 1.2s ease-in-out infinite;
+}
+.sp-dot:nth-child(2) { animation-delay: 0.22s; }
+.sp-dot:nth-child(3) { animation-delay: 0.44s; }
+@keyframes sp-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%       { transform: scale(0.4); opacity: 0.3; }
+}
+
+.sp-progress-track {
+  width: 200px;
+  height: 4px;
+  background: var(--sp-gray-100);
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 18px auto 0;
+}
+.sp-progress-fill {
+  height: 100%;
+  background: var(--sp-brick);
+  border-radius: 4px;
+  transition: width 0.4s ease-out;
+}
+.sp-progress-animate {
+  animation: sp-progress-slide 3s ease-out forwards;
+}
+@keyframes sp-progress-slide {
+  from { width: 5%; }
+  to   { width: 60%; }
+}
+
+/* ---- Playing screen ---- */
+.sp-playing-area {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  /* overflow: visible so menu dropdown isn't clipped by this container */
+}
+
+/* ---- Floating menu button ---- */
+.sp-menu-btn {
+  position: absolute;
+  top: 14px;
+  inset-inline-end: 14px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(0,0,0,0.08);
+  background: var(--sp-white);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.12), 0 3px 12px rgba(0,0,0,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: opacity 0.15s, box-shadow 0.15s;
+}
+.sp-menu-btn:hover { opacity: 0.88; box-shadow: 0 2px 8px rgba(0,0,0,0.18); }
+.sp-menu-btn:focus-visible { outline: 2px solid var(--sp-brick); outline-offset: 2px; }
+.sp-menu-btn--video {
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.18);
+  opacity: 0;
+  pointer-events: none;
+}
+/* Show video menu button only when hovering over the player */
+.sp-playing-area:hover .sp-menu-btn--video,
+.sp-playing-area:focus-within .sp-menu-btn--video {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Touch devices have no hover — the hover-gated video menu button would never
+   appear. Keep it visible so menu (replay/mute/exit) stays reachable on mobile. */
+@media (hover: none) and (pointer: coarse) {
+  .sp-menu-btn--video {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+/* ---- Dropdown menu ---- */
+.sp-menu-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 28;
+}
+
+.sp-menu-dropdown {
+  position: absolute;
+  top: 58px;
+  inset-inline-end: 14px;
+  width: 216px;
+  max-height: calc(100% - 72px);
+  background: var(--sp-white);
+  border-radius: 14px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.06), 0 12px 36px rgba(0,0,0,0.14);
+  border: 1px solid rgba(0,0,0,0.07);
+  overflow-y: auto;
+  z-index: 29;
+  animation: drop-in 0.18s ease-out;
+}
+
+[dir="rtl"] .sp-menu-dropdown {
+  inset-inline-end: 14px;
+  inset-inline-start: auto;
+}
+
+.sp-menu-header {
+  padding: 13px 16px;
+  border-bottom: 1px solid #f5f4ee;
+  font-size: 11px;
+  color: var(--sp-gray-400);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sp-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 0 16px;
+  min-height: 50px;
+  border: none;
+  background: transparent;
+  width: 100%;
+  font-family: var(--sp-font);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--sp-charcoal);
+  cursor: pointer;
+  text-align: start;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  transition: background 0.1s;
+}
+.sp-menu-item:last-child { border-bottom: none; }
+.sp-menu-item:hover { background: var(--sp-gray-50); }
+.sp-menu-item:focus-visible { outline: 2px solid var(--sp-brick); outline-offset: -2px; }
+.sp-menu-item--exit { color: #c0392b; }
+
+/* ---- End screen ---- */
+.sp-check-circle {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: var(--sp-forest);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 13px auto 0;
+}
+
+.sp-end-heading {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--sp-obsidian);
+  text-align: center;
+  margin-top: 13px;
+}
+
+.sp-end-subtitle {
+  font-size: 11px;
+  color: var(--sp-gray-400);
+  text-align: center;
+  margin-top: 3px;
+}
+
+/* ---- Fade transitions ---- */
+@keyframes sp-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.sp-fade-in { animation: sp-fade-in 0.25s ease; }
+
+/* ---- Design Exploration keyframes & helper styles ---- */
+@keyframes sheet-up {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+@keyframes drop-in {
+  from { opacity: 0; transform: translateY(-8px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes fade-bg {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes scrub-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.sp-video-custom-controls {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: transparent;
+  font-family: 'Rubik', sans-serif;
+  opacity: 1;
+  transition: opacity 0.25s ease;
+}
+
+.sp-video-custom-controls.faded {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sp-video-progress-mini {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.12);
+  z-index: 5;
+  transition: opacity 0.3s ease;
+}
+
+.sp-video-progress-mini-fill {
+  height: 100%;
+  background: var(--sp-brick);
+}
+
+/* Normalize authored question-title HTML so every type renders the same size.
+   Some ECML content wraps the text in <p style="font-size:Xem"> — strip that. */
+.ecml-qtitle p,
+.ecml-qtitle span,
+.ecml-qtitle div {
+  font-size: inherit !important;
+  line-height: inherit !important;
+  margin: 0 !important;
+}
+
+/* ── ECML unified responsive scale ──────────────────────────────────────────
+   Single source of truth for all ECML question sizing. Every size is fluid:
+   clamp(mobileMin, N·cqi, desktopMax). `cqi` resolves against the nearest
+   container, so applying this class (which also declares container-type) to
+   BOTH the answering root AND the narrower options box makes the title/header
+   scale to the full embed while option cards scale to their smaller box.
+   Tune the whole player here. */
+.eq-scale {
+  container-type: inline-size;
+  /* type */
+  --eq-fs-eyebrow: clamp(9px, 0.85cqi, 11px);
+  --eq-fs-label:   clamp(10px, 1cqi, 13px);
+  --eq-fs-option:  clamp(15px, 1.5cqi, 20px);
+  --eq-fs-title:   clamp(17px, 2.2cqi, 28px);   /* question title — stacked + split */
+  --eq-fs-xl:      clamp(18px, 1.9cqi, 26px);
+  /* space */
+  --eq-sp-2: clamp(4px, 0.5cqi, 8px);
+  --eq-sp-3: clamp(6px, 0.8cqi, 12px);
+  --eq-sp-4: clamp(8px, 1.1cqi, 16px);
+  --eq-sp-5: clamp(12px, 1.6cqi, 22px);
+  --eq-sp-6: clamp(16px, 2.2cqi, 32px);
+  --eq-gap:  clamp(8px, 1.2cqi, 18px);
+  /* objects */
+  --eq-badge:    clamp(28px, 3.4cqi, 46px);
+  --eq-img:      clamp(48px, 7cqi, 110px);
+  --eq-radius:   clamp(12px, 1.3cqi, 18px);
+  --eq-card-min: clamp(46px, 5.5cqi, 80px);
+}
+
+/* ── Tier-1 interaction polish for ECML option/answer elements ──────────────
+   Applied via className="eq-opt" on tappable cards/chips/inputs (answering mode
+   only). Adds smooth transitions, a hover lift, a press response, and a
+   keyboard focus ring — without touching each element's inline state colors. */
+.eq-opt {
+  transition: transform 0.14s ease, box-shadow 0.16s ease, border-color 0.15s ease, background 0.15s ease;
+  outline: none;
+}
+.eq-opt:focus-visible {
+  outline: 2px solid var(--sp-brick, #a85236);
+  outline-offset: 2px;
+}
+@media (hover: hover) {
+  .eq-opt:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.10); }
+}
+.eq-opt:active { transform: translateY(0) scale(0.985); }
+
