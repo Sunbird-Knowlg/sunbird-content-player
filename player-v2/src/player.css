@@ -472,6 +472,19 @@
   50% { opacity: 0.6; }
 }
 
+/* Suppress video.js built-in UI — we render our own controls overlay */
+.sp-video-vjs-container .vjs-big-play-button,
+.sp-video-vjs-container .vjs-control-bar,
+.sp-video-vjs-container .vjs-error-display,
+.sp-video-vjs-container .vjs-loading-spinner {
+  display: none !important;
+}
+
+/* video.js tech element: fill container and preserve aspect ratio */
+.sp-video-vjs-container .vjs-tech {
+  object-fit: contain;
+}
+
 .sp-video-custom-controls {
   position: absolute;
   inset: 0;
