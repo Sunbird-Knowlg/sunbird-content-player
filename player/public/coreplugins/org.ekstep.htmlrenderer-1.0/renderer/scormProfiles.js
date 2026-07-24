@@ -4,6 +4,7 @@ window.SCORM_PROFILES = {
         apiNamespace: 'API',
         statusKey: 'cmi.core.lesson_status',
         scoreKey: 'cmi.core.score.raw',
+        scoreMaxKey: 'cmi.core.score.max',
         exitKey: 'cmi.core.exit',
         defaultState: {
             'cmi.core.lesson_status': 'not attempted'
@@ -32,6 +33,7 @@ window.SCORM_PROFILES = {
         statusKey: 'cmi.completion_status',
         successKey: 'cmi.success_status',
         scoreKey: 'cmi.score.raw',
+        scoreMaxKey: 'cmi.score.max',
         exitKey: 'cmi.exit',
         defaultState: {
             'cmi.completion_status': 'unknown',
