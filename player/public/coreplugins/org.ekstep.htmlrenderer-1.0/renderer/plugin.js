@@ -141,13 +141,18 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         api[profile.methods.set] = function (k, v) {
             instance.allScoStates[instance.activeScoId][k] = v;
 
-            if (k === profile.scoreKey) {
-                instance.fireTelemetry('ASSESSMENT', {
-                    type: 'ASSESSMENT',
-                    subtype: 'SCORM_SCORE',
-                    id: 'scorm_score',
-                    score: v
-                });
+            if (k === profile.scoreKey && !instance._assessStartedFor[instance.activeScoId]) {
+                var telemetry = EkstepRendererAPI.getTelemetryService();
+                if (telemetry) {
+                    var maxScoreValue = instance.allScoStates[instance.activeScoId][profile.scoreMaxKey];
+                    var maxScore = (maxScoreValue !== undefined && maxScoreValue !== null && maxScoreValue !== '') ? maxScoreValue : 100;
+                    instance._assessStartedFor[instance.activeScoId] = telemetry.assess(
+                        instance.activeScoId,
+                        instance.data.subject || 'SCORM',
+                        'MEDIUM',
+                        { maxscore: maxScore }
+                    ).start();
+                }
             }
 
             if (k === profile.statusKey || (profile.successKey && k === profile.successKey)) {
@@ -161,6 +166,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
                 if (v === 'completed' || v === 'passed' || v === 'failed') {
                     instance.allScoStates[instance.activeScoId]._finished = true;
+
                     if (instance.scoList && instance.scoList.length > 1) {
                         if (!instance._navShown) {
                             instance._navShown = true;
@@ -207,9 +213,31 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                     });
                     scormAPI[profile.methods.commit]("");
                 } catch (e) {
-                
+
                 }
             }
+
+            if (state._finished && instance._assessStartedFor[instance.activeScoId] && !instance._assessEndedFor[instance.activeScoId]) {
+                var telemetry = EkstepRendererAPI.getTelemetryService();
+                if (telemetry) {
+                    var startEvent = instance._assessStartedFor[instance.activeScoId];
+                    var statusValue = state[profile.statusKey] || state[profile.successKey];
+                    var activeSco = instance.scoList && instance.scoList[instance.currentScoIndex];
+                    telemetry.assessEnd(startEvent, {
+                        pass: (statusValue === 'completed' || statusValue === 'passed'),
+                        score: state[profile.scoreKey],
+                        qindex: instance.currentScoIndex,
+                        qtitle: activeSco ? activeSco.title : '',
+                        qdesc: '',
+                        res: [],
+                        mmc: [],
+                        mc: []
+                    });
+                    instance._assessEndedFor[instance.activeScoId] = true;
+                    delete instance._assessStartedFor[instance.activeScoId];
+                }
+            }
+
             return "true";
         };
 
@@ -254,6 +282,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         instance.allScoStates = {};
         instance.scoList = [];
         instance.currentScoIndex = 0;
+        instance._assessStartedFor = {};
+        instance._assessEndedFor = {};
 
         var isMobile = window.cordova ? true : false;
         var envHTML = isMobile ? "app" : "portal";
@@ -337,6 +367,18 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var iframe = document.createElement('iframe');
         iframe.id = instance.manifest.id;
         iframe.src = path;
+
+        if (instance.data.mimeType === 'application/vnd.ekstep.scorm-archive' && instance.scormProfile) {
+            var apiNamespace = instance.scormProfile.apiNamespace;
+            iframe.addEventListener('load', function () {
+                try {
+                    iframe.contentWindow[apiNamespace] = window[apiNamespace];
+                } catch (e) {
+                    console.error('SCORM: Unable to expose API to SCO iframe', e);
+                }
+            });
+        }
+
         instance.validateSrc(path, iframe);
     },
 
