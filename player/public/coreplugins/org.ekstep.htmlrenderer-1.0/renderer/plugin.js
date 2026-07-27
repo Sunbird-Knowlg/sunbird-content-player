@@ -144,14 +144,26 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             if (k === profile.scoreKey && !instance._assessStartedFor[instance.activeScoId]) {
                 var telemetry = EkstepRendererAPI.getTelemetryService();
                 if (telemetry) {
-                    var maxScoreValue = instance.allScoStates[instance.activeScoId][profile.scoreMaxKey];
-                    var maxScore = (maxScoreValue !== undefined && maxScoreValue !== null && maxScoreValue !== '') ? maxScoreValue : 100;
-                    instance._assessStartedFor[instance.activeScoId] = telemetry.assess(
-                        instance.activeScoId,
-                        instance.data.subject || 'SCORM',
-                        'MEDIUM',
-                        { maxscore: maxScore }
-                    ).start();
+                    try {
+                        var maxScoreValue = instance.allScoStates[instance.activeScoId][profile.scoreMaxKey];
+                        var maxScore = (maxScoreValue !== undefined && maxScoreValue !== null && maxScoreValue !== '') ? maxScoreValue : 100;
+                        instance._assessStartedFor[instance.activeScoId] = telemetry.assess(
+                            instance.activeScoId,
+                            instance.data.subject || 'SCORM',
+                            'MEDIUM',
+                            { maxscore: maxScore }
+                        ).start();
+                    } catch (e) {
+                        console.error('SCORM: Unable to start ASSESS telemetry', e);
+                    }
+
+                    instance.fireTelemetry('INTERACT', {
+                        type: 'OTHER',
+                        subtype: 'SCORM_PROGRESS',
+                        id: 'scorm_progress',
+                        status: 'incomplete',
+                        scoId: instance.activeScoId
+                    });
                 }
             }
 
@@ -220,19 +232,23 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             if (state._finished && instance._assessStartedFor[instance.activeScoId] && !instance._assessEndedFor[instance.activeScoId]) {
                 var telemetry = EkstepRendererAPI.getTelemetryService();
                 if (telemetry) {
-                    var startEvent = instance._assessStartedFor[instance.activeScoId];
-                    var statusValue = state[profile.statusKey] || state[profile.successKey];
-                    var activeSco = instance.scoList && instance.scoList[instance.currentScoIndex];
-                    telemetry.assessEnd(startEvent, {
-                        pass: (statusValue === 'completed' || statusValue === 'passed'),
-                        score: state[profile.scoreKey],
-                        qindex: instance.currentScoIndex,
-                        qtitle: activeSco ? activeSco.title : '',
-                        qdesc: '',
-                        res: [],
-                        mmc: [],
-                        mc: []
-                    });
+                    try {
+                        var startEvent = instance._assessStartedFor[instance.activeScoId];
+                        var statusValue = state[profile.statusKey] || state[profile.successKey];
+                        var activeSco = instance.scoList && instance.scoList[instance.currentScoIndex];
+                        telemetry.assessEnd(startEvent, {
+                            pass: (statusValue === 'completed' || statusValue === 'passed'),
+                            score: state[profile.scoreKey],
+                            qindex: instance.currentScoIndex,
+                            qtitle: activeSco ? activeSco.title : '',
+                            qdesc: '',
+                            res: [],
+                            mmc: [],
+                            mc: []
+                        });
+                    } catch (e) {
+                        console.error('SCORM: Unable to end ASSESS telemetry', e);
+                    }
                     instance._assessEndedFor[instance.activeScoId] = true;
                     delete instance._assessStartedFor[instance.activeScoId];
                 }
