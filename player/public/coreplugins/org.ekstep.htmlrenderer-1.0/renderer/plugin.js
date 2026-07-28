@@ -216,8 +216,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                         var maxScoreValue = state[profile.scoreMaxKey];
                         var maxScore = (maxScoreValue !== undefined && maxScoreValue !== null && maxScoreValue !== '') ? maxScoreValue : 100;
                         var statusValue = state[profile.statusKey] || (profile.successKey && state[profile.successKey]);
-                        instance._scormAssessCounter = (instance._scormAssessCounter || 0) + 1;
-                        var qid = instance.activeScoId + '-' + instance._scormAssessCounter;
+                        var qid = instance.activeScoId;
                         var activeSco = instance.scoList && instance.scoList[instance.currentScoIndex];
                         var startEvent = telemetry.assess(
                             qid,
@@ -228,7 +227,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                         telemetry.assessEnd(startEvent, {
                             pass: (statusValue === 'completed' || statusValue === 'passed'),
                             score: currentScore,
-                            qindex: instance._scormAssessCounter - 1,
+                            qindex: instance.currentScoIndex,
                             qtitle: activeSco ? activeSco.title : '',
                             qdesc: '',
                             res: [],
@@ -434,6 +433,25 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }, 100);
     },
 
+    hasAttemptedCurrentSco: function () {
+        var instance = this;
+        var profile = instance.scormProfile;
+        if (!profile) return true;
+        var state = instance.allScoStates[instance.activeScoId] || {};
+        var scoreValue = state[profile.scoreKey];
+        var statusValue = state[profile.statusKey] || (profile.successKey && state[profile.successKey]);
+        var hasInteraction = Object.keys(state).some(function (k) {
+            return k.indexOf('cmi.interactions.') === 0 && k.endsWith('.result');
+        });
+        var isDefaultState = scoreValue === undefined &&
+            (!statusValue || statusValue === profile.defaultState[profile.statusKey]) &&
+            !hasInteraction;
+        if (isDefaultState) return true;
+        if (scoreValue !== undefined) return true;
+        if (statusValue && statusValue !== profile.defaultState[profile.statusKey]) return true;
+        return hasInteraction;
+    },
+
     showMultiScoNavigation: function () {
         var instance = this;
         jQuery('#multi-sco-nav').remove();
@@ -467,10 +485,16 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
         if (isLastSco) {
             jQuery('#sco-complete').click(function () {
+                if (!instance.hasAttemptedCurrentSco() && !window.confirm("You haven't attempted this section's quiz yet. Complete the course anyway?")) {
+                    return;
+                }
                 EkstepRendererAPI.dispatchEvent('renderer:content:end');
             });
         } else {
             jQuery('#sco-next').click(function () {
+                if (!instance.hasAttemptedCurrentSco() && !window.confirm("You haven't attempted this section's quiz yet. Continue to the next section anyway?")) {
+                    return;
+                }
                 instance.navigateToSCO(instance.currentScoIndex + 1);
             });
         }
