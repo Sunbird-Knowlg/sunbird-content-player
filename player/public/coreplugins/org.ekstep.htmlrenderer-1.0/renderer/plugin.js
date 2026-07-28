@@ -139,51 +139,16 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         };
 
         api[profile.methods.set] = function (k, v) {
-            var previousValue = instance.allScoStates[instance.activeScoId][k];
             instance.allScoStates[instance.activeScoId][k] = v;
 
-            // Each scoreKey set is its own complete, independent ASSESS event
-            // (mirrors QUML's one-ASSESS-per-question). A SCO may set the same
-            // value multiple times (idempotent autosave-style calls) - skip those.
-            if (k === profile.scoreKey && v !== previousValue) {
-                var telemetry = EkstepRendererAPI.getTelemetryService();
-                if (telemetry) {
-                    try {
-                        var state = instance.allScoStates[instance.activeScoId];
-                        var maxScoreValue = state[profile.scoreMaxKey];
-                        var maxScore = (maxScoreValue !== undefined && maxScoreValue !== null && maxScoreValue !== '') ? maxScoreValue : 100;
-                        var statusValue = state[profile.statusKey] || (profile.successKey && state[profile.successKey]);
-                        instance._scormAssessCounter = (instance._scormAssessCounter || 0) + 1;
-                        var qid = instance.activeScoId + '-' + instance._scormAssessCounter;
-                        var activeSco = instance.scoList && instance.scoList[instance.currentScoIndex];
-                        var startEvent = telemetry.assess(
-                            qid,
-                            instance.data.subject || 'SCORM',
-                            'MEDIUM',
-                            { maxscore: maxScore }
-                        ).start();
-                        telemetry.assessEnd(startEvent, {
-                            pass: (statusValue === 'completed' || statusValue === 'passed'),
-                            score: v,
-                            qindex: instance._scormAssessCounter - 1,
-                            qtitle: activeSco ? activeSco.title : '',
-                            qdesc: '',
-                            res: [],
-                            mmc: [],
-                            mc: []
-                        });
-                    } catch (e) {
-                        console.error('SCORM: Unable to record ASSESS telemetry', e);
-                    }
-
-                    instance.fireTelemetry('INTERACT', {
-                        type: 'OTHER',
-                        subtype: 'SCORM_PROGRESS',
-                        id: 'scorm_progress',
-                        status: 'incomplete',
-                        scoId: instance.activeScoId
-                    });
-                }
+            if (k === profile.scoreKey) {
+                instance.fireTelemetry('INTERACT', {
+                    type: 'OTHER',
+                    subtype: 'SCORM_PROGRESS',
+                    id: 'scorm_progress',
+                    status: 'incomplete',
+                    scoId: instance.activeScoId
+                });
             }
 
             if (k === profile.statusKey || (profile.successKey && k === profile.successKey)) {
@@ -243,6 +208,40 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 }
             }
 
+            var currentScore = state[profile.scoreKey];
+            if (currentScore !== undefined && currentScore !== instance._lastReportedScore[instance.activeScoId]) {
+                var telemetry = EkstepRendererAPI.getTelemetryService();
+                if (telemetry) {
+                    try {
+                        var maxScoreValue = state[profile.scoreMaxKey];
+                        var maxScore = (maxScoreValue !== undefined && maxScoreValue !== null && maxScoreValue !== '') ? maxScoreValue : 100;
+                        var statusValue = state[profile.statusKey] || (profile.successKey && state[profile.successKey]);
+                        instance._scormAssessCounter = (instance._scormAssessCounter || 0) + 1;
+                        var qid = instance.activeScoId + '-' + instance._scormAssessCounter;
+                        var activeSco = instance.scoList && instance.scoList[instance.currentScoIndex];
+                        var startEvent = telemetry.assess(
+                            qid,
+                            instance.data.subject || 'SCORM',
+                            'MEDIUM',
+                            { maxscore: maxScore }
+                        ).start();
+                        telemetry.assessEnd(startEvent, {
+                            pass: (statusValue === 'completed' || statusValue === 'passed'),
+                            score: currentScore,
+                            qindex: instance._scormAssessCounter - 1,
+                            qtitle: activeSco ? activeSco.title : '',
+                            qdesc: '',
+                            res: [],
+                            mmc: [],
+                            mc: []
+                        });
+                        instance._lastReportedScore[instance.activeScoId] = currentScore;
+                    } catch (e) {
+                        console.error('SCORM: Unable to record ASSESS telemetry', e);
+                    }
+                }
+            }
+
             if (state._finished && instance.scoList && instance.scoList.length === 1) {
                 var overallStatus = instance.computeOverallStatus();
                 if (!instance.isUnloading && (overallStatus === 'completed' || overallStatus === 'passed' || overallStatus === 'failed')) {
@@ -266,17 +265,25 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var instance = this;
         instance.allScoStates[instance.activeScoId]._finished = true;
         var isLastSco = instance.currentScoIndex === instance.scoList.length - 1;
+        var isMultiSco = instance.scoList && instance.scoList.length > 1;
         if (isLastSco) {
+            var result = "true";
+            if (scormAPI && !instance._realFinishCalled) {
+                instance._realFinishCalled = true;
+                result = scormAPI[profile.methods.finish]("");
+            }
+            if (isMultiSco) {
+                instance._navShown = true;
+                instance.showMultiScoNavigation();
+                return String(result);
+            }
             var overallStatus = instance.computeOverallStatus();
-            var result = scormAPI
-                ? scormAPI[profile.methods.finish]("")
-                : "true";
             if (!instance.isUnloading && (result === "true" || result === true) && (overallStatus === 'completed' || overallStatus === 'passed' || overallStatus === 'failed')) {
                 EkstepRendererAPI.dispatchEvent('renderer:content:end');
             }
             return String(result);
         }
-        if (instance.scoList && instance.scoList.length > 1) {
+        if (isMultiSco) {
             instance.showMultiScoNavigation();
         }
         return "true";
@@ -295,6 +302,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         instance.scoList = [];
         instance.currentScoIndex = 0;
         instance._scormAssessCounter = 0;
+        instance._lastReportedScore = {};
+        instance._realFinishCalled = false;
 
         var isMobile = window.cordova ? true : false;
         var envHTML = isMobile ? "app" : "portal";
