@@ -139,22 +139,41 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         };
 
         api[profile.methods.set] = function (k, v) {
+            var previousValue = instance.allScoStates[instance.activeScoId][k];
             instance.allScoStates[instance.activeScoId][k] = v;
 
-            if (k === profile.scoreKey && !instance._assessStartedFor[instance.activeScoId]) {
+            // Each scoreKey set is its own complete, independent ASSESS event
+            // (mirrors QUML's one-ASSESS-per-question). A SCO may set the same
+            // value multiple times (idempotent autosave-style calls) - skip those.
+            if (k === profile.scoreKey && v !== previousValue) {
                 var telemetry = EkstepRendererAPI.getTelemetryService();
                 if (telemetry) {
                     try {
-                        var maxScoreValue = instance.allScoStates[instance.activeScoId][profile.scoreMaxKey];
+                        var state = instance.allScoStates[instance.activeScoId];
+                        var maxScoreValue = state[profile.scoreMaxKey];
                         var maxScore = (maxScoreValue !== undefined && maxScoreValue !== null && maxScoreValue !== '') ? maxScoreValue : 100;
-                        instance._assessStartedFor[instance.activeScoId] = telemetry.assess(
-                            instance.activeScoId,
+                        var statusValue = state[profile.statusKey] || (profile.successKey && state[profile.successKey]);
+                        instance._scormAssessCounter = (instance._scormAssessCounter || 0) + 1;
+                        var qid = instance.activeScoId + '-' + instance._scormAssessCounter;
+                        var activeSco = instance.scoList && instance.scoList[instance.currentScoIndex];
+                        var startEvent = telemetry.assess(
+                            qid,
                             instance.data.subject || 'SCORM',
                             'MEDIUM',
                             { maxscore: maxScore }
                         ).start();
+                        telemetry.assessEnd(startEvent, {
+                            pass: (statusValue === 'completed' || statusValue === 'passed'),
+                            score: v,
+                            qindex: instance._scormAssessCounter - 1,
+                            qtitle: activeSco ? activeSco.title : '',
+                            qdesc: '',
+                            res: [],
+                            mmc: [],
+                            mc: []
+                        });
                     } catch (e) {
-                        console.error('SCORM: Unable to start ASSESS telemetry', e);
+                        console.error('SCORM: Unable to record ASSESS telemetry', e);
                     }
 
                     instance.fireTelemetry('INTERACT', {
@@ -186,12 +205,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                         }
                     }
                 }
-
-                var overallStatus = instance.computeOverallStatus();
-                if (!instance.isUnloading && (instance.scoList.length === 1) && (overallStatus === 'completed' || overallStatus === 'passed' || overallStatus === 'failed')) {
-                    EkstepRendererAPI.dispatchEvent('renderer:content:end');
-                }
-            }
+                           }
 
             if (k === profile.exitKey) {
                 instance.fireTelemetry('INTERACT', {
@@ -225,32 +239,14 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                     });
                     scormAPI[profile.methods.commit]("");
                 } catch (e) {
-
+                    console.error('SCORM: wrapper commit failed', e);
                 }
             }
 
-            if (state._finished && instance._assessStartedFor[instance.activeScoId] && !instance._assessEndedFor[instance.activeScoId]) {
-                var telemetry = EkstepRendererAPI.getTelemetryService();
-                if (telemetry) {
-                    try {
-                        var startEvent = instance._assessStartedFor[instance.activeScoId];
-                        var statusValue = state[profile.statusKey] || state[profile.successKey];
-                        var activeSco = instance.scoList && instance.scoList[instance.currentScoIndex];
-                        telemetry.assessEnd(startEvent, {
-                            pass: (statusValue === 'completed' || statusValue === 'passed'),
-                            score: state[profile.scoreKey],
-                            qindex: instance.currentScoIndex,
-                            qtitle: activeSco ? activeSco.title : '',
-                            qdesc: '',
-                            res: [],
-                            mmc: [],
-                            mc: []
-                        });
-                    } catch (e) {
-                        console.error('SCORM: Unable to end ASSESS telemetry', e);
-                    }
-                    instance._assessEndedFor[instance.activeScoId] = true;
-                    delete instance._assessStartedFor[instance.activeScoId];
+            if (state._finished && instance.scoList && instance.scoList.length === 1) {
+                var overallStatus = instance.computeOverallStatus();
+                if (!instance.isUnloading && (overallStatus === 'completed' || overallStatus === 'passed' || overallStatus === 'failed')) {
+                    EkstepRendererAPI.dispatchEvent('renderer:content:end');
                 }
             }
 
@@ -298,8 +294,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         instance.allScoStates = {};
         instance.scoList = [];
         instance.currentScoIndex = 0;
-        instance._assessStartedFor = {};
-        instance._assessEndedFor = {};
+        instance._scormAssessCounter = 0;
 
         var isMobile = window.cordova ? true : false;
         var envHTML = isMobile ? "app" : "portal";
@@ -370,6 +365,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
         instance.allScoStates[instance.activeScoId]._finished = false;
         instance._navShown = false;
+        instance._scormAssessCounter = 0;
 
         var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
         var prefix_url = isbrowserpreview
