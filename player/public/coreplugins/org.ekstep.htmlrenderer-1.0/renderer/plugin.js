@@ -90,6 +90,50 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         return 'incomplete';
     },
 
+    fireAggregatedAssess: function () {
+        var instance = this;
+        var profile = instance.scormProfile;
+        if (instance.maxAttemptsExceeded || instance._aggregateAssessFired) return;
+
+        var quizStates = instance.scoList
+            .map(function (sco) { return instance.allScoStates[sco.identifier]; })
+            .filter(function (state) { return state && state[profile.scoreKey] !== undefined; });
+
+        if (quizStates.length === 0) return;
+
+        var total = 0;
+        var allPassed = true;
+        quizStates.forEach(function (state) {
+            total += Number(state[profile.scoreKey]) || 0;
+            var statusValue = state[profile.statusKey] || (profile.successKey && state[profile.successKey]);
+            if (!(statusValue === 'completed' || statusValue === 'passed')) allPassed = false;
+        });
+        var avgScore = total / quizStates.length;
+
+        var telemetry = EkstepRendererAPI.getTelemetryService();
+        if (!telemetry) return;
+        try {
+            var qid = instance.data.identifier || instance.activeScoId;
+            var startEvent = telemetry.assess(
+                qid,
+                instance.data.subject || 'SCORM',
+                'MEDIUM',
+                { maxscore: 100 }
+            ).start();
+            telemetry.assessEnd(startEvent, {
+                pass: allPassed,
+                score: avgScore,
+                qindex: 0,
+                qtitle: instance.data.name || '',
+                qdesc: '',
+                res: [], mmc: [], mc: []
+            });
+            instance._aggregateAssessFired = true;
+        } catch (e) {
+            console.error('SCORM: Unable to record aggregated ASSESS telemetry', e);
+        }
+    },
+
     setupScormAPI: function (profile) {
         var instance = this;
         var scormAPI = null;
@@ -131,6 +175,14 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         };
 
         api[profile.methods.get] = function (k) {
+            if (k === profile.entryKey) {
+                var state = instance.allScoStates[instance.activeScoId];
+                var hasSuspendData = state[profile.statusKey] && state[profile.statusKey] !== profile.defaultState[profile.statusKey];
+                return hasSuspendData ? 'resume' : 'ab-initio';
+            }
+            if (k === profile.modeKey) {
+                return instance.maxAttemptsExceeded ? 'review' : 'normal';
+            }
             var val = instance.allScoStates[instance.activeScoId][k];
             if (val === undefined && profile.defaultState[k] !== undefined) {
                 return profile.defaultState[k];
@@ -139,6 +191,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         };
 
         api[profile.methods.set] = function (k, v) {
+            if (k === profile.entryKey || k === profile.modeKey) {
+                return "true";
+            }
             instance.allScoStates[instance.activeScoId][k] = v;
 
             if (k === profile.scoreKey) {
@@ -209,7 +264,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             }
 
             var currentScore = state[profile.scoreKey];
-            if (currentScore !== undefined && currentScore !== instance._lastReportedScore[instance.activeScoId]) {
+            if (!instance.isMultiSco && !instance.maxAttemptsExceeded && currentScore !== undefined && currentScore !== instance._lastReportedScore[instance.activeScoId]) {
                 var telemetry = EkstepRendererAPI.getTelemetryService();
                 if (telemetry) {
                     try {
@@ -272,13 +327,21 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 result = scormAPI[profile.methods.finish]("");
             }
             if (isMultiSco) {
+                instance.fireAggregatedAssess();
+            }
+            if (!instance.isUnloading && (result === "true" || result === true)) {
+                var overallStatus = instance.computeOverallStatus();
+                var hasAssessment = instance.scoList.some(function (sco) {
+                    var state = instance.allScoStates[sco.identifier];
+                    return state && state[profile.scoreKey] !== undefined;
+                });
+                if (hasAssessment ? (overallStatus === 'completed' || overallStatus === 'passed' || overallStatus === 'failed') : true) {
+                    EkstepRendererAPI.dispatchEvent('renderer:content:end');
+                }
+            }
+            if (isMultiSco) {
                 instance._navShown = true;
                 instance.showMultiScoNavigation();
-                return String(result);
-            }
-            var overallStatus = instance.computeOverallStatus();
-            if (!instance.isUnloading && (result === "true" || result === true) && (overallStatus === 'completed' || overallStatus === 'passed' || overallStatus === 'failed')) {
-                EkstepRendererAPI.dispatchEvent('renderer:content:end');
             }
             return String(result);
         }
@@ -300,9 +363,14 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         instance.allScoStates = {};
         instance.scoList = [];
         instance.currentScoIndex = 0;
-        instance._scormAssessCounter = 0;
         instance._lastReportedScore = {};
         instance._realFinishCalled = false;
+
+        instance.maxAttempts = instance.data.maxAttempts;
+        instance.currentAttempt = instance.data.currentAttempt || 0;
+        instance.maxAttemptsExceeded = instance.maxAttempts != null && instance.currentAttempt >= instance.maxAttempts;
+        instance.isMultiSco = false;
+        instance._aggregateAssessFired = false;
 
         var isMobile = window.cordova ? true : false;
         var envHTML = isMobile ? "app" : "portal";
@@ -335,6 +403,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 href: instance.data.launchFile || 'index.html'
             }];
         }
+
+        instance.isMultiSco = instance.scoList && instance.scoList.length > 1;
 
         instance.scoList.forEach(function (sco) {
             instance.allScoStates[sco.identifier] = Object.assign({}, profile.defaultState);
@@ -373,7 +443,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
         instance.allScoStates[instance.activeScoId]._finished = false;
         instance._navShown = false;
-        instance._scormAssessCounter = 0;
 
         var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
         var prefix_url = isbrowserpreview
@@ -427,10 +496,28 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             EkstepRendererAPI.dispatchEvent('renderer:next:hide');
             EkstepRendererAPI.dispatchEvent('renderer:previous:hide');
 
+            if (instance.maxAttemptsExceeded && !instance._maxAttemptsToastShown) {
+                instance._maxAttemptsToastShown = true;
+                instance.showMaxAttemptsToast();
+            }
+
             if (instance.scoList && instance.scoList.length > 1) {
                 instance.showMultiScoNavigation();
             }
         }, 100);
+    },
+
+    showMaxAttemptsToast: function () {
+        var toastHtml = '<div id="max-attempts-toast" style="position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #fff3cd; border: 1px solid #ffc107; border-radius: 4px; padding: 16px 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); z-index: 10000; display: flex; justify-content: space-between; align-items: center; max-width: 500px;">' +
+            '<span style="color: #856404; font-weight: 500; margin-right: 16px;">Attempts exhausted — this session will not be scored.</span>' +
+            '<button id="close-max-attempts-toast" style="background: none; border: none; cursor: pointer; color: #856404; font-size: 18px; padding: 0; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">×</button>' +
+            '</div>';
+        jQuery('body').append(toastHtml);
+        jQuery('#close-max-attempts-toast').click(function () {
+            jQuery('#max-attempts-toast').fadeOut(300, function () {
+                jQuery(this).remove();
+            });
+        });
     },
 
     hasAttemptedCurrentSco: function () {
@@ -488,6 +575,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 if (!instance.hasAttemptedCurrentSco() && !window.confirm("You haven't attempted this section's quiz yet. Complete the course anyway?")) {
                     return;
                 }
+                instance.fireAggregatedAssess();
                 EkstepRendererAPI.dispatchEvent('renderer:content:end');
             });
         } else {
