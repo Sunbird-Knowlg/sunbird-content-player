@@ -90,6 +90,11 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         return 'incomplete';
     },
 
+    getScoreMax: function (state, profile) {
+        var maxScoreValue = state[profile.scoreMaxKey];
+        return (maxScoreValue !== undefined && maxScoreValue !== null && maxScoreValue !== '') ? Number(maxScoreValue) : 100;
+    },
+
     fireAggregatedAssess: function () {
         var instance = this;
         var profile = instance.scormProfile;
@@ -102,9 +107,11 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         if (quizStates.length === 0) return;
 
         var total = 0;
+        var totalMax = 0;
         var allPassed = true;
         quizStates.forEach(function (state) {
             total += Number(state[profile.scoreKey]) || 0;
+            totalMax += instance.getScoreMax(state, profile);
             var statusValue = state[profile.statusKey] || (profile.successKey && state[profile.successKey]);
             if (!(statusValue === 'completed' || statusValue === 'passed')) allPassed = false;
         });
@@ -118,7 +125,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 qid,
                 instance.data.subject || 'SCORM',
                 'MEDIUM',
-                { maxscore: 100 }
+                { maxscore: totalMax }
             ).start();
             telemetry.assessEnd(startEvent, {
                 pass: allPassed,
@@ -268,8 +275,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 var telemetry = EkstepRendererAPI.getTelemetryService();
                 if (telemetry) {
                     try {
-                        var maxScoreValue = state[profile.scoreMaxKey];
-                        var maxScore = (maxScoreValue !== undefined && maxScoreValue !== null && maxScoreValue !== '') ? maxScoreValue : 100;
+                        var maxScore = instance.getScoreMax(state, profile);
                         var statusValue = state[profile.statusKey] || (profile.successKey && state[profile.successKey]);
                         var qid = instance.activeScoId;
                         var activeSco = instance.scoList && instance.scoList[instance.currentScoIndex];
@@ -533,7 +539,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var isDefaultState = scoreValue === undefined &&
             (!statusValue || statusValue === profile.defaultState[profile.statusKey]) &&
             !hasInteraction;
-        if (isDefaultState) return true;
+        if (isDefaultState) return false;
         if (scoreValue !== undefined) return true;
         if (statusValue && statusValue !== profile.defaultState[profile.statusKey]) return true;
         return hasInteraction;
