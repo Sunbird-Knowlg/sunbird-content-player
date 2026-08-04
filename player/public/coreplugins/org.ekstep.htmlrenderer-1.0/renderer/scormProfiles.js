@@ -6,6 +6,8 @@ window.SCORM_PROFILES = {
         scoreKey: 'cmi.core.score.raw',
         scoreMaxKey: 'cmi.core.score.max',
         exitKey: 'cmi.core.exit',
+        entryKey: 'cmi.core.entry',
+        modeKey: 'cmi.core.lesson_mode',
         defaultState: {
             'cmi.core.lesson_status': 'not attempted'
         },
@@ -35,6 +37,8 @@ window.SCORM_PROFILES = {
         scoreKey: 'cmi.score.raw',
         scoreMaxKey: 'cmi.score.max',
         exitKey: 'cmi.exit',
+        entryKey: 'cmi.entry',
+        modeKey: 'cmi.mode',
         defaultState: {
             'cmi.completion_status': 'unknown',
             'cmi.success_status': 'unknown'
