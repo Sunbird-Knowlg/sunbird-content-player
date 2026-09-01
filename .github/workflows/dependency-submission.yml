@@ -1,0 +1,36 @@
+name: Dependency Submission (npm)
+
+on:
+  push:
+    branches: ["master"]
+  pull_request:
+    branches: ["master"]
+
+permissions:
+  contents: write
+
+jobs:
+  dependency-submission:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Generate fresh package-lock.json
+        working-directory: player
+        run: npm install --package-lock-only --legacy-peer-deps
+
+      - name: Install Syft
+        run: curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin
+
+      - name: Generate SPDX SBOM
+        run: syft dir:player --output spdx-json=player.spdx.json
+
+      - name: Submit npm Dependencies via SPDX
+        uses: advanced-security/spdx-dependency-submission-action@v0.2.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
