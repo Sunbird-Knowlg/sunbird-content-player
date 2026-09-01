@@ -6,7 +6,6 @@ module.exports = function(config) {
     config.set({
         basePath: '../../',
         frameworks: [
-            'jasmine-jquery',
             'jasmine',
             'jasmine-matchers'
         ],
@@ -22,6 +21,7 @@ module.exports = function(config) {
             'public/coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs/creatine-1.0.0.min.js',
             'public/libs/md5.js',
             'www/preview/script.min.*.js',
+            'node_modules/jasmine-jquery/lib/jasmine-jquery.js',
             'node_modules/angular-mocks/angular-mocks.js',
             'public/coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs/renderer.min.js',
             { pattern: 'public/assets/user_list/user_list.json', watched: true, served: true, included: false },
@@ -75,10 +75,9 @@ module.exports = function(config) {
             }]
         },
         plugins: [
-            "karma-phantomjs-launcher",
-            "karma-jasmine-jquery",
+            "karma-chrome-launcher",
             "karma-jasmine",
-            "karma-jasmine-matchers",
+            "karma-jasmine-matchers", 
             'karma-coverage',
             "karma-mocha-reporter"
         ],
@@ -89,7 +88,7 @@ module.exports = function(config) {
         client: {
             captureConsole: false
         },
-        browsers: ['PhantomJS'],
+        browsers: ['ChromeHeadless'],
         singleRun: false,
         browserNoActivityTimeout: 60000
     })

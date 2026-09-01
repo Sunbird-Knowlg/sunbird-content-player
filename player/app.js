@@ -14,6 +14,12 @@
  */
 appConfig = require("./app-data/appConfig.json")
 var express = require("express")
+var favicon = require("serve-favicon")
+var logger = require("morgan")
+var compression = require("compression")
+var bodyParser = require("body-parser")
+var methodOverride = require("method-override")
+var cookieParser = require("cookie-parser")
 
 var http = require("http")
 
@@ -29,30 +35,21 @@ app.set("port", 3000)
 // eslint-disable-next-line
 app.set("views", __dirname + "/views")
 app.set("view engine", "ejs")
-app.use(express.favicon())
-app.use(express.logger("dev"))
-app.use(express.compress())
+app.use(compression())
+app.use(logger("dev"))
 app.use(express.json())
-app.use(express.urlencoded())
-app.use(express.bodyParser())
-app.use(express.methodOverride())
-app.use(express.cookieParser())
+app.use(express.urlencoded({ extended: true }))
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(methodOverride())
+app.use(cookieParser())
 
-app.use(app.router)
-app.locals({
-	contextPath: ""
-})
+app.locals.contextPath = ""
 
-app.use(express.compress())
 app.use(express.static(path.join(__dirname, "public")))
 app.use(express.static(path.join(__dirname, "../js-libs/")))
 app.use(express.static(path.join(__dirname, "../player/node_modules/")))
 app.use(express.static(path.join(__dirname, "views")))
-
-// development only
-if (app.get("env") === "development") {
-	app.use(express.errorHandler())
-}
 
 // Bootstrap routes
 // eslint-disable-next-line

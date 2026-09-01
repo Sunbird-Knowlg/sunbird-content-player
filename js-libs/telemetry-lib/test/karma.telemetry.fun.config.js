@@ -7,12 +7,12 @@ module.exports = function(config) {
     config.set({
         basePath: '',
         frameworks: [
-            'jasmine-jquery',
             'jasmine',
             'jasmine-matchers'
         ],
         files: [{ pattern: 'http-image/**/*', watched: false, included: false, served: true },
             '../../build/telemetry.js',
+            '../../../player/node_modules/jasmine-jquery/lib/jasmine-jquery.js',
             './telemetrylib.fun.spec.js',
         ],
         exclude: ['coverage'],
@@ -50,8 +50,7 @@ module.exports = function(config) {
         },
 
         plugins: [
-            "karma-phantomjs-launcher",
-            "karma-jasmine-jquery",
+            "karma-chrome-launcher",
             "karma-jasmine",
             "karma-jasmine-matchers",
             "karma-junit-reporter",
@@ -67,7 +66,7 @@ module.exports = function(config) {
         logLevel: config.LOG_INFO,
         autoWatch: false,
         client: { captureConsole: true },
-        browsers: ['PhantomJS'],
+        browsers: ['ChromeHeadless'],
         singleRun: true,
         //browserNoActivityTimeout: 3000
     })
