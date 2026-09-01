@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sunbird Player v2</title>
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html, body { width: 100%; height: 100%; }
+      body { font-family: system-ui, sans-serif; background: #111; display: flex; flex-direction: column; }
+
+      /* Dev toolbar — only visible in dev harness, not part of the player */
+      #dev-toolbar {
+        height: 40px;
+        background: #1a1a1a;
+        border-bottom: 1px solid #333;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 0 12px;
+        font-size: 12px;
+        color: #888;
+        flex-shrink: 0;
+      }
+      #dev-toolbar label { color: #666; font-size: 11px; }
+      #dev-toolbar select, #dev-toolbar input {
+        padding: 3px 8px;
+        border-radius: 5px;
+        border: 1px solid #333;
+        background: #2a2a2a;
+        color: #ccc;
+        font-size: 11px;
+        outline: none;
+      }
+      #dev-toolbar button {
+        padding: 4px 12px;
+        border-radius: 5px;
+        border: none;
+        background: #a85236;
+        color: #fff;
+        cursor: pointer;
+        font-size: 11px;
+        font-weight: 600;
+      }
+      #dev-toolbar button:hover { background: #8f4630; }
+      #dev-toolbar .spacer { flex: 1; }
+      #dev-toolbar .env-hint { font-size: 10px; color: #444; }
+
+      /* Player area fills remaining height */
+      #player-root { flex: 1; overflow: hidden; }
+    </style>
+  </head>
+  <body>
+    <div id="dev-toolbar">
+      <label>Content ID</label>
+      <input id="content-id-input" type="text" placeholder="do_31234" style="width:200px" />
+      <label>Lang</label>
+      <select id="lang-select">
+        <option value="en">English</option>
+        <option value="ar">Arabic (RTL)</option>
+        <option value="hi">Hindi</option>
+        <option value="ta">Tamil</option>
+        <option value="fr">Français</option>
+        <option value="pt">Português</option>
+      </select>
+      <button onclick="loadContent()">Load</button>
+      <div class="spacer"></div>
+      <span class="env-hint">Dev harness — set VITE_BASE_URL + VITE_CONTENT_ID in .env.local</span>
+    </div>
+    <div id="player-root"></div>
+    <script>
+      function loadContent() {
+        const id = document.getElementById('content-id-input').value.trim();
+        const lang = document.getElementById('lang-select').value;
+        if (id) window.__sb_contentId = id;
+        if (lang) window.__sb_lang = lang;
+        window.dispatchEvent(new CustomEvent('load-content'));
+      }
+    </script>
+    <script type="module" src="/src/dev-harness.tsx"></script>
+  </body>
+</html>

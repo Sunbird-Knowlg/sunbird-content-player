@@ -4,3 +4,6 @@ player/app-data/fixture-content-list.json
 web-player/node_modules
 *.todo
 dist/
+node_modules/
+
+.DS_Store
